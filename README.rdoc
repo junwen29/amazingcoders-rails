@@ -1,9 +1,17 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Things to take note when developing:
 
-Things you may want to cover:
+* Branching 
+	* Checkout from 'develop' Branch
+	* Indicate which system and what feature: <system>/<feature>, for e.g dms/create_deal
+
+* Generate Pull Request
+	* Tag the person to notify the pull request
+
+
+
+Things to take note to get the application up and running:
 
 * Ruby version
 
@@ -21,8 +29,8 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
+* Windows not working with Coffee script above 1.80
+	• Find the gemfile in project folder (should be just a level below the project folder)
+	• Add  gem 'coffee-script-source', '1.8.0' to the gemfile
+	• After that, type bundle update coffee-script-source
 
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
