@@ -1,10 +1,55 @@
 <p>
-  <strong>Title:</strong>
-  <%= @deal.title %>
+  	<strong>Redeemable:</strong>
+  	<%= @deal.redeemable.inspect %>
 </p>
 
 <p>
-  <strong>Text:</strong>
-  <%= @deal.text %>
+  	<strong>Multiple Use:</strong>
+ 	<%= @deal.multiple_use %>
+</p>
+
+<p>
+  	<strong>Image:</strong>
+ 	<%= @deal.image %>
+</p>
+
+<p>
+  	<strong>Type of Deal:</strong>
+ 	<%= @deal.type_of_deal %>
+</p>
+
+<p>
+  	<strong>Description:</strong>
+ 	<%= @deal.description %>
+</p>
+
+<p>
+  	<strong>Start Date:</strong>
+ 	<%= @deal.start_date %>
+</p>
+
+<p>
+  	<strong>Expiry Date:</strong>
+ 	<%= @deal.expiry_date %>
+</p>
+
+<p>
+  	<strong>Location:</strong>
+ 	<%= @deal.location %>
+</p>
+
+<p>
+  	<strong>Terms and Condition:</strong>
+ 	<%= @deal.t_c %>
+</p>
+
+<p>
+  	<strong>Number of Redeems:</strong>
+ 	<%= @deal.num_of_redeems %>
+</p>
+
+<p>
+  	<strong>Pushed:</strong>
+ 	<%= @deal.pushed %>
 </p>
 <%= link_to 'Back', deals_path %>
