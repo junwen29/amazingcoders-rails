@@ -14,6 +14,7 @@
 ActiveRecord::Schema.define(version: 20150824080417) do
 
   create_table "deals", force: true do |t|
+    t.string   "name_of_deal"
     t.boolean  "redeemable"
     t.boolean  "multiple_use"
     t.string   "image"
@@ -23,7 +24,8 @@ ActiveRecord::Schema.define(version: 20150824080417) do
     t.date     "expiry_date"
     t.string   "location"
     t.string   "t_c"
-    t.integer  "num_of_redeems"
+    t.string   "num_of_redeems"
+    t.string   "selected_others"
     t.boolean  "pushed"
     t.datetime "created_at"
     t.datetime "updated_at"

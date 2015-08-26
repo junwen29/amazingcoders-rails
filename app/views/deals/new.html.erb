@@ -1,7 +1,6 @@
 <h1>New deal</h1>
 
 <%= form_for :deal, url: deals_path do |f| %>
-!--display error message if any-->
     <% if @deal.errors.any? %>
         <div id="error_explanation">
           <h2>
@@ -15,65 +14,76 @@
           </ul>
         </div>
     <% end %>
+    <div>
+      <p>
+        <%= f.label :name_of_deal, "Title of Deal" %><br>
+        <%= f.text_field :name_of_deal%>
+      </p>
+      <p>
+        <%= f.label :type_of_deal, "Type of Deal" %><br>
+        <%= f.select :type_of_deal, [['1 for 1','1_for_1'],['10% off','10% off']] %>
+      </p>
+      <p>
+        <%= f.label :description, "Description of your deal" %><br>
+        <%= f.text_field :description%>
+      </p>
 
-    <p>
-      <%= f.label :redeemable, "Would you like users to be redeem through deal code? (Helps gather analytics)" %><br>
+      <p>
+        <%= f.label :start_date, "Start date of the Deal" %><br>
+        <%= f.text_field :start_date%>
+      </p>
+
+      <p>
+        <%= f.label :expiry_date, "End date of the Deal" %><br>
+        <%= f.text_field :expiry_date %>
+      </p>
+
+      <p>
+        <%= f.label :location %><br>
+        <%= f.select :location, [['All Outlets','all_outlets'],['Clementi','clementi']] %>
+      </p>
+
+      <p>
+        <%= f.label :t_c, 'Terms and Conditions' %><br>
+        <%= f.text_field :t_c%>
+      </p>
+
+      <p>
+        <%= f.label :pushed, 'Would you like to push to those who have wishlisted?' %><br>
+        <%= f.label :pushed, "Yes", :value => true %>
+        <%= f.radio_button :pushed, true%>
+        <%= f.label :pushed, "No", :value => false %>
+        <%= f.radio_button :pushed, false%>
+      </p>
+    </div>
+
+    <div id= "redeemable">
+      <%= f.label :redeemable, "Would you like users to redeem through deal code? (Helps gather analytics)" %><br>
       <%= f.label :redeemable, "Yes", :value => true %>
-      <%= f.radio_button :redeemable, true %>
+      <%= f.radio_button :redeemable, true%>
       <%= f.label :redeemable, "No", :value => false %>
-      <%= f.radio_button :redeemable, false, :checked => true %>
-    </p>
-
-    <p>
-      <%= f.label :multiple_use, "Would you like to enable users to have unlimited use of Deals or each User can only redeem once?" %><br>
-      <%= f.label :multiple_use, "Unlimited", :value => true %>
-      <%= f.radio_button :multiple_use, true %>
-      <%= f.label :multiple_use, "Once", :value => false %>
-      <%= f.radio_button :multiple_use, false, :checked => true %>
-    </p>
-
-    <p>
-      <%= f.label :type_of_deal, "Type of Deal" %><br>
-      <%= f.select :type_of_deal, [['1 for 1','1_for_1'],['10% off','10% off']] %>
-    </p>
-
-    <p>
-      <%= f.label :description, "Description of your deal" %><br>
-      <%= f.text_field :description%>
-    </p>
-
-    <p>
-      <%= f.label :start_date, "Start date of the Deal" %><br>
-      <%= f.text_field :start_date%>
-    </p>
-
-    <p>
-      <%= f.label :expiry_date, "End date of the Deal" %><br>
-      <%= f.text_field :expiry_date %>
-    </p>
-
-    <p>
-      <%= f.label :location %><br>
-      <%= f.text_field :location%>
-    </p>
-
-    <p>
-      <%= f.label :t_c, 'Terms and Conditions' %><br>
-      <%= f.text_field :t_c%>
-    </p>
-
-    <p>
-      <%= f.label :num_of_redeems, 'Number of Redeems' %><br>
-      <%= f.text_field :num_of_redeems%>
-    </p>
-
-    <p>
-      <%= f.label :pushed, 'Would you like to push to those who have wishlisted?' %><br>
-      <%= f.label :pushed, "Yes", :value => true %>
-      <%= f.radio_button :pushed, true %>
-      <%= f.label :pushed, "No", :value => false %>
-      <%= f.radio_button :pushed, false, :checked => true %>
-    </p>
+      <%= f.radio_button :redeemable, false%>
+      <br></br>
+      <div id="redeemable_true">
+        <%= f.label :multiple_use, "Would you like to enable users to have unlimited use of Deals or each User can only redeem once?" %><br>
+        <%= f.label :multiple_use, "Unlimited", :value => "unlimited" %>
+        <%= f.radio_button :multiple_use, 'unlimited' %>
+        <%= f.label :multiple_use, "Once", :value => "once" %>
+        <%= f.radio_button :multiple_use, 'once'%>
+        <br></br>
+        <div id ="multiple_use_false">
+          <%= f.label :num_of_redeems, 'Select the maximum number of redemptions for this deal.' %><br>
+          <%= f.label :num_of_redeems, "Infinite", :value => "infinite" %>
+          <%= f.radio_button :num_of_redeems, 'infinite' %>
+          <%= f.label :num_of_redeems, "Others", :value => "others" %>
+          <%= f.radio_button :num_of_redeems, 'others'%>
+          <div id ="num_of_redeems_others">
+            <%= f.label :selected_others, 'Please key in numbers' %><br>
+            <%= f.text_field :selected_others %>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <p>
       <%= f.submit %>

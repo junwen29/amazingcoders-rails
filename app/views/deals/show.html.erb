@@ -1,11 +1,61 @@
 <p>
-  	<strong>Redeemable:</strong>
-  	<%= @deal.redeemable.inspect %>
+  <strong>Title of Deal:</strong>
+  <%= @deal.name_of_deal %>
 </p>
 
 <p>
-  	<strong>Multiple Use:</strong>
+  <strong>Type of Deal:</strong>
+  <%= @deal.type_of_deal %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @deal.description %>
+</p>
+
+<p>
+  <strong>Deal Start Date:</strong>
+  <%= @deal.start_date %>
+</p>
+
+<p>
+  <strong>Expiry Date:</strong>
+  <%= @deal.expiry_date %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @deal.location %>
+</p>
+
+<p>
+  <strong>Terms and Condition:</strong>
+  <%= @deal.t_c %>
+</p>
+
+<p>
+  <strong>Has the deal been pushed to users?</strong>
+  <%= @deal.pushed %>
+</p>
+
+<p>
+  <strong>Can your code be redeemed?</strong>
+  <%= @deal.redeemable %>
+</p>
+
+<p>
+  	<strong>Is your deal limited to once per user or unlimited redemptions?</strong>
  	<%= @deal.multiple_use %>
+</p>
+
+<p>
+  <strong>Number of Redeems:</strong>
+  <%= @deal.num_of_redeems %>
+</p>
+
+<p>
+  <strong>Limit of redemptions for this deal:</strong>
+  <%= @deal.selected_others %>
 </p>
 
 <p>
@@ -13,43 +63,5 @@
  	<%= @deal.image %>
 </p>
 
-<p>
-  	<strong>Type of Deal:</strong>
- 	<%= @deal.type_of_deal %>
-</p>
 
-<p>
-  	<strong>Description:</strong>
- 	<%= @deal.description %>
-</p>
-
-<p>
-  	<strong>Start Date:</strong>
- 	<%= @deal.start_date %>
-</p>
-
-<p>
-  	<strong>Expiry Date:</strong>
- 	<%= @deal.expiry_date %>
-</p>
-
-<p>
-  	<strong>Location:</strong>
- 	<%= @deal.location %>
-</p>
-
-<p>
-  	<strong>Terms and Condition:</strong>
- 	<%= @deal.t_c %>
-</p>
-
-<p>
-  	<strong>Number of Redeems:</strong>
- 	<%= @deal.num_of_redeems %>
-</p>
-
-<p>
-  	<strong>Pushed:</strong>
- 	<%= @deal.pushed %>
-</p>
 <%= link_to 'Back', deals_path %>
