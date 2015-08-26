@@ -11,7 +11,7 @@ class DealsController < ApplicationController
     @deal = Deal.all
   end
 
-  def create
+  def create  
     #for database
     @deal = Deal.new(deal_params)
 
@@ -46,7 +46,9 @@ class DealsController < ApplicationController
 
   private
   def deal_params
-    params.require(:deal).permit(:title, :text)
+    params.require(:deal).permit(:redeemable, :multiple_use, :image, 
+      :type_of_deal, :description, :start_date, :expiry_date, :location, :t_c, 
+      :num_of_redeems, :pushed)
   end
 end
 
