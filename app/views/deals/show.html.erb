@@ -1,66 +1,99 @@
 <p>
   <strong>Title of Deal:</strong>
-  <%= @deal.name_of_deal %>
-</p>
+  <%= @deal.name_of_deal %><br>
 
-<p>
   <strong>Type of Deal:</strong>
-  <%= @deal.type_of_deal %>
-</p>
+  <%= @deal.type_of_deal %><br>
 
-<p>
   <strong>Description:</strong>
-  <%= @deal.description %>
-</p>
+  <%= @deal.description %><br>
 
-<p>
   <strong>Deal Start Date:</strong>
-  <%= @deal.start_date %>
-</p>
+  <%= @deal.start_date %><br>
 
-<p>
   <strong>Expiry Date:</strong>
-  <%= @deal.expiry_date %>
-</p>
+  <%= @deal.expiry_date %><br>
 
-<p>
+  <% if @deal.monday %>
+      <strong>Monday:</strong>
+      <%= @deal.monday_start %>
+       to
+      <%= @deal.monday_end %><br>
+  <% end %>
+
+  <% if @deal.tuesday %>
+      <strong>Tuesday:</strong>
+      <%= @deal.tuesday_start %>
+       to
+      <%= @deal.tuesday_end %><br>
+  <% end %>
+
+  <% if @deal.wednesday %>
+      <strong>Wednesday:</strong>
+      <%= @deal.wednesday_start %>
+       to
+      <%= @deal.wednesday_end %><br>
+  <% end %>
+
+  <% if @deal.thursday %>
+      <strong>Thursday:</strong>
+      <%= @deal.thursday_start %>
+       to
+      <%= @deal.thursday_end %><br>
+  <% end %>
+
+  <% if @deal.friday %>
+      <strong>Friday:</strong>
+      <%= @deal.friday_start %>
+       to
+      <%= @deal.friday_end %><br>
+  <% end %>
+
+  <% if @deal.saturday %>
+      <strong>Saturday:</strong>
+      <%= @deal.saturday_start %>
+       to
+      <%= @deal.saturday_end %><br>
+  <% end %>
+
+  <% if @deal.sunday %>
+      <strong>Sunday:</strong>
+      <%= @deal.sunday_start %>
+       to
+      <%= @deal.sunday_end %><br>
+  <% end %>
+
   <strong>Location:</strong>
-  <%= @deal.location %>
-</p>
+  <%= @deal.location %><br>
 
-<p>
   <strong>Terms and Condition:</strong>
-  <%= @deal.t_c %>
-</p>
+  <%= @deal.t_c %><br>
 
-<p>
   <strong>Has the deal been pushed to users?</strong>
-  <%= @deal.pushed %>
-</p>
+  <%= @deal.pushed %><br>
 
-<p>
   <strong>Can your code be redeemed?</strong>
-  <%= @deal.redeemable %>
-</p>
+  <% if @deal.redeemable %>
+      Yes <br>
+      <strong>Is your deal limited to once per user or unlimited redemptions?</strong>
+      <% if !@deal.multiple_use %>
+          Once per user <br>
+          <strong>Number of Redeems:</strong>
+          <% if @deal.num_of_redeems.match('others') %>
+                <%= @deal.selected_others %><br>
+          <% else %>
+              Infinite<br>
+          <% end %>
+      <% else %>
+          Unlimited Redemptions <br>
+      <% end %>
+  <% else %>
+      No <br>
+  <% end %>
 
-<p>
-  	<strong>Is your deal limited to once per user or unlimited redemptions?</strong>
- 	<%= @deal.multiple_use %>
-</p>
 
-<p>
-  <strong>Number of Redeems:</strong>
-  <%= @deal.num_of_redeems %>
-</p>
-
-<p>
-  <strong>Limit of redemptions for this deal:</strong>
-  <%= @deal.selected_others %>
-</p>
-
-<p>
-  	<strong>Image:</strong>
- 	<%= @deal.image %>
+  <strong>Image:</strong>
+  <%= @deal.image %>
 </p>
 
 

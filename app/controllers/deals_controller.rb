@@ -46,9 +46,12 @@ class DealsController < ApplicationController
 
   private
   def deal_params
-    params.require(:deal).permit(:name_of_deal, :redeemable, :multiple_use, :image,
-      :type_of_deal, :description, :start_date, :expiry_date, :location, :t_c, 
-      :num_of_redeems, :selected_others, :pushed)
+    params.require(:deal).permit(:name_of_deal, :redeemable, :multiple_use, :image, :type_of_deal, :description,
+                                 :start_date, :expiry_date, :monday, :tuesday, :wednesday, :thursday, :friday,
+                                 :saturday, :sunday, :monday_start, :monday_end, :tuesday_start, :tuesday_end,
+                                 :wednesday_start, :wednesday_end, :thursday_start, :thursday_end, :friday_start, :friday_end,
+                                 :saturday_start, :saturday_end, :sunday_start, :sunday_end, :location, :t_c, :num_of_redeems,
+                                 :selected_others, :pushed)
   end
 end
 

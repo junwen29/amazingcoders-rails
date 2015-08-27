@@ -17,7 +17,7 @@
     <div>
       <p>
         <%= f.label :name_of_deal, "Title of Deal" %><br>
-        <%= f.text_field :name_of_deal%>
+        <%= f.text_field :name_of_deal, :placeholder => 'Less then 50 characters'%>
       </p>
       <p>
         <%= f.label :type_of_deal, "Type of Deal" %><br>
@@ -29,13 +29,59 @@
       </p>
 
       <p>
-        <%= f.label :start_date, "Start date of the Deal" %><br>
+        Deal Period: <br>
+        <%= f.label :start_date, "Start:" %>
         <%= f.text_field :start_date%>
+
+        <%= f.label :expiry_date, "End:" %>
+        <%= f.text_field :expiry_date %>
       </p>
 
       <p>
-        <%= f.label :expiry_date, "End date of the Deal" %><br>
-        <%= f.text_field :expiry_date %>
+        Periods where deal is offered:<br>
+        <%= f.check_box :monday%>Monday
+        <%= f.check_box :tuesday%>Tuesday
+        <%= f.check_box :wednesday%>Wednesday
+        <%= f.check_box :thursday%>Thursday
+        <%= f.check_box :friday%>Friday
+        <%= f.check_box :saturday%>Saturday
+        <%= f.check_box :sunday%>Sunday
+      <div id="monday_true">
+          Monday:<br>
+          Start: <%= f.time_select :monday_start, :minute_step => 30, :include_blank => true  %>
+          End:<%= f.time_select :monday_end, :minute_step => 30, :include_blank => true  %>
+      </div>
+      <div id="tuesday_true">
+        Tuesday:<br>
+        Start: <%= f.time_select :tuesday_start, :minute_step => 30, :include_blank => true %>
+        End:<%= f.time_select :tuesday_end, :minute_step => 30, :include_blank => true %>
+      </div>
+      <div id="wednesday_true">
+        Wednesday:<br>
+        Start: <%= f.time_select :wednesday_start, :minute_step => 30, :include_blank => true  %>
+        End:<%= f.time_select :wednesday_end, :minute_step => 30, :include_blank => true  %>
+      </div>
+      <div id="thursday_true">
+        Thursday:<br>
+        Start: <%= f.time_select :thursday_start, :minute_step => 30, :include_blank => true  %>
+        End:<%= f.time_select :thursday_end, :minute_step => 30, :include_blank => true  %>
+      </div>
+      <div id="friday_true">
+        Friday:<br>
+        Start: <%= f.time_select :friday_start, :minute_step => 30, :include_blank => true  %>
+        End:<%= f.time_select :friday_end, :minute_step => 30, :include_blank => true  %>
+      </div>
+      <div id="saturday_true">
+        Saturday:<br>
+        Start: <%= f.time_select :saturday_start, :minute_step => 30, :include_blank => true  %>
+        End:<%= f.time_select :saturday_end, :minute_step => 30, :include_blank => true  %>
+      </div>
+      <div id="sunday_true">
+        Sunday:<br>
+        Start: <%= f.time_select :sunday_start, :minute_step => 30, :include_blank => true  %>
+        End:<%= f.time_select :sunday_end, :minute_step => 30, :include_blank => true  %>
+      </div>
+
       </p>
 
       <p>
@@ -66,10 +112,10 @@
       <br></br>
       <div id="redeemable_true">
         <%= f.label :multiple_use, "Would you like to enable users to have unlimited use of Deals or each User can only redeem once?" %><br>
-        <%= f.label :multiple_use, "Unlimited", :value => "unlimited" %>
-        <%= f.radio_button :multiple_use, 'unlimited' %>
-        <%= f.label :multiple_use, "Once", :value => "once" %>
-        <%= f.radio_button :multiple_use, 'once'%>
+        <%= f.label :multiple_use, "Unlimited", :value => true %>
+        <%= f.radio_button :multiple_use, true %>
+        <%= f.label :multiple_use, "Once", :value => false %>
+        <%= f.radio_button :multiple_use, false%>
         <br></br>
         <div id ="multiple_use_false">
           <%= f.label :num_of_redeems, 'Select the maximum number of redemptions for this deal.' %><br>
@@ -79,7 +125,7 @@
           <%= f.radio_button :num_of_redeems, 'others'%>
           <div id ="num_of_redeems_others">
             <%= f.label :selected_others, 'Please key in numbers' %><br>
-            <%= f.text_field :selected_others %>
+            <%= f.text_field :selected_others, :placeholder => 'Please key in numbers only' %>
           </div>
         </div>
       </div>
