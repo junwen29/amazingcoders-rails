@@ -111,23 +111,12 @@
       <%= f.radio_button :redeemable, false%>
       <br></br>
       <div id="redeemable_true">
-        <%= f.label :multiple_use, "Would you like to enable users to have unlimited use of Deals or each User can only redeem once?" %><br>
-        <%= f.label :multiple_use, "Unlimited", :value => true %>
+        <%= f.label :multiple_use, "How many times can this deal be redeemed per user?" %><br>
+        <%= f.label :multiple_use, "Unlimited Redemptions", :value => true %>
         <%= f.radio_button :multiple_use, true %>
         <%= f.label :multiple_use, "Once", :value => false %>
         <%= f.radio_button :multiple_use, false%>
         <br></br>
-        <div id ="multiple_use_false">
-          <%= f.label :num_of_redeems, 'Select the maximum number of redemptions for this deal.' %><br>
-          <%= f.label :num_of_redeems, "Infinite", :value => "infinite" %>
-          <%= f.radio_button :num_of_redeems, 'infinite' %>
-          <%= f.label :num_of_redeems, "Others", :value => "others" %>
-          <%= f.radio_button :num_of_redeems, 'others'%>
-          <div id ="num_of_redeems_others">
-            <%= f.label :selected_others, 'Please key in numbers' %><br>
-            <%= f.text_field :selected_others, :placeholder => 'Please key in numbers only' %>
-          </div>
-        </div>
       </div>
     </div>
 

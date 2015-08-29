@@ -1,7 +1,7 @@
 <h1>Editing deal</h1>
 
-<% if @deal.start_date < Date.today %>
-    <h2>As you have passed your deals starting date, due to our terms of service you are only able to change the maximum number of redeems per day.</h2>
+<% if @deal.start_date.today? || @deal.expiry_date.today? || (@deal.start_date.past? && @deal.expiry_date.future?) %>
+    <h2>As your deal is ongoing, you are only allowed to change certain details.</h2>
     <%= form_for :deal, url: deal_path(@deal), method: :patch do |f| %>
 
         <% if @deal.errors.any? %>
@@ -19,8 +19,8 @@
         <% end %>
 
         <p>
-          <%= f.label :num_of_redeems, 'Maximum number of redeems allowed per day.' %><br>
-          <%= f.text_field :num_of_redeems%>
+          <%= f.label :description, "Description of your deal" %><br>
+          <%= f.text_field :description%>
         </p>
 
         <p>
@@ -30,7 +30,6 @@
     <% end %>
 
 <% else %>
-    <h2> As your deal have not started yet, you are allowed to change the details of your deal.</h2>
     <%= form_for :deal, url: deal_path(@deal), method: :patch do |f| %>
 
         <% if @deal.errors.any? %>
@@ -151,17 +150,6 @@
             <%= f.label :multiple_use, "Once", :value => false %>
             <%= f.radio_button :multiple_use, false%>
             <br></br>
-            <div id ="multiple_use_false">
-              <%= f.label :num_of_redeems, 'Select the maximum number of redemptions for this deal.' %><br>
-              <%= f.label :num_of_redeems, "Infinite", :value => "infinite" %>
-              <%= f.radio_button :num_of_redeems, 'infinite' %>
-              <%= f.label :num_of_redeems, "Others", :value => "others" %>
-              <%= f.radio_button :num_of_redeems, 'others'%>
-              <div id ="num_of_redeems_others">
-                <%= f.label :selected_others, 'Please key in numbers' %><br>
-                <%= f.text_field :selected_others %>
-              </div>
-            </div>
           </div>
         </div>
 

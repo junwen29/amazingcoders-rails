@@ -22,12 +22,6 @@ class Deal < ActiveRecord::Base
     errors.add(:redeemable, 'Please select one option') if ((redeemable == nil) rescue ArgumentError == ArgumentError)
     if (redeemable)
       errors.add(:multiple_use, 'Please select one option') if ((multiple_use == nil) rescue ArgumentError == ArgumentError)
-      if (!multiple_use && multiple_use!= nil)
-        errors.add(:num_of_redeems, 'Please select one option') if ((num_of_redeems == nil) rescue ArgumentError == ArgumentError)
-        if (num_of_redeems == 'others')
-          errors.add(:selected_others, 'Number of Redeems keyed in should be in numbers!') if ((!num_of_redeems.match('infinite') && !is_number?(selected_others)) rescue ArgumentError == ArgumentError)
-        end
-      end
     end
   end
 

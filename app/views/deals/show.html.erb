@@ -75,15 +75,9 @@
   <strong>Can your code be redeemed?</strong>
   <% if @deal.redeemable %>
       Yes <br>
-      <strong>Is your deal limited to once per user or unlimited redemptions?</strong>
+      <strong>How many times can this deal be redeemed per user?</strong>
       <% if !@deal.multiple_use %>
           Once per user <br>
-          <strong>Number of Redeems:</strong>
-          <% if @deal.num_of_redeems.match('others') %>
-                <%= @deal.selected_others %><br>
-          <% else %>
-              Infinite<br>
-          <% end %>
       <% else %>
           Unlimited Redemptions <br>
       <% end %>

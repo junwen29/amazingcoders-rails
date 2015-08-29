@@ -27,15 +27,6 @@ $ ->
       $("#multiple_use_false").hide();
 
 $ ->
-  $("#num_of_redeems_others").hide();
-  $("input:radio[name ='deal[num_of_redeems]']").change ->
-    if(this.value == "others" && this.checked)
-      $("#num_of_redeems_others").show();
-    else
-      $("#num_of_redeems_others").hide();
-
-
-$ ->
   $("#monday_true").hide();
   $("input:checkbox[name ='deal[monday]']").change ->
     if(this.value == "1" && this.checked)
