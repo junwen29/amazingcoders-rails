@@ -1,0 +1,596 @@
+
+a:link,
+a:visited,
+a:active{
+  color: #333;
+  text-decoration: none;
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in; 
+}
+
+/* buttons
+=================================================================== */
+a.btn, button{
+  display: inline-block;
+  padding: 10px 14px 8px 14px ;
+  border: 0;
+  margin: 0;
+  background-color: #b5b5b5;
+  color: #fff;
+  font: 14px/14px "proxima-nova",  Verdana, Arial, sans-serif;
+  text-decoration: none;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 700;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;       
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in; 
+}
+
+a.btn:hover, button:hover{
+  background-color: #656565;
+}
+
+a.btn--outline, button.btn--outline{
+  padding: 9px 13px 7px 13px;
+  border: 1px solid #b5b5b5;
+  background-color: transparent;
+  color: #b5b5b5;
+}
+
+a.btn--outline:hover, button.btn--outline:hover{
+  border-color: #656565;
+  background-color: transparent;
+  color: #656565;
+}
+
+a.btn--big{
+  font: 20px/20px "proxima-nova",  Verdana, Arial, sans-serif;
+  font-weight: 700;
+  padding: 20px 28px;
+}
+
+a.btn--medium{
+  font: 17px/17px "proxima-nova",  Verdana, Arial, sans-serif;
+  font-weight: 700;
+  padding: 12px 16px;
+}
+
+a.btn--darkPink, button.btn--darkPink{
+  color: #fff;
+  background-color: #75324b;
+}
+
+a.btn--darkPink:hover{
+  background-color: #542436;
+}
+
+a.btn--outline--grey{
+  border-color: #ddd;
+  color: #ddd;  
+}
+
+a.btn--outline--grey:hover{
+  border-color: #fff;
+  color: #fff;
+}
+
+a.btn--green, a.btn--green:link, .btn--green{
+    color: #fff;
+    background-color: #159f61;
+}
+
+a.btn--green:hover, a.btn--green:hover:link, .btn--green:hover{
+    color: #fff;
+    background-color: #159f61;
+}
+
+.pull-left-with-margin{
+  float: left;
+  margin-left: 35px;
+}
+
+.brands-img{
+  position: relative;
+  top: 10px;
+  max-width: 960px;
+  margin: 0 auto 10px auto;
+  
+}
+
+/* for full screen
+=====================================================================*/
+
+  @media screen and (min-width: 1050px) {
+/* general
+  =================================================================== */
+  html{
+    background: #fff;
+    min-width: 320px;
+  }
+
+  body{
+    color: #404040;
+    font: 100%/1.5625 "proxima-nova", Verdana, Arial, sans-serif; /*16/25*/
+  }
+
+/* typography
+  =================================================================== */
+  h1{
+    font: 44px/1 "proxima-nova", Verdana, Arial, sans-serif;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  h2{
+    font: 24px/1 "proxima-nova", Verdana, Arial, sans-serif;
+    color: #f0f0f0;
+  }
+
+  h3{
+    font: 22px/26px "proxima-nova", Verdana, Arial, sans-serif; /*16/25*/
+    font-weight: 700;
+  }
+
+  h4{
+    font: 1em/1.5625 "proxima-nova", Verdana, Arial, sans-serif; /*16/25*/
+  }
+
+  h5{
+    font: 1em/1.5625 "proxima-nova", Verdana, Arial, sans-serif; /*16/25*/
+  }
+
+  h6{
+    font: 1em/1.5625 "proxima-nova", Verdana, Arial, sans-serif; /*16/25*/
+  }
+
+/* header
+  =================================================================== */
+  header{
+    padding-top: 30px;
+    min-height: 840px;
+    background: #aaa image-url("biz/marketing/hero_bg.jpg") no-repeat;
+    background-size: cover;
+  }
+
+  header .nav{
+    margin-bottom: 70px;
+  }
+
+  header .nav-logo{
+    float: left;
+    width: 240px;
+  }
+
+  header .nav-links{
+    float: right;
+  }
+
+  header .nav-links > ul > li{
+    float: left;
+    margin-left: 15px;
+  }
+  
+  header .header-links{
+    width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  header .header-links > ul > li{
+    float: left;
+    margin-left: 15px;
+    margin-top: 10px;
+  }
+
+
+  header .masthead{
+    text-align: center;
+  }
+
+  header .masthead h1{
+    margin-bottom: 15px;
+  }
+  
+  header .masthead h2{
+    margin-bottom: 15px;
+    line-height: 125%;
+  }
+
+  .devices-img{
+    position: relative;
+    top: -450px;
+    max-width: 960px;
+    margin: 0 auto -500px auto;
+  }
+  
+  .features{
+    margin: 60px 0;
+  }
+
+  .features-feature-img{
+  	height: 74px;
+    margin-bottom: 20px;
+  }
+  
+  .features-feature > h3{
+    margin-bottom: 5px;
+  }
+
+  .features-feature > p{
+    font-size: 18px;
+  }
+
+  .quotes{
+    padding: 60px 0;
+    background-color: #f0f0f0;
+  }
+
+  .quotes-quote{
+    color: #666;
+    font-size: 20px;
+    font-style: italic;
+  }
+
+  .quotes-author{
+    margin-top: 10px;
+  }
+
+  .quotes-author-avatar{
+    float: left;
+    height: 40px;
+    width: 40px;
+    background-color: #d0d0d0;
+    border-radius: 40px;
+  }
+
+  .quotes-author-name{
+    float: left;
+    padding-top: 5px;
+    margin-left: 10px;
+  }
+
+  .about{
+    padding: 55px 0;
+    color: #fff;
+    background-color: #ff5c8a;
+    text-align: center;
+  }
+  
+  .about-wrapper{
+    display: inline-block; 
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .about-wrapper > span{
+  	display: inline-block;
+  }
+  
+  .about-wrapper > p{
+    font-size: 18px;
+  }
+  
+  .about-title{
+    font-size: 1.875rem;
+  }
+  
+  .about-text{
+    font-size: 1.25rem;
+  }
+  
+  .cta{
+    padding: 40px 0px;
+    text-align: center;
+    font-size: 28px;
+  }
+  
+  .cta-wrapper{
+    display: inline-block; 
+  }
+  
+  .cta-wrapper > span{
+    display: inline-block;
+    margin-right:20px
+  }
+  
+  .brand_cta{
+    padding: 30px 0px;
+  }
+
+/*
+  footer{
+    padding: 30px 0;
+    color: #999;
+    font-size: 12px;
+    text-align: center;
+  }
+  */
+  
+  header .show-on-mobile{
+    display: none;
+  }
+  
+}
+  
+/* Custom CSS for mobile view 
+==============================================================================*/
+  @media screen and (min-width: 320px) and (max-width: 1050px) {
+    
+    /* custom buttons */
+    a.btn--medium{
+      font: 14px/14px "proxima-nova",  Verdana, Arial, sans-serif;
+      font-weight: 700;
+      padding: 12px 16px;
+    }
+    
+    header .show-on-mobile{
+      //width: 97%;
+    }
+    
+    .container.web-footer{
+      padding-left:20px;
+    }
+
+    /* General
+  ============================================================================ */
+    
+    html{
+      background: #fff;
+      min-width: 320px;
+    }
+
+    body{
+      color: #404040;
+      font: 100%/1.5625 "proxima-nova", Verdana, Arial, sans-serif; /*16/25*/
+    }
+    
+    header .hide-on-mobile{
+      display: none;
+    }
+    
+    /* typography
+      =================================================================== */
+      h1{
+        font: 34px/1 "proxima-nova", Verdana, Arial, sans-serif;
+        font-weight: 700;
+        color: #fff;
+      }
+
+      h2{
+        font: 20px/1 "proxima-nova", Verdana, Arial, sans-serif;
+        color: #f0f0f0;
+      }
+
+      h3{
+        font: 22px/26px "proxima-nova", Verdana, Arial, sans-serif; /*16/25*/
+        font-weight: 700;
+      }
+
+      h4{
+        font: 1em/1.5625 "proxima-nova", Verdana, Arial, sans-serif; /*16/25*/
+      }
+
+      h5{
+        font: 1em/1.5625 "proxima-nova", Verdana, Arial, sans-serif; /*16/25*/
+      }
+
+      h6{
+        font: 1em/1.5625 "proxima-nova", Verdana, Arial, sans-serif; /*16/25*/
+      }
+      
+      /* header
+        =================================================================== */
+        header{
+          padding-top: 30px;
+          min-height: 740px;
+          background: #aaa image-url("biz/marketing/hero_bg.jpg") no-repeat;
+          background-size: cover;
+        }
+
+        header .nav{
+          margin-bottom: 35px;
+        }
+
+        header .nav-logo{
+          float:none;
+          width: 240px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        header .nav-links{
+          float: right;
+        }
+
+        header .nav-links > ul > li{
+          float: left;
+          margin-left: 15px;
+        }
+        
+        header .header-links{
+          width: 260px;
+          margin-left: auto;
+          margin-right: auto;
+          text-align: center;
+        }
+
+        header .header-links > ul > li{
+          float: left;
+          margin-left: 0px;
+          margin-top: 10px;
+          width: 100%;
+        }
+
+        header .masthead{
+          text-align: center;
+        }
+
+        header .masthead h1{
+          margin-bottom: 15px;
+        }
+        
+        header .masthead h2{
+          margin-bottom: 15px;
+        }
+        
+        .devices .container{
+          padding-left: 0px;
+        }
+
+        .devices-img{
+          position: relative;
+          top: -65vw;
+          max-width: 960px;
+          width: 100vw  ;
+          margin: 0 auto -65vw auto;
+        }
+
+        .features{
+          margin: 20px 0;
+        }
+        
+        .features-feature{
+          width: 100%;
+          padding: 15px 0px;
+        }
+
+        .features-feature-img{
+        	height: 74px;
+          margin-bottom: 20px;
+          width: 64px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        
+        .features-feature > h3{
+          margin-bottom: 5px;
+          text-align: center;
+        }
+
+        .features-feature > p{
+          font-size: 18px;
+          text-align: center;
+        }
+
+        .quotes{
+          padding: 60px 0;
+          background-color: #f0f0f0;
+        }
+
+        .quotes-quote{
+          color: #666;
+          font-size: 20px;
+          font-style: italic;
+        }
+
+        .quotes-author{
+          margin-top: 10px;
+        }
+
+        .quotes-author-avatar{
+          float: left;
+          height: 40px;
+          width: 40px;
+          background-color: #d0d0d0;
+          border-radius: 40px;
+        }
+
+        .quotes-author-name{
+          float: left;
+          padding-top: 5px;
+          margin-left: 10px;
+        }
+
+        .about{
+          padding: 30px 0;
+          color: #fff;
+          background-color: #ff5c8a;
+          font-size: 28px;
+          text-align: center;
+        }
+        
+        .about-wrapper{
+          display: inline-block;  
+        }
+        
+        .about-wrapper > span{
+        	display: inline-block;
+        	margin-right: 20px;
+        }
+        
+        .about-title{
+          font-size: 1.875rem;
+        }
+        
+        .about-text{
+          font-size: 1.25rem;
+        }
+        
+        .about-wrapper > p{
+          font-size: 18px;
+        }
+        
+        .cta{
+          padding: 40px 0px;
+          text-align: center;
+          font-size: 28px;
+        }
+        
+        .cta-wrapper{
+          display: inline-block; 
+        }
+        
+        .cta-wrapper > span{
+          display: inline-block;
+          font-size: 22px;
+          padding-bottom: 10px;
+        }
+        
+        .cta-wrapper > a{
+          font: 14px/14px "proxima-nova",  Verdana, Arial, sans-serif;
+          font-weight: 700;
+          padding: 12px 16px;    
+        }
+        
+        .pull-left-with-margin{
+          float: left;
+          margin-left: 0px;
+          margin-bottom: 25px;
+        } 
+        
+        @media screen and (min-width: 320px) and (max-width: 340px){
+          .container{
+          padding-left: 35px; 
+          }
+          
+          .fullWidth{
+          padding-right: 35px; 
+          }
+          
+          header  .nav{
+          margin-bottom: 30px;
+          }
+          
+          .devices-img{
+            position: relative;
+            top: -70vw;
+            max-width: 960px;
+            margin: 0 auto -70vw auto;
+          }
+          
+          .cta-wrapper > a{
+            font: 12px/12px "proxima-nova",  Verdana, Arial, sans-serif;
+            font-weight: 700;
+            padding: 12px 16px;    
+          }
+          
+        }  
+      
+  }   
