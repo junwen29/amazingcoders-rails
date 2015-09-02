@@ -1,11 +1,12 @@
 class DealsController < ApplicationController
+  before_action :set_deal, only: [:show, :edit, :update, :destroy]
 
   def new
     @deal = Deal.new
+    @deal.deal_hours.build
   end
 
   def edit
-    @deal = Deal.find(params[:id])
   end
 
   def index
@@ -16,20 +17,26 @@ class DealsController < ApplicationController
     #for database
     @deal = Deal.new(deal_params)
 
-    if @deal.save
-      redirect_to @deal
-    else
-      render 'new'
+    respond_to do |format|
+      if @deal.save
+        format.html { redirect_to @deal, notice: 'Deal was successfully created.' }
+        format.json { render :show, status: :created, location: @deal }
+      else
+        format.html { render :new }
+        format.json { render json: @deal.errors, status: :unprocessable_entity }
+        end
     end
   end
 
   def update
-    @deal = Deal.find(params[:id])
-
-    if @deal.update(deal_params)
-      redirect_to @deal
-    else
-      render 'edit'
+    respond_to do |format|
+      if @deal.update(deal_params)
+        format.html { redirect_to @deal, notice: 'Deal was successfully updated.' }
+        format.json { render :show, status: :ok, location: @deal }
+      else
+        format.html { render :edit }
+        format.json { render json: @deal.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -40,9 +47,13 @@ class DealsController < ApplicationController
   def destroy
     @deal = Deal.find(params[:id])
     @deal.destroy
-    #need not add a view for this action since redirecting to the index
-    #action
     redirect_to deals_path
+  end
+
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_deal
+    @deal = Deal.find(params[:id])
   end
 
   private
@@ -52,7 +63,7 @@ class DealsController < ApplicationController
                                  :monday_end, :tuesday_start, :tuesday_end, :wednesday_start, :wednesday_end,
                                  :thursday_start, :thursday_end, :friday_start, :friday_end, :saturday_start,
                                  :saturday_end, :sunday_start, :sunday_end, :location, :t_c, :pushed,:redeemable,
-                                 :multiple_use, :image,)
+                                 :multiple_use, :image, deal_hours_attributes: [:id, :day, :started_at, :ended_at, :destroy])
   end
 end
 

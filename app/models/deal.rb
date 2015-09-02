@@ -1,4 +1,8 @@
 class Deal < ActiveRecord::Base
+  has_many :deal_hours, :dependent => :destroy
+
+  accepts_nested_attributes_for :deal_hours
+
   validates(:name_of_deal, presence: true)
   validates(:type_of_deal, presence: true)
   validates(:description,presence: true, length: {minimum: 5})

@@ -14,6 +14,11 @@
   <strong>Expiry Date:</strong>
   <%= @deal.expiry_date %><br>
 
+  <strong> Days:</strong>
+  <% for deal_hour in @deal.deal_hours%>
+      <%=h deal_hour.day %> <br>
+  <% end %>
+
   <% if @deal.monday %>
       <strong>Monday:</strong>
       <%= @deal.monday_start %>

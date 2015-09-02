@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150824080417) do
+ActiveRecord::Schema.define(version: 20150901154955) do
+
+  create_table "deal_hours", force: true do |t|
+    t.integer  "deal_id"
+    t.string   "day"
+    t.time     "started_at"
+    t.time     "ended_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "deals", force: true do |t|
     t.string   "name_of_deal"
