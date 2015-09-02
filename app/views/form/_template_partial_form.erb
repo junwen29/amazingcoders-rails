@@ -1,0 +1,87 @@
+<div class="content-form">
+  <%= form_for(@venue_promotion, url: form_name, :html => { :class => "venue_promotion_form"}) do |f| %>
+      <p class="form-select content-form-first clearfix">
+        <% type = [["Burpple Exclusive", "0"], ["Existing Promotion", "1"]] %>
+        <%= f.label "Select the type of deal" %>
+        <span>
+              <%= f.select :promotion_type, type %>
+          </span>
+      </p>
+      <p class="form-textarea clearfix">
+        <%= f.label "What are the details of your deal?" %>
+        <span>
+                <%= f.text_area :description, :rows => '6', :cols => '32', :placeholder => 'e.g. Thank you for wish-listing! Drop by this week and we will save a table with a great view just for you.' %>
+            </span>
+      </p>
+      <p class="form-textarea clearfix">
+        <%= f.label "How will customers claim it?" %>
+        <span>
+                <%= f.text_area :claim_instruction, :rows => '6', :cols => '32', :placeholder => 'e.g. Customers are required to flash the Burpple app.' %>
+            </span>
+      </p>
+      <p class="form-select half clearfix">
+        <%= f.label "Start Date" %>
+        <span>
+                <%= f.date_select(:started_at, order: [:day, :month, :year]) %>
+            </span>
+      </p>
+      <p class="form-select clearfix">
+        <%= f.label "End Date" %>
+        <span>
+                <%= f.date_select(:ended_at, order: [:day, :month, :year]) %>
+            </span>
+      </p>
+      <p class="form-text clearfix">
+        <%= f.label "Supporting Website (if any)" %>
+        <span>
+                <%= f.text_field :supporting_website %>
+            </span>
+      </p>
+
+      <%= f.hidden_field :submitted, :value => false %>
+
+      <p class="form-actions">
+        <a href="javascript:void(0);" id="form-actions-submit" class="btn btn--big btn--green">Submit</a>
+        <%= f.submit "Save as draft" , :class => 'btn btn--big' %>
+        <% unless new_promotion %>
+            <%= link_to "Delete this Promotion", biz_dashboard_venue_promotion_path(@venue_promotion.venue_id, @venue_promotion.id), method: :delete, data: { confirm: 'Are you sure? This action cannot be undone' }, :id => 'form-actions-delete' %>
+        <% end %>
+        <span>After submitting this deal, our friendly team will confirm and schedule the deal with you before customers are notified.</span>
+      </p>
+  <% end %>
+</div>
+<div class="content-faq">
+  <p>
+    <span class="title">Recommended Deals:</span><br />
+    <span>Personal:</span> Complementary drinks or service<br />
+    <span>Financial:</span> Discounts or special offers<br />
+    <span>Action:</span> e.g. Post a photo of your meal on Burpple to get a complementary drink
+  </p>
+</div>
+
+
+<%= content_for :body_footer do %>
+    <script>
+        $(function() {
+            $('#form-actions-submit').click(function(e){
+                $('#venue_promotion_submitted').val(true);
+                $('.venue_promotion_form').submit();
+            });
+
+            $("#venue_promotion_promotion_type").change(function() {
+                var type = $("#venue_promotion_promotion_type").val();
+
+                if (type == 0){
+                    $("#venue_promotion_description").attr("placeholder", "e.g. Thank you for wish-listing! Drop by this week and we will save a table with a great view just for you.");
+                    $("#venue_promotion_claim_instruction").attr("placeholder", "e.g. Customers are required to flash the Burpple app.");
+                }
+                else{
+                    $("#venue_promotion_description").attr("placeholder", "e.g. Get 10% off your total bill for dinner on weekdays.");
+                    $("#venue_promotion_claim_instruction").attr("placeholder", "e.g. Customers are required to pay using the ABC credit card.");
+                }
+
+            });
+        });
+    </script>
+
+<% end %>
