@@ -1,10 +1,10 @@
- <div class="header">
+<div class="header">
     <div class="header-content">
         <div class="header-logo">
             <%# link_to image_tag("biz/burpple_logo.png", :alt => "burpple"), biz_dashboard_path %>
             <%= link_to image_tag("biz/burpple_logo.png", :alt => "burpple"), deals_path %>
         </div>
-      
+
         <div class="header-content-item venueDropdown">
             <%# @selectClass = ( @venues.count + @temp_venues.count == 1 ? 'venueDropdown-noselect' : 'venueDropdown-select' ) %>
 
@@ -62,12 +62,21 @@
             <li><%= link_to "Edit Listing", biz_dashboard_edit_temp_venue_path,  {:class => @editSelected} %></li>
             <li><%= link_to "Premium Listing", biz_dashboard_promotions_temp_venue_path,  {:class => @promotionsSelected} %></li>
         <% else %>
-            <% if [12, 277].include?(@merchant_id) %>
-            <li><%= link_to "Activity", biz_dashboard_activity_venue_path(@venue.id),  {:class => @statsSelected} %></li>
-            <% end %>
-            <li>View Listing<%# link_to "View Listing",  web_venue_url(@venue.url_key || @venue.id, :subdomain => Rails.env.production? ? 'www' : 'eli'), :target => "_blank"%></li>
-            <li>Edit Listing<%# link_to "Edit Listing", biz_dashboard_edit_venue_path(@venue.id),  {:class => @editSelected} %></li>
-            <li>Premium Listing<%# link_to "Premium Listing", biz_dashboard_promotions_venue_path(@venue.id),  {:class => @promotionsSelected} %></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Personal Settings
+                <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Email</a></li>
+                <li><a href="#">Account Settings</a></li>
+                <li><a href="#">Billing</a></li>
+              </ul>
+            </li>
+            <li><%= link_to "Activity", deals_url %></li>
+            <li><%= link_to "View Listing",  deals_url %></li>
+            <li><%= link_to "Edit Listing", deals_url %></li>
+            <li><%= link_to "Premium Listing", deals_url %></li>
             <% if [12, 277].include?(@merchant_id) %>
             <li><%= link_to "List a deal", new_biz_dashboard_venue_promotion_path(@venue.id),  {:class => @dealSelected}  %></li>
             <% end %>

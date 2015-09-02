@@ -29,6 +29,9 @@
     <!-- Content Body -->
     <%= render :partial => 'form/deal_create_form' %>
 
+    <%= content_for :lean_overlay do %>
+    <% end %>
+
     <%= link_to 'Back', deals_path %>
 
   </div><!-- /content -->

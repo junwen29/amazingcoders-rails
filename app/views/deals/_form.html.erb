@@ -1,0 +1,248 @@
+<%= form_for @deal, :html => { :class => "form-horizontal deal" } do |f| %>
+
+    <% if @deal.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@deal.errors.count, "error") %> prohibited this deal from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @deal.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :name_of_deal, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name_of_deal, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:name_of_deal]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :type_of_deal, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :type_of_deal, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:type_of_deal]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :description, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :description, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:description]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :start_date, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :start_date, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:start_date]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :expiry_date, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :expiry_date, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:expiry_date]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :monday, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :monday, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:monday]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :monday_start, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :monday_start, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:monday_start]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :monday_end, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :monday_end, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:monday_end]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :tuesday, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :tuesday, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:tuesday]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :tuesday_start, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :tuesday_start, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:tuesday_start]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :tuesday_end, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :tuesday_end, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:tuesday_end]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :wednesday, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :wednesday, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:wednesday]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :wednesday_start, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :wednesday_start, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:wednesday_start]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :wednesday_end, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :wednesday_end, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:wednesday_end]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :thursday, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :thursday, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:thursday]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :thursday_start, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :thursday_start, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:thursday_start]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :thursday_end, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :thursday_end, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:thursday_end]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :friday, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :friday, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:friday]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :friday_start, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :friday_start, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:friday_start]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :friday_end, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :friday_end, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:friday_end]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :saturday, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :saturday, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:saturday]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :saturday_start, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :saturday_start, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:saturday_start]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :saturday_end, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :saturday_end, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:saturday_end]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :sunday, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :sunday, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:sunday]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :sunday_start, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :sunday_start, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:sunday_start]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :sunday_end, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :sunday_end, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:sunday_end]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :location, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :location, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:location]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :t_c, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :t_c, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:t_c]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :pushed, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :pushed, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:pushed]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :redeemable, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :redeemable, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:redeemable]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :multiple_use, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :multiple_use, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:multiple_use]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :image, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :image, :class => 'form-control' %>
+    </div>
+    <%= error_span(@deal[:image]) %>
+  </div>
+
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            deals_path, :class => 'btn btn-default' %>
+
+<% end %>

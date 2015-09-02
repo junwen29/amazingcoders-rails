@@ -43,3 +43,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
 # the coffee-script-source does not work on Windows, so downgrade
 gem 'coffee-script-source', '1.8.0'
+
+gem "twitter-bootstrap-rails", ">= 2.2.6"
