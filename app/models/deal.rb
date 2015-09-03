@@ -1,7 +1,7 @@
 class Deal < ActiveRecord::Base
-  has_many :deal_hours, :dependent => :destroy
+  has_many :deal_days, :dependent => :destroy
+  accepts_nested_attributes_for :deal_days, allow_destroy: true
 
-  accepts_nested_attributes_for :deal_hours
 
   validates(:name_of_deal, presence: true)
   validates(:type_of_deal, presence: true)
@@ -13,66 +13,12 @@ class Deal < ActiveRecord::Base
   validates(:redeemable, :inclusion => {:in => [true, false]})
   validate :check_expiry_date
   validate :check_hidden_redeemable_fields
-  validate :check_dates_fields
-  validate :check_monday
-  validate :check_tuesday
-  validate :check_wednesday
-  validate :check_thursday
-  validate :check_friday
-  validate :check_saturday
-  validate :check_sunday
+  validate :future_date
 
   def check_hidden_redeemable_fields
     errors.add(:redeemable, 'Please select one option') if ((redeemable == nil) rescue ArgumentError == ArgumentError)
     if (redeemable)
       errors.add(:multiple_use, 'Please select one option') if ((multiple_use == nil) rescue ArgumentError == ArgumentError)
-    end
-  end
-
-  def check_dates_fields
-    errors.add(:monday, 'Please select at least one date') if ((!monday && !tuesday && !wednesday && !thursday &&!friday &&
-        !saturday && !sunday) rescue ArgumentError == ArgumentError)
-  end
-
-  def check_monday
-    if (monday)
-      errors.add(:monday_end, 'For Monday please select a end time after start time.') if ((monday_start >= monday_end) rescue ArgumentError == ArgumentError)
-    end
-  end
-
-  def check_tuesday
-    if (tuesday)
-      errors.add(:tuesday_end, 'For Tuesday please select a end time after start time.') if ((tuesday_start >= tuesday_end) rescue ArgumentError == ArgumentError)
-    end
-  end
-
-  def check_wednesday
-    if (wednesday)
-      errors.add(:wednesday_end, 'For Wednesday please select a end time after start time.') if ((wednesday_start >= wednesday_end) rescue ArgumentError == ArgumentError)
-    end
-  end
-
-  def check_thursday
-    if (thursday)
-      errors.add(:thursday_end, 'For Thursday please select a end time after start time.') if ((thursday_start >= thursday_end) rescue ArgumentError == ArgumentError)
-    end
-  end
-
-  def check_friday
-    if (friday)
-      errors.add(:friday_end, 'For Friday please select a end time after start time.') if ((friday_start >= friday_end) rescue ArgumentError == ArgumentError)
-    end
-  end
-
-  def check_saturday
-    if (saturday)
-      errors.add(:saturday_end, 'For Saturday please select a end time after start time.') if ((saturday_start >= saturday_end) rescue ArgumentError == ArgumentError)
-    end
-  end
-
-  def check_sunday
-    if (sunday)
-      errors.add(:sunday_end, 'For Sunday please select a end time after start time.') if ((sunday_start >= sunday_end) rescue ArgumentError == ArgumentError)
     end
   end
 

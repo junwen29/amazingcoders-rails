@@ -1,0 +1,10 @@
+<fieldset>
+  Enter Days (e.g Mon - Fri)<br>
+  <%= f.text_field :day%>
+  <%= link_to "Delete", '#', class: "remove_fields" %><br>
+  <%= f.hidden_field :_destroy %>
+  <%= f.fields_for :deal_times do |builder| %>
+      <%= render 'deal_time_fields', f: builder %>
+  <% end %>
+  <%= link_to_add_fields "Add another time period", f, :deal_times %>
+</fieldset>

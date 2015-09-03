@@ -1,4 +1,3 @@
-<p>
   <strong>Title of Deal:</strong>
   <%= @deal.name_of_deal %><br>
 
@@ -14,58 +13,15 @@
   <strong>Expiry Date:</strong>
   <%= @deal.expiry_date %><br>
 
-  <strong> Days:</strong>
-  <% for deal_hour in @deal.deal_hours%>
-      <%=h deal_hour.day %> <br>
-  <% end %>
-
-  <% if @deal.monday %>
-      <strong>Monday:</strong>
-      <%= @deal.monday_start %>
-       to
-      <%= @deal.monday_end %><br>
-  <% end %>
-
-  <% if @deal.tuesday %>
-      <strong>Tuesday:</strong>
-      <%= @deal.tuesday_start %>
-       to
-      <%= @deal.tuesday_end %><br>
-  <% end %>
-
-  <% if @deal.wednesday %>
-      <strong>Wednesday:</strong>
-      <%= @deal.wednesday_start %>
-       to
-      <%= @deal.wednesday_end %><br>
-  <% end %>
-
-  <% if @deal.thursday %>
-      <strong>Thursday:</strong>
-      <%= @deal.thursday_start %>
-       to
-      <%= @deal.thursday_end %><br>
-  <% end %>
-
-  <% if @deal.friday %>
-      <strong>Friday:</strong>
-      <%= @deal.friday_start %>
-       to
-      <%= @deal.friday_end %><br>
-  <% end %>
-
-  <% if @deal.saturday %>
-      <strong>Saturday:</strong>
-      <%= @deal.saturday_start %>
-       to
-      <%= @deal.saturday_end %><br>
-  <% end %>
-
-  <% if @deal.sunday %>
-      <strong>Sunday:</strong>
-      <%= @deal.sunday_start %>
-       to
-      <%= @deal.sunday_end %><br>
+  <% for deal_day in @deal.deal_days%>
+    <strong> Days:</strong>
+    <%=h deal_day.day %> <br>
+      <strong> Time period:</strong><br>
+      <% for deal_time in deal_day.deal_times%>
+          <%=h deal_time.started_at %>
+          to
+          <%=h deal_time.ended_at %><br>
+      <% end %>
   <% end %>
 
   <strong>Location:</strong>

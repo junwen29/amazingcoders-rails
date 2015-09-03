@@ -1,5 +1,9 @@
 <h1>Editing deal</h1>
 
-<%= render 'form' %>
+<% if @deal.start_date.today? || @deal.expiry_date.today? || (@deal.start_date.past? && @deal.expiry_date.future?) %>
+    <h2> As your deal is ongoing, you are not allowed to change any details</h2>
+<% else %>
+    <%= render 'form' %>
+<% end %>
 
 <%= link_to 'Back', deals_path %>

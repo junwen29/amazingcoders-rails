@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class DealHoursControllerTest < ActionController::TestCase
+class DealDaysControllerTest < ActionController::TestCase
   # test "the truth" do
   #   assert true
   # end

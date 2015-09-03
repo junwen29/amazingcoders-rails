@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class DealHourTest < ActiveSupport::TestCase
+class DealTimeTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

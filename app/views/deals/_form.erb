@@ -36,59 +36,16 @@ nested models-->
         <%= f.label :expiry_date, "End:" %>
         <%= f.text_field :expiry_date %>
       </p>
-      <%= f.fields_for :deal_hours do |builder| %>
-          <p>
-            <%= builder.label :day, "Question" %> <br />
-            <%= builder.text_field :day %>
-          </p>
+      
+      <!-- Following is a nested form of deal_day-->
+      Periods where deal is offered:<br>
+      <%= f.fields_for :deal_days do |builder| %>
+        <%= render 'deal_day_fields', f: builder %>
       <% end %>
-      <p>
-        Periods where deal is offered:<br>
-        <%= f.check_box :monday%>Monday
-        <%= f.check_box :tuesday%>Tuesday
-        <%= f.check_box :wednesday%>Wednesday
-        <%= f.check_box :thursday%>Thursday
-        <%= f.check_box :friday%>Friday
-        <%= f.check_box :saturday%>Saturday
-        <%= f.check_box :sunday%>Sunday
 
-      <div id="monday_true">
-        Monday:<br>
-        Start: <%= f.time_select :monday_start, :minute_step => 30, :include_blank => true  %>
-        End:<%= f.time_select :monday_end, :minute_step => 30, :include_blank => true  %>
-      </div>
-      <div id="tuesday_true">
-        Tuesday:<br>
-        Start: <%= f.time_select :tuesday_start, :minute_step => 30, :include_blank => true %>
-        End:<%= f.time_select :tuesday_end, :minute_step => 30, :include_blank => true %>
-      </div>
-      <div id="wednesday_true">
-        Wednesday:<br>
-        Start: <%= f.time_select :wednesday_start, :minute_step => 30, :include_blank => true  %>
-        End:<%= f.time_select :wednesday_end, :minute_step => 30, :include_blank => true  %>
-      </div>
-      <div id="thursday_true">
-        Thursday:<br>
-        Start: <%= f.time_select :thursday_start, :minute_step => 30, :include_blank => true  %>
-        End:<%= f.time_select :thursday_end, :minute_step => 30, :include_blank => true  %>
-      </div>
-      <div id="friday_true">
-        Friday:<br>
-        Start: <%= f.time_select :friday_start, :minute_step => 30, :include_blank => true  %>
-        End:<%= f.time_select :friday_end, :minute_step => 30, :include_blank => true  %>
-      </div>
-      <div id="saturday_true">
-        Saturday:<br>
-        Start: <%= f.time_select :saturday_start, :minute_step => 30, :include_blank => true  %>
-        End:<%= f.time_select :saturday_end, :minute_step => 30, :include_blank => true  %>
-      </div>
-      <div id="sunday_true">
-        Sunday:<br>
-        Start: <%= f.time_select :sunday_start, :minute_step => 30, :include_blank => true  %>
-        End:<%= f.time_select :sunday_end, :minute_step => 30, :include_blank => true  %>
-      </div>
-
-      </p>
+      <!-- This links to helpers/application_helper that allows me to create new set-->
+      <!-- Must take note, :deal_days is used to link to _deal_day_fields.html.erb so naming convention must be standard-->
+      <%= link_to_add_fields "Add Another Day", f, :deal_days %>
 
       <p>
         <%= f.label :location %><br>

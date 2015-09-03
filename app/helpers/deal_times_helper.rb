@@ -1,0 +1,2 @@
+module DealTimesHelper
+end
