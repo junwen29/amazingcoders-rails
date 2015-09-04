@@ -13,9 +13,21 @@
 
 ActiveRecord::Schema.define(version: 20150824080417) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "deals", force: true do |t|
-    t.string   "title"
-    t.text     "text"
+    t.boolean  "redeemable"
+    t.boolean  "multiple_use"
+    t.string   "image"
+    t.string   "type_of_deal"
+    t.string   "description"
+    t.date     "start_date"
+    t.date     "expiry_date"
+    t.string   "location"
+    t.string   "t_c"
+    t.integer  "num_of_redeems"
+    t.boolean  "pushed"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
