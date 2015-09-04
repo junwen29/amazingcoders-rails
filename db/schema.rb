@@ -28,6 +28,9 @@ ActiveRecord::Schema.define(version: 20150903145119) do
     t.datetime "updated_at"
   end
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "deals", force: true do |t|
     t.string   "name_of_deal"
     t.string   "type_of_deal"
