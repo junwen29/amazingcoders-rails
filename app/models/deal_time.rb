@@ -1,7 +1,13 @@
 class DealTime < ActiveRecord::Base
   belongs_to :deal_day
 
-  validates_presence_of :started_at
-  validates_presence_of :ended_at
+  validates :started_at, :presence => {message: "Please ensure you have keyed in a start time"}
+  validates :ended_at, :presence => {message: "Please ensure you have keyed in a end time"}
+  validate :start_must_be_before_end_time
 
+  private
+  def start_must_be_before_end_time
+    errors.add(:started_at, " of deal must be before end time") unless
+        started_at < ended_at
+  end
 end

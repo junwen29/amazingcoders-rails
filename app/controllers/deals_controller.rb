@@ -14,7 +14,7 @@ class DealsController < ApplicationController
     @deal = Deal.all
   end
 
-  def create  
+  def create
     #for database
     @deal = Deal.new(deal_params)
 
@@ -59,7 +59,7 @@ class DealsController < ApplicationController
   def deal_params
     params.require(:deal).permit(:name_of_deal, :type_of_deal, :description, :start_date, :expiry_date, :location, :t_c,
                                  :pushed,:redeemable, :multiple_use, :image,
-                                 deal_days_attributes: [:id, :day, :_destroy,
+                                 deal_days_attributes: [:id, :mon, :tue, :wed, :thur, :fri, :sat, :sun, :_destroy,
                                                         deal_times_attributes: [:id, :started_at, :ended_at, :_destroy]])
   end
 end

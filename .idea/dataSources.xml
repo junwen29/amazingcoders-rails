@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="459316071">
+  <component name="DataSourceManagerImpl" format="xml" hash="3535221482">
     <data-source source="LOCAL" name="Rails amazingcoders-rails: development" uuid="9e677077-e09e-4b68-9b07-baf0ba72499e">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\woonyong123\Documents\GitHub\amazingcoders-rails\db\development.sqlite3</jdbc-url>
+      <jdbc-url>jdbc:postgresql:amazing_dev</jdbc-url>
       <libraries>
         <library>
-          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/xerial-sqlite-license.txt</url>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/postgresql-driver-license.txt</url>
         </library>
         <library>
-          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/sqlite-jdbc-3.8.9.jar</url>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/postgresql-9.4-1201.jdbc4.jar</url>
         </library>
       </libraries>
+    </data-source>
+    <data-source source="LOCAL" name="PostgreSQL - amazing_dev@localhost" uuid="468c6e15-5fe1-4ad5-9dce-1b7a7a134401">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/amazing_dev</jdbc-url>
+      <libraries />
     </data-source>
   </component>
 </project>

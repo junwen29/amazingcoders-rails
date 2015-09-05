@@ -1,0 +1,45 @@
+[1mdiff --git a/.idea/amazingcoders-rails.iml b/.idea/amazingcoders-rails.iml[m
+[1mindex 6b9062b..b0b1239 100644[m
+[1m--- a/.idea/amazingcoders-rails.iml[m
+[1m+++ b/.idea/amazingcoders-rails.iml[m
+[36m@@ -140,7 +140,7 @@[m
+     <orderEntry type="library" scope="PROVIDED" name="hike (v1.2.3, ruby-2.1.5-p273) [gem]" level="application" />[m
+     <orderEntry type="library" scope="PROVIDED" name="i18n (v0.7.0, ruby-2.1.5-p273) [gem]" level="application" />[m
+     <orderEntry type="library" scope="PROVIDED" name="jbuilder (v2.3.1, ruby-2.1.5-p273) [gem]" level="application" />[m
+[31m-    <orderEntry type="library" scope="PROVIDED" name="jquery-rails (v3.1.3, ruby-2.1.5-p273) [gem]" level="application" />[m
+[32m+[m[32m    <orderEntry type="library" scope="PROVIDED" name="jquery-rails (v3.1.4, ruby-2.1.5-p273) [gem]" level="application" />[m
+     <orderEntry type="library" scope="PROVIDED" name="jquery-turbolinks (v2.1.0, ruby-2.1.5-p273) [gem]" level="application" />[m
+     <orderEntry type="library" scope="PROVIDED" name="jquery-ui-rails (v5.0.5, ruby-2.1.5-p273) [gem]" level="application" />[m
+     <orderEntry type="library" scope="PROVIDED" name="json (v1.8.3, ruby-2.1.5-p273) [gem]" level="application" />[m
+[36m@@ -148,6 +148,7 @@[m
+     <orderEntry type="library" scope="PROVIDED" name="mime-types (v2.6.1, ruby-2.1.5-p273) [gem]" level="application" />[m
+     <orderEntry type="library" scope="PROVIDED" name="minitest (v5.8.0, ruby-2.1.5-p273) [gem]" level="application" />[m
+     <orderEntry type="library" scope="PROVIDED" name="multi_json (v1.11.2, ruby-2.1.5-p273) [gem]" level="application" />[m
+[32m+[m[32m    <orderEntry type="library" scope="PROVIDED" name="pg (v0.18.2, ruby-2.1.5-p273) [gem]" level="application" />[m
+     <orderEntry type="library" scope="PROVIDED" name="rack (v1.5.5, ruby-2.1.5-p273) [gem]" level="application" />[m
+     <orderEntry type="library" scope="PROVIDED" name="rack-test (v0.6.3, ruby-2.1.5-p273) [gem]" level="application" />[m
+     <orderEntry type="library" scope="PROVIDED" name="rails (v4.1.8, ruby-2.1.5-p273) [gem]" level="application" />[m
+[36m@@ -159,14 +160,13 @@[m
+     <orderEntry type="library" scope="PROVIDED" name="sdoc (v0.4.1, ruby-2.1.5-p273) [gem]" level="application" />[m
+     <orderEntry type="library" scope="PROVIDED" name="sprockets (v2.12.4, ruby-2.1.5-p273) [gem]" level="application" />[m
+     <orderEntry type="library" scope="PROVIDED" name="sprockets-rails (v2.3.2, ruby-2.1.5-p273) [gem]" level="application" />[m
+[31m-    <orderEntry type="library" scope="PROVIDED" name="sqlite3 (v1.3.10, ruby-2.1.5-p273) [gem]" level="application" />[m
+     <orderEntry type="library" scope="PROVIDED" name="thor (v0.19.1, ruby-2.1.5-p273) [gem]" level="application" />[m
+     <orderEntry type="library" scope="PROVIDED" name="thread_safe (v0.3.5, ruby-2.1.5-p273) [gem]" level="application" />[m
+     <orderEntry type="library" scope="PROVIDED" name="tilt (v1.4.1, ruby-2.1.5-p273) [gem]" level="application" />[m
+     <orderEntry type="library" scope="PROVIDED" name="turbolinks (v2.5.3, ruby-2.1.5-p273) [gem]" level="application" />[m
+     <orderEntry type="library" scope="PROVIDED" name="tzinfo (v1.2.2, ruby-2.1.5-p273) [gem]" level="application" />[m
+     <orderEntry type="library" scope="PROVIDED" name="tzinfo-data (v1.2015.6, ruby-2.1.5-p273) [gem]" level="application" />[m
+[31m-    <orderEntry type="library" scope="PROVIDED" name="uglifier (v2.7.1, ruby-2.1.5-p273) [gem]" level="application" />[m
+[32m+[m[32m    <orderEntry type="library" scope="PROVIDED" name="uglifier (v2.7.2, ruby-2.1.5-p273) [gem]" level="application" />[m
+   </component>[m
+   <component name="RModuleSettingsStorage">[m
+     <LOAD_PATH number="0" />[m
+[1mdiff --git a/.idea/dataSources.xml b/.idea/dataSources.xml[m
+[1mindex 252a3a2..300c3c5 100644[m
+[1m--- a/.idea/dataSources.xml[m
+[1m+++ b/.idea/dataSources.xml[m
+[36m@@ -5,13 +5,13 @@[m
+       <driver-ref>sqlite.xerial</driver-ref>[m
+       <synchronize>true</synchronize>[m
+       <jdbc-driver>org.sql

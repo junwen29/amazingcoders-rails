@@ -1,10 +1,16 @@
 <fieldset>
   Enter Days (e.g Mon - Fri)<br>
-  <%= f.text_field :day%>
-  <%= link_to "Delete", '#', class: "remove_fields" %><br>
+  <%= f.check_box :mon %>Mon
+  <%= f.check_box :tue %>Tue
+  <%= f.check_box :wed %>Wed
+  <%= f.check_box :thur %>Thur
+  <%= f.check_box :fri %>Fri
+  <%= f.check_box :sat %>Sat
+  <%= f.check_box :sun %>Sun
   <%= f.hidden_field :_destroy %>
+  <%= link_to 'Delete this period', '#', class: 'remove_fields' %><br>
   <%= f.fields_for :deal_times do |builder| %>
       <%= render 'deal_time_fields', f: builder %>
   <% end %>
-  <%= link_to_add_fields "Add another time period", f, :deal_times %>
+  <%= link_to_add_fields "Add another timing", f, :deal_times %>
 </fieldset>
