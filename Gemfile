@@ -46,3 +46,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
 # the coffee-script-source does not work on Windows, so downgrade
 gem 'coffee-script-source', '1.8.0'
+
+# add Stripe gem
+gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
