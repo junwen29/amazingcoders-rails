@@ -1,7 +1,12 @@
-<h1>Editing deal</h1>
+<%= render 'layouts/biz/dash' %>
 
-<%= form_for :deal, url: deal_path(@deal), method: :patch do |f| %>
+<div class="contentWrapper">
+  <div class="content">
 
+    <% if @deal.start_date.today? || @deal.expiry_date.today? || (@deal.start_date.past? && @deal.expiry_date.future?) %>
+        <h2>You cannot change your deal because it is already active!</h2>
+    <% else %>
+    <!-- post back messages -->
     <% if @deal.errors.any? %>
         <div id="error_explanation">
           <h2>
@@ -16,20 +21,18 @@
         </div>
     <% end %>
 
-    <p>
-      <%= f.label :title %><br>
-      <%= f.text_field :title %>
-    </p>
+    <p class="b2 content-title">Edit Deals</p>
+    <div class="content-separator"></div>
 
-    <p>
-      <%= f.label :text %><br>
-      <%= f.text_area :text %>
-    </p>
+    <!-- Content Body -->
+    <%= render :partial => 'form/deal_edit_form' %>
+    <% end %>
+    <%= link_to 'Back', deals_path, class: "btn btn-big btn-default" %>
+  </div>
+</div>
 
-    <p>
-      <%= f.submit %>
-    </p>
-
+<%= content_for :lean_overlay do %>
 <% end %>
 
-<%= link_to 'Back', deals_path %>
+<%= content_for :body_footer do %>
+<% end %>
