@@ -1,0 +1,38 @@
+<table class="table table-bordered table-hover table-responsive">
+  <tr>
+    <th>Redeemable?</th>
+    <th>Multiple Use?</th>
+    <th>Image</th>
+    <th>Type of Deal</th>
+    <th>Description</th>
+    <th>Expiry Date</th>
+    <th>Location</th>
+    <th>Terms and Condition</th>
+    <th>Number of Redeems</th>
+    <th>Pushed?</th>
+    <th colspan="3"></th>
+  </tr>
+
+  <% @deal.each do |deal| %>
+      <tr>
+        <td><%= deal.redeemable %></td>
+        <td><%= deal.multiple_use %></td>
+        <td><%= image_tag deal.image %></td>
+        <td><%= deal.type_of_deal %></td>
+        <td><%= deal.description %></td>
+        <td><%= deal.expiry_date %></td>
+        <td><%= deal.location %></td>
+        <td><%= deal.t_c %></td>
+        <td><%= deal.num_of_redeems %></td>
+        <td><%= deal.pushed %></td>
+        <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
+        <td><%= link_to 'Edit', edit_deal_path(deal), class: "btn btn-xs btn-default" %></td>
+        <td>
+          <%= link_to 'Delete', deal_path(deal),
+                      method: :delete,
+                      data: { confirm: 'Are you sure?'},
+                      class: "btn btn-xs btn-danger"%>
+        </td>
+      </tr>
+  <% end %>
+</table>

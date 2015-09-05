@@ -1,7 +1,9 @@
-<h1>New deal</h1>
+<%= render 'layouts/biz/dash' %>
 
-<%= form_for :deal, url: deals_path do |f| %>
-!--display error message if any-->
+<div class="contentWrapper">
+  <div class="content">
+
+    <!-- Flash Error Message -->
     <% if @deal.errors.any? %>
         <div id="error_explanation">
           <h2>
@@ -16,67 +18,24 @@
         </div>
     <% end %>
 
-    <p>
-      <%= f.label :redeemable, "Would you like users to be redeem through deal code? (Helps gather analytics)" %><br>
-      <%= f.label :redeemable, "Yes", :value => true %>
-      <%= f.radio_button :redeemable, true %>
-      <%= f.label :redeemable, "No", :value => false %>
-      <%= f.radio_button :redeemable, false, :checked => true %>
-    </p>
+    <!-- Content Heading -->
+    <div class="pull-left">
+      <p class="b2 content-title">List a deal</p>
+      <h4>Get more customers excited about your place by simply listing a deal on your page. It's free!</h4>
+    </div>
 
-    <p>
-      <%= f.label :multiple_use, "Would you like to enable users to have unlimited use of Deals or each User can only redeem once?" %><br>
-      <%= f.label :multiple_use, "Unlimited", :value => true %>
-      <%= f.radio_button :multiple_use, true %>
-      <%= f.label :multiple_use, "Once", :value => false %>
-      <%= f.radio_button :multiple_use, false, :checked => true %>
-    </p>
+    <div class="clearfix"></div>
+    <div class="content-separator"></div>
 
-    <p>
-      <%= f.label :type_of_deal, "Type of Deal" %><br>
-      <%= f.select :type_of_deal, [['1 for 1','1_for_1'],['10% off','10% off']] %>
-    </p>
+    <!-- Content Body -->
+    <%= render :partial => 'form/deal_create_form' %>
+    <%= link_to 'Back', deals_path, class: "btn btn-big btn-default" %>
 
-    <p>
-      <%= f.label :description, "Description of your deal" %><br>
-      <%= f.text_field :description%>
-    </p>
+  </div><!-- /content -->
+</div><!-- /contentWrapper -->
 
-    <p>
-      <%= f.label :start_date, "Start date of the Deal" %><br>
-      <%= f.text_field :start_date%>
-    </p>
-
-    <p>
-      <%= f.label :expiry_date, "End date of the Deal" %><br>
-      <%= f.text_field :expiry_date %>
-    </p>
-
-    <p>
-      <%= f.label :location %><br>
-      <%= f.text_field :location%>
-    </p>
-
-    <p>
-      <%= f.label :t_c, 'Terms and Conditions' %><br>
-      <%= f.text_field :t_c%>
-    </p>
-
-    <p>
-      <%= f.label :num_of_redeems, 'Number of Redeems' %><br>
-      <%= f.text_field :num_of_redeems%>
-    </p>
-
-    <p>
-      <%= f.label :pushed, 'Would you like to push to those who have wishlisted?' %><br>
-      <%= f.label :pushed, "Yes", :value => true %>
-      <%= f.radio_button :pushed, true %>
-      <%= f.label :pushed, "No", :value => false %>
-      <%= f.radio_button :pushed, false, :checked => true %>
-    </p>
-
-    <p>
-      <%= f.submit %>
-    </p>
+<%= content_for :lean_overlay do %>
 <% end %>
-<%= link_to 'Back', deals_path %>
+
+<%= content_for :body_footer do %>
+<% end %>

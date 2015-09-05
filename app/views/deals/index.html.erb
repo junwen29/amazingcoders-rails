@@ -1,39 +1,39 @@
-<h1>Listing deals</h1>
-<%= link_to 'New deal', new_deal_path %>
-<table>
-  <tr>
-    <th>Redeemable?</th>
-    <th>Multiple Use?</th>
-    <th>Image</th>
-    <th>Type of Deal</th>
-    <th>Description</th>
-    <th>Expiry Date</th>
-    <th>Location</th>
-    <th>Terms and Condition</th>
-    <th>Number of Redeems</th>
-    <th>Pushed?</th>
-    <th colspan="3"></th>
-  </tr>
+<%= render 'layouts/biz/dash' %>
 
-  <% @deal.each do |deal| %>
-      <tr>
-        <td><%= deal.redeemable %></td>
-        <td><%= deal.multiple_use %></td>
-        <td><%= image_tag deal.image %></td>
-        <td><%= deal.type_of_deal %></td>
-        <td><%= deal.description %></td>
-        <td><%= deal.expiry_date %></td>
-        <td><%= deal.location %></td>
-        <td><%= deal.t_c %></td>
-        <td><%= deal.num_of_redeems %></td>
-        <td><%= deal.pushed %></td>
-        <td><%= link_to 'Show', deal_path(deal) %></td>
-        <td><%= link_to 'Edit', edit_deal_path(deal) %></td>
-        <td><%= link_to 'Delete', deal_path(deal),
-                        method: :delete,
-                        data: { confirm: 'Are you sure?'} %></td>
-      </tr>
-  <% end %>
-</table>
-<%= link_to 'Edit', edit_deal_path(@deal) %> |
-<%= link_to 'Back', deals_path %>
+<div class="contentWrapper">
+  <div class="content">
+
+    <!-- post back messages -->
+    <% unless flash.empty? %>
+        <div class="flashMessages">
+          <% unless flash[:error].blank? %>
+              <% flash[:error].each do |msg| %>
+                  <div class="alert alert--error"><span>Error! </span><%= msg %></div>
+              <% end %>
+          <% end %>
+        </div>
+    <% end %>
+
+    <!-- Content Heading -->
+    <div class="pull-left">
+      <p class="b2 content-title">Deal Listing</p>
+      <%= link_to 'New deal', new_deal_path, class: "btn btn-big btn-success" %>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="content-separator"></div>
+
+    <!-- Content Body -->
+    <%= render :partial => 'form/deal_index_form' %>
+    <%= link_to 'Back', deals_path, class: "btn btn-big btn-default" %>
+
+  </div><!-- /content -->
+</div><!-- /contentWrapper -->
+
+<%= content_for :lean_overlay do %>
+<% end %>
+
+<%= content_for :body_footer do %>
+<% end %>
+
+
