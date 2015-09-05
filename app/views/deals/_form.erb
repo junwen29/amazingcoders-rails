@@ -1,0 +1,89 @@
+<!--Copy pasted from new. Apparently for rails the convention is to declare it in _form and rails will auto help you link
+nested models-->
+<%= form_for @deal do |f| %>
+    <% if @deal.errors.any? %>
+        <div id="error_explanation">
+          <h2>
+            <%= pluralize(@deal.errors.count, "error") %> prohibited
+            this deal from being saved:
+          </h2>
+          <ul>
+            <% @deal.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <div>
+      <p>
+        <%= f.label :name_of_deal, "Title of Deal" %><br>
+        <%= f.text_field :name_of_deal, :placeholder => 'Less then 50 characters'%>
+      </p>
+      <p>
+        <%= f.label :type_of_deal, "Type of Deal" %><br>
+        <%= f.select :type_of_deal, [['1 for 1','1_for_1'],['10% off','10% off']] %>
+      </p>
+      <p>
+        <%= f.label :description, "Description of your deal" %><br>
+        <%= f.text_field :description%>
+      </p>
+
+      <p>
+        Deal Period: <br>
+        <%= f.label :start_date, "Start:" %>
+        <%= f.text_field :start_date%>
+
+        <%= f.label :expiry_date, "End:" %>
+        <%= f.text_field :expiry_date %>
+      </p>
+      
+      <!-- Following is a nested form of deal_day-->
+      Periods where deal is offered:<br>
+      <%= f.fields_for :deal_days do |builder| %>
+        <%= render 'deal_day_fields', f: builder %>
+      <% end %>
+
+      <!-- This links to helpers/application_helper that allows me to create new set-->
+      <!-- Must take note, :deal_days is used to link to _deal_day_fields.html.erb so naming convention must be standard-->
+      <%= link_to_add_fields "Add another period", f, :deal_days %>
+
+      <p>
+        <%= f.label :location %><br>
+        <%= f.select :location, [['All Outlets','all_outlets'],['Clementi','clementi']] %>
+      </p>
+
+      <p>
+        <%= f.label :t_c, 'Terms and Conditions' %><br>
+        <%= f.text_field :t_c%>
+      </p>
+
+      <p>
+        <%= f.label :pushed, 'Would you like to push to those who have wishlisted?' %><br>
+        <%= f.label :pushed, "Yes", :value => true %>
+        <%= f.radio_button :pushed, true%>
+        <%= f.label :pushed, "No", :value => false %>
+        <%= f.radio_button :pushed, false%>
+      </p>
+    </div>
+
+    <div id= "redeemable">
+      <%= f.label :redeemable, "Would you like users to redeem through deal code? (Helps gather analytics)" %><br>
+      <%= f.label :redeemable, "Yes", :value => true %>
+      <%= f.radio_button :redeemable, true%>
+      <%= f.label :redeemable, "No", :value => false %>
+      <%= f.radio_button :redeemable, false%>
+      <br></br>
+      <div id="redeemable_true">
+        <%= f.label :multiple_use, "How many times can this deal be redeemed per user?" %><br>
+        <%= f.label :multiple_use, "Unlimited Redemptions", :value => true %>
+        <%= f.radio_button :multiple_use, true %>
+        <%= f.label :multiple_use, "Once", :value => false %>
+        <%= f.radio_button :multiple_use, false%>
+        <br></br>
+      </div>
+    </div>
+
+    <p>
+      <%= f.submit %>
+    </p>
+<% end %>

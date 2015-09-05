@@ -21,3 +21,26 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+
+      deal:
+        deal_days: ""
+        name_of_deal: "Title of Deal"
+        type_of_deal: "Type of Deal"
+        description: "Description"
+        start_date: "Start date"
+        expiry_date: "End date"
+        location: ""
+        t_c: "Terms and Conditions"
+        pushed: ""
+        redeemable: ""
+        multiple_use: ""
+        image: ""
+
+      deal/deal_days:
+        deal_times: ""
+        mon: ""
+
+      deal/deal_days/deal_times:
+        started_at: "Start time"

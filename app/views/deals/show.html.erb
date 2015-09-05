@@ -1,55 +1,88 @@
-<p>
-  	<strong>Redeemable:</strong>
-  	<%= @deal.redeemable.inspect %>
+  <strong>Title of Deal:</strong>
+  <%= @deal.name_of_deal %><br>
+
+  <strong>Type of Deal:</strong>
+  <%= @deal.type_of_deal %><br>
+
+  <strong>Description:</strong>
+  <%= @deal.description %><br>
+
+  <strong>Deal Start Date:</strong>
+  <%= @deal.start_date %><br>
+
+  <strong>Expiry Date:</strong>
+  <%= @deal.expiry_date %><br>
+
+  <% for deal_day in @deal.deal_days%>
+    <strong> Days:</strong>
+      <% if deal_day.mon %>
+          Mon
+      <% end %>
+      <% if deal_day.tue && deal_day.mon %>
+          , Tue
+      <% elsif deal_day.tue %>
+          Tue
+      <%end %>
+      <% if deal_day.wed && (deal_day.tue || deal_day.mon) %>
+          , Wed
+      <% elsif deal_day.wed %>
+          Wed
+      <%end %>
+      <% if deal_day.thur && (deal_day.wed || deal_day.tue || deal_day.mon) %>
+          , Thur
+      <% elsif deal_day.thur %>
+          Thur
+      <%end %>
+      <% if deal_day.fri && (deal_day.thur || deal_day.wed || deal_day.tue || deal_day.mon) %>
+          , Thur
+      <% elsif deal_day.fri %>
+          Fri
+      <%end %>
+      <% if deal_day.sat && (deal_day.fri || deal_day.thur || deal_day.wed || deal_day.tue || deal_day.mon) %>
+          , Sat
+      <% elsif deal_day.sat %>
+          Sat
+      <%end %>
+      <% if deal_day.sun && (deal_day.sat || deal_day.fri || deal_day.thur || deal_day.wed || deal_day.tue || deal_day.mon) %>
+          , Sun
+      <% elsif deal_day.sun %>
+          Sun
+      <%end %>
+      <br>
+      <strong> Time period:</strong><br>
+      <% for deal_time in deal_day.deal_times%>
+          <%=h deal_time.started_at %>
+          to
+          <%=h deal_time.ended_at %><br>
+      <% end %>
+  <% end %>
+
+  <strong>Location:</strong>
+  <%= @deal.location %><br>
+
+  <strong>Terms and Condition:</strong>
+  <%= @deal.t_c %><br>
+
+  <strong>Has the deal been pushed to users?</strong>
+  <%= @deal.pushed %><br>
+
+  <strong>Can your code be redeemed?</strong>
+  <% if @deal.redeemable %>
+      Yes <br>
+      <strong>How many times can this deal be redeemed per user?</strong>
+      <% if !@deal.multiple_use %>
+          Once per user <br>
+      <% else %>
+          Unlimited Redemptions <br>
+      <% end %>
+  <% else %>
+      No <br>
+  <% end %>
+
+
+  <strong>Image:</strong>
+  <%= @deal.image %>
 </p>
 
-<p>
-  	<strong>Multiple Use:</strong>
- 	<%= @deal.multiple_use %>
-</p>
 
-<p>
-  	<strong>Image:</strong>
- 	<%= @deal.image %>
-</p>
-
-<p>
-  	<strong>Type of Deal:</strong>
- 	<%= @deal.type_of_deal %>
-</p>
-
-<p>
-  	<strong>Description:</strong>
- 	<%= @deal.description %>
-</p>
-
-<p>
-  	<strong>Start Date:</strong>
- 	<%= @deal.start_date %>
-</p>
-
-<p>
-  	<strong>Expiry Date:</strong>
- 	<%= @deal.expiry_date %>
-</p>
-
-<p>
-  	<strong>Location:</strong>
- 	<%= @deal.location %>
-</p>
-
-<p>
-  	<strong>Terms and Condition:</strong>
- 	<%= @deal.t_c %>
-</p>
-
-<p>
-  	<strong>Number of Redeems:</strong>
- 	<%= @deal.num_of_redeems %>
-</p>
-
-<p>
-  	<strong>Pushed:</strong>
- 	<%= @deal.pushed %>
-</p>
 <%= link_to 'Back', deals_path %>

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="Rails amazingcoders-rails: development" uuid="9e677077-e09e-4b68-9b07-baf0ba72499e">
-      <first-sync>true</first-sync>
+    <data-source name="Rails amazingcoders-rails: development" uuid="9e677077-e09e-4b68-9b07-baf0ba72499e" />
+    <data-source name="PostgreSQL - amazing_dev@localhost" uuid="468c6e15-5fe1-4ad5-9dce-1b7a7a134401">
+      <secret-storage>master_key</secret-storage>
+      <user-name>amazingcoders</user-name>
+      <schema-pattern>amazing_dev.pg_catalog amazing_dev.public</schema-pattern>
+      <default-schemas>amazing_dev.pg_catalog amazing_dev.public</default-schemas>
     </data-source>
   </component>
 </project>
