@@ -15,9 +15,9 @@
 /log/*.log
 /tmp
 
-<<<<<<< HEAD
-# Ignore all secret keys file
-=======
 Ignore the secret file
->>>>>>> develop
 /config/secrets.yml
+
+# Ignore the .idea folder
+.idea/
+>>>>>>> dms/layout3
