@@ -29,11 +29,13 @@
 
     <!-- Content Body -->
     <%= render :partial => 'form/deal_create_form' %>
-
-    <%= content_for :lean_overlay do %>
-    <% end %>
-
     <%= link_to 'Back', deals_path, class: "btn btn-big btn-default" %>
 
   </div><!-- /content -->
 </div><!-- /contentWrapper -->
+
+<%= content_for :lean_overlay do %>
+<% end %>
+
+<%= content_for :body_footer do %>
+<% end %>

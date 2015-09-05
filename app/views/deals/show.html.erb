@@ -1,55 +1,30 @@
-<p>
-  	<strong>Redeemable:</strong>
-  	<%= @deal.redeemable.inspect %>
-</p>
+<%= render 'layouts/biz/dash' %>
 
-<p>
-  	<strong>Multiple Use:</strong>
- 	<%= @deal.multiple_use %>
-</p>
+<div class="contentWrapper">
+  <div class="content">
 
-<p>
-  	<strong>Image:</strong>
- 	<%= @deal.image %>
-</p>
+    <!-- post back messages -->
+    <% unless flash.empty? %>
+        <div class="flashMessages">
+          <% unless flash[:error].blank? %>
+              <% flash[:error].each do |msg| %>
+                  <div class="alert alert--error"><span>Error! </span><%= msg %></div>
+              <% end %>
+          <% end %>
+        </div>
+    <% end %>
 
-<p>
-  	<strong>Type of Deal:</strong>
- 	<%= @deal.type_of_deal %>
-</p>
+    <p class="b2 content-title">View Deals</p>
+    <div class="content-separator"></div>
 
-<p>
-  	<strong>Description:</strong>
- 	<%= @deal.description %>
-</p>
+    <!-- Content Body -->
+    <%= render :partial => 'form/deal_show_form' %>
+    <%= link_to 'Back', deals_path, class: "btn btn-big btn-default" %>
+  </div>
+</div>
 
-<p>
-  	<strong>Start Date:</strong>
- 	<%= @deal.start_date %>
-</p>
+<%= content_for :lean_overlay do %>
+<% end %>
 
-<p>
-  	<strong>Expiry Date:</strong>
- 	<%= @deal.expiry_date %>
-</p>
-
-<p>
-  	<strong>Location:</strong>
- 	<%= @deal.location %>
-</p>
-
-<p>
-  	<strong>Terms and Condition:</strong>
- 	<%= @deal.t_c %>
-</p>
-
-<p>
-  	<strong>Number of Redeems:</strong>
- 	<%= @deal.num_of_redeems %>
-</p>
-
-<p>
-  	<strong>Pushed:</strong>
- 	<%= @deal.pushed %>
-</p>
-<%= link_to 'Back', deals_path %>
+<%= content_for :body_footer do %>
+<% end %>

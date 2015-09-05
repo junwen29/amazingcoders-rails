@@ -3,7 +3,16 @@
 <div class="contentWrapper">
   <div class="content">
 
-    <!-- Flash Error Message -->
+    <!-- post back messages -->
+    <% unless flash.empty? %>
+        <div class="flashMessages">
+          <% unless flash[:error].blank? %>
+              <% flash[:error].each do |msg| %>
+                  <div class="alert alert--error"><span>Error! </span><%= msg %></div>
+              <% end %>
+          <% end %>
+        </div>
+    <% end %>
 
     <!-- Content Heading -->
     <div class="pull-left">
@@ -54,12 +63,15 @@
       <% end %>
     </table>
 
-    <%= content_for :lean_overlay do %>
-    <% end %>
-
     <%= link_to 'Back', deals_path, class: "btn btn-big btn-default" %>
 
   </div><!-- /content -->
 </div><!-- /contentWrapper -->
+
+<%= content_for :lean_overlay do %>
+<% end %>
+
+<%= content_for :body_footer do %>
+<% end %>
 
 
