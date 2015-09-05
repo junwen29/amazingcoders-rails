@@ -1,6 +1,7 @@
 class DealsController < ApplicationController
   def new
     @deal = Deal.new
+    #DealMailer.deal_email("Test Food Merchant", "Deal Listing Service").deliver
   end
 
   def edit
@@ -17,6 +18,8 @@ class DealsController < ApplicationController
 
     if @deal.save
       redirect_to @deal
+      # Send out confirmation email
+      DealMailer.deal_email("Test Food Merchant", @deal).deliver
     else
       render 'new'
     end
