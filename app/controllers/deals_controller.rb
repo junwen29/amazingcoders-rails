@@ -19,7 +19,7 @@ class DealsController < ApplicationController
     if @deal.save
       redirect_to @deal
       # Send out confirmation email
-      DealMailer.deal_email("Test Food Merchant", @deal).deliver
+      # DealMailer.deal_email("Test Food Merchant", @deal).deliver
     else
       render 'new'
     end
