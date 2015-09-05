@@ -1,0 +1,83 @@
+
+/* new about us css in homepage
+    ===========================================*/
+    
+    .container.web-footer.no-max-width{
+      padding-left: 20px;
+      max-width: none;
+    }
+    
+    .pull-left{
+      float:left;  
+    }
+    
+    .pull-right{
+      float:right;
+    }
+
+    .web-footer ul li {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      line-height: 150%;
+    } 
+    
+    .footer-nav.pull-right{
+      padding-right: 15px;
+    }
+    
+    #web-footer-info{
+      text-align: right;
+    }
+    
+    .footer-top{
+      background-color: #FFF;
+    } 
+    
+    .footer-middle{
+      background-color: #f5f5f1;
+    }
+    
+    .footer-bottom{
+    //  height: 30px;
+    }
+
+  div.footer{
+    margin: 40px 0;
+    background-color: #dc0d56;
+    color: #fff;
+    /* background-color: black; */
+  }
+  
+    
+  .footer a:link,
+  .footer a:visited,
+  .footer a:active{
+    color: #d9b3c0; 
+  }
+  
+  .footer a:hover{
+    color: #fff;
+  }
+  
+  .footer-nav li{
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 15px;
+    font-size: 14px;
+    line-height: 20px;
+    //font-weight: bold;
+  }
+  
+  @media screen and (max-width: 645px){
+      .footer-nav{
+        text-align: center;
+        width:100%;
+        margin-left: auto;
+        margin-right: auto;
+      }    
+
+  }
+
+
+/* End of footer
+=================================================================*/

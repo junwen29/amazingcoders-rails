@@ -1,0 +1,200 @@
+/* helpers
+  =================================================================== */
+   
+  /* reset - adapted from meyer | v2.0 | License: none (public domain)
+    =================================================================== */
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed, 
+    figure, figcaption, footer, header, hgroup, 
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video{
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+    }
+    
+    article, aside, details, figcaption, figure, 
+    footer, header, hgroup, menu, nav, section, summmary{
+      display: block;
+    }
+    
+    body{
+      line-height: 1;
+    }
+    
+    ol, ul{
+      list-style: none;
+    }
+    
+    blockquote, q{
+      quotes: none;
+    }
+    
+    blockquote:before, blockquote:after,
+    q:before, q:after{
+      content: '';
+      content: none;
+    }
+    
+    table{
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+    
+    a img{
+      border: none;
+    }
+    
+    /* set font smoothing in webkit browsers */
+    *, html, html a{
+      -webkit-font-smoothing: antialiased;
+      text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+    }
+    
+    /* set all elements box-sizing to border-box */
+    *{ 
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box; 
+    }
+
+  /* responsive web design reset
+    =================================================================== */
+    /*
+    @-ms-viewport{
+      width: device-width;
+    }
+    */
+    
+    html{
+      overflow-y: auto;
+      -webkit-text-size-adjust:none;
+    }
+    
+    img, video{
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+  /* clearfix
+    =================================================================== */
+    .clearfix:before,
+    .clearfix:after{
+      content: " "; /* 1 */
+      display: table; /* 2 */
+    }
+    
+    .clearfix:after{
+      clear: both;
+    }
+    
+    /**
+     * For IE 6/7 only
+     * Include this rule to trigger hasLayout and contain floats.
+     */
+    .clearfix{
+      *zoom: 1;
+    }
+  
+  
+/* 1250px grid system - max-width: 1250px, gutter: 50px
+  =================================================================== */
+  .container{
+    margin: 0 auto;
+    max-width: 1250px;
+    padding-left: 50px;
+  }
+  
+  .fullWidth{
+    width: 100%;
+    padding-right: 50px;
+  }
+  
+  .oneHalf,
+  .oneThird, .twoThird,
+  .oneFourth, .threeFourth,
+  .oneFifth, .twoFifth, .threeFifth, .fourFifth,
+  .oneSixth, .fiveSixth,
+  .oneEighth, .threeEighth, .fiveEighth, .sevenEighth{
+    width: 100%;
+    padding-right: 50px;
+  }   
+   
+  /* media queries for 1250px grid system
+    =================================================================== */ 
+    @media screen and (min-width: 650px){
+      .oneHalf,
+      .oneThird, .twoThird,
+      .oneFourth, .threeFourth,
+      .oneFifth, .twoFifth, .threeFifth, .fourFifth,
+      .oneSixth, .fiveSixth,
+      .oneEighth, .threeEighth, .fiveEighth, .sevenEighth{
+        float: left;
+        padding-right: 50px;
+      }       
+           
+      .oneHalf{ width: 50%; }       
+         
+      .oneThird{ width: 33.333333333%; }
+      .twoThird{ width: 66.666666666%; }
+      
+      .oneFourth{ width: 25%; }
+      .threeFourth{ width: 75%; }
+      
+      .oneFifth{ width: 20%; }
+      .twoFifth{ width: 40%; }
+      .threeFifth{ width: 60%; }
+      .fourFifth{ width: 80%; }
+      
+      .oneSixth{ width: 16.666666667%; }
+      .fiveSixth{ width: 83.333333335%; }
+      
+      .oneEighth{ width: 12.5%; }
+      .threeEighth{ width: 37.5%; }
+      .fiveEighth{ width: 62.5%; }
+      .sevenEighth{ width: 87.5%; }
+    }
+
+  /* clearfix for 1250px grid system
+    =================================================================== */
+    .container:before,
+    .container:after{
+      content: " "; /* 1 */
+      display: table; /* 2 */
+    }
+    
+    .container:after{
+      clear: both;
+    }
+   
+   
+/* center div
+  =================================================================== */
+  .center{
+    display: table;
+    margin: 0 auto;
+  }
+   
+
+/* horizontal rule
+  =================================================================== */
+  hr{
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+  }
