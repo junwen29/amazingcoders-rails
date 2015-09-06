@@ -58,7 +58,10 @@
   <% end %>
 
   <strong>Location:</strong>
-  <%= @deal.location %><br>
+  <% @venues.each do |v| %>
+        <%= v.location%>  &nbsp;
+  <% end %>
+  <br>
 
   <strong>Terms and Condition:</strong>
   <%= @deal.t_c %><br>

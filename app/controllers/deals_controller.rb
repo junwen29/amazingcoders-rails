@@ -3,11 +3,17 @@ class DealsController < ApplicationController
 
   def new
     @deal = Deal.new
+    @deal_venue = @deal.deal_venues.build
     deal_day = @deal.deal_days.build
     deal_day.deal_times.build
+    @all_venues = Venue.all
   end
 
   def edit
+    @deal_venues = @deal.deal_venues.all
+    @deal_venues.destroy_all
+    @deal_venue = @deal.deal_venues.build
+    @all_venues = Venue.all
   end
 
   def index
@@ -17,6 +23,14 @@ class DealsController < ApplicationController
   def create
     #for database
     @deal = Deal.new(deal_params)
+    @deal_venue = @deal.deal_venues.build
+    @all_venues = Venue.all
+
+    params[:venues][:id].each do |venue|
+      if !venue.empty?
+        @deal.deal_venues.build(:venue_id => venue)
+      end
+    end
 
     respond_to do |format|
       if @deal.save
@@ -30,6 +44,11 @@ class DealsController < ApplicationController
   end
 
   def update
+    params[:venues][:id].each do |venue|
+      if !venue.empty?
+        @deal.deal_venues.build(:venue_id => venue)
+      end
+    end
     respond_to do |format|
       if @deal.update(deal_params)
         format.html { redirect_to @deal, notice: 'Deal was successfully updated.' }
@@ -42,6 +61,7 @@ class DealsController < ApplicationController
   end
 
   def show
+    @venues = @deal.venues
   end
 
   def destroy
@@ -60,7 +80,8 @@ class DealsController < ApplicationController
     params.require(:deal).permit(:name_of_deal, :type_of_deal, :description, :start_date, :expiry_date, :location, :t_c,
                                  :pushed,:redeemable, :multiple_use, :image,
                                  deal_days_attributes: [:id, :mon, :tue, :wed, :thur, :fri, :sat, :sun, :_destroy,
-                                                        deal_times_attributes: [:id, :started_at, :ended_at, :_destroy]])
+                                                        deal_times_attributes: [:id, :started_at, :ended_at, :_destroy]],
+    deal_venues_attributes: [:id, :qrCodeLink], venues_attributes: [:id, :location])
   end
 end
 
