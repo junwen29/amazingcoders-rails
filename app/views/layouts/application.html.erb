@@ -1,14 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AmazingcodersRails</title>
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title><%= !@html_title.blank? ? @html_title  : "Amazing Coders" %></title>
+
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
+<%= render 'layouts/header' %>
 <%= yield %>
 
 </body>
+
+<footer>
+  <script>
+      $(document).ready(function(){
+          // Initialize collapse button
+          $(".button-collapse").sideNav();
+          <%= yield :script %>
+      });
+  </script>
+</footer>
+
+<%= debug(params) if Rails.env.development? %>
 </html>

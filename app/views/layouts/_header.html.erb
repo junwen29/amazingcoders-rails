@@ -1,0 +1,38 @@
+<div class="navbar-fixed">
+  <nav class="">
+    <div class="nav-wrapper">
+      <a href="<%= merchant_home_path%>" class="brand-logo center">Burpple Business</a>
+      <a href="#" data-activates="mobile-merchant" class="button-collapse"><i class="material-icons">menu</i></a>
+
+      <ul class="left hide-on-med-and-down">
+        <li class="active"><a href="<%= merchant_home_path%>">Home</a></li>
+      </ul>
+
+      <ul class="right hide-on-med-and-down">
+        <% if user_merchant_signed_in? %>
+            <li><%= link_to 'Edit profile', edit_user_merchant_registration_path %> </li>
+            <li><%= link_to "Logout", destroy_user_merchant_session_path, method: :delete %> </li>
+            <li><strong><%=link_to current_user_merchant.email, user_merchant_path(id: current_user_merchant.id) %></strong></li>
+        <% else %>
+            <li><%= link_to "Sign up", new_user_merchant_registration_path %> </li>
+            <li><%= link_to "Login", new_user_merchant_session_path %></li>
+        <% end %>
+      </ul>
+
+      <ul class="side-nav" id="mobile-merchant">
+        <li class="active"><a href="<%= merchant_home_path%>">Home</a></li>
+        <hr/>
+        <% if user_merchant_signed_in? %>
+            <!-- <strong><%= current_user_merchant.email %></strong> -->
+            <li><%= link_to 'Edit profile', edit_user_merchant_registration_path %> </li>
+            <li><%= link_to "Logout", destroy_user_merchant_session_path, method: :delete %> </li>
+            <li><strong><%=link_to current_user_merchant.email, user_merchant_path(id: current_user_merchant.id) %></strong></li>
+        <% else %>
+            <li><%= link_to "Sign up", new_user_merchant_registration_path %> </li>
+            <li><%= link_to "Login", new_user_merchant_session_path %></li>
+        <% end %>
+      </ul>
+
+    </div>
+  </nav>
+</div>
