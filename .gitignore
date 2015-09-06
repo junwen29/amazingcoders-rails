@@ -15,8 +15,6 @@
 /log/*.log
 /tmp
 
-# Ignore the secret file
-/config/secrets.yml
-
 # Ignore the .idea folder
-/.idea/
+.idea/
+
