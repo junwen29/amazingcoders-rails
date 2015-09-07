@@ -1,4 +1,30 @@
-<p id="notice"><%= notice %></p>
+<%= render 'layouts/biz/dash' %>
 
-<%= link_to 'Edit', edit_venue_path(@venue) %> |
-<%= link_to 'Back', venues_path %>
+<div class="contentWrapper">
+  <div class="content">
+
+    <!-- post back messages -->
+    <% unless flash.empty? %>
+        <div class="flashMessages">
+          <% unless flash[:error].blank? %>
+              <% flash[:error].each do |msg| %>
+                  <div class="alert alert--error"><span>Error! </span><%= msg %></div>
+              <% end %>
+          <% end %>
+        </div>
+    <% end %>
+
+    <p class="b2 content-title">View Venue</p>
+    <div class="content-separator"></div>
+
+    <!-- Content Body -->
+    <%= render :partial => 'form/deal_show_form' %>
+    <%= link_to 'Back', venues_path, class: "btn btn-big btn-default" %>
+  </div>
+</div>
+
+<%= content_for :lean_overlay do %>
+<% end %>
+
+<%= content_for :body_footer do %>
+<% end %>

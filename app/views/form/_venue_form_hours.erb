@@ -1,0 +1,256 @@
+<%= content_for :head do %>
+  
+<% end %>
+
+<div class="form-content-venueHours">
+</div>
+
+<div class="form-content-venueHours-actions">
+  <a class="btn" href="javascript:void(0)" id="new">Add Other Hours</a>
+</div>
+
+<%= content_for :body_footer do %>
+
+
+  <script>
+
+  // methods
+  var select_day_time_count = 0;
+
+  function loadSelectDayTime(){
+      var array = <%= @select_day_hours_string.html_safe %>;
+      if(array == "")
+        newSelectDayTime();
+      else
+        getExistingSelectDayTime(array);
+  }
+
+  // create existing select-day-time
+  function getExistingSelectDayTime(existingArray){
+      for(var i = 0; i < existingArray.length; i++){
+          newSelectDayTime(existingArray[i][0], existingArray[i][1], existingArray[i][2]);
+      }
+  }
+
+  function createHourSelect(name, startEndTime){
+    var text = "<select name='" + name + "'>";
+    var increment = 1800; // 30 mins
+    var padding = "00";
+    var mins = ":00";
+    var amPm = "";
+    var time = 0;
+    var timeInSec = 0;
+    var selectedTrue = "";
+
+    if (startEndTime == -1)
+      startEndTime = 43200; // default 12:00 PM
+
+    for (var x = 0; x < 48; x ++){
+
+      currentTime = time;
+
+      if(time < 12){
+        amPm = " AM"; 
+      }
+      else{
+        currentTime = time % 12;
+        amPm = " PM";
+      }
+
+      if (currentTime == 0)
+        currentTime = 12;
+
+      var timeStr = "" + currentTime;
+      timeStr = padding.substring(0, padding.length - timeStr.length) + timeStr;
+      timeStr = timeStr + mins + amPm;
+
+      if (startEndTime == timeInSec)      
+        selectedTrue = "selected='true'";
+      else
+        selectedTrue = "";
+
+      text += "<option value='" + timeInSec + "'" + selectedTrue +">" + timeStr + "</option>";
+
+      if(mins == ":00"){
+        mins = ":30";
+      }
+      else{
+        mins = ":00";
+        time ++;
+      }
+
+      timeInSec += increment;
+    }
+
+    text += "</select>";
+    return text;
+    //alert(text);
+  }
+
+  //create new select-day-time
+  function newSelectDayTime(selectedDaysArray, started, ended){
+    select_day_time_count++;
+
+      $content = $(".form-content-venueHours");  
+      daysArray = [["Monday", false], ["Tuesday", false], ["Wednesday", false], ["Thursday", false], ["Friday", false], ["Saturday", false], ["Sunday", false]];
+
+      if(selectedDaysArray != null){
+        for (var i = 0; i < daysArray.length; i++){ 
+          for(var x = 0; x < selectedDaysArray.length; x++){
+            if(daysArray[i][0] == selectedDaysArray[x]){
+              daysArray[i][1] = true;
+            }
+          }
+        } 
+      }
+
+      var text = "<div class='select-day-time clearfix' data-id=" + select_day_time_count +" >";
+      text += "<ul class='select-day'>";
+      
+      for (var i = 0; i < daysArray.length; i++){ 
+        text += "<li data-selected='" + daysArray[i][1] + "' data-day='" + daysArray[i][0] + "'>" + daysArray[i][0].substring(0,3) + "</li>";
+      }
+
+      text += "</ul>";
+      text += "<ul class='select-time'>";
+
+      text += "<span class='label'>from</span>";
+      if(started != null)
+        text += createHourSelect("started", started);
+      else
+        text += createHourSelect("started", -1);
+
+
+        text += "<span class='label'>to</span>";
+      if(ended != null)
+        text += createHourSelect("ended", ended);
+      else
+        text += createHourSelect("ended", -1);
+
+      text += "</ul>";
+      text += "<ul class='select-day-time-delete'><a href='javascript:void(0)' class='btn' data-id=" + select_day_time_count + ">Delete</a></ul>"
+      text += "</div>";
+      
+      $(text).appendTo($content);
+      initialize_select_day_time(select_day_time_count);
+  }
+
+
+  //initialize on click toggle
+  function initialize_select_day_time(selected_id){
+    $select_day_time = $('.select-day-time');
+    $select_day = $('.select-day');
+    $select_time = $('.select-time');
+
+    selected = 'selected';
+    unselected = 'unselected';
+
+      $select_day_time.each(function(i, obj){
+          var id = $(obj).data("id");
+
+          if(id == selected_id){
+
+            // initialize values
+            $(obj).children($select_day).children("li").each(function(i, select_day_item_obj){
+                  var x = $(select_day_item_obj).data("selected");
+                  if(x == true){
+                      $(select_day_item_obj).removeClass(unselected);
+                      $(select_day_item_obj).addClass(selected);
+                      $(select_day_item_obj).data("selected", 'true');
+                  }
+                  else {
+                      $(select_day_item_obj).removeClass(selected);
+                      $(select_day_item_obj).addClass(unselected);  
+                      $(select_day_item_obj).data("selected", 'false');
+                  }  
+              });
+
+            // initialize toggle on click
+              $(obj).children($select_day).children("li").each(function(i, select_day_item_obj){
+                  $(select_day_item_obj).click(function () {
+                      var x = $(this).data("selected");
+                      if(x == "false"){
+                          $(this).removeClass(unselected);
+                          $(this).addClass(selected);
+                          $(this).data("selected", 'true');
+                      }
+                      else {
+                          $(this).removeClass(selected);
+                          $(this).addClass(unselected);  
+                          $(this).data("selected", 'false');
+                      }  
+                  });
+              });
+          }
+      });
+
+      // delete new selectDayTime
+      $('.select-day-time-delete').children('a').each(function(i, delete_obj){
+        $(delete_obj).click(function(){
+          $(delete_obj).parents('div.select-day-time').remove();
+        });
+      });
+  }
+
+
+  // on load
+  $(function() {
+
+    loadSelectDayTime();
+    createHourSelect();
+
+    // // button press
+    // $('#press').click(function() { 
+    //     $select_day_time = $('.select-day-time');
+    //     $select_day = $('.select-day');
+    //     $select_time = $('.select-time');
+        
+    //     // TEST - identify and clear console and table
+    //     $console = $('#console');
+    //     $console.empty();
+        
+    //     $table = $('.output-table');
+    //     $table.empty();
+        
+    //     // add headers to table
+    //     text = "<tr>";
+    //     text += "<td>Day</td>";
+    //     text += "<td>Start Time</td>";
+    //     text += "<td>End Time</td>";
+    //     text += "</tr>";
+    //     $(text).appendTo($table);
+        
+    //     $select_day_time.each(function(i, select_day_time_obj){
+    //         var started_at = $(select_day_time_obj).children($select_time).children("[name='started']").val();
+    //         var ended_at = $(select_day_time_obj).children($select_time).children("[name='ended']").val();
+            
+    //         $(select_day_time_obj).children($select_day).children("li").each(function(i, select_day_item_obj){
+    //             var selected = $(select_day_item_obj).data("selected");
+                
+    //              if(selected == "true"){
+    //                 day = $(select_day_item_obj).data('day');
+    //                 text = "<tr>";
+    //                 text += "<td>" + day + "</td>";
+    //                 text += "<td>" + started_at + "</td>";
+    //                 text += "<td>" + ended_at + "</td>";
+    //                 text += "</tr>";        
+    //                 $(text).appendTo($table);
+    //             }
+
+    //         });
+    //     });       
+            
+    // });
+
+
+    // create new selectDayTime
+    $('#new').click(function() { 
+      newSelectDayTime();
+    });
+
+  });
+
+
+  </script>
+
+<% end %>

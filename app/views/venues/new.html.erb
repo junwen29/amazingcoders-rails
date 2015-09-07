@@ -1,5 +1,65 @@
-<h1>New venue</h1>
+<%= render 'layouts/biz/dash' %>
 
-<%= render 'form' %>
+<div class="contentWrapper">
+  <div class="content">
 
-<%= link_to 'Back', venues_path %>
+    <!-- Flash Error Message -->
+    <% if @venue.errors.any? %>
+        <div id="error_explanation">
+          <h2>
+            <%= pluralize(@venue.errors.count, "error") %> prohibited this venue from being saved:
+          </h2>
+          <ul>
+            <% @venue.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <!-- Content Heading -->
+    <div class="pull-left">
+      <p class="b2 content-title">Add another business or outlet</p>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="content-separator"></div>
+
+    <!-- Content Body -->
+    <%= form_for(@venue, url: venues_path,  :html => {:onSubmit => "return validate_getting_started(this);", :class => "venueForm"}) do |f| %>
+        <%= render :partial => 'form/venue_create_form', :locals => { :f => f , :object => @select_day_hours_string, :venue_type => @venue_type } %>
+        <p class="form-actions">
+          <%= f.submit "Submit", :class => 'btn btn-big btn-success' %>
+        </p>
+        <%= link_to 'Back', deals_path, class: "btn btn-big btn-default" %>
+
+        </div><!-- /content -->
+        </div><!-- /contentWrapper -->
+
+        <%= content_for :lean_overlay do %>
+        <% end %>
+
+        <%= content_for :body_footer do %>
+            <script>
+                $('html').css('background', '#f0f0f0');
+
+                function validate_getting_started(){
+                    $venue_name = $('#temp_venue_name').val();
+
+                    $formErrors = $("#merchantErrors");
+                    $oldAlerts = $(".alert");
+
+                    if ($venue_name != ""){
+                        return validate();
+                    }
+                    else{
+                        $oldAlerts.remove();
+                        if ($venue_name == "")
+                            $formErrors.append( "<div class='alert alert--error'><strong>Error!</strong> Name of restaurant can't be blank</div>" );
+                    }
+
+                    return false;
+                }
+            </script>
+        <% end %>
+    <% end %>

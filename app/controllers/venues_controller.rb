@@ -4,21 +4,25 @@ class VenuesController < ApplicationController
   # GET /venues
   # GET /venues.json
   def index
-    @venues = Venue.all
+    @venue = Venue.all
   end
 
   # GET /venues/1
   # GET /venues/1.json
   def show
+    @venue = Venue.find(params[:id])
   end
 
   # GET /venues/new
   def new
     @venue = Venue.new
+    @select_day_hours_string = "[]".html_safe
+
   end
 
   # GET /venues/1/edit
   def edit
+    @venues = Venue.find(params[:id])
   end
 
   # POST /venues
@@ -69,6 +73,8 @@ class VenuesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def venue_params
-      params[:venue]
+      params.require(:venue).permit(:name, :street, :zipcode,
+                                   :city, :city, :state, :country, :neighbourhood, :bio,
+                                   :phone, :address_2, :contact_number)
     end
 end
