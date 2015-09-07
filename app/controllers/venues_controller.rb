@@ -12,11 +12,12 @@ class VenuesController < ApplicationController
 
   # GET /venues/1
   # GET /venues/1.json
-=begin
+
   def show
     @venue = Venue.find(params[:id])
+    @venues = Venue.all
   end
-=end
+
 
   # GET /venues/new
   def new

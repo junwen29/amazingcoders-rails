@@ -5,10 +5,10 @@
     </div>
 
     <div class="header-content-item venueDropdown">
-      <%# @selectClass = ( @venues.count + @temp_venues.count == 1 ? 'venueDropdown-noselect' : 'venueDropdown-select' ) %>
+      <%# @selectClass = ( @venues.count == 1 ? 'venueDropdown-noselect' : 'venueDropdown-select' ) %>
       <div class="<%= @selectClass %>">
         <a href="#" class="venueDropdown-item">
-          <% if (@venue.name) %>
+          <% if (@venue) %>
               <span class="venueDropdown-item-title"><%= @venue.name %></span>
               <span class="venueDropdown-item-subtitle"><%= @venue.street %></span>
           <% else %>
@@ -17,6 +17,7 @@
           <% end  %>
         </a>
       </div>
+
       <div class="venueDropdown-dropdown">
         <% unless @venues.blank? or (@venues.count == 1 and @venue_type == "venue") %>
             <div class="venueDropdown-dropdown-header">Verified Venues</div>
@@ -25,17 +26,6 @@
                     <%= link_to venue_path(venue.id), {class: "venueDropdown-item"} do %>
                         <span class="venueDropdown-item-title"><%= venue.name %></span>
                         <span class="venueDropdown-item-subtitle"><%= venue.street %></span>
-                    <% end %>
-                <% end %>
-            <% end %>
-        <% end %>
-        <% unless @temp_venues.blank? or (@temp_venues.count == 1 and @venue_type == "temp_venue") %>
-            <div class="venueDropdown-dropdown-header">Unverified Venues</div>
-            <% @temp_venues.each do |temp_venue| %>
-                <% unless temp_venue.id == @venue.id %>
-                    <%= link_to biz_dashboard_edit_temp_venue_path(temp_venue.id), {class: "venueDropdown-item"} do %>
-                        <span class="venueDropdown-item-title"><%= temp_venue.name %></span>
-                        <span class="venueDropdown-item-subtitle"><%= temp_venue.street %></span>
                     <% end %>
                 <% end %>
             <% end %>
