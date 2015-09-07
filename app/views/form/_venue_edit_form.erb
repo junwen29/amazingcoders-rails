@@ -85,8 +85,8 @@
 
 
   <% render :partial => 'form/venue_form_hours', :locals => { :f => f , :object => @select_day_hours_string} %>
-
-
+  <%= yield :partial_form %>
+  
   <div class="b3 content-subtitle" id="important-information">Important Information About Your Business</div>
   <div class="content-separator"></div>
 

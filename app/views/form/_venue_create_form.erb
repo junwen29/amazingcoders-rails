@@ -1,3 +1,6 @@
+<%= content_for :head do %>
+<% end %>
+
 <div class="content-form">
   <p class="form-text clearfix">
     <%= f.label "Name of Restaurant*" %>
@@ -85,7 +88,7 @@
 
 
   <% render :partial => 'form/venue_form_hours', :locals => { :f => f , :object => @select_day_hours_string} %>
-
+  <%= yield :partial_form %>
 
   <div class="b3 content-subtitle" id="important-information">Important Information About Your Business</div>
   <div class="content-separator"></div>
@@ -122,3 +125,7 @@
 
 
 </div><!-- content form -->
+
+<%= content_for :body_footer do %>
+    <%= javascript_include_tag "biz/dashboard/venueForm_validate.js" %>
+<% end %>
