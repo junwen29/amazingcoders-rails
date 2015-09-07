@@ -39,6 +39,7 @@
         <%= content_for :lean_overlay do %>
         <% end %>
 
+        <%= yield :body_footer %>
         <%= content_for :body_footer do %>
             <script>
                 $('html').css('background', '#f0f0f0');

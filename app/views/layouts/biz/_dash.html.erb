@@ -5,11 +5,11 @@
     </div>
 
     <div class="header-content-item venueDropdown">
-      <%# @selectClass = ( @venues.count == 1 ? 'venueDropdown-noselect' : 'venueDropdown-select' ) %>
+      <% @selectClass = ( @venues.count == 1 ? 'venueDropdown-noselect' : 'venueDropdown-select' ) %>
       <div class="<%= @selectClass %>">
         <a href="#" class="venueDropdown-item">
           <% if (@venue) %>
-              <span class="venueDropdown-item-title"><%= @venue.name %></span>
+              <span class="venueDropdown-item-title"><%= @venue.name %></span><span class="caret pull-right"></span>
               <span class="venueDropdown-item-subtitle"><%= @venue.street %></span>
           <% else %>
               <span class="venueDropdown-item-title">@venue.name</span>

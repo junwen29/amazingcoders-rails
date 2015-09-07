@@ -28,6 +28,7 @@ class VenuesController < ApplicationController
   # GET /venues/1/edit
   def edit
     @venue = Venue.find(params[:id])
+    @venues = Venue.all
     @select_day_hours_string = "[]".html_safe
   end
 
