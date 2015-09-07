@@ -4,19 +4,16 @@
       <%= link_to image_tag("biz/burpple_logo.png", :alt => "burpple"), deals_path %>
     </div>
 
+    <% if (@venue)  %>
     <div class="header-content-item venueDropdown">
       <% @selectClass = ( @venues.count == 1 ? 'venueDropdown-noselect' : 'venueDropdown-select' ) %>
       <div class="<%= @selectClass %>">
         <a href="#" class="venueDropdown-item">
-          <% if (@venue) %>
               <span class="venueDropdown-item-title"><%= @venue.name %></span><span class="caret pull-right"></span>
               <span class="venueDropdown-item-subtitle"><%= @venue.street %></span>
-          <% else %>
-              <span class="venueDropdown-item-title">@venue.name</span>
-              <span class="venueDropdown-item-subtitle">@venue.street</span>
-          <% end  %>
         </a>
       </div>
+
 
       <div class="venueDropdown-dropdown">
         <% unless @venues.blank? or (@venues.count == 1 and @venue_type == "venue") %>
@@ -32,6 +29,7 @@
         <% end %>
       </div>
     </div>
+    <% end  %>
 
     <div class="header-content-item newBtn">
       <%= link_to "Add Another Business or Outlet", new_venue_path, { :class=> "btn" } %>

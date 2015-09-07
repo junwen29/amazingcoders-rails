@@ -12,7 +12,7 @@ class DealsController < ApplicationController
     @deal = Deal.all
   end
 
-  def create  
+  def create
     #for database
     @deal = Deal.new(deal_params)
 

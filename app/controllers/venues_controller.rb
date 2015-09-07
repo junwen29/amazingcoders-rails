@@ -4,10 +4,14 @@ class VenuesController < ApplicationController
   # GET /venues
   # GET /venues.json
   def index
-    @venues = Venue.all
     @venue = Venue.new
-    @venue_type = "temp_venue"
+
+    # Get data required for dashboard
+    @venues = Venue.all
+
+    # Get data required for form
     @select_day_hours_string = "[]".html_safe
+    @venue_type = "temp_venue"
   end
 
   # GET /venues/1
@@ -15,6 +19,8 @@ class VenuesController < ApplicationController
 
   def show
     @venue = Venue.find(params[:id])
+
+    # Get data required for dashboard
     @venues = Venue.all
   end
 
@@ -22,13 +28,22 @@ class VenuesController < ApplicationController
   # GET /venues/new
   def new
     @venue = Venue.new
+
+    # Get data required for dashboard
+    @venues = Venue.all
+
+    # Get data required for form
     @select_day_hours_string = "[]".html_safe
   end
 
   # GET /venues/1/edit
   def edit
     @venue = Venue.find(params[:id])
+
+    # Get data required for dashboard
     @venues = Venue.all
+
+    # Get data required for form
     @select_day_hours_string = "[]".html_safe
   end
 
