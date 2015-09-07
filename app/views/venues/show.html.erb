@@ -16,10 +16,9 @@
 
     <p class="b2 content-title">View Venue</p>
     <div class="content-separator"></div>
+    <%= render :partial => 'form/venue_show_form' %>
 
-    <!-- Content Body -->
-    <%= render :partial => 'form/deal_show_form' %>
-    <%= link_to 'Back', venues_path, class: "btn btn-big btn-default" %>
+    <%= link_to 'See all venues', venues_path, class: "btn btn-big btn-default" %>
   </div>
 </div>
 

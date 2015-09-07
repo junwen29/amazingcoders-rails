@@ -1,9 +1,9 @@
-<%# render 'layouts/biz/dash' %>
+<%= render 'layouts/biz/dash' %>
 
 <div class="contentWrapper">
   <div class="content">
 
-    <!-- post back messages -->
+    <!-- Flash Error Message -->
     <% unless flash.empty? %>
         <div class="flashMessages">
           <% unless flash[:error].blank? %>
@@ -16,8 +16,7 @@
 
     <!-- Content Heading -->
     <div class="pull-left">
-      <p class="b2 content-title">Venue Listing</p>
-      <%= link_to 'New Venue', new_venue_path, class: "btn btn-big btn-success" %>
+      <p class="b2 content-title">Add another business or outlet</p>
     </div>
 
     <div class="clearfix"></div>
@@ -35,4 +34,3 @@
 
 <%= content_for :body_footer do %>
 <% end %>
-

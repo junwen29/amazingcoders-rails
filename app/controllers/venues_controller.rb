@@ -4,25 +4,30 @@ class VenuesController < ApplicationController
   # GET /venues
   # GET /venues.json
   def index
-    @venue = Venue.all
+    @venues = Venue.all
+    @venue = Venue.new
+    @venue_type = "temp_venue"
+    @select_day_hours_string = "[]".html_safe
   end
 
   # GET /venues/1
   # GET /venues/1.json
+=begin
   def show
     @venue = Venue.find(params[:id])
   end
+=end
 
   # GET /venues/new
   def new
     @venue = Venue.new
     @select_day_hours_string = "[]".html_safe
-
   end
 
   # GET /venues/1/edit
   def edit
-    @venues = Venue.find(params[:id])
+    @venue = Venue.find(params[:id])
+    @select_day_hours_string = "[]".html_safe
   end
 
   # POST /venues

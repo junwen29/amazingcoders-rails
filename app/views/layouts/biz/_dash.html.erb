@@ -17,7 +17,7 @@
             <div class="venueDropdown-dropdown-header">Verified Venues</div>
             <% @venues.each do |venue| %>
                 <% unless venue.id == @venue.id %>
-                    <%= link_to biz_dashboard_activity_venue_path(venue.id), {class: "venueDropdown-item"} do %>
+                    <%= link_to venue_path(venue.id), {class: "venueDropdown-item"} do %>
                         <span class="venueDropdown-item-title"><%= venue.name %></span>
                         <span class="venueDropdown-item-subtitle"><%= venue.street %></span>
                     <% end %>
@@ -39,7 +39,7 @@
     </div>
 
     <div class="header-content-item newBtn">
-      <%= link_to "Add Another Business or Outlet", new_deal_path, { :class=> "btn" } %>
+      <%= link_to "Add Another Business or Outlet", new_venue_path, { :class=> "btn" } %>
     </div>
 
     <div class="header-content-item logoutBtn">
