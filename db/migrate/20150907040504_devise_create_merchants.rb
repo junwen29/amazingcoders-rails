@@ -1,6 +1,6 @@
 class DeviseCreateMerchants < ActiveRecord::Migration
   def change
-    create_table(:user_merchants) do |t|
+    create_table(:merchants) do |t|
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
@@ -34,8 +34,8 @@ class DeviseCreateMerchants < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    add_index :user_merchants, :email,                unique: true
-    add_index :user_merchants, :reset_password_token, unique: true
+    add_index :merchants, :email,                unique: true
+    add_index :merchants, :reset_password_token, unique: true
     # add_index :merchants, :confirmation_token,   unique: true
     # add_index :merchants, :unlock_token,         unique: true
   end

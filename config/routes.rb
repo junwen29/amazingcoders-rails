@@ -1,16 +1,15 @@
 Rails.application.routes.draw do
-
-  devise_for :user_merchants,controllers: { sessions: "user_merchants/sessions", registrations: "user_merchants/registrations"}
+  devise_for :merchants, controllers: { sessions: "merchants/sessions", registrations: "merchants/registrations"}
+  resources :merchants
   resources :charges
   resources :deals
-  resources :user_merchants
 
   get 'merchant_pages/home' => 'merchant_pages#home', :as => :merchant_home
   get 'merchant_pages/help' => 'merchant_pages#help', :as => :merchant_help
 
   resources :merchant_pages
   root :to => 'merchant_pages#home'
-
+end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -66,4 +65,3 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-end
