@@ -11,10 +11,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150824080417) do
+ActiveRecord::Schema.define(version: 20150907062839) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "deal_days", force: true do |t|
+    t.integer  "deal_id"
+    t.boolean  "mon"
+    t.boolean  "tue"
+    t.boolean  "wed"
+    t.boolean  "thur"
+    t.boolean  "fri"
+    t.boolean  "sat"
+    t.boolean  "sun"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "deal_times", force: true do |t|
+    t.integer  "deal_day_id"
+    t.time     "started_at"
+    t.time     "ended_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "deal_venues", force: true do |t|
+    t.integer  "deal_id"
+    t.integer  "venue_id"
+    t.string   "qrCodeLink"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "deal_venues", ["deal_id"], name: "index_deal_venues_on_deal_id", using: :btree
+  add_index "deal_venues", ["venue_id"], name: "index_deal_venues_on_venue_id", using: :btree
 
   create_table "deals", force: true do |t|
     t.boolean  "redeemable"
@@ -28,6 +60,24 @@ ActiveRecord::Schema.define(version: 20150824080417) do
     t.string   "t_c"
     t.integer  "num_of_redeems"
     t.boolean  "pushed"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "venues", force: true do |t|
+    t.string   "name"
+    t.string   "street"
+    t.string   "zipcode"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.string   "neighbourhood"
+    t.text     "bio"
+    t.string   "phone"
+    t.boolean  "submitted"
+    t.string   "address_2"
+    t.string   "contact_number"
+    t.string   "contact_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
