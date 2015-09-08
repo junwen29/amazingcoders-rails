@@ -33,10 +33,10 @@
                 <%= f.text_field :expiry_date %>
           </span>
       </p>
-
+      <%= debug(@locations) %>
       <p class="form-textarea clearfix">
         <%= f.label :location %><br>
-        <%= f.select :location, [['All Outlets','all_outlets'],['Clementi','clementi']] %>
+        <%= f.select :location, @locations %>
       </p>
 
       <p class="form-textarea clearfix">

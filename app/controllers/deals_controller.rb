@@ -2,10 +2,17 @@ class DealsController < ApplicationController
   def new
     @deal = Deal.new
     #DealMailer.deal_email("Test Food Merchant", "Deal Listing Service").deliver
+
+    # Get all venue locations from this merchant
+    @locations = Venue.pluck(:neighbourhood)
+
   end
 
   def edit
     @deal = Deal.find(params[:id])
+
+    # Get all venue locations from this merchant
+    @locations = Venue.pluck(:neighbourhood)
   end
 
   def index
