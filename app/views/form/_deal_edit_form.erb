@@ -1,5 +1,12 @@
 <div class="content-form">
-  <%= form_for :deal, url: deals_path do |f| %>
+  <%= form_for :deal, url: deal_path(@deal), html: {method: "patch"} do |f| %>
+      <p class="form-textarea clearfix">
+        <%= f.label :title, "Title of deal" %>
+        <span>
+                <%= f.text_field :title%>
+          </span>
+      </p>
+
       <p class="form-textarea clearfix">
         <%= f.label :type_of_deal, "Type of Deal" %>
         <span>
