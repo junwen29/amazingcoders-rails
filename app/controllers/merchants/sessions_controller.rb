@@ -1,10 +1,19 @@
 class Merchants::SessionsController < Devise::SessionsController
-# before_filter :configure_sign_in_params, only: [:create]
 
+  def after_sign_up_path_for(resource)
+    deals_path
+  end
+
+  def after_sign_in_path_for(resource)
+    deals_path
+  end
+
+# before_filter :configure_sign_in_params, only: [:create]
 # GET /resource/sign_in
-# def new
-#   super
-# end
+def new
+  @merchant_page = true
+  super
+end
 
 # POST /resource/sign_in
 # def create

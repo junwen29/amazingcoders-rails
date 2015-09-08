@@ -1,11 +1,20 @@
 class Merchants::RegistrationsController < Devise::RegistrationsController
+  def after_sign_up_path_for(resource)
+    deals_path
+  end
+
+  def after_sign_in_path_for(resource)
+    deals_path
+  end
+
 # before_filter :configure_sign_up_params, only: [:create]
 # before_filter :configure_account_update_params, only: [:update]
 
 # GET /resource/sign_up
-# def new
-#   super
-# end
+def new
+  @merchant_page = true
+  super
+end
 
 # POST /resource
   def create

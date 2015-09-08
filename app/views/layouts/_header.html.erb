@@ -3,7 +3,6 @@
     <div class="nav-wrapper">
       <a href="<%= merchant_home_path%>" class="brand-logo center">Burpple Business</a>
       <a href="#" data-activates="mobile-merchant" class="button-collapse"><i class="material-icons">menu</i></a>
-
       <ul class="left hide-on-med-and-down">
         <li class="active"><a href="<%= merchant_home_path%>">Home</a></li>
       </ul>
@@ -14,8 +13,8 @@
             <li><%= link_to "Logout", destroy_merchant_session_path, method: :delete %> </li>
             <li><strong><%=link_to current_merchant.email, merchant_path(id: current_merchant.id) %></strong></li>
         <% else %>
-            <li><%= link_to "Sign up", new_merchant_registration_path %> </li>
-            <li><%= link_to "Login", new_merchant_session_path %></li>
+            <li><%= link_to "Claim your business for free", new_merchant_registration_path %> </li>
+            <li><%= link_to "Log in", new_merchant_session_path %></li>
         <% end %>
       </ul>
 
@@ -28,8 +27,8 @@
             <li><%= link_to "Logout", destroy_merchant_session_path, method: :delete %> </li>
             <li><strong><%=link_to current_merchant.email, merchant_path(id: current_merchant.id) %></strong></li>
         <% else %>
-            <li><%= link_to "Sign up", new_merchant_registration_path %> </li>
-            <li><%= link_to "Login", new_merchant_session_path %></li>
+            <li><%= link_to "Claim your business for free", new_merchant_registration_path %> </li>
+            <li><%= link_to "Log in", new_merchant_session_path %></li>
         <% end %>
       </ul>
 
