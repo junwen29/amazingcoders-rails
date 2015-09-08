@@ -14,25 +14,17 @@
         </div>
     <% end %>
 
-    <!-- Content Heading -->
-    <div class="pull-left">
-      <p class="b2 content-title">Deal Listing <%= link_to 'Add New', new_deal_path, class: "btn btn-lg btn-info" %></p>
-    </div>
+    <p class="b2 content-title">View Venue <%= link_to 'List a Deal', deals_path, class: "btn btn-lg btn-info" %></p>
 
-    <div class="clearfix"></div>
     <div class="content-separator"></div>
+    <%= render :partial => 'form/venue_show_form' %>
 
-    <!-- Content Body -->
-    <%= render :partial => 'form/deal_index_form' %>
-    <%= link_to 'Back', deals_path, class: "btn btn-big btn-default" %>
-
-  </div><!-- /content -->
-</div><!-- /contentWrapper -->
+    <%= link_to 'See all outlets', venues_path, class: "btn btn-lg btn-default" %>
+  </div>
+</div>
 
 <%= content_for :lean_overlay do %>
 <% end %>
 
 <%= content_for :body_footer do %>
 <% end %>
-
-

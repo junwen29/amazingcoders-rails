@@ -4,42 +4,35 @@
       <%= link_to image_tag("biz/burpple_logo.png", :alt => "burpple"), deals_path %>
     </div>
 
+    <% if (@venue)  %>
     <div class="header-content-item venueDropdown">
-      <%# @selectClass = ( @venues.count + @temp_venues.count == 1 ? 'venueDropdown-noselect' : 'venueDropdown-select' ) %>
+      <% @selectClass = ( @venues.count == 1 ? 'venueDropdown-noselect' : 'venueDropdown-select' ) %>
       <div class="<%= @selectClass %>">
         <a href="#" class="venueDropdown-item">
-          <span class="venueDropdown-item-title"> @venue.name </span>
-          <span class="venueDropdown-item-subtitle"> @venue.street </span>
+              <span class="venueDropdown-item-title"><%= @venue.name %></span><span class="caret pull-right"></span>
+              <span class="venueDropdown-item-subtitle"><%= @venue.street %></span>
         </a>
       </div>
+
+
       <div class="venueDropdown-dropdown">
         <% unless @venues.blank? or (@venues.count == 1 and @venue_type == "venue") %>
             <div class="venueDropdown-dropdown-header">Verified Venues</div>
             <% @venues.each do |venue| %>
                 <% unless venue.id == @venue.id %>
-                    <%= link_to biz_dashboard_activity_venue_path(venue.id), {class: "venueDropdown-item"} do %>
+                    <%= link_to venue_path(venue.id), {class: "venueDropdown-item"} do %>
                         <span class="venueDropdown-item-title"><%= venue.name %></span>
                         <span class="venueDropdown-item-subtitle"><%= venue.street %></span>
                     <% end %>
                 <% end %>
             <% end %>
         <% end %>
-        <% unless @temp_venues.blank? or (@temp_venues.count == 1 and @venue_type == "temp_venue") %>
-            <div class="venueDropdown-dropdown-header">Unverified Venues</div>
-            <% @temp_venues.each do |temp_venue| %>
-                <% unless temp_venue.id == @venue.id %>
-                    <%= link_to biz_dashboard_edit_temp_venue_path(temp_venue.id), {class: "venueDropdown-item"} do %>
-                        <span class="venueDropdown-item-title"><%= temp_venue.name %></span>
-                        <span class="venueDropdown-item-subtitle"><%= temp_venue.street %></span>
-                    <% end %>
-                <% end %>
-            <% end %>
-        <% end %>
       </div>
     </div>
+    <% end  %>
 
     <div class="header-content-item newBtn">
-      <%= link_to "Add Another Business or Outlet", new_deal_path, { :class=> "btn" } %>
+      <%= link_to "Add Another Business or Outlet", new_venue_path, { :class=> "btn" } %>
     </div>
 
     <div class="header-content-item logoutBtn">

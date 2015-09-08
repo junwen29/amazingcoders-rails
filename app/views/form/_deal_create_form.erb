@@ -1,82 +1,89 @@
 <div class="content-form">
   <%= form_for :deal, url: deals_path do |f| %>
-    <p class="form-textarea clearfix">
-      <%= f.label :type_of_deal, "Type of Deal" %>
-      <span>
+      <p class="form-textarea clearfix">
+        <%= f.label :title, "Title of deal" %>
+        <span>
+                <%= f.text_field :title%>
+          </span>
+      </p>
+
+      <p class="form-textarea clearfix">
+        <%= f.label :type_of_deal, "Type of Deal" %>
+        <span>
                 <%= f.select :type_of_deal, [['1 for 1','1_for_1'],['10% off','10% off']] %>
           </span>
-    </p>
+      </p>
 
-    <p class="form-textarea clearfix">
-      <%= f.label :description, "Description of your deal" %>
-      <span>
+      <p class="form-textarea clearfix">
+        <%= f.label :description, "Description of your deal" %>
+        <span>
                 <%= f.text_field :description%>
           </span>
-    </p>
+      </p>
 
-    <p class="form-select half clearfix">
-      <%= f.label :start_date, "Start Date:" %>
-      <span>
+      <p class="form-select half clearfix">
+        <%= f.label :start_date, "Start Date:" %>
+        <span>
                 <%= f.text_field :start_date%>
           </span>
-    </p>
-    <p class="form-select clearfix">
-      <%= f.label :expiry_date, "End Date:" %>
-      <span>
+      </p>
+      <p class="form-select clearfix">
+        <%= f.label :expiry_date, "End Date:" %>
+        <span>
                 <%= f.text_field :expiry_date %>
           </span>
-    </p>
+      </p>
 
-    <p class="form-textarea clearfix">
-      <%= f.label :location %><br>
-      <%= f.select :location, [['All Outlets','all_outlets'],['Clementi','clementi']] %>
-    </p>
+      <p class="form-textarea clearfix">
+        <%= f.label :location %><br>
+        <%= f.select :location, @locations %>
+      </p>
 
-    <p class="form-textarea clearfix">
-      <%= f.label :t_c, 'Terms and Conditions' %>
-      <span>
+      <p class="form-textarea clearfix">
+        <%= f.label :t_c, 'Terms and Conditions' %>
+        <span>
                 <%= f.text_field :t_c%>
               </span>
-    </p>
+      </p>
 
-    <p class="form-textarea clearfix">
-      <%= f.label :pushed, 'Would you like to push to those who have wishlisted?' %>
-    </p>
-    <p class="form-select half" style="margin-top: 0px;">
-      <%= f.label :pushed, "Yes", :value => true %>
-      <%= f.radio_button :pushed, true%>
-    </p>
-    <p class="form-select" style="margin-top: 0px;">
-      <%= f.label :pushed, "No", :value => false %>
-      <%= f.radio_button :pushed, false%>
-    </p>
+      <p class="form-textarea clearfix">
+        <%= f.label :pushed, 'Would you like to push to those who have wishlisted?' %>
+      </p>
+      <p class="form-select half" style="margin-top: 0px;">
+        <%= f.label :pushed, "Yes", :value => true %>
+        <%= f.radio_button :pushed, true%>
+      </p>
+      <p class="form-select" style="margin-top: 0px;">
+        <%= f.label :pushed, "No", :value => false %>
+        <%= f.radio_button :pushed, false%>
+      </p>
 
-    <p class="form-textarea clearfix">
-      <%= f.label :redeemable, "Would you like users to redeem through deal code? (Helps gather analytics)" %>
-    </p>
-    <p class="form-select half" style="margin-top: 0px;">
-      <%= f.label :redeemable, "Yes", :value => true %>
-      <%= f.radio_button :redeemable, true%>
-    </p>
-    <p class="form-select" style="margin-top: 0px;">
-      <%= f.label :redeemable, "No", :value => false %>
-      <%= f.radio_button :redeemable, false%>
-    </p>
+      <p class="form-textarea clearfix">
+        <%= f.label :redeemable, "Would you like users to redeem through deal code? (Helps gather analytics)" %>
+      </p>
+      <p class="form-select half" style="margin-top: 0px;">
+        <%= f.label :redeemable, "Yes", :value => true %>
+        <%= f.radio_button :redeemable, true%>
+      </p>
+      <p class="form-select" style="margin-top: 0px;">
+        <%= f.label :redeemable, "No", :value => false %>
+        <%= f.radio_button :redeemable, false%>
+      </p>
 
-    <p class="form-textarea clearfix">
-      <%= f.label :multiple_use, "How many times can this deal be redeemed per user?" %><br>
-    </p>
-    <p class="form-select half" style="margin-top: 0px;">
-      <%= f.label :multiple_use, "Unlimited Redemptions", :value => true %>
-      <%= f.radio_button :multiple_use, true %>
-    </p>
-    <p class="form-select" style="margin-top: 0px;">
-      <%= f.label :multiple_use, "Once", :value => false %>
-      <%= f.radio_button :multiple_use, false%>
-    </p>
+      <p class="form-textarea clearfix">
+        <%= f.label :multiple_use, "How many times can this deal be redeemed per user?" %><br>
+      </p>
+      <p class="form-select half" style="margin-top: 0px;">
+        <%= f.label :multiple_use, "Unlimited Redemptions", :value => true %>
+        <%= f.radio_button :multiple_use, true %>
+      </p>
+      <p class="form-select" style="margin-top: 0px;">
+        <%= f.label :multiple_use, "Once", :value => false %>
+        <%= f.radio_button :multiple_use, false%>
+      </p>
 
-    <p class="clearfix">
-      <%= f.submit "Create Deal", :class => 'btn btn-big btn-success' %>
-    </p>
-<% end %>
+      <p class="clearfix">
+        <%= f.submit "Create Deal", :class => 'btn btn-big btn-success' %>
+      </p>
+  <% end %>
 </div><!-- content-form -->

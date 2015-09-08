@@ -1,5 +1,7 @@
 <table class="table table-bordered table-hover table-responsive">
   <tr>
+    <th>Id</th>
+    <th>Title</th>
     <th>Redeemable?</th>
     <th>Multiple Use?</th>
     <th>Image</th>
@@ -15,6 +17,8 @@
 
   <% @deal.each do |deal| %>
       <tr>
+        <td><%= deal.id %></td>
+        <td><%= deal.title %></td>
         <td><%= deal.redeemable %></td>
         <td><%= deal.multiple_use %></td>
         <td><%= image_tag deal.image %></td>

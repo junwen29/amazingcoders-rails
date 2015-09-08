@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-gb">
 <head>
 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -12,15 +12,24 @@
 
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+  <%= yield :head %>
+
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body class="preload">
 
-<% if @merchant_page %>
-    <%= render 'layouts/header' %>
-<% end %>
+<%= content_for?(:content) ? yield(:content) : yield %>
 
-<%= yield %>
+<!-- START MODAL BOXES -->
+<div id="leanOverlayContent">
+  <%= yield :lean_overlay %>
+</div>
+
+<div id="leanOverlayBg"></div>
+<!-- END MODAL BOXES -->
+
+<%= yield :body_footer %>
 
 </body>
 
