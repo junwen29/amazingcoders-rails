@@ -84,8 +84,9 @@
         <%= f.radio_button :multiple_use, false%>
       </p>
 
-      <p class="clearfix">
+      <div style="margin-top: 30px">
         <%= f.submit "Create Deal", :class => 'btn btn-big btn-success' %>
-      </p>
+        <%= link_to 'Back', deals_path, class: "btn btn-big btn-default" %>
+      </div>
   <% end %>
 </div><!-- content-form -->
