@@ -52,39 +52,39 @@ class VenuesController < ApplicationController
   def create
     @venue = Venue.new(venue_params)
 
-    respond_to do |format|
+    #respond_to do |format|
       if @venue.save
-        format.html { redirect_to @venue, notice: 'Venue was successfully created.' }
-        format.json { render :show, status: :created, location: @venue }
+        flash[:success] = "Venue successfully created!"
+        redirect_to @venue
+        #format.html { redirect_to @venue, notice: 'Venue was successfully created.' }
+        #format.json { render :show, status: :created, location: @venue }
       else
-        format.html { render :new }
-        format.json { render json: @venue.errors, status: :unprocessable_entity }
-      end
+        flash[:error] = "Failed to create venue!"
+        render 'new'
+        #format.html { render :new }
+        #format.json { render json: @venue.errors, status: :unprocessable_entity }
+      #end
     end
   end
 
   # PATCH/PUT /venues/1
   # PATCH/PUT /venues/1.json
   def update
-    respond_to do |format|
       if @venue.update(venue_params)
-        format.html { redirect_to @venue, notice: 'Venue was successfully updated.' }
-        format.json { render :show, status: :ok, location: @venue }
+        flash[:success] = "Venue successfully updated!"
+        redirect_to @venue
       else
-        format.html { render :edit }
-        format.json { render json: @venue.errors, status: :unprocessable_entity }
+        flash[:error] = "Failed to update venue!"
+        render 'new'
       end
-    end
   end
 
   # DELETE /venues/1
   # DELETE /venues/1.json
   def destroy
     @venue.destroy
-    respond_to do |format|
-      format.html { redirect_to venues_url, notice: 'Venue was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    flash[:success] = "Deal deleted!"
+    redirect_to venues_path
   end
 
   private

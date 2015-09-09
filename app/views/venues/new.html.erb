@@ -5,7 +5,7 @@
 
     <!-- Flash Error Message -->
     <% if @venue.errors.any? %>
-        <div id="error_explanation">
+        <div id="error_explanation" class="alert alert-error">
           <h2>
             <%= pluralize(@venue.errors.count, "error") %> prohibited this venue from being saved:
           </h2>
