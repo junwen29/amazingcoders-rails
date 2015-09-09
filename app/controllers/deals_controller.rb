@@ -17,6 +17,10 @@ class DealsController < ApplicationController
   def edit
     @deal = Deal.find(params[:id])
 
+    # For drop down form
+    @all_venues = Venue.all
+    @deal_venue = @deal.deal_venues.build
+
     # Get all venue locations from this merchant
     @locations = Venue.pluck(:neighbourhood)
   end
@@ -33,6 +37,7 @@ class DealsController < ApplicationController
     @locations = Venue.pluck(:neighbourhood)
 
     # Add venue_id to deal_venue join table
+    raise params[:venues][:id].inspect
     params[:venues][:id].each do |venue|
       if !venue.empty?
         @deal.deal_venues.build(:venue_id => venue)
@@ -50,6 +55,19 @@ class DealsController < ApplicationController
 
   def update
     @deal = Deal.find(params[:id])
+
+    # Find all previous associations in join table and delete them
+    @deal_venues = DealVenue.where("deal_id = ?", params[:id])
+    @deal_venues.each do |dv|
+      dv.destroy
+    end
+
+    # Add venue_id to deal_venue join table
+    params[:venues][:id].each do |venue|
+      if !venue.empty?
+        @deal.deal_venues.build(:venue_id => venue)
+      end
+    end
 
     if @deal.update(deal_params)
       redirect_to @deal
