@@ -1,6 +1,12 @@
 class DealsController < ApplicationController
+  before_action :set_deal, only: [:show, :edit, :update, :destroy]
+
   def new
     @deal = Deal.new
+
+    # For drop down form
+    @all_venues = Venue.all
+    @deal_venue = @deal.deal_venues.build
     #DealMailer.deal_email("Test Food Merchant", "Deal Listing Service").deliver
 
     # Get all venue locations from this merchant
@@ -22,6 +28,16 @@ class DealsController < ApplicationController
   def create
     #for database
     @deal = Deal.new(deal_params)
+    @deal_venue = @deal.deal_venues.build
+    # Get all venue locations from this merchant
+    @locations = Venue.pluck(:neighbourhood)
+
+    # Add venue_id to deal_venue join table
+    params[:venues][:id].each do |venue|
+      if !venue.empty?
+        @deal.deal_venues.build(:venue_id => venue)
+      end
+    end
 
     if @deal.save
       redirect_to @deal
@@ -55,10 +71,16 @@ class DealsController < ApplicationController
   end
 
   private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_deal
+    @deal = Deal.find(params[:id])
+  end
+
+  private
   def deal_params
     params.require(:deal).permit(:title, :redeemable, :multiple_use, :image,
       :type_of_deal, :description, :start_date, :expiry_date, :location, :t_c, 
-      :num_of_redeems, :pushed)
+      :pushed)
   end
 end
 

@@ -34,10 +34,12 @@
           </span>
       </p>
 
-      <p class="form-textarea clearfix">
-        <%= f.label :location %><br>
-        <%= f.select :location, @locations %>
-      </p>
+      <%= fields_for (@deal_venue) do |dv| %>
+          <div class = "field">
+            <%= dv.label "Select Venues" %><br />
+            <%= collection_select(:venues, :id, @all_venues, :id, :neighbourhood, {}, {:multiple => true}) %>
+          </div>
+      <% end %>
 
       <p class="form-textarea clearfix">
         <%= f.label :t_c, 'Terms and Conditions' %>

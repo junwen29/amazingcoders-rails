@@ -8,7 +8,7 @@
     <th>Type of Deal</th>
     <th>Description</th>
     <th>Expiry Date</th>
-    <th>Location</th>
+    <th>Venue</th>
     <th>Terms and Condition</th>
     <th>Number of Redeems</th>
     <th>Pushed?</th>
@@ -25,7 +25,11 @@
         <td><%= deal.type_of_deal %></td>
         <td><%= deal.description %></td>
         <td><%= deal.expiry_date %></td>
-        <td><%= deal.location %></td>
+        <td>
+            <% deal.venues.each do |venue| %>
+                <%= venue.neighbourhood %><br/>
+            <% end %>
+        </td>
         <td><%= deal.t_c %></td>
         <td><%= deal.num_of_redeems %></td>
         <td><%= deal.pushed %></td>
