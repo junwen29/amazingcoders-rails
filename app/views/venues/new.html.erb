@@ -25,8 +25,8 @@
     <div class="clearfix"></div>
     <div class="content-separator"></div>
 
-    <!-- Content Body -->
-    <%= form_for(@venue, url: venues_path,  :html => {:onSubmit => "return validate_getting_started(this);", :class => "venueForm"}) do |f| %>
+    <!-- Content Body --><!--excuting a javascript to do validation when the form is submitted-->
+    <%= form_for(@venue, :html => {:onSubmit => "return validate_getting_started(this);", :class => "venueForm"}) do |f| %>
         <%= render :partial => 'form/venue_create_form', :locals => { :f => f , :object => @select_day_hours_string, :venue_type => @venue_type } %>
         <p class="form-actions">
           <%= f.submit "Submit", :class => 'btn btn-big btn-success' %>

@@ -27,10 +27,11 @@ class VenuesController < ApplicationController
 
   # GET /venues/new
   def new
-    @venue = Venue.new
+    @merchant = current_merchant
+    @venue = @merchant.venues.create
 
     # Get data required for dashboard
-    @venues = Venue.all
+    @venues = @merchant.venues.all
 
     # Get data required for form
     @select_day_hours_string = "[]".html_safe
