@@ -11,10 +11,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150908041922) do
+ActiveRecord::Schema.define(version: 20150908151202) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "deal_days", force: true do |t|
+    t.integer  "deal_id"
+    t.boolean  "mon"
+    t.boolean  "tue"
+    t.boolean  "wed"
+    t.boolean  "thur"
+    t.boolean  "fri"
+    t.boolean  "sat"
+    t.boolean  "sun"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "deal_times", force: true do |t|
+    t.integer  "deal_day_id"
+    t.time     "started_at"
+    t.time     "ended_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "deal_venues", force: true do |t|
+    t.integer  "deal_id"
+    t.integer  "venue_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "deal_venues", ["deal_id"], name: "index_deal_venues_on_deal_id", using: :btree
+  add_index "deal_venues", ["venue_id"], name: "index_deal_venues_on_venue_id", using: :btree
 
   create_table "deals", force: true do |t|
     t.string   "title"
