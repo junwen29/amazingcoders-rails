@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :deals
 
   get 'merchant_pages/home' => 'merchant_pages#home', :as => :merchant_home
-  get 'merchant_pages/hegit slp' => 'merchant_pages#help', :as => :merchant_help
+  get 'merchant_pages/help' => 'merchant_pages#help', :as => :merchant_help
 
   resources :merchant_pages
   root :to => 'merchant_pages#home'

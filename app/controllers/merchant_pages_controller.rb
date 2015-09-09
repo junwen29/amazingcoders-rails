@@ -1,12 +1,12 @@
 class MerchantPagesController < ApplicationController
-
-  def index
-    redirect_to deals_path
-  end
-
   def home
     @merchant_page = true
     @html_title = "Amazing Coders - Home"
+
+    if merchant_signed_in?
+      redirect_to venues_path
+    end
+
   end
 
 end
