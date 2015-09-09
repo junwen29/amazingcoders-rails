@@ -6,17 +6,16 @@
 
     <% if (@venue)  %>
     <div class="header-content-item venueDropdown">
-      <% @selectClass = ( @venues.count == 1 ? 'venueDropdown-noselect' : 'venueDropdown-select' ) %>
+      <% @selectClass = ( @venues.count == 0 ? 'venueDropdown-noselect' : 'venueDropdown-select' ) %>
       <div class="<%= @selectClass %>">
         <a href="#" class="venueDropdown-item">
-              <span class="venueDropdown-item-title"><%= @venue.name %></span><span class="caret pull-right"></span>
+              <span class="venueDropdown-item-title"><%= @venue.name %></span>
               <span class="venueDropdown-item-subtitle"><%= @venue.street %></span>
         </a>
       </div>
 
-
       <div class="venueDropdown-dropdown">
-        <% unless @venues.blank? or (@venues.count == 1 and @venue_type == "venue") %>
+        <% unless @venues.blank? or (@venues.count == 1 ) %>
             <div class="venueDropdown-dropdown-header">Verified Venues</div>
             <% @venues.each do |venue| %>
                 <% unless venue.id == @venue.id %>
@@ -36,8 +35,8 @@
     </div>
 
     <div class="header-content-item logoutBtn">
-      <%= link_to "Help", deals_path, {:class => "help"} %>
-      <%= link_to "Sign Out", deals_path, { :class=> "btn", :method => :delete } %>
+      <%= link_to "Help", venues_path , {:class => "help"} %>
+      <%= link_to "Sign Out", destroy_merchant_session_path, { :class=> "btn", :method => :delete } %>
     </div>
   </div>
 </div>
@@ -53,10 +52,10 @@
         <li><a href="#">Billing</a></li>
       </ul>
     </li>
-    <li><%= link_to "Activity", deals_path %></li>
-    <li><%= link_to "View Listing",  deals_path%></li>
-    <li><%= link_to "Edit Listing", deals_path %></li>
-    <li><%= link_to "Premium Listing", deals_path %></li>
+    <li><%= link_to "Activity", venues_path %></li>
+    <li><%= link_to "View Listing",  venues_path%></li>
+    <li><%= link_to "Edit Listing", venues_path %></li>
+    <li><%= link_to "Premium Listing", venues_path %></li>
     <li><%= link_to "List a deal", deals_path %></li>
   </ul>
 </div>
@@ -64,9 +63,9 @@
 
 <%= content_for :body_footer do %>
     <div class="navMobileFooter">
-      <%= link_to "Add Another Business or Outlet", deals_path, { :class=> "" } %>
-      <%= link_to "Help", deals_path, {:class => ""} %>
-      <%= link_to "Sign Out", deals_path, { :class=> "", :method => :delete } %>
+      <%= link_to "Add Another Business or Outlet", new_venue_path, { :class=> "" } %>
+      <%= link_to "Help", venues_path, {:class => ""} %>
+      <%= link_to "Sign Out", destroy_merchant_session_path, { :class=> "", :method => :delete } %>
     </div>
 
     <script>

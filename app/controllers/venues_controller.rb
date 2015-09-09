@@ -1,37 +1,15 @@
 class VenuesController < ApplicationController
-  before_action :set_venue, only: [:show, :edit, :update, :destroy]
+  before_action :set_venue, only: [:index, :show, :edit, :update, :destroy]
+  before_action :all_venues
 
-  # GET /venues
-  # GET /venues.json
   def index
-    @venue = Venue.new
-
-    # Get data required for dashboard
-    @venues = Venue.all
-
     # Get data required for form
     @select_day_hours_string = "[]".html_safe
-    @venue_type = "temp_venue"
   end
-
-  # GET /venues/1
-  # GET /venues/1.json
-
-  def show
-    @venue = Venue.find(params[:id])
-
-    # Get data required for dashboard
-    @venues = Venue.all
-  end
-
 
   # GET /venues/new
   def new
     @venue = Venue.new
-
-    # Get data required for dashboard
-    @venues = Venue.all
-
     # Get data required for form
     @select_day_hours_string = "[]".html_safe
   end
@@ -50,7 +28,7 @@ class VenuesController < ApplicationController
   # POST /venues
   # POST /venues.json
   def create
-    @venue = Venue.new(venue_params)
+    @venue = Merchant.find(merchant_id).venues.new(venue_params)
 
     respond_to do |format|
       if @venue.save
@@ -88,15 +66,24 @@ class VenuesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_venue
+  # find all venues
+  def all_venues
+    @venues = MerchantService.get_all_venues(merchant_id)
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_venue
+    unless @venue.present?
+      @venue = all_venues.first
+    else
       @venue = Venue.find(params[:id])
     end
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def venue_params
-      params.require(:venue).permit(:name, :street, :zipcode,
-                                   :city, :city, :state, :country, :neighbourhood, :bio,
-                                   :phone, :address_2, :contact_number)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def venue_params
+    params.require(:venue).permit(:name, :street, :zipcode,
+                                  :city, :city, :state, :country, :neighbourhood, :bio,
+                                  :phone, :address_2, :contact_number)
+  end
 end

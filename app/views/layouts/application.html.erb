@@ -19,10 +19,6 @@
 </head>
 <body class="preload">
 
-<% if @merchant_page %>
-    <%= render 'layouts/header' %>
-<% end %>
-
 <%= content_for?(:content) ? yield(:content) : yield %>
 
 <!-- START MODAL BOXES -->
