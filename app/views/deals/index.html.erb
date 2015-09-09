@@ -2,15 +2,9 @@
 <div class="contentWrapper">
   <div class="content">
 
-    <!-- post back messages -->
-    <% unless flash.empty? %>
-        <div class="flashMessages">
-          <% unless flash[:error].blank? %>
-              <% flash[:error].each do |msg| %>
-                  <div class="alert alert--error"><span>Error! </span><%= msg %></div>
-              <% end %>
-          <% end %>
-        </div>
+    <!--Flash messages-->
+    <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
     <% end %>
 
     <!-- Content Heading -->

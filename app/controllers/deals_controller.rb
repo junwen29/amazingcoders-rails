@@ -34,6 +34,9 @@ class DealsController < ApplicationController
     @deal = Deal.new(deal_params)
     # Get all venue locations from this merchant
     @locations = Venue.pluck(:neighbourhood)
+    # For drop down form
+    @all_venues = Venue.all
+    @deal_venue = @deal.deal_venues.build
 
     # Add venue_id to deal_venue join table
     venues_arr = params[:venues][:id].drop(1)     # pop out initial null
@@ -45,16 +48,22 @@ class DealsController < ApplicationController
     end
 
     if @deal.save
+      flash[:success] = "Deal successfully created!"
       redirect_to @deal
       # Send out confirmation email
       # DealMailer.deal_email("Test Food Merchant", @deal).deliver
     else
+      flash[:error] = "Failed to create deal!"
       render 'new'
     end
   end
 
   def update
     @deal = Deal.find(params[:id])
+
+    # For drop down form
+    @all_venues = Venue.all
+    @deal_venue = @deal.deal_venues.build
 
     # Find all previous associations in join table and delete them
     @deal_venues = DealVenue.where("deal_id = ?", params[:id])
@@ -71,8 +80,10 @@ class DealsController < ApplicationController
     end
 
     if @deal.update(deal_params)
+      flash[:success] = "Deal successfully updated!"
       redirect_to @deal
     else
+      flash[:error] = "Failed to update deal!"
       render 'edit'
     end
   end
@@ -84,6 +95,7 @@ class DealsController < ApplicationController
   def destroy
     @deal = Deal.find(params[:id])
     @deal.destroy
+    flash[:success] = "Deal deleted!"
     #need not add a view for this action since redirecting to the index
     #action
     redirect_to deals_path
