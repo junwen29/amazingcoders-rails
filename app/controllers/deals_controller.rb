@@ -32,13 +32,13 @@ class DealsController < ApplicationController
   def create
     #for database
     @deal = Deal.new(deal_params)
-    @deal_venue = @deal.deal_venues.build
     # Get all venue locations from this merchant
     @locations = Venue.pluck(:neighbourhood)
 
     # Add venue_id to deal_venue join table
-    raise params[:venues][:id].inspect
-    params[:venues][:id].each do |venue|
+    venues_arr = params[:venues][:id].drop(1)     # pop out initial null
+    # raise venues_arr.inspect
+    venues_arr.each do |venue|
       if !venue.empty?
         @deal.deal_venues.build(:venue_id => venue)
       end
@@ -63,7 +63,8 @@ class DealsController < ApplicationController
     end
 
     # Add venue_id to deal_venue join table
-    params[:venues][:id].each do |venue|
+    venues_arr = params[:venues][:id].drop(1)     # pop out initial null
+    venues_arr.each do |venue|
       if !venue.empty?
         @deal.deal_venues.build(:venue_id => venue)
       end
