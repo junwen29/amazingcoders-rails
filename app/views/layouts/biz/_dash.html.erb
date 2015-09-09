@@ -37,7 +37,7 @@
 
     <div class="header-content-item logoutBtn">
       <%= link_to "Help", deals_path, {:class => "help"} %>
-      <%= link_to "Sign Out", deals_path, { :class=> "btn", :method => :delete } %>
+      <%= link_to "Sign Out", destroy_merchant_session_path, method: :delete %>
     </div>
   </div>
 </div>
@@ -66,7 +66,7 @@
     <div class="navMobileFooter">
       <%= link_to "Add Another Business or Outlet", deals_path, { :class=> "" } %>
       <%= link_to "Help", deals_path, {:class => ""} %>
-      <%= link_to "Sign Out", deals_path, { :class=> "", :method => :delete } %>
+      <%= link_to "Sign Out", destroy_merchant_session_path, method: :delete %>
     </div>
 
     <script>
