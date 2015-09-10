@@ -29,3 +29,12 @@ $ ->
     regexp = new RegExp($(this).data('id'),'g')
     $(this).before($(this).data('fields').replace(regexp, time))
     event.preventDefault()
+
+#    Shows hidden field in deal form when selected
+$ ->
+  $("#redeemable_true").hide();
+  $("input:radio[name ='deal[redeemable]']").change ->
+    if(this.value == "true" && this.checked)
+      $("#redeemable_true").show();
+    else
+      $("#redeemable_true").hide();

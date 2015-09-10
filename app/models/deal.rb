@@ -30,10 +30,11 @@ class Deal < ActiveRecord::Base
   end
 
   def ensuring_multiple_use_checked
-    if (redeemable != nil)
+    if (redeemable)
       errors.add(:multiple_use, 'Please indicate the number of times the deals can be redeemed per user') if ((multiple_use == nil) rescue ArgumentError == ArgumentError)
     end
   end
+
   def future_date
     errors.add(:start_date, 'must be at least one day in advance') if ((start_date <= Date.today) rescue ArgumentError == ArgumentError)
   end
