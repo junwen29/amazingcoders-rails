@@ -1,0 +1,54 @@
+<% title = @is_facebook_flow ? "Confirmation" : "Sign up" %>
+<!--<div class="modal-header"><%= title %></div>-->
+<div class="sessions-modal-body">
+
+  <div id="modal-left" class="pull-left">
+    <div id="signup-left-display">
+      <%= image_tag("web/logo_text.png", id:"modal-logo-img")%>
+      <div class="left-display-text">Don't have an account? Sign up now to receive weekly Burpple Guides in your inbox and more!
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-right" class="pull-right">
+    <%= form_tag(web_sign_up_path, :id => "signup-form") do %>
+        <% unless @is_facebook_flow %>
+            <a href="" class="btn btn--facebook">Sign up with Facebook</a>
+            <div class="or">
+              <span class="or-span">or</span>
+              <hr />
+            </div>
+        <% end %>
+        <% user = defined?(resource) ? resource : {} %>
+        <%= text_field_tag 'user[first_name]', user[:first_name], :class => 'firstName pull-left', :placeholder => 'First Name' %>
+        <%= text_field_tag 'user[last_name]', user[:last_name], :class => 'lastName pull-right', :placeholder => 'Last Name' %>
+        <%= text_field_tag 'user[username]', user[:username], :class => 'username', :placeholder => 'Username' %>
+        <%= text_field_tag 'user[email]', @email || user[:email], :class => 'email', :placeholder => 'Email' %>
+
+        <% unless @is_facebook_flow %>
+            <%= password_field_tag 'user[password]', nil, :class => 'password', :placeholder => 'Password' %>
+        <% end %>
+
+        <%= hidden_field_tag 'user[city]', 'Singapore' %>
+        <%= hidden_field_tag 'user[country]', 'Singapore' %>
+        <%= hidden_field_tag('user[fb_token]', user.fb_token) if user.is_a?(User) and user.fb_token %>
+        <%= hidden_field_tag :sign_up_redirect_url, request.fullpath %>
+        <% flash.each do |name, msg| %>
+            <% if name == :alert %>
+                <% if msg.class == Array %>
+                    <% msg.each do |message| %>
+                        <div class="alert alert--error alert--wrongInfo"><strong>Error!</strong> <%= message %></div>
+                    <% end %>
+                <% else %>
+                    <div class="alert alert--error alert--wrongInfo"><strong>Error!</strong> <%= msg %></div>
+                <% end %>
+            <% end %>
+        <% end %>
+        <% title = @is_facebook_flow ? "Confirm" : "Sign up" %>
+        <%= submit_tag title, :class => 'btn btn--green btn--signup' %>
+    <% end %>
+    <div class="modal-footer modal--signup-footer">Already a Burppler? <a style="color:#2ba942;" href="<%= web_sign_in_path %>">Login now.</a></div>
+  </div>
+
+</div>
+<%= render 'web/shared/auth_support' %>

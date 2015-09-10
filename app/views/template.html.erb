@@ -1,0 +1,29 @@
+<%= render 'layouts/biz/dash' %>
+<div class="contentWrapper">
+  <div class="content">
+
+    <!-- Flash Error Message -->
+    <% unless flash.empty? %>
+        <div class="flashMessages">
+          <% unless flash[:error].blank? %>
+              <% flash[:error].each do |msg| %>
+                  <div class="alert alert--error"><span>Error! </span><%= msg %></div>
+              <% end %>
+          <% end %>
+        </div>
+    <% end %>
+
+    <!-- Content Heading -->
+    <div class="pull-left">
+      <p class="b2 content-title">Content Title</p>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="content-separator"></div>
+
+    <!-- Content Body -->
+    <%= render :partial => 'biz/form/promotion_form', :locals => { :venue_promotion => @venue_promotion } %>
+
+  </div><!-- /content -->
+</div><!-- /contentWrapper -->
+

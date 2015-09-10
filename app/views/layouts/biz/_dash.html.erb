@@ -1,0 +1,77 @@
+<div class="header">
+  <div class="header-content">
+    <div class="header-logo">
+      <%= link_to image_tag("biz/burpple_logo.png", :alt => "burpple"), deals_path %>
+    </div>
+
+    <% if (@venue)  %>
+    <div class="header-content-item venueDropdown">
+      <% @selectClass = ( @venues.count == 0 ? 'venueDropdown-noselect' : 'venueDropdown-select' ) %>
+      <div class="<%= @selectClass %>">
+        <a href="#" class="venueDropdown-item">
+              <span class="venueDropdown-item-title"><%= @venue.name %></span>
+              <span class="venueDropdown-item-subtitle"><%= @venue.street %></span>
+        </a>
+      </div>
+
+      <div class="venueDropdown-dropdown">
+        <% unless @venues.blank? or (@venues.count == 1 ) %>
+            <div class="venueDropdown-dropdown-header">Verified Venues</div>
+            <% @venues.each do |venue| %>
+                <% unless venue.id == @venue.id %>
+                    <%= link_to venue_path(venue.id), {class: "venueDropdown-item"} do %>
+                        <span class="venueDropdown-item-title"><%= venue.name %></span>
+                        <span class="venueDropdown-item-subtitle"><%= venue.street %></span>
+                    <% end %>
+                <% end %>
+            <% end %>
+        <% end %>
+      </div>
+    </div>
+    <% end  %>
+
+    <div class="header-content-item newBtn">
+      <%= link_to "Add Another Business or Outlet", new_venue_path, { :class=> "btn" } %>
+    </div>
+
+    <div class="header-content-item logoutBtn">
+      <%= link_to "Help", venues_path , {:class => "help"} %>
+      <%= link_to "Sign Out", destroy_merchant_session_path, { :class=> "btn", :method => :delete } %>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <ul>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Personal Settings <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">Email</a></li>
+        <li><a href="#">Account Settings</a></li>
+        <li><a href="#">Billing</a></li>
+      </ul>
+    </li>
+    <li><%= link_to "Activity", venues_path %></li>
+    <li><%= link_to "View Listing",  venues_path%></li>
+    <li><%= link_to "Edit Listing", venues_path %></li>
+    <li><%= link_to "Premium Listing", venues_path %></li>
+    <li><%= link_to "List a deal", deals_path %></li>
+  </ul>
+</div>
+
+<%= content_for :body_footer do %>
+    <div class="navMobileFooter">
+      <%= link_to "Add Another Business or Outlet", new_venue_path, { :class=> "" } %>
+      <%= link_to "Help", venues_path, {:class => ""} %>
+      <%= link_to "Sign Out", destroy_merchant_session_path, { :class=> "", :method => :delete } %>
+    </div>
+
+    <script>
+        $('.venueDropdown-select').click(function() {
+            $('.venueDropdown-dropdown').toggle();
+            $(this).toggleClass('venueDropdown-select--selected');
+        });
+    </script>
+<% end %>
+

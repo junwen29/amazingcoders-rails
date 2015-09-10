@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require materialize-sprockets
 //= require jquery-ui/datepicker
 //= require jquery.turbolinks
 //= require_tree .

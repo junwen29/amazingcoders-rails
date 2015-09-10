@@ -1,13 +1,15 @@
-<h1>Editing deal</h1>
+<%= render 'layouts/biz/dash' %>
 
-<%= form_for :deal, url: deal_path(@deal), method: :patch do |f| %>
+<div class="contentWrapper">
+  <div class="content">
 
+    <!-- post back messages -->
     <% if @deal.errors.any? %>
-        <div id="error_explanation">
-          <h2>
+        <div id="error_explanation" class="alert alert-error">
+          <h5>
             <%= pluralize(@deal.errors.count, "error") %> prohibited
             this deal from being saved:
-          </h2>
+          </h5>
           <ul>
             <% @deal.errors.full_messages.each do |msg| %>
                 <li><%= msg %></li>
@@ -16,20 +18,17 @@
         </div>
     <% end %>
 
-    <p>
-      <%= f.label :title %><br>
-      <%= f.text_field :title %>
-    </p>
+    <p class="b2 content-title">Edit Deals</p>
+    <div class="content-separator"></div>
 
-    <p>
-      <%= f.label :text %><br>
-      <%= f.text_area :text %>
-    </p>
+    <!-- Content Body -->
+    <%= render :partial => 'form/deal_edit_form' %>
+    
+  </div>
+</div>
 
-    <p>
-      <%= f.submit %>
-    </p>
-
+<%= content_for :lean_overlay do %>
 <% end %>
 
-<%= link_to 'Back', deals_path %>
+<%= content_for :body_footer do %>
+<% end %>

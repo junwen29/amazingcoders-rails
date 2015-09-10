@@ -1,0 +1,24 @@
+<%= render 'layouts/biz/dash' %>
+
+<div class="contentWrapper">
+  <div class="content">
+
+    <!--Flash messages-->
+    <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+    <% end %>
+
+    <p class="b2 content-title">View Venue</p>
+
+    <div class="content-separator"></div>
+    <%= render :partial => 'form/venue_show_form' %>
+
+    <%= link_to 'See all outlets', venues_path, class: "btn btn-lg btn-default" %>
+  </div>
+</div>
+
+<%= content_for :lean_overlay do %>
+<% end %>
+
+<%= content_for :body_footer do %>
+<% end %>

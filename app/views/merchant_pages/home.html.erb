@@ -1,0 +1,114 @@
+<header>
+  <div class="header-content">
+    <div class="header-logo">
+      <%= link_to image_tag("biz/burpple_logo.png", :alt => "burpple"), deals_path %>
+    </div>
+    <div class="header-content-item logoutBtn">
+      <% if merchant_signed_in? %>
+          <!-- <strong><%= current_merchant.email %></strong> -->
+          <%= link_to 'Edit profile', edit_merchant_registration_path, class: "btn btn-lg btn-info" %>
+          <%= link_to "Logout", destroy_merchant_session_path,class: "btn btn-lg btn-info", method: :delete %>
+          <strong><%=link_to current_merchant.email, merchant_path(id: current_merchant.id),class: "btn btn-lg btn-info" %></strong>
+      <% else %>
+          <%= link_to "Claim your business for free", new_merchant_registration_path ,class: "btn btn-lg btn-info" %>
+          <%= link_to "Log in", new_merchant_session_path, class: "btn btn-lg btn-info"%>
+      <% end %>
+    </div>
+  </div>
+</header>
+
+<div class="devices">
+  <div class="container">
+    <div class="fullWidth">
+      <div class="devices-img">
+        <%= image_tag "biz/marketing/hero_devices.png" %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="features">
+  <div class="container">
+    <div class="oneThird">
+      <div class="features-feature">
+        <div class="features-feature-img">
+          <%= image_tag "biz/marketing/icon-stats.png" %>
+        </div>
+        <h3>Track your performance</h3>
+        <p>Weekly analytics reveal potential customers, and how your business is ranking.</p>
+      </div>
+    </div>
+    <div class="oneThird">
+      <div class="features-feature">
+        <div class="features-feature-img">
+          <%= image_tag "biz/marketing/icon-crown.png" %>
+        </div>
+        <h3>Keep customers updated</h3>
+        <p>Easily input key business information customers need, and ensure your page is always updated.</p>
+      </div>
+    </div>
+    <div class="oneThird">
+      <div class="features-feature">
+        <div class="features-feature-img">
+          <%= image_tag "biz/marketing/icon-deal.png" %>
+        </div>
+        <h3>List exciting deals</h3>
+        <p>Get more customers excited about your place by simply listing a deal on your page. It's free!</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="quotes">
+  <div class="container">
+    <div class="oneHalf">
+      <div class="quotes-quote">
+        "Believe in yourself! Have faith in your abilities! Without a humble but reasonable confidence in your own powers you cannot be successful or happy."
+      </div>
+      <div class="quotes-author">
+        <div class="quotes-author-avatar"></div>
+        <div class="quotes-author-name">Don Jon</div>
+      </div>
+    </div>
+    <div class="oneHalf">
+      <div class="quotes-quote">
+       "If you don't design your own life plan, chances are you'll fall into someone else's plan. And guess what they have planned for you? Not much."
+      </div>
+      <div class="quotes-author clearfix">
+        <div class="quotes-author-avatar"></div>
+        <div class="quotes-author-name">Jeremy Alcasa</div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="about">
+  <div class="container">
+    <div class="fullWidth">
+      <div class="about-wrapper">
+        <h3>About Burpple</h3>
+        <p>Burpple helps people decide where to eat. Over 2 million people used Burpple in 2014 to find trending places to eat through drool-worthy photo reviews. Join over 1,000 businesses in reaching these potential customers!</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="brand_cta">
+  <div class="brands">
+    <div class="container">
+      <div class="fullWidth">
+        <div class="brands-img">
+          <%= image_tag "biz/marketing/brands-top.png", class: "pull-left-with-margin"%>
+          <%= image_tag "biz/marketing/brands-bottom.png", class: "pull-left-with-margin"%>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cta">
+    <div class="container">
+      <div class="fullWidth">
+        <div class="cta-wrapper">
+          <span>Join over 1000 other businesses now!</span>
+          <%= link_to "Claim your business for free", new_merchant_registration_path, :class => 'btn btn--green btn--big' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

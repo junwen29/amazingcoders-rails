@@ -1,14 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-gb">
 <head>
-  <title>AmazingcodersRails</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="icon" type="image/png" href="http://www.burpple.com/img/favicon.ico" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title><%= !@html_title.blank? ? @html_title  : "Amazing Coders" %></title>
+
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+  <%= yield :head %>
+
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body class="preload">
 
-<%= yield %>
+<%= content_for?(:content) ? yield(:content) : yield %>
+
+<!-- START MODAL BOXES -->
+<div id="leanOverlayContent">
+  <%= yield :lean_overlay %>
+</div>
+
+<div id="leanOverlayBg"></div>
+<!-- END MODAL BOXES -->
+
+<%= yield :body_footer %>
 
 </body>
+
+<footer>
+  <script>
+      $(document).ready(function(){
+          // Initialize collapse button
+          $(".button-collapse").sideNav();
+          <%= yield :script %>
+      });
+  </script>
+</footer>
+
+<%# debug(params) if Rails.env.development? %>
 </html>
