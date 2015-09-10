@@ -1,6 +1,8 @@
 class Deal < ActiveRecord::Base
   has_many :deal_venues, inverse_of: :deal, dependent: :destroy
   has_many :venues, through: :deal_venues
+  has_many :deal_days, :dependent => :destroy
+  accepts_nested_attributes_for :deal_days, allow_destroy: true
 
   # Validate input fields from form
   validates(:title, presence: true)
@@ -9,7 +11,7 @@ class Deal < ActiveRecord::Base
   validates(:start_date, presence: true)
   validates(:expiry_date, presence: true)
   validates(:t_c, presence: true)
-  # validates :deal_days, :presence => {message: "Please ensure that there is at least one deal period"}
+  validates :deal_days, :presence => {message: "Please ensure that there is at least one deal period"}
 
   # Process input fields and further validate
   validate :future_date
