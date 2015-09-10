@@ -1,0 +1,76 @@
+<div class="content-form">
+  <%= form_for :payment, url: payments_path do |f| %>
+
+      <h4>Premium Services</h4>
+
+      <h6> lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum </h6>
+
+      <p class="form-textarea clearfix">
+        <%= f.label :premium, 'Upgrade to enjoy premium services?' %>
+      </p>
+      <p class="form-select half" style="margin-top: 0px;">
+        <%= f.label :premium, "Yes", :value => true %>
+        <%= f.radio_button :premium, true%>
+      </p>
+      <p class="form-select" style="margin-top: 0px;">
+        <%= f.label :premium, "No", :value => false %>
+        <%= f.radio_button :premium, false%>
+      </p>
+<br>
+      <h4>Add-on 1</h4>
+
+      <h6> lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum </h6>
+
+      <h4>Add-on 2</h4>
+
+      <h6> lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum </h6>
+
+      <h4>Add-on 3</h4>
+
+      <h6> lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum </h6>
+
+      <p class="form-textarea clearfix">
+        <%= f.label :add1, 'Include Add-on 1' %>
+      </p>
+      <p class="form-select half" style="margin-top: 0px;">
+        <%= f.label :add1, "Yes", :value => true %>
+        <%= f.radio_button :add1, true%>
+      </p>
+      <p class="form-select" style="margin-top: 0px;">
+        <%= f.label :add1, "No", :value => false %>
+        <%= f.radio_button :add1, false%>
+      </p>
+
+      <p class="form-textarea clearfix">
+        <%= f.label :add2, 'Include Add-on 2' %>
+      </p>
+      <p class="form-select half" style="margin-top: 0px;">
+        <%= f.label :add2, "Yes", :value => true %>
+        <%= f.radio_button :add2, true%>
+      </p>
+      <p class="form-select" style="margin-top: 0px;">
+        <%= f.label :add2, "No", :value => false %>
+        <%= f.radio_button :add2, false%>
+      </p>
+
+      <p class="form-textarea clearfix">
+        <%= f.label :add3, 'Include Add-on 3' %>
+      </p>
+      <p class="form-select half" style="margin-top: 0px;">
+        <%= f.label :add3, "Yes", :value => true %>
+        <%= f.radio_button :add3, true%>
+      </p>
+      <p class="form-select" style="margin-top: 0px;">
+        <%= f.label :add3, "No", :value => false %>
+        <%= f.radio_button :add3, false%>
+      </p>
+
+      <h4>Total Price:</h4>
+
+
+
+      <p class="clearfix">
+        <%= f.submit "Proceed to Checkout", :class => 'btn btn-big btn-success' %>
+      </p>
+  <% end %>
+</div><!-- content-form -->

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :merchants
   resources :charges
   resources :deals
+  resources :payments
 
   get 'merchant_pages/home' => 'merchant_pages#home', :as => :merchant_home
   get 'merchant_pages/help' => 'merchant_pages#help', :as => :merchant_help
