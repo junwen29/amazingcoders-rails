@@ -25,6 +25,7 @@ en:
     attributes:
 
       deal:
+        venues: ""
         deal_days: ""
         name_of_deal: "Title of Deal"
         type_of_deal: "Type of Deal"
