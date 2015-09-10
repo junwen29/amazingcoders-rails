@@ -62,6 +62,7 @@ class DealsController < ApplicationController
 
   def show
     @venues = @deal.venues
+    @qr = RQRCode::QRCode.new(@deal.to_s).to_img.resize(200, 200).to_data_url
   end
 
   def destroy
