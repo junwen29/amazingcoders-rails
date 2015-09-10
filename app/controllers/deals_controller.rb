@@ -3,30 +3,21 @@ class DealsController < ApplicationController
 
   def new
     @deal = Deal.new
-
-    # To give data to deal_day and deal_time
+    @deal_venue = @deal.deal_venues.build
     deal_day = @deal.deal_days.build
     deal_day.deal_times.build
-
-    # For drop down form
     @all_venues = Venue.all
+  end
+
+  def edit
+    @deal_venues = @deal.deal_venues.all
+    @deal_venues.destroy_all
     @deal_venue = @deal.deal_venues.build
     #DealMailer.deal_email("Test Food Merchant", "Deal Listing Service").deliver
 
     # Get all venue locations from this merchant
     @locations = Venue.pluck(:neighbourhood)
 
-  end
-
-  def edit
-    @deal = Deal.find(params[:id])
-
-    # For drop down form
-    @all_venues = Venue.all
-    @deal_venue = @deal.deal_venues.build
-
-    # Get all venue locations from this merchant
-    @locations = Venue.pluck(:neighbourhood)
   end
 
   def index
@@ -63,7 +54,6 @@ class DealsController < ApplicationController
   end
 
   def update
-    @deal = Deal.find(params[:id])
 
     # For drop down form
     @all_venues = Venue.all
@@ -93,11 +83,9 @@ class DealsController < ApplicationController
   end
 
   def show
-    @deal = Deal.find(params[:id])
   end
 
   def destroy
-    @deal = Deal.find(params[:id])
     @deal.destroy
     flash[:success] = "Deal deleted!"
     #need not add a view for this action since redirecting to the index
@@ -113,11 +101,10 @@ class DealsController < ApplicationController
 
   private
   def deal_params
-    params.require(:deal).permit(:title, :redeemable, :multiple_use, :image,
-      :type_of_deal, :description, :start_date, :expiry_date, :location, :t_c,
-                                 :pushed, deal_days_attributes: [:id, :mon, :tue, :wed, :thur, :fri, :sat, :sun,
-                                                                 :_destroy, deal_times_attributes:
-                                                                     [:id, :started_at, :ended_at, :_destroy]],
+    params.require(:deal).permit(:title, :redeemable, :multiple_use, :image, :type_of_deal, :description, :start_date,
+                                 :expiry_date, :location, :t_c, :pushed,
+                                 deal_days_attributes: [:id, :mon, :tue, :wed, :thur, :fri, :sat, :sun, :_destroy,
+                                                        deal_times_attributes: [:id, :started_at, :ended_at, :_destroy]],
                                  deal_venues_attributes: [:id, :qrCodeLink], venues_attributes: [:id, :location])
   end
 end

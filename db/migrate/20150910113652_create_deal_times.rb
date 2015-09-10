@@ -1,8 +1,9 @@
 class CreateDealTimes < ActiveRecord::Migration
   def change
     create_table :deal_times do |t|
-      t.time :started_at
-      t.time :ended_at
+      t.references :deal_day
+      t.time :started_at, null: true, :default => nil
+      t.time :ended_at, null:true, :default => nil
       t.timestamps
     end
   end

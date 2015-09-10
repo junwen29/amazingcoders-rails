@@ -1,5 +1,5 @@
 <div class="content-form">
-  <%= form_for :deal, url: deals_path do |f| %>
+  <%= form_for @deal, url: deals_path do |f| %>
       <p class="form-textarea clearfix">
         <%= f.label :title, "Title of deal" %>
         <span>
@@ -34,6 +34,14 @@
           </span>
       </p>
 
+      <!-- Following is a nested form of deal_day-->
+      <p class="form-textarea clearfix">
+          <%= f.label :deal_days, "Deal Period:" %>
+          <%= f.fields_for :deal_days do |builder| %>
+              <%= render 'form/deal_day_form', f: builder %>
+          <% end %>
+          <%= link_to_add_day "Add deal period", f, :deal_days %>
+      </p>
       <%= fields_for (@deal_venue) do |dv| %>
           <div class = "field">
             <%= dv.label "Select Venues" %><br />

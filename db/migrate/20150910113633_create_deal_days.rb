@@ -1,6 +1,7 @@
 class CreateDealDays < ActiveRecord::Migration
   def change
     create_table :deal_days do |t|
+      t.references :deal
       t.boolean :mon
       t.boolean :tue
       t.boolean :wed
