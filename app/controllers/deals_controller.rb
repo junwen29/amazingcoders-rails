@@ -10,14 +10,12 @@ class DealsController < ApplicationController
   end
 
   def edit
-    @deal_venues = @deal.deal_venues.all
-    @deal_venues.destroy_all
+    # For drop down form
+    @all_venues = Venue.all
     @deal_venue = @deal.deal_venues.build
-    #DealMailer.deal_email("Test Food Merchant", "Deal Listing Service").deliver
 
     # Get all venue locations from this merchant
     @locations = Venue.pluck(:neighbourhood)
-
   end
 
   def index
@@ -43,6 +41,7 @@ class DealsController < ApplicationController
     end
 
     if @deal.save
+      #DealMailer.deal_email("Test Food Merchant", "Deal Listing Service").deliver
       flash[:success] = "Deal successfully created!"
       redirect_to @deal
       # Send out confirmation email
