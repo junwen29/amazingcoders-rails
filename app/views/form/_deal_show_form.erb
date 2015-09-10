@@ -39,8 +39,10 @@
 </p>
 
 <p>
-  <strong>Location:</strong>
-  <%= @deal.location %>
+  <strong>Venue:</strong>
+  <% @deal.venues.each do |venue| %>
+      <span><%= venue.neighbourhood %></span>
+  <% end %>
 </p>
 
 <p>

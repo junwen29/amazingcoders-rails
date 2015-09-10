@@ -5,7 +5,7 @@
 
     <!-- Flash Error Message -->
     <% if @venue.errors.any? %>
-        <div id="error_explanation">
+        <div id="error_explanation" class="alert alert-error">
           <h2>
             <%= pluralize(@venue.errors.count, "error") %> prohibited this venue from being saved:
           </h2>
@@ -28,10 +28,10 @@
     <!-- Content Body -->
     <%= form_for(@venue, url: venue_path,  :html => {:onSubmit => "return validate_getting_started(this);", :class => "venueForm"}) do |f| %>
         <%= render :partial => 'form/venue_edit_form', :locals => { :f => f , :object => @select_day_hours_string, :venue_type => @venue_type } %>
-        <p class="form-actions">
-          <%= f.submit "Submit", :class => 'btn btn-big btn-success' %>
-        </p>
-        <%= link_to 'Back', venues_path, class: "btn btn-big btn-default" %>
+        <div style="margin-top: 30px">
+          <%= f.submit "Submit", :class => 'btn btn-lg btn-success' %>
+          <%= link_to 'Back', venues_path, class: "btn btn-lg btn-default" %>
+        </div>
 
         </div><!-- /content -->
         </div><!-- /contentWrapper -->
