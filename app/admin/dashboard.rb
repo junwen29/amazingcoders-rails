@@ -10,6 +10,15 @@ ActiveAdmin.register_page "Dashboard" do
       end
     end
 
+    panel "Recent Deals" do
+      table_for Deal.order("created_at desc").limit(5) do
+        column "Title", :title
+        column "Merchant Id", :merchant_id
+        column "Created At", :created_at
+      end
+      strong {link_to "View all Deals", admin_deals_path}
+    end
+
     # Here is an example of a simple dashboard with columns and panels.
     #
     # columns do
