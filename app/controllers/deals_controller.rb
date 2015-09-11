@@ -6,12 +6,12 @@ class DealsController < ApplicationController
     @deal_venue = @deal.deal_venues.build
     deal_day = @deal.deal_days.build
     deal_day.deal_times.build
-    @all_venues = Venue.all
+    @all_venues = MerchantService.get_all_venues(merchant_id)
   end
 
   def edit
     # For drop down form
-    @all_venues = Venue.all
+    @all_venues = MerchantService.get_all_venues(merchant_id)
     @deal_venue = @deal.deal_venues.build
 
     # Get all venue locations from this merchant
@@ -29,7 +29,7 @@ class DealsController < ApplicationController
     # Get all venue locations from this merchant
     @locations = Venue.pluck(:neighbourhood)
     # For drop down form
-    @all_venues = Venue.all
+    @all_venues = MerchantService.get_all_venues(merchant_id)
     @deal_venue = @deal.deal_venues.build
 
     # Add venue_id to deal_venue join table
@@ -56,7 +56,7 @@ class DealsController < ApplicationController
   def update
 
     # For drop down form
-    @all_venues = Venue.all
+    @all_venues = MerchantService.get_all_venues(merchant_id)
     @deal_venue = @deal.deal_venues.build
 
     # Find all previous associations in join table and delete them

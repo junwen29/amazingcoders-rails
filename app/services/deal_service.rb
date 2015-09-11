@@ -2,29 +2,13 @@ class DealService
 
   module ClassMethods
 
-    def get_all_venues(merchant_id)
-      Venue.where(:merchant_id => merchant_id)
+    def get_overlapping_deals(merchant_id, new_start_date, new_expiry_date)
+      all_deals = Deal.where(:merchant_id => merchant_id)
+      valid_deals = all_deals.where('expiry_date > ?', DateTime.now)
+      overlapping_deals = valid_deals.where('(? <= start_date AND ? >= start_date) OR (? >= start_date AND ? <= expiry_date)',
+                                          new_start_date, new_expiry_date, new_start_date, new_start_date)
+      overlapping_deals.count
     end
-
-    # for venue
-    def get_venue(merchant_id, venue_id)
-      Venue.where(:id => venue_id ,:merchant_id => merchant_id).first
-    end
-
-    def update_venue(merchant_id, params)
-      venue_id = params[:id]
-      venue = get_venue(merchant_id, venue_id)
-
-      unless venue
-        raise ActiveRecord::RecordNotFound
-      end
-
-      venue.update_attributes(add_permit_on_venue(params[:venue]))
-
-      venue
-    end
-
-
 
   end
 
