@@ -1,4 +1,6 @@
 class Deal < ActiveRecord::Base
+  belongs_to :merchant
+
   has_many :deal_venues, inverse_of: :deal, dependent: :destroy
   has_many :venues, through: :deal_venues
   has_many :deal_days, :dependent => :destroy
