@@ -1,6 +1,8 @@
 class Deal < ActiveRecord::Base
   has_many :deal_venues, inverse_of: :deal, dependent: :destroy
   has_many :venues, through: :deal_venues
+  has_many :deal_days, :dependent => :destroy
+  accepts_nested_attributes_for :deal_days, allow_destroy: true
 
   # Validate input fields from form
   validates(:title, presence: true)
@@ -8,8 +10,9 @@ class Deal < ActiveRecord::Base
   validates(:description,presence: true, length: {minimum: 5})
   validates(:start_date, presence: true)
   validates(:expiry_date, presence: true)
+  # validates :venues, :presence => {message: "Please ensure that there is at least one venue selected"}
   validates(:t_c, presence: true)
-  # validates :deal_days, :presence => {message: "Please ensure that there is at least one deal period"}
+  validates :deal_days, :presence => {message: "Please ensure that there is at least one deal period"}
 
   # Process input fields and further validate
   validate :future_date
@@ -28,10 +31,11 @@ class Deal < ActiveRecord::Base
   end
 
   def ensuring_multiple_use_checked
-    if (redeemable != nil)
+    if (redeemable)
       errors.add(:multiple_use, 'Please indicate the number of times the deals can be redeemed per user') if ((multiple_use == nil) rescue ArgumentError == ArgumentError)
     end
   end
+
   def future_date
     errors.add(:start_date, 'must be at least one day in advance') if ((start_date <= Date.today) rescue ArgumentError == ArgumentError)
   end

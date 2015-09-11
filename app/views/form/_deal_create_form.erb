@@ -1,5 +1,5 @@
 <div class="content-form">
-  <%= form_for :deal, url: deals_path do |f| %>
+  <%= form_for @deal, url: deals_path do |f| %>
       <p class="form-textarea clearfix">
         <%= f.label :title, "Title of deal" %>
         <span>
@@ -34,6 +34,14 @@
           </span>
       </p>
 
+      <!-- Following is a nested form of deal_day-->
+      <p class="form-textarea clearfix">
+          <%= f.label :deal_days, "Deal Period:" %>
+          <%= f.fields_for :deal_days do |builder| %>
+              <%= render 'form/deal_day_form', f: builder %>
+          <% end %>
+          <%= link_to_add_day "Add deal period", f, :deal_days %>
+      </p>
       <%= fields_for (@deal_venue) do |dv| %>
           <div class = "field">
             <%= dv.label "Select Venues" %><br />
@@ -60,29 +68,32 @@
         <%= f.radio_button :pushed, false%>
       </p>
 
-      <p class="form-textarea clearfix">
-        <%= f.label :redeemable, "Would you like users to redeem through deal code? (Helps gather analytics)" %>
-      </p>
-      <p class="form-select half" style="margin-top: 0px;">
-        <%= f.label :redeemable, "Yes", :value => true %>
-        <%= f.radio_button :redeemable, true%>
-      </p>
-      <p class="form-select" style="margin-top: 0px;">
-        <%= f.label :redeemable, "No", :value => false %>
-        <%= f.radio_button :redeemable, false%>
-      </p>
-
-      <p class="form-textarea clearfix">
-        <%= f.label :multiple_use, "How many times can this deal be redeemed per user?" %><br>
-      </p>
-      <p class="form-select half" style="margin-top: 0px;">
-        <%= f.label :multiple_use, "Unlimited Redemptions", :value => true %>
-        <%= f.radio_button :multiple_use, true %>
-      </p>
-      <p class="form-select" style="margin-top: 0px;">
-        <%= f.label :multiple_use, "Once", :value => false %>
-        <%= f.radio_button :multiple_use, false%>
-      </p>
+      <div id= "redeemable">
+        <p class="form-textarea clearfix">
+          <%= f.label :redeemable, "Would you like users to redeem through deal code? (Helps gather analytics)" %>
+        </p>
+        <p class="form-select half" style="margin-top: 0px;">
+          <%= f.label :redeemable, "Yes", :value => true %>
+          <%= f.radio_button :redeemable, true%>
+        </p>
+        <p class="form-select" style="margin-top: 0px;">
+          <%= f.label :redeemable, "No", :value => false %>
+          <%= f.radio_button :redeemable, false%>
+        </p>
+        <div id="redeemable_true">
+          <p class="form-textarea clearfix">
+            <%= f.label :multiple_use, "How many times can this deal be redeemed per user?" %><br>
+          </p>
+          <p class="form-select half" style="margin-top: 0px;">
+            <%= f.label :multiple_use, "Unlimited Redemptions", :value => true %>
+            <%= f.radio_button :multiple_use, true %>
+          </p>
+          <p class="form-select" style="margin-top: 0px;">
+            <%= f.label :multiple_use, "Once", :value => false %>
+            <%= f.radio_button :multiple_use, false%>
+          </p>
+        </div>
+      </div>
 
       <div style="margin-top: 30px">
         <%= f.submit "Create Deal", :class => 'btn btn-big btn-success' %>

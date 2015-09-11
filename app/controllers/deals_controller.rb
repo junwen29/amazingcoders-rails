@@ -3,20 +3,13 @@ class DealsController < ApplicationController
 
   def new
     @deal = Deal.new
-
-    # For drop down form
-    @all_venues = Venue.all
     @deal_venue = @deal.deal_venues.build
-    #DealMailer.deal_email("Test Food Merchant", "Deal Listing Service").deliver
-
-    # Get all venue locations from this merchant
-    @locations = Venue.pluck(:neighbourhood)
-
+    deal_day = @deal.deal_days.build
+    deal_day.deal_times.build
+    @all_venues = Venue.all
   end
 
   def edit
-    @deal = Deal.find(params[:id])
-
     # For drop down form
     @all_venues = Venue.all
     @deal_venue = @deal.deal_venues.build
@@ -48,6 +41,7 @@ class DealsController < ApplicationController
     end
 
     if @deal.save
+      #DealMailer.deal_email("Test Food Merchant", "Deal Listing Service").deliver
       flash[:success] = "Deal successfully created!"
       redirect_to @deal
       # Send out confirmation email
@@ -59,7 +53,6 @@ class DealsController < ApplicationController
   end
 
   def update
-    @deal = Deal.find(params[:id])
 
     # For drop down form
     @all_venues = Venue.all
@@ -89,11 +82,9 @@ class DealsController < ApplicationController
   end
 
   def show
-    @deal = Deal.find(params[:id])
   end
 
   def destroy
-    @deal = Deal.find(params[:id])
     @deal.destroy
     flash[:success] = "Deal deleted!"
     #need not add a view for this action since redirecting to the index
@@ -109,9 +100,11 @@ class DealsController < ApplicationController
 
   private
   def deal_params
-    params.require(:deal).permit(:title, :redeemable, :multiple_use, :image,
-      :type_of_deal, :description, :start_date, :expiry_date, :location, :t_c, 
-      :pushed)
+    params.require(:deal).permit(:title, :redeemable, :multiple_use, :image, :type_of_deal, :description, :start_date,
+                                 :expiry_date, :location, :t_c, :pushed,
+                                 deal_days_attributes: [:id, :mon, :tue, :wed, :thur, :fri, :sat, :sun, :_destroy,
+                                                        deal_times_attributes: [:id, :started_at, :ended_at, :_destroy]],
+                                 deal_venues_attributes: [:id, :qrCodeLink], venues_attributes: [:id, :location])
   end
 end
 
