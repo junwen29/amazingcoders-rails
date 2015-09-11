@@ -1,9 +1,9 @@
 class CreatePlans < ActiveRecord::Migration
   def change
     create_table :plans do |t|
-      t.String :name
+      t.string :name
       t.integer :cost
-      t.String :description
+      t.string :description
       t.timestamps
     end
   end

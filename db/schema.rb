@@ -11,10 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150909080335) do
+ActiveRecord::Schema.define(version: 20150911023530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "add_ons", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "deals", force: true do |t|
     t.string   "title"
@@ -50,6 +55,26 @@ ActiveRecord::Schema.define(version: 20150909080335) do
 
   add_index "merchants", ["email"], name: "index_merchants_on_email", unique: true, using: :btree
   add_index "merchants", ["reset_password_token"], name: "index_merchants_on_reset_password_token", unique: true, using: :btree
+
+  create_table "payments", force: true do |t|
+    t.date     "start_date"
+    t.date     "expiry_date"
+    t.integer  "total_cost"
+    t.boolean  "add_on1"
+    t.boolean  "add_on2"
+    t.boolean  "add_on3"
+    t.integer  "plan_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "plans", force: true do |t|
+    t.string   "name"
+    t.integer  "cost"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "venues", force: true do |t|
     t.string   "name"
