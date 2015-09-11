@@ -41,11 +41,11 @@ class DealsController < ApplicationController
     end
 
     if @deal.save
-      #DealMailer.deal_email("Test Food Merchant", "Deal Listing Service").deliver
+      # DealMailer.deal_email("Test Food Merchant", "Deal Listing Service").deliver
       flash[:success] = "Deal successfully created!"
       redirect_to @deal
       # Send out confirmation email
-      # DealMailer.deal_email("Test Food Merchant", @deal).deliver
+      DealMailer.deal_email("Test Food Merchant", @deal).deliver
     else
       flash[:error] = "Failed to create deal!"
       render 'new'
@@ -82,6 +82,7 @@ class DealsController < ApplicationController
   end
 
   def show
+    @qr = RQRCode::QRCode.new(@deal.id.to_s + "_" + @deal.created_at.to_s).to_img.resize(200, 200).to_data_url
   end
 
   def destroy

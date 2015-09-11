@@ -61,9 +61,9 @@
     <br>
     <strong> Time period:</strong><br>
     <% for deal_time in deal_day.deal_times%>
-        <%=h deal_time.started_at %>
+        <%=h deal_time.started_at.strftime("%H:%M") %>
         to
-        <%=h deal_time.ended_at %><br>
+        <%=h deal_time.ended_at.strftime("%H:%M") %><br>
     <% end %>
 <% end %>
 
@@ -96,5 +96,18 @@
       <% end %>
   <% else %>
       No <br>
+  <% end %>
+</p>
+
+<p>
+  <% @deal.venues.each do |venue| %>
+      <%= attachments.inline['qr_code'] = {
+              :data => File.read(@qr = RQRCode::QRCode.new("hello").to_img.resize(100, 100).to_data_url),
+              :mime_type => "image/png",
+              :encoding => "base64"
+      } %>
+      <strong>QR Code for <%= venue.neighbourhood %></strong><br>
+      <% @qr = RQRCode::QRCode.new("hello").to_img.resize(100, 100).to_data_url %>
+      <span><%= image_tag @qr %><br></span>
   <% end %>
 </p>
