@@ -3,6 +3,13 @@
   <h2>Log in</h2>
   <br/><br/>
 
+  <!--Flash messages-->
+  <% flash.each do |key, value| %>
+      <% if(key == "alert") %>
+          <div class="alert alert-error"><%= value %></div>
+      <% end %>
+  <% end %>
+
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="field">
         <%= f.label :email %><br />

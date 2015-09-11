@@ -5,4 +5,5 @@ class Merchant < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :venues, dependent: :destroy
+  has_many :deals
 end

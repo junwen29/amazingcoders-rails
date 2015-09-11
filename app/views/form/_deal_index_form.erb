@@ -19,7 +19,7 @@
         <th colspan="3"></th>
       </tr>
 
-      <% @deal.each do |deal| %>
+      <% @deals.each do |deal| %>
           <% if deal.start_date.today? || deal.expiry_date.today? || (deal.start_date.past? && deal.expiry_date.future?) %>
               <tr>
                 <td><%= deal.id %></td>
@@ -73,7 +73,7 @@
         <th colspan="3"></th>
       </tr>
 
-      <% @deal.each do |deal| %>
+      <% @deals.each do |deal| %>
           <% if deal.start_date.future? %>
               <tr>
                 <td><%= deal.id %></td>
@@ -127,7 +127,7 @@
         <th colspan="3"></th>
       </tr>
 
-      <% @deal.each do |deal| %>
+      <% @deals.each do |deal| %>
           <% if deal.expiry_date.past? %>
               <tr>
                 <td><%= deal.id %></td>

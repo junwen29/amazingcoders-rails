@@ -1,9 +1,10 @@
 <header>
+  <div class="container">
   <div class="header-content">
     <div class="header-logo">
       <%= link_to image_tag("biz/burpple_logo.png", :alt => "burpple"), deals_path %>
     </div>
-    <div class="header-content-item logoutBtn">
+    <div style="float: right; padding-top: 24px;">
       <% if merchant_signed_in? %>
           <!-- <strong><%= current_merchant.email %></strong> -->
           <%= link_to 'Edit profile', edit_merchant_registration_path, class: "btn btn-lg btn-info" %>
@@ -14,6 +15,7 @@
           <%= link_to "Log in", new_merchant_session_path, class: "btn btn-lg btn-info"%>
       <% end %>
     </div>
+  </div>
   </div>
 </header>
 
@@ -95,18 +97,18 @@
     <div class="container">
       <div class="fullWidth">
         <div class="brands-img">
-          <%= image_tag "biz/marketing/brands-top.png", class: "pull-left-with-margin"%>
-          <%= image_tag "biz/marketing/brands-bottom.png", class: "pull-left-with-margin"%>
+          <%= image_tag "biz/marketing/brands-top.png", class: "col-sm-6"%>
+          <%= image_tag "biz/marketing/brands-bottom.png", class: "col-sm-6"%>
         </div>
       </div>
     </div>
   </div>
-  <div class="cta">
+  <div style="padding: 40px 0px; text-align: center; font-size: 28px;">
     <div class="container">
       <div class="fullWidth">
         <div class="cta-wrapper">
           <span>Join over 1000 other businesses now!</span>
-          <%= link_to "Claim your business for free", new_merchant_registration_path, :class => 'btn btn--green btn--big' %>
+          <%= link_to "Claim your business for free", new_merchant_registration_path, :class => 'btn btn-lg btn-success' %>
         </div>
       </div>
     </div>

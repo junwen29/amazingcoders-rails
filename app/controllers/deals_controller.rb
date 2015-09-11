@@ -19,12 +19,13 @@ class DealsController < ApplicationController
   end
 
   def index
-    @deal = Deal.all
+    @deals = MerchantService.get_all_deals(merchant_id)
   end
 
   def create
     #for database
-    @deal = Deal.new(deal_params)
+    @deal = Merchant.find(merchant_id).deals.new(deal_params)
+
     # Get all venue locations from this merchant
     @locations = Venue.pluck(:neighbourhood)
     # For drop down form
