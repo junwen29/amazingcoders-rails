@@ -59,3 +59,6 @@ gem 'devise'
 
 # For QRCode
 gem 'rqrcode_png'
+
+# For attaching images
+gem 'carrierwave'
