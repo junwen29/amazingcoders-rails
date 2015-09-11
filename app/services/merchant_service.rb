@@ -2,6 +2,7 @@ class MerchantService
 
   module ClassMethods
 
+    # for venues
     def get_all_venues(merchant_id)
       Venue.where(:merchant_id => merchant_id)
     end
@@ -9,6 +10,11 @@ class MerchantService
     # for venue
     def get_venue(merchant_id, venue_id)
       Venue.where(:id => venue_id ,:merchant_id => merchant_id).first
+    end
+
+    #for deals
+    def get_all_deals(merchant_id)
+      Deal.where(:merchant_id => merchant_id)
     end
 
     def update_venue(merchant_id, params)
