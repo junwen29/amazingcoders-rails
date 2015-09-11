@@ -1,11 +1,11 @@
 class PaymentsController < ApplicationController
 
   def new
-   # @payment = Payment.new
+  #  @payments = Payment.new
   end
 
   def index
- #   @payments = Payment.all
+  #  @payments = Payment.all
   end
 
   def create
