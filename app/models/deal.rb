@@ -15,8 +15,8 @@ class Deal < ActiveRecord::Base
   validates :deal_days, :presence => {message: "Please ensure that there is at least one deal period"}
 
   # Process input fields and further validate
-  validate :future_date
-  validate :check_expiry_date
+  # validate :future_date
+  # validate :check_expiry_date
   validate :ensuring_pushed_checked
   validate :ensuring_redeemable_checked
   validate :ensuring_multiple_use_checked

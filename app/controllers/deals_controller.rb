@@ -137,7 +137,7 @@ class DealsController < ApplicationController
     end
     dealperiod
   end
-  helper_method :organize_dates
+  helper_method :format_days
 
   private
   # Use callbacks to share common setup or constraints between actions.
