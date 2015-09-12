@@ -1,4 +1,5 @@
 class AddOnsController < ApplicationController
+  before_filter :authenticate_merchant!, except: [:home, :help]
 
   def new
     @add_on = Add_on.new
