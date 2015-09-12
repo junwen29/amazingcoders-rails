@@ -15,8 +15,13 @@ ActiveAdmin.register_page "Dashboard" do
 
     panel "Recent Deals" do
       table_for Deal.order("created_at desc").limit(5) do
-        column "Title", :title
-        column "Merchant Id", :merchant_id
+        column "Title", :title do |deal|
+          link_to deal.title, admin_deal_path(deal)
+        end
+        column :merchant_id
+        column "Venues" do |deal|
+          deal.venues.map{|v| v.name }.join(", ").html_safe
+        end
         column "Created At", :created_at
       end
       strong {link_to "View all Deals", admin_deals_path}
