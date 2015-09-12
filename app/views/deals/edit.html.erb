@@ -3,16 +3,13 @@
 <div class="contentWrapper">
   <div class="content">
 
-    <% if @deal.start_date.today? || @deal.expiry_date.today? || (@deal.start_date.past? && @deal.expiry_date.future?) %>
-        <h2>You cannot change your deal because it is already active!</h2>
-    <% else %>
     <!-- post back messages -->
     <% if @deal.errors.any? %>
-        <div id="error_explanation">
-          <h2>
+        <div id="error_explanation" class="alert alert-error">
+          <h5>
             <%= pluralize(@deal.errors.count, "error") %> prohibited
             this deal from being saved:
-          </h2>
+          </h5>
           <ul>
             <% @deal.errors.full_messages.each do |msg| %>
                 <li><%= msg %></li>
@@ -26,8 +23,7 @@
 
     <!-- Content Body -->
     <%= render :partial => 'form/deal_edit_form' %>
-    <% end %>
-    <%= link_to 'Back', deals_path, class: "btn btn-big btn-default" %>
+    
   </div>
 </div>
 
