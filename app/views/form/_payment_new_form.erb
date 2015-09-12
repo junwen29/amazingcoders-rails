@@ -1,0 +1,35 @@
+<div class="content-form">
+  <%= form_for :payment, url: payments_path do |f| %>
+
+      <h4>Premium Services</h4>
+
+      <%= @plan.each do |p| %>
+          <tr>
+            <td><%= p.name %></td><br>
+            <td><%= p.cost %></td><br>
+            <td><%= p.description %></td><br>
+          </tr>
+      <% end %>
+
+      <p class="form-textarea clearfix">
+        <%= f.label :plan1, 'Upgrade to enjoy premium services?' %>
+      </p>
+      <p class="form-select half" style="margin-top: 0px;">
+        <%= f.label :plan1, "Yes", :value => true %>
+        <%= f.radio_button :plan1, true%>
+      </p>
+      <p class="form-select" style="margin-top: 0px;">
+        <%= f.label :plan1, "No", :value => false %>
+        <%= f.radio_button :plan1, false%>
+      </p>
+
+
+      <h4>Total Price:</h4>
+
+
+
+      <p class="clearfix">
+        <%= f.submit "Proceed to Checkout", :class => 'btn btn-big btn-success' %>
+      </p>
+  <% end %>
+</div><!-- content-form -->
