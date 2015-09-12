@@ -22,6 +22,8 @@ ActiveAdmin.register_page "Dashboard" do
         column "Venues" do |deal|
           deal.venues.map{|v| v.name }.join(", ").html_safe
         end
+        column "Active Date", :start_date
+        column "Expiry Date", :expiry_date
         column "Created At", :created_at
       end
       strong {link_to "View all Deals", admin_deals_path}
