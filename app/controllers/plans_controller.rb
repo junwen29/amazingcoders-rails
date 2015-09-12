@@ -1,6 +1,6 @@
 class PlansController < ApplicationController
   before_filter :authenticate_merchant!, except: [:home, :help]
-  
+
   def new
   #  @plan = Plan.new
     @plan = Plan.all
