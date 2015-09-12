@@ -3,7 +3,7 @@ class PlansController < ApplicationController
 
   def new
     @plan = Plan.new
-  #  @plan = Plan.all
+    #  @plan = Plan.all
   end
 
   def edit
@@ -16,12 +16,10 @@ class PlansController < ApplicationController
 
   def create
     #for database
-    @plan = Plan.new(deal_params)
+    @plan = Plan.new(plan_params)
 
     if @plan.save
       redirect_to @plan
-      # Send out confirmation email
-      # DealMailer.deal_email("Test Food Merchant", @deal).deliver
     else
       render 'new'
     end
@@ -46,7 +44,7 @@ class PlansController < ApplicationController
     @plan.destroy
     #need not add a view for this action since redirecting to the index
     #action
-         #redirect_to plan_path
+    #redirect_to plan_path
   end
 
   private

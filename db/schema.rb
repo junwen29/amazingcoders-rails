@@ -32,12 +32,17 @@ ActiveRecord::Schema.define(version: 20150911125527) do
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
   create_table "add_ons", force: true do |t|
+    t.integer  "payment_id"
+    t.integer  "plan_id"
     t.string   "name"
     t.integer  "cost"
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "add_ons", ["payment_id"], name: "index_add_ons_on_payment_id", using: :btree
+  add_index "add_ons", ["plan_id"], name: "index_add_ons_on_plan_id", using: :btree
 
   create_table "admin_users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -139,12 +144,15 @@ ActiveRecord::Schema.define(version: 20150911125527) do
   end
 
   create_table "plans", force: true do |t|
+    t.integer  "Payment_id"
     t.string   "name"
     t.integer  "cost"
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "plans", ["Payment_id"], name: "index_plans_on_Payment_id", using: :btree
 
   create_table "venues", force: true do |t|
     t.string   "name"
