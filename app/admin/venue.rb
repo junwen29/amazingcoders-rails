@@ -1,18 +1,20 @@
 ActiveAdmin.register Venue do
+  menu :parent => "Merchant", :priority => 2
 
-
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # permit_params :list, :of, :attributes, :on, :model
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:permitted, :attributes]
-  #   permitted << :other if resource.something?
-  #   permitted
-  # end
-
-
+  index do
+    selectable_column
+    column :id
+    column "Merchant id", :merchant_id
+    column "Venue", :name
+    column "Information", :bio
+    column "Neighbourhood", :neighbourhood
+    column "Street", :street
+    column "Unit No", :address_2
+    column "Zipcode", :zipcode
+    column "Country", :country
+    column "Contact Number", :phone
+    column "Created At", :created_at
+    column "Updated At", :updated_at
+    actions
+  end
 end
