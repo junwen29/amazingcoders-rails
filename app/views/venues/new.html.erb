@@ -29,9 +29,10 @@
 
         <%= render :partial => 'form/venue_create_form', :locals => { :f => f , :object => @select_day_hours_string } %>
 
-        <p class="form-actions">
-          <%= f.submit "Submit", :class => 'btn btn-big btn-success' %>
-        </p>
+        <div style="margin-top: 30px">
+          <%= f.submit "Submit", :class => 'btn btn-lg btn-success' %>
+          <%= link_to 'Back', venues_path, class: "btn btn-lg btn-default" %>
+        </div>
 
     <% end %>
 

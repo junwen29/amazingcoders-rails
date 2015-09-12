@@ -4,11 +4,11 @@
   <div class="content">
     <!-- Flash Error Message -->
     <% if @deal.errors.any? %>
-        <div id="error_explanation">
-          <h2>
+        <div id="error_explanation" class="alert alert-error">
+          <h5>
             <%= pluralize(@deal.errors.count, "error") %> prohibited
             this deal from being saved:
-          </h2>
+          </h5>
           <ul>
             <% @deal.errors.full_messages.each do |msg| %>
                 <li><%= msg %></li>
@@ -28,7 +28,7 @@
 
     <!-- Content Body -->
     <%= render :partial => 'form/deal_create_form' %>
-    <%= link_to 'Back', deals_path, class: "btn btn-big btn-default" %>
+
 
   </div><!-- /content -->
 </div><!-- /contentWrapper -->
