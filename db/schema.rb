@@ -17,6 +17,9 @@ ActiveRecord::Schema.define(version: 20150911023530) do
   enable_extension "plpgsql"
 
   create_table "add_ons", force: true do |t|
+    t.string   "name"
+    t.integer  "cost"
+    t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -63,7 +66,7 @@ ActiveRecord::Schema.define(version: 20150911023530) do
     t.boolean  "add_on1"
     t.boolean  "add_on2"
     t.boolean  "add_on3"
-    t.integer  "plan_id"
+    t.boolean  "plan1"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

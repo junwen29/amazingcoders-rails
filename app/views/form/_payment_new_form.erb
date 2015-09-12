@@ -3,57 +3,26 @@
 
       <h4>Premium Services</h4>
 
-      <h6> lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum </h6>
+      <%= @plan.each do |p| %>
+          <tr>
+            <td><%= p.name %></td><br>
+            <td><%= p.cost %></td><br>
+            <td><%= p.description %></td><br>
+          </tr>
+      <% end %>
 
       <p class="form-textarea clearfix">
-        <%= f.label :premium, 'Upgrade to enjoy premium services?' %>
+        <%= f.label :plan1, 'Upgrade to enjoy premium services?' %>
       </p>
       <p class="form-select half" style="margin-top: 0px;">
-        <%= f.label :premium, "Yes", :value => true %>
-        <%= f.radio_button :premium, true%>
+        <%= f.label :plan1, "Yes", :value => true %>
+        <%= f.radio_button :plan1, true%>
       </p>
       <p class="form-select" style="margin-top: 0px;">
-        <%= f.label :premium, "No", :value => false %>
-        <%= f.radio_button :premium, false%>
-      </p>
-<br>
-      <h4>Description of Add-on</h4>
-
-      <p class="form-textarea clearfix">
-        <%= f.label :add1, 'Include Add-on 1' %>
-      </p>
-      <p class="form-select half" style="margin-top: 0px;">
-        <%= f.label :add1, "Yes", :value => true %>
-        <%= f.radio_button :add1, true%>
-      </p>
-      <p class="form-select" style="margin-top: 0px;">
-        <%= f.label :add1, "No", :value => false %>
-        <%= f.radio_button :add1, false%>
+        <%= f.label :plan1, "No", :value => false %>
+        <%= f.radio_button :plan1, false%>
       </p>
 
-      <p class="form-textarea clearfix">
-        <%= f.label :add2, 'Include Add-on 2' %>
-      </p>
-      <p class="form-select half" style="margin-top: 0px;">
-        <%= f.label :add2, "Yes", :value => true %>
-        <%= f.radio_button :add2, true%>
-      </p>
-      <p class="form-select" style="margin-top: 0px;">
-        <%= f.label :add2, "No", :value => false %>
-        <%= f.radio_button :add2, false%>
-      </p>
-
-      <p class="form-textarea clearfix">
-        <%= f.label :add3, 'Include Add-on 3' %>
-      </p>
-      <p class="form-select half" style="margin-top: 0px;">
-        <%= f.label :add3, "Yes", :value => true %>
-        <%= f.radio_button :add3, true%>
-      </p>
-      <p class="form-select" style="margin-top: 0px;">
-        <%= f.label :add3, "No", :value => false %>
-        <%= f.radio_button :add3, false%>
-      </p>
 
       <h4>Total Price:</h4>
 

@@ -1,7 +1,8 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
-Plan.create()
+Plan.create(name: 'Premium Deals Services', cost: '30', description: 'Allows unlimited creation of deals. Publishing
+of up to 5 active deals')
 
 
 # Examples:
