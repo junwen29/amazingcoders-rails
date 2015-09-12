@@ -31,6 +31,14 @@ ActiveRecord::Schema.define(version: 20150911125527) do
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
+  create_table "add_ons", force: true do |t|
+    t.string   "name"
+    t.integer  "cost"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "admin_users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -117,6 +125,26 @@ ActiveRecord::Schema.define(version: 20150911125527) do
 
   add_index "merchants", ["email"], name: "index_merchants_on_email", unique: true, using: :btree
   add_index "merchants", ["reset_password_token"], name: "index_merchants_on_reset_password_token", unique: true, using: :btree
+
+  create_table "payments", force: true do |t|
+    t.date     "start_date"
+    t.date     "expiry_date"
+    t.integer  "total_cost"
+    t.boolean  "add_on1"
+    t.boolean  "add_on2"
+    t.boolean  "add_on3"
+    t.boolean  "plan1"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "plans", force: true do |t|
+    t.string   "name"
+    t.integer  "cost"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "venues", force: true do |t|
     t.string   "name"
