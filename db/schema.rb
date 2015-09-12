@@ -11,10 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150910113652) do
+ActiveRecord::Schema.define(version: 20150911041926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "add_ons", force: true do |t|
+    t.string   "name"
+    t.integer  "cost"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "deal_days", force: true do |t|
     t.integer  "deal_id"
@@ -47,14 +55,6 @@ ActiveRecord::Schema.define(version: 20150910113652) do
   add_index "deal_venues", ["deal_id"], name: "index_deal_venues_on_deal_id", using: :btree
   add_index "deal_venues", ["venue_id"], name: "index_deal_venues_on_venue_id", using: :btree
 
-  create_table "add_ons", force: true do |t|
-    t.string   "name"
-    t.integer  "cost"
-    t.string   "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "deals", force: true do |t|
     t.string   "title"
     t.boolean  "redeemable"
@@ -70,7 +70,10 @@ ActiveRecord::Schema.define(version: 20150910113652) do
     t.boolean  "pushed"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "merchant_id"
   end
+
+  add_index "deals", ["merchant_id"], name: "index_deals_on_merchant_id", using: :btree
 
   create_table "merchants", force: true do |t|
     t.string   "email",                  default: "", null: false
