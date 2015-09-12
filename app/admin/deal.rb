@@ -1,4 +1,10 @@
 ActiveAdmin.register Deal do
+  permit_params :title, :redeemable, :multiple_use, :image, :type_of_deal, :description, :start_date,
+                  :expiry_date, :location, :t_c, :pushed,
+                  deal_days_attributes: [:id, :mon, :tue, :wed, :thur, :fri, :sat, :sun, :_destroy,
+                                         deal_times_attributes: [:id, :started_at, :ended_at, :_destroy]],
+                  deal_venues_attributes: [:id, :qrCodeLink], venues_attributes: [:id, :location]
+
   scope :active
   scope :waiting
   scope :expired
