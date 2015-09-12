@@ -4,6 +4,7 @@ ActiveAdmin.register Deal do
   scope :waiting
   scope :expired
 
+  # INDEX
   index do
     selectable_column
     column :id
@@ -20,6 +21,52 @@ ActiveAdmin.register Deal do
     actions
   end
 
+  # SHOW
+  show do |f|
+    panel "Deal Associations" do
+      attributes_table_for f do
+        row :merchant_id
+      end
+    end
+
+    panel "Deal Info" do
+      attributes_table_for f do
+        row :title
+        row :type_of_deal
+        row :description
+        row 'Terms and Conditions', :t_c
+      end
+    end
+
+    panel "Deal Schedule" do
+      attributes_table_for f do
+        row :start_date
+        row :expiry_date
+      end
+    end
+
+    panel "Deal Redemption" do
+      attributes_table_for f do
+        row "Number of redeems", :num_of_redeems
+        row "Multiple Use?" do
+          f.multiple_use ? status_tag( "yes", :ok ) : status_tag( "no" )
+        end
+      end
+    end
+
+    panel "Deal Add-ons" do
+      attributes_table_for f do
+        row "QR Code Redeemable?" do
+          f.redeemable ? status_tag( "yes", :ok ) : status_tag( "no" )
+        end
+        row "Push Notification to Wishlist?" do
+          f.pushed ? status_tag( "yes", :ok ) : status_tag( "no" )
+        end
+      end
+    end
+  end
+
+  # EDIT
   form do |f|
     f.inputs "Deal Associations" do
       f.input :merchant_id
@@ -43,8 +90,8 @@ ActiveAdmin.register Deal do
     end
 
     f.inputs "Deal Add-ons" do
-      f.input :pushed, label: "Push Notification to Wishlist?"
       f.input :redeemable, label: "QR Code Redeemable?"
+      f.input :pushed, label: "Push Notification to Wishlist?"
     end
 
     f.actions
