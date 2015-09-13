@@ -3,7 +3,7 @@ ActiveAdmin.register Plan do
   permit_params :name, :cost, :description
 
   # Sidebar
-  sidebar "Plan Add Ons" do
+  sidebar "Plan Add Ons", only: [:show, :edit] do
     ul do
       li link_to "See Add Ons", admin_plan_add_ons_path(plan)
     end
@@ -38,7 +38,6 @@ ActiveAdmin.register Plan do
       end
     end
   end
-
 
   # EDIT
   form do |f|

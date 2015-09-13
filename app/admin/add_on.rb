@@ -23,7 +23,6 @@ ActiveAdmin.register AddOn do
   form do |f|
     f.semantic_errors
     f.inputs "Add On Information" do
-      f.input :plan_id
       f.input :name
       f.input :cost, as: :string, :hint => "No need to specify currency - defaulted to SGD $. Input to 2 decimal places. e.g. 10.00"
       f.input :description
