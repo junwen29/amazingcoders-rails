@@ -61,6 +61,22 @@
          </div>
       </div>
 
+      <!-- choose start date -->
+      <p class="form-select half clearfix">
+        <%= f.label :start_date, "Start Date:" %>
+        <span>
+                <%= f.text_field :start_date%>
+          </span>
+      </p>
+
+      <!-- to be deleted and replaced with auto-fill -->
+      <p class="form-select clearfix">
+        <%= f.label :expiry_date, "End Date:" %>
+        <span>
+                <%= f.text_field :expiry_date %>
+          </span>
+      </p>
+
       <h4>Total Price:</h4>
 
 
