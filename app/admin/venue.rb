@@ -3,8 +3,10 @@ ActiveAdmin.register Venue do
 
   index do
     selectable_column
-    column :id
-    column "Merchant id", :merchant_id
+    column "Deal Id", :id
+    column "Merchant", :merchant_id do |venue|
+      auto_link venue.merchant
+    end
     column "Venue", :name
     column "Information", :bio
     column "Neighbourhood", :neighbourhood
@@ -20,6 +22,7 @@ ActiveAdmin.register Venue do
 
   form do |f|
     f.inputs "Venue Info" do
+      f.input :merchant, label: "Select merchant"
       f.input :name
       f.input :bio, input_html: { rows: 5 }
       f.input :phone
