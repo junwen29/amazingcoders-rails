@@ -1,62 +1,58 @@
 <p>
-  <strong>Title:</strong>
+  <strong><font size = "4">Title</font></strong><br>
   <%= @deal.title %>
 </p>
 
 <p>
-  <strong>Type of Deal:</strong>
+  <strong><font size = "4">Type of Deal</font></strong><br>
   <%= @deal.type_of_deal %><br>
 </p>
 
 <p>
-  <strong>Description:</strong>
+  <strong><font size = "4">Description</font></strong><br>
   <%= @deal.description %><br>
 </p>
 
 <p>
-  <strong>Deal Start Date:</strong>
-  <%= @deal.start_date %><br>
+  <strong><font size = "4">Deal Period</font></strong><br>
+  <strong><%= @deal.start_date %></strong> to <strong><%= @deal.expiry_date %></strong>
+
+  <% for deal_day in @deal.deal_days%>
+      <br>
+      <strong><%= format_days (deal_day) %>:</strong>
+      <% for deal_time in deal_day.deal_times%>
+          <%=h deal_time.started_at.strftime("%H:%M") %> to <%=h deal_time.ended_at.strftime("%H:%M") %>&nbsp;&nbsp;
+      <% end %><% end %>
 </p>
 
 <p>
-  <strong>Expiry Date:</strong>
-  <%= @deal.expiry_date %><br>
-</p>
-
-<% for deal_day in @deal.deal_days%>
-    <strong> Deal Periods:</strong>
-    <%= format_days (deal_day) %><br>
-    <% for deal_time in deal_day.deal_times%>
-        <strong> From:</strong>
-        <%=h deal_time.started_at.strftime("%H:%M") %>
-        to
-        <strong> To:</strong>
-        <%=h deal_time.ended_at.strftime("%H:%M") %><br><br>
-    <% end %>
-<% end %>
-
-<p>
-  <strong>Venue:</strong>
-  <% @deal.venues.each do |venue| %>
-      <span><%= venue.neighbourhood %></span>
+  <% if !@deal.redeemable %>
+      <strong><font size = "4">Venue</font></strong><br>
+      <% @deal.venues.each do |venue| %>
+          <span><%= venue.neighbourhood %></span>&nbsp;&nbsp;
+      <% end %>
   <% end %>
 </p>
 
 <p>
-  <strong>Terms and Condition:</strong>
+  <strong><font size = "4">Terms and Condition</font></strong><br>
   <%= @deal.t_c %>
 </p>
 
 <p>
-  <strong>Has the deal been pushed to users?</strong>
-  <%= @deal.pushed %><br>
+  <strong><font size = "4">Has the deal been pushed to users?</font></strong><br>
+  <% if @deal.pushed %>
+    Yes
+  <% else %>
+    No
+  <% end %>
 </p>
 
 <p>
-  <strong>Can your code be redeemed?</strong>
+  <strong><font size = "4">Can your code be redeemed?</font></strong><br>
   <% if @deal.redeemable %>
       Yes <br>
-      <strong>How many times can this deal be redeemed per user?</strong>
+      <strong><font size = "4">How many times can this deal be redeemed per user?</font></strong><br>
       <% if !@deal.multiple_use %>
           Once per user <br>
       <% else %>
@@ -68,9 +64,11 @@
 </p>
 
 <p>
-  <% @deal.venues.each do |venue| %>
-      <strong>QR Code for <%= venue.neighbourhood %></strong><br>
-      <% @qr = RQRCode::QRCode.new(@deal.id.to_s + "_" + venue.id.to_s + "_" + @deal.created_at.to_s).to_img.resize(200, 200).to_data_url %>
-      <span><%= image_tag @qr %><br></span>
+  <% if @deal.redeemable %>
+      <% @deal.venues.each do |venue| %>
+          <strong>QR Code for <%= venue.neighbourhood %></strong><br>
+          <% @qr = RQRCode::QRCode.new(@deal.id.to_s + "_" + venue.id.to_s + "_" + @deal.created_at.to_s).to_img.resize(100, 100).to_data_url %>
+          <span><%= image_tag @qr %><br></span>
+      <% end %>
   <% end %>
 </p>
