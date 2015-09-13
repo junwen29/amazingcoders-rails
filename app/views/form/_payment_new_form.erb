@@ -10,19 +10,56 @@
             <td><%= p.description %></td><br>
           </tr>
       <% end %>
+      <div id="plan1">
+          <p class="form-textarea clearfix">
+            <%= f.label :plan1, 'Choose plan upgrade:' %>
+          </p>
+          <p class="form-select" style="margin-top: 0px;">
+            <%= f.label :plan1, "Premium Deals Services", :value => true %>
+            <%= f.radio_button :plan1, true%>
+          </p>
 
-      <p class="form-textarea clearfix">
-        <%= f.label :plan1, 'Upgrade to enjoy premium services?' %>
-      </p>
-      <p class="form-select half" style="margin-top: 0px;">
-        <%= f.label :plan1, "Yes", :value => true %>
-        <%= f.radio_button :plan1, true%>
-      </p>
-      <p class="form-select" style="margin-top: 0px;">
-        <%= f.label :plan1, "No", :value => false %>
-        <%= f.radio_button :plan1, false%>
-      </p>
 
+         <div id="plan1_true">
+              <h4>Description of Add-on</h4>
+
+              <p class="form-textarea clearfix">
+                <%= f.label :add_on1, 'Include Add-on 1' %>
+              </p>
+              <p class="form-select half" style="margin-top: 0px;">
+                <%= f.label :add_on1, "Yes", :value => true %>
+                <%= f.radio_button :add_on1, true%>
+              </p>
+              <p class="form-select" style="margin-top: 0px;">
+                <%= f.label :add_on1, "No", :value => false %>
+                <%= f.radio_button :add_on1, false%>
+              </p>
+
+              <p class="form-textarea clearfix">
+                <%= f.label :add_on2, 'Include Add-on 2' %>
+              </p>
+              <p class="form-select half" style="margin-top: 0px;">
+                <%= f.label :add_on2, "Yes", :value => true %>
+                <%= f.radio_button :add_on2, true%>
+              </p>
+              <p class="form-select" style="margin-top: 0px;">
+                <%= f.label :add_on2, "No", :value => false %>
+                <%= f.radio_button :add_on2, false%>
+              </p>
+
+              <p class="form-textarea clearfix">
+                <%= f.label :add_on3, 'Include Add-on 3' %>
+              </p>
+              <p class="form-select half" style="margin-top: 0px;">
+                <%= f.label :add_on3, "Yes", :value => true %>
+                <%= f.radio_button :add_on3, true%>
+              </p>
+              <p class="form-select" style="margin-top: 0px;">
+                <%= f.label :add_on3, "No", :value => false %>
+                <%= f.radio_button :add_on3, false%>
+              </p>
+         </div>
+      </div>
 
       <h4>Total Price:</h4>
 
