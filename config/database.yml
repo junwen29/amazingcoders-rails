@@ -8,22 +8,28 @@ default: &default
   adapter: postgresql
   pool: 5
   timeout: 5000
+  encoding: UTF8
+  host: localhost
+  port: 5432
 
 development: &development
   <<: *default
   database: amazing_dev
-  database: <%= ENV['AMAZING_DATABASE_NAME'] %>
-  username: <%= ENV['AMAZING_DATABASE_USER'] %>
-  password: <%= ENV['AMAZING_DATABASE_PASSEWORD'] %>
-  encoding: UTF8
+  username: <%= Rails.application.secrets[:database][:user] %>
+  password: <%= Rails.application.secrets[:database][:password] %>
+  host: localhost
 
 test:
   <<: *default
   database: amazing_dev
-  database: <%= ENV['AMAZING_TEST_DATABASE_NAME'] %>
-  username: <%= ENV['AMAZING_TEST_DATABASE_'] %>
-  password: <%= ENV['AMAZING_TEST_DATABASE_PASSEWORD'] %>
+  username: <%= Rails.application.secrets[:database][:user] %>
+  password: <%= Rails.application.secrets[:database][:password] %>
 
 production:
-  <<: *development
+  <<: *default
+  database: <%= ENV['AMAZING_DATABASE'] %>
+  username: <%= ENV['AMAZING_DATABASE_USERNAME'] %>
+  password: <%= ENV['AMAZING_DATABASE_PASSWORD'] %>
+  host: <%= ENV['AMAZING_DATABASE_HOST'] %>
+  port: <%= ENV['AMAZING_DATABASE_PORT'] %>
 
