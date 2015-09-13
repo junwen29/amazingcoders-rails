@@ -8,6 +8,13 @@ class DealMailer < ActionMailer::Base
     mail(to: "woonyong92@gmail.com", subject: "Congratulations! You have successfully listed a deal on Burpple!")
   end
 
+  def update_deal_email(user, deal)
+    @user = user
+    @deal = deal
+    @url = "www.example.com"
+    mail(to: "woonyong92@gmail.com", subject: "Your deal has been successfully updated")
+  end
+
   def format_days (deal_day)
     deal_days = [deal_day.mon, deal_day.tue, deal_day.wed, deal_day.thur, deal_day.fri, deal_day.sat, deal_day.sun ]
     days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
