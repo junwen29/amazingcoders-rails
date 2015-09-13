@@ -1,12 +1,9 @@
 class PaymentsController < ApplicationController
+  before_action :set_payment, only: [:show]
 
   def new
     @payment = Payment.new
     @plan = Plan.all
-  end
-
-  def edit
-    @payment = Payment.find(params[:id])
   end
 
   def index
@@ -26,19 +23,19 @@ class PaymentsController < ApplicationController
     end
   end
 
-  def update
-  end
-
   def show
     @payment = Payment.find(params[:id])
   end
 
-  def destroy
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_payment
+    @payment = Payment.find(params[:id])
   end
 
   private
   def payment_params
-    params.require(:payment).permit(:plan_1)
+    params.require(:payment).permit(:plan1)
   end
 
 
