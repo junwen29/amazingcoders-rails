@@ -26,6 +26,9 @@ ActiveAdmin.register Deal do
     panel "Deal Associations" do
       attributes_table_for f do
         row :merchant_id
+        row "Venues" do |deal|
+          deal.venues.map{|v| v.name }.join(", ").html_safe
+        end
       end
     end
 
@@ -34,7 +37,7 @@ ActiveAdmin.register Deal do
         row :title
         row :type_of_deal
         row :description
-        row 'Terms and Conditions', :t_c
+        row :t_c, label: "Terms and Conditions"
       end
     end
 
@@ -47,7 +50,7 @@ ActiveAdmin.register Deal do
 
     panel "Deal Redemption" do
       attributes_table_for f do
-        row "Number of redeems", :num_of_redeems
+        row :num_of_redeems, label: "Number of Redeems"
         row "Multiple Use?" do
           f.multiple_use ? status_tag( "yes", :ok ) : status_tag( "no" )
         end
@@ -68,10 +71,6 @@ ActiveAdmin.register Deal do
 
   # EDIT
   form do |f|
-    f.inputs "Deal Associations" do
-      f.input :merchant_id
-    end
-
     f.inputs "Deal Info" do
       f.input :title
       f.input :type_of_deal
