@@ -18,7 +18,9 @@ ActiveAdmin.register_page "Dashboard" do
         column "Title", :title do |deal|
           link_to deal.title, admin_deal_path(deal)
         end
-        column :merchant_id
+        column "Merchant", :merchant_id do |deal|
+          auto_link deal.merchant
+        end
         column "Venues" do |deal|
           deal.venues.map{|v| v.name }.join(", ").html_safe
         end
