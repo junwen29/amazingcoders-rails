@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20150911125527) do
     t.integer  "payment_id"
     t.integer  "plan_id"
     t.string   "name"
-    t.integer  "cost"
+    t.decimal  "cost",        precision: 8, scale: 2
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -134,7 +134,7 @@ ActiveRecord::Schema.define(version: 20150911125527) do
   create_table "payments", force: true do |t|
     t.date     "start_date"
     t.date     "expiry_date"
-    t.integer  "total_cost"
+    t.decimal  "total_cost",  precision: 8, scale: 2
     t.boolean  "add_on1"
     t.boolean  "add_on2"
     t.boolean  "add_on3"
@@ -144,15 +144,15 @@ ActiveRecord::Schema.define(version: 20150911125527) do
   end
 
   create_table "plans", force: true do |t|
-    t.integer  "Payment_id"
+    t.integer  "payment_id"
     t.string   "name"
-    t.integer  "cost"
+    t.decimal  "cost",        precision: 8, scale: 2
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "plans", ["Payment_id"], name: "index_plans_on_Payment_id", using: :btree
+  add_index "plans", ["payment_id"], name: "index_plans_on_payment_id", using: :btree
 
   create_table "venues", force: true do |t|
     t.string   "name"
