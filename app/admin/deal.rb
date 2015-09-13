@@ -1,16 +1,32 @@
 ActiveAdmin.register Deal do
-
   scope :active
   scope :waiting
   scope :expired
 
+  filter :merchant, :collection => proc {(Merchant.all).map{|m| [m.email, m.id]}}
+  filter :venues, label: 'Venues',:collection => proc {(Venue.all).map{|v| [v.name, v.id]}}
+  filter :type_of_deal
+  filter :description
+  filter :start_date, label: 'Active Date'
+  filter :expiry_date
+  filter :multiple_use, label: 'Multiple Use'
+  filter :redeemable, label: 'QR Code Redeemable'
+  filter :pushed, label: 'Push Notification'
+  filter :created_at
+  filter :updated_at
+
   # INDEX
   index do
     selectable_column
-    column :id
     column "Title", :title
     column "Type", :type_of_deal
     column "Description", :description
+    column "Merchant", :merchant_id do |deal|
+      auto_link deal.merchant
+    end
+    column "Venues" do |deal|
+      deal.venues.map{|v| v.name }.join(", ").html_safe
+    end
     column "Active Date", :start_date
     column "Expiry Date", :expiry_date
     column "Multiple Use", :multiple_use
