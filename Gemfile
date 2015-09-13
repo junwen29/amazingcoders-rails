@@ -7,11 +7,7 @@ gem 'rails', '4.1.8'
 # Use postgres as the database for Heroku remote server purpose
 gem 'pg'
 
-group :production do
-  gem 'thin'
-end
-
-gem 'rails_12factor'
+gem 'rails_12factor', group: :production
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
