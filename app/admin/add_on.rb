@@ -1,5 +1,5 @@
 ActiveAdmin.register AddOn do
-  menu :parent => "Premium Services", :priority => 2
+  belongs_to :plan
 
   # Allow edit
   permit_params :name, :cost, :description

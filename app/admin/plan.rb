@@ -1,8 +1,13 @@
 ActiveAdmin.register Plan do
-  menu :parent => "Premium Services", :priority => 1
-
   # Allow edit
   permit_params :name, :cost, :description
+
+  # Sidebar
+  sidebar "Plan Add Ons" do
+    ul do
+      li link_to "See Add Ons", admin_plan_add_ons_path(plan)
+    end
+  end
 
   # INDEX
   index do
