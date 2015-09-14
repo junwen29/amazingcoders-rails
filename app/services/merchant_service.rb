@@ -12,6 +12,12 @@ class MerchantService
       Venue.where(:id => venue_id ,:merchant_id => merchant_id).first
     end
 
+    # for email
+    def get_email(merchant_id)
+      merchant = Merchant.find(merchant_id)
+      merchant.email
+    end
+
     #for deals
     def get_all_deals(merchant_id)
       Deal.where(:merchant_id => merchant_id)

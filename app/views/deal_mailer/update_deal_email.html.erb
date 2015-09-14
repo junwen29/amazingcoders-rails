@@ -29,17 +29,14 @@
 </p>
 
 <p>
-  <% if !@deal.redeemable %>
-      <strong><font size = "2">Venue</font></strong><br>
-      <% @deal.venues.each do |venue| %>
-          <span><%= venue.neighbourhood %></span>&nbsp;&nbsp;
-      <% end %>
-  <% end %>
-</p>
-
-<p>
   <strong><font size = "2">Terms and Condition</font></strong><br>
   <%= @deal.t_c %>
+</p>
+
+
+<p>
+  <strong><font size = "4">Deal Image</font></strong><br>
+  <%= image_tag @deal.image.url, :size => "150x150" %>
 </p>
 
 <p>
