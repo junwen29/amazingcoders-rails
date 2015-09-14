@@ -1,15 +1,30 @@
 <div class="content-form">
   <%= form_for @payment, url: payments_path do |f| %>
 
-      <h4>Premium Services</h4>
 
-      <% @plan.each do |p| %>
-          <tr>
-            <td><%= p.name %></td><br>
-            <td><%= p.cost %></td><br>
-            <td><%= p.description %></td><br>
-          </tr>
-      <% end %>
+      <!-- show list of plans -->
+
+      <table class="table table-bordered table-hover table-responsive">
+        <tr>
+          <h4>Premium Services</h4>
+          <th>Plan Name</th>
+          <th>Description</th>
+          <th>Cost</th>
+
+        </tr>
+
+        <% @plan.each do |p| %>
+            <tr>
+              <td><%= p.name %></td><br>
+              <td><%= p.description %></td><br>
+              <td><%= p.cost %></td><br>
+            </tr>
+        <% end %>
+      </table>
+
+
+
+
       <div id="plan1">
           <p class="form-textarea clearfix">
             <%= f.label :plan1, 'Choose plan upgrade:' %>
@@ -21,7 +36,26 @@
 
 
          <div id="plan1_true">
-              <h4>Description of Add-on</h4>
+
+           <!-- show list of addons -->
+
+           <table class="table table-bordered table-hover table-responsive">
+             <tr>
+               <h4>Add-Ons</h4>
+               <th>Add-On Name</th>
+               <th>Description</th>
+               <th>Cost</th>
+
+             </tr>
+
+             <% @addon.each do |p| %>
+                 <tr>
+                   <td><%= p.name %></td><br>
+                   <td><%= p.description %></td><br>
+                   <td><%= p.cost %></td><br>
+                 </tr>
+             <% end %>
+           </table>
 
               <p class="form-textarea clearfix">
                 <%= f.label :add_on1, 'Include Add-on 1' %>

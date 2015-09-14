@@ -1,16 +1,16 @@
-class AddOnsController < ApplicationController
+class AddonsController < ApplicationController
 
   def new
-    @add_on = Add_on.new
+    @addon = Addon.new
 
   end
 
   def edit
-    @add_on = Add_on.find(params[:id])
+    @addon = Addon.find(params[:id])
   end
 
   def index
-    @add_on = Add_on.all
+    @addon = Addon.all
   end
 
   def create
@@ -45,7 +45,7 @@ class AddOnsController < ApplicationController
     @add_on.destroy
     #need not add a view for this action since redirecting to the index
     #action
-    redirect_to add_on_path
+    #redirect_to add_on_path
   end
 
   private

@@ -24,7 +24,29 @@
     <div class="content-separator"></div>
 
     <!-- Content Body -->
-    <%= render :partial => 'form/payment_index_form' %>
+    <table class="table table-bordered table-hover table-responsive">
+      <tr>
+        Payment History
+        <th>Payment Date</th>
+        <th>Amount</th>
+        <th>Payment Items</th>
+        <th>Validity of Upgrades</th>
+
+        <th colspan="3"></th>
+      </tr>
+
+
+      <% @payments.each do |payment| %>
+          <tr>
+            <td></td>
+            <td><%= payment.total_cost %></td>
+            <td><%= payment.plan1 %></td>
+            <td><%= payment.start_date %> </td>
+
+          </tr>
+      <% end %>
+    </table>
+
     <%= link_to 'Back', deals_path, class: "btn btn-big btn-default" %>
 
   </div><!-- /content -->

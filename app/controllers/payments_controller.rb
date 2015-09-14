@@ -4,10 +4,11 @@ class PaymentsController < ApplicationController
   def new
     @payment = Payment.new
     @plan = Plan.all
+    @addon = Addon.all
   end
 
   def index
-    @payment = Payment.all
+    @payments = Payment.all
   end
 
   def create
