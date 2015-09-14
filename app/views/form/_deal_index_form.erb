@@ -5,7 +5,6 @@
   <div class="panel-body">
     <table class="table table-bordered table-hover table-responsive">
       <tr>
-        <th>Id</th>
         <th>Title</th>
         <th>Image</th>
         <th>Type of Deal</th>
@@ -22,7 +21,6 @@
       <% @deals.each do |deal| %>
           <% if deal.start_date.today? || deal.expiry_date.today? || (deal.start_date.past? && deal.expiry_date.future?) %>
               <tr>
-                <td><%= deal.id %></td>
                 <td><%= deal.title %></td>
                 <td><%= image_tag deal.image %></td>
                 <td><%= deal.type_of_deal %></td>
@@ -59,7 +57,6 @@
   <div class="panel-body">
     <table class="table table-bordered table-hover table-responsive">
       <tr>
-        <th>Id</th>
         <th>Title</th>
         <th>Image</th>
         <th>Type of Deal</th>
@@ -76,7 +73,6 @@
       <% @deals.each do |deal| %>
           <% if deal.start_date.future? %>
               <tr>
-                <td><%= deal.id %></td>
                 <td><%= deal.title %></td>
                 <td><%= image_tag deal.image %></td>
                 <td><%= deal.type_of_deal %></td>
@@ -113,7 +109,6 @@
   <div class="panel-body">
     <table class="table table-bordered table-hover table-responsive">
       <tr>
-        <th>Id</th>
         <th>Title</th>
         <th>Image</th>
         <th>Type of Deal</th>
@@ -130,7 +125,6 @@
       <% @deals.each do |deal| %>
           <% if deal.expiry_date.past? %>
               <tr>
-                <td><%= deal.id %></td>
                 <td><%= deal.title %></td>
                 <td><%= image_tag deal.image %></td>
                 <td><%= deal.type_of_deal %></td>
