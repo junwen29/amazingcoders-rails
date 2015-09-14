@@ -1,12 +1,114 @@
 <p> Hi  <%= @user %>!</p>
 
 <p>Congratulations! You have successfully listed a deal on Burpple!</p>
-<p>Type of Deal: <%= @deal_type %> </p>
-<p>Start Date: <%= @deal_start %></p>
-<p>Expiry Date: <%= @deal_end %></p>
-<p>Location: <%= @deal_location %></p>
-<p>Multiple Use: <%= @deal_multiple %></p>
-<p>QR Code Redeemable: <%= @deal_redeemable %></p>
+<p>
+  <strong>Title:</strong>
+  <%= @deal.title %>
+</p>
+
+<p>
+  <strong>Type of Deal:</strong>
+  <%= @deal.type_of_deal %><br>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @deal.description %><br>
+</p>
+
+<p>
+  <strong>Deal Start Date:</strong>
+  <%= @deal.start_date %><br>
+</p>
+
+<p>
+  <strong>Expiry Date:</strong>
+  <%= @deal.expiry_date %><br>
+</p>
+
+<% for deal_day in @deal.deal_days%>
+    <strong> Days:</strong>
+    <% if deal_day.mon %>
+        Mon
+    <% end %>
+    <% if deal_day.tue && deal_day.mon %>
+        , Tue
+    <% elsif deal_day.tue %>
+        Tue
+    <%end %>
+    <% if deal_day.wed && (deal_day.tue || deal_day.mon) %>
+        , Wed
+    <% elsif deal_day.wed %>
+        Wed
+    <%end %>
+    <% if deal_day.thur && (deal_day.wed || deal_day.tue || deal_day.mon) %>
+        , Thur
+    <% elsif deal_day.thur %>
+        Thur
+    <%end %>
+    <% if deal_day.fri && (deal_day.thur || deal_day.wed || deal_day.tue || deal_day.mon) %>
+        , Thur
+    <% elsif deal_day.fri %>
+        Fri
+    <%end %>
+    <% if deal_day.sat && (deal_day.fri || deal_day.thur || deal_day.wed || deal_day.tue || deal_day.mon) %>
+        , Sat
+    <% elsif deal_day.sat %>
+        Sat
+    <%end %>
+    <% if deal_day.sun && (deal_day.sat || deal_day.fri || deal_day.thur || deal_day.wed || deal_day.tue || deal_day.mon) %>
+        , Sun
+    <% elsif deal_day.sun %>
+        Sun
+    <%end %>
+    <br>
+    <strong> Time period:</strong><br>
+    <% for deal_time in deal_day.deal_times%>
+        <%=h deal_time.started_at.strftime("%H:%M") %>
+        to
+        <%=h deal_time.ended_at.strftime("%H:%M") %><br>
+    <% end %>
+<% end %>
+
+<p>
+  <strong>Venue:</strong>
+  <% @deal.venues.each do |venue| %>
+      <span><%= venue.neighbourhood %></span>
+  <% end %>
+</p>
+
+<p>
+  <strong>Terms and Condition:</strong>
+  <%= @deal.t_c %>
+</p>
+
+<p>
+  <strong>Has the deal been pushed to users?</strong>
+  <%= @deal.pushed %><br>
+</p>
+
+<p>
+  <strong>Can your code be redeemed?</strong>
+  <% if @deal.redeemable %>
+      Yes <br>
+      <strong>How many times can this deal be redeemed per user?</strong>
+      <% if !@deal.multiple_use %>
+          Once per user <br>
+      <% else %>
+          Unlimited Redemptions <br>
+      <% end %>
+  <% else %>
+      No <br>
+  <% end %>
+</p>
+
+<p>
+  <% @deal.venues.each do |venue| %>
+      <strong>QR Code for <%= venue.neighbourhood %></strong><br>
+      <% @qr = RQRCode::QRCode.new(@deal.id.to_s + "_" + venue.id.to_s + "_" + @deal.created_at.to_s).to_img.resize(100, 100).to_data_url %>
+      <span><%= image_tag @qr %><br></span>
+  <% end %>
+</p>
 <p>To view your deal listing on Burpple, follow this link: <%= @url %> </p>
 
 <p>Thank you for using Burpple. Have a nice day!</p>

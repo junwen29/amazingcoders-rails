@@ -24,46 +24,14 @@
 </p>
 
 <% for deal_day in @deal.deal_days%>
-    <strong> Days:</strong>
-    <% if deal_day.mon %>
-        Mon
-    <% end %>
-    <% if deal_day.tue && deal_day.mon %>
-        , Tue
-    <% elsif deal_day.tue %>
-        Tue
-    <%end %>
-    <% if deal_day.wed && (deal_day.tue || deal_day.mon) %>
-        , Wed
-    <% elsif deal_day.wed %>
-        Wed
-    <%end %>
-    <% if deal_day.thur && (deal_day.wed || deal_day.tue || deal_day.mon) %>
-        , Thur
-    <% elsif deal_day.thur %>
-        Thur
-    <%end %>
-    <% if deal_day.fri && (deal_day.thur || deal_day.wed || deal_day.tue || deal_day.mon) %>
-        , Thur
-    <% elsif deal_day.fri %>
-        Fri
-    <%end %>
-    <% if deal_day.sat && (deal_day.fri || deal_day.thur || deal_day.wed || deal_day.tue || deal_day.mon) %>
-        , Sat
-    <% elsif deal_day.sat %>
-        Sat
-    <%end %>
-    <% if deal_day.sun && (deal_day.sat || deal_day.fri || deal_day.thur || deal_day.wed || deal_day.tue || deal_day.mon) %>
-        , Sun
-    <% elsif deal_day.sun %>
-        Sun
-    <%end %>
-    <br>
-    <strong> Time period:</strong><br>
+    <strong> Deal Periods:</strong>
+    <%= format_days (deal_day) %><br>
     <% for deal_time in deal_day.deal_times%>
-        <%=h deal_time.started_at %>
+        <strong> From:</strong>
+        <%=h deal_time.started_at.strftime("%H:%M") %>
         to
-        <%=h deal_time.ended_at %><br>
+        <strong> To:</strong>
+        <%=h deal_time.ended_at.strftime("%H:%M") %><br><br>
     <% end %>
 <% end %>
 
@@ -96,5 +64,13 @@
       <% end %>
   <% else %>
       No <br>
+  <% end %>
+</p>
+
+<p>
+  <% @deal.venues.each do |venue| %>
+      <strong>QR Code for <%= venue.neighbourhood %></strong><br>
+      <% @qr = RQRCode::QRCode.new(@deal.id.to_s + "_" + venue.id.to_s + "_" + @deal.created_at.to_s).to_img.resize(200, 200).to_data_url %>
+      <span><%= image_tag @qr %><br></span>
   <% end %>
 </p>

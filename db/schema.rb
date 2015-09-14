@@ -113,6 +113,8 @@ ActiveRecord::Schema.define(version: 20150914144558) do
 
   add_index "deals", ["merchant_id"], name: "index_deals_on_merchant_id", using: :btree
 
+  add_index "deals", ["merchant_id"], name: "index_deals_on_merchant_id", using: :btree
+
   create_table "merchants", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false

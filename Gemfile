@@ -57,5 +57,11 @@ gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 #for user modelling
 gem 'devise'
 
+# For QRCode
+gem 'rqrcode_png'
+
+# For attaching images
+gem 'carrierwave'gem 'devise'
+
 # Active Admin
 gem 'activeadmin', '~> 1.0.0.pre1'
