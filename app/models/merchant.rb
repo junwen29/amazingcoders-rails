@@ -6,4 +6,5 @@ class Merchant < ActiveRecord::Base
 
   has_many :venues, dependent: :destroy
   has_many :deals
+  has_many :payments
 end
