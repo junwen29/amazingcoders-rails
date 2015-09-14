@@ -1,6 +1,9 @@
 ActiveAdmin.register Payment do
   actions :all, except: [:edit] # forbid edit to payment information
 
+  scope :active
+  scope :expired
+
   preserve_default_filters!
   filter :merchant, :collection => proc {(Merchant.all).map{|m| [m.email, m.id]}}
   #filter :plan
@@ -15,7 +18,6 @@ ActiveAdmin.register Payment do
   #filter :add_on3, label: 'Aggregate Trends'
   #filter :created_at
   #filter :updated_at
-
 
   index do
     selectable_column
@@ -98,5 +100,24 @@ ActiveAdmin.register Payment do
     end
     active_admin_comments # Add this line for comment block
   end
+
+  # CREATE NEW
+  form do |f|
+    f.semantic_errors
+    f.inputs "Payment Details" do
+      f.input :merchant
+      f.input :plan1, label: "Deal Listing Plan"
+      f.input :add_on1, label: "Push Notification Add On"
+      f.input :add_on2, label: "Deal Statistics Add On"
+      f.input :add_on3, label: "Aggregate Trends Add On"
+      f.input :total_cost, as: :string, :hint => "No need to specify currency - defaulted to SGD $. Input to 2 decimal places. e.g. 10.00"
+      f.input :start_date
+      f.input :expiry_date
+    end
+    f.actions
+  end
+
+  # Allow edit
+  permit_params :start_date, :expiry_date, :total_cost, :add_on1, :add_on2, :add_on3, :plan1, :merchant_id, :created_at, :updated_at
 
 end
