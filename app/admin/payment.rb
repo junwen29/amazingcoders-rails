@@ -1,14 +1,28 @@
 ActiveAdmin.register Payment do
   actions :all, except: [:edit] # forbid edit to payment information
 
+  preserve_default_filters!
+  filter :merchant, :collection => proc {(Merchant.all).map{|m| [m.email, m.id]}}
+  #filter :plan
+  #filter :addons, :collection => AddOn.all.map(&:name)
+  #filter :total_cost
+  #filter :start_date, label: 'Subscription Date'
+  #filter :expiry_date, label: 'Expiry Date'
+  #filter :total_cost, label: 'Premium Paid'
+  #filter :plan1, label: 'Deal Listing Plan'
+  # filter :add_on1, label: 'Push Notification', as: :check_boxes
+  #filter :add_on2, label: 'Deal Statistics'
+  #filter :add_on3, label: 'Aggregate Trends'
+  #filter :created_at
+  #filter :updated_at
+
+
   index do
     selectable_column
     column "Id", :id
-=begin
     column "Merchant", :merchant_id do |payment|
       auto_link payment.merchant
     end
-=end
     column "Plan" do |payment|
       # auto_link payment.plan
       if (payment.plan1)
@@ -46,6 +60,9 @@ ActiveAdmin.register Payment do
     panel "Payment Details" do
       attributes_table_for f do
         row :id
+        row :merchant do |payment|
+          auto_link payment.merchant
+        end
         row :plan do |payment|
           #payment.plan
           if (payment.plan1)
