@@ -1,5 +1,5 @@
 <div class="content-form">
-  <%= form_for @deal, url: deals_path do |f| %>
+  <%= form_for @deal, url: deals_path, :html => {:multipart => true} do |f| %>
       <div class = "row">
         <div class="col-lg-1">
           <p class="form-textarea clearfix">
@@ -84,6 +84,16 @@
               <%= f.text_field :t_c%>
             </span>
           </p>
+        </div>
+      </div>
+
+      <div class = "row">
+        <div class="col-lg-8">
+          <p class="form-text clearfix">
+            <%= f.label :image, 'Upload an image of your deal!' %>
+          </p>
+          <%= f.file_field :image %>
+          For best effect, upload an image of 150x150
         </div>
       </div>
 

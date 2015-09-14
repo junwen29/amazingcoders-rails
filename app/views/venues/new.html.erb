@@ -11,7 +11,7 @@
     <div class="content-separator"></div>
 
     <!-- Content Body --><!--executing a javascript at the end of the file to do validation when the form is submitted-->
-    <%= form_for(@venue,url: venues_path, :html => {:onSubmit => "return validate_getting_started(this);", :class => "venueForm"}) do |f| %>
+    <%= form_for(@venue,url: venues_path, :html => {:onSubmit => "return validate_getting_started(this);", :class => "venueForm", :multipart => true}) do |f| %>
 
         <!-- Flash Error Message -->
         <% if @venue.errors.any? %>
@@ -27,36 +27,10 @@
             </div>
         <% end %>
 
-        <%= render :partial => 'form/venue_create_form', :locals => { :f => f , :object => @select_day_hours_string } %>
+        <%= render :partial => 'form/venue_create_form' %>
 
     <% end %>
 
   </div>
 </div>
 
-<%= content_for :lean_overlay do %>
-<% end %>
-
-<%= content_for :body_footer do %>
-    <script>
-        $('html').css('background', '#f0f0f0');
-
-        function validate_getting_started(){
-            $venue_name = $('#temp_venue_name').val();
-
-            $formErrors = $("#merchantErrors");
-            $oldAlerts = $(".alert");
-
-            if ($venue_name != ""){
-                return validate();
-            }
-            else{
-                $oldAlerts.remove();
-                if ($venue_name == "")
-                    $formErrors.append( "<div class='alert alert--error'><strong>Error!</strong> Name of restaurant can't be blank</div>" );
-            }
-
-            return false;
-        }
-    </script>
-<% end %>

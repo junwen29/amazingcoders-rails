@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150911041926) do
+ActiveRecord::Schema.define(version: 20150914142520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,7 +51,6 @@ ActiveRecord::Schema.define(version: 20150911041926) do
     t.string   "title"
     t.boolean  "redeemable"
     t.boolean  "multiple_use"
-    t.string   "image"
     t.string   "type_of_deal"
     t.string   "description"
     t.date     "start_date"
@@ -63,6 +62,10 @@ ActiveRecord::Schema.define(version: 20150911041926) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "merchant_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "deals", ["merchant_id"], name: "index_deals_on_merchant_id", using: :btree
@@ -102,6 +105,10 @@ ActiveRecord::Schema.define(version: 20150911041926) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "merchant_id"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
   end
 
   add_index "venues", ["merchant_id"], name: "index_venues_on_merchant_id", using: :btree

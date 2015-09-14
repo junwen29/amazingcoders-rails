@@ -40,6 +40,11 @@
 </p>
 
 <p>
+  <strong><font size = "4">Deal Image</font></strong><br>
+  <%= image_tag @deal.image.url, :size => "150x150" %>
+</p>
+
+<p>
   <strong><font size = "4">Has the deal been pushed to users?</font></strong><br>
   <% if @deal.pushed %>
     Yes

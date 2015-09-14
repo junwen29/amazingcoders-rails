@@ -3,6 +3,8 @@ class Venue < ActiveRecord::Base
   has_many :deal_venues, inverse_of: :venue, dependent: :destroy
   has_many :deals, through:  :deal_venues
 
+  has_attached_file :photo
+
   validates(:name, presence: true)
   validates(:street, presence: true)
   validates(:address_2, presence: true)
@@ -13,4 +15,7 @@ class Venue < ActiveRecord::Base
   validates(:neighbourhood, presence: true)
   validates(:phone, presence: true)
   validates(:phone, :numericality => {:only_integer => true})
+  validates :photo, :presence => {message: "Please upload an image of your deal"}
+
+  validates_attachment_content_type :photo, content_type: /\Aimage/
 end

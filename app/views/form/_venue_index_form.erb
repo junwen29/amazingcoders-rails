@@ -1,5 +1,6 @@
 <table class="table table-bordered table-hover table-responsive">
   <tr>
+    <th>Photo</th>
     <th>Name of Restaurant</th>
     <th>Street</th>
     <th>Mall/Unit Number</th>
@@ -15,6 +16,7 @@
 
   <% @venues.each do |venue| %>
       <tr>
+        <td><%= image_tag venue.photo.url, :size => "150x150" %></td>
         <td><%= venue.name %></td>
         <td><%= venue.street %></td>
         <td><%= venue.address_2 %></td>
@@ -31,7 +33,7 @@
           <%= link_to 'Delete', venue_path(venue),
                       method: :delete,
                       data: { confirm: 'Are you sure?'},
-                      class: "btn btn-xs btn-danger"%>
+                      class: "btn btn-xs btn-anger"%>
         </td>
       </tr>
   <% end %>

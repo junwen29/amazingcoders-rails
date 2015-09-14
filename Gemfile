@@ -61,4 +61,5 @@ gem 'devise'
 gem 'rqrcode_png'
 
 # For attaching images
+gem 'paperclip'
 gem 'carrierwave'
