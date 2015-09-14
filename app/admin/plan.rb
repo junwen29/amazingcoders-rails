@@ -37,6 +37,7 @@ ActiveAdmin.register Plan do
         row :updated_at
       end
     end
+    active_admin_comments
   end
 
   # EDIT

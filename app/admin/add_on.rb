@@ -19,6 +19,24 @@ ActiveAdmin.register AddOn do
     actions
   end
 
+  # SHOW
+  show do |f|
+    panel "Add on Details" do
+      attributes_table_for f do
+        row :id
+        row :plan
+        row :name
+        row :cost do |add_on|
+          number_to_currency add_on.cost
+        end
+        row :description
+        row :created_at
+        row :updated_at
+      end
+    end
+    active_admin_comments
+  end
+
   # EDIT
   form do |f|
     f.semantic_errors
