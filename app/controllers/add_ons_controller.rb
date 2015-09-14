@@ -1,16 +1,16 @@
-class AddonsController < ApplicationController
+class AddOnsController < ApplicationController
 
   def new
-    @addon = Addon.new
+    @add_on = Add_on.new
 
   end
 
   def edit
-    @addon = Addon.find(params[:id])
+    @add_on = Add_on.find(params[:id])
   end
 
   def index
-    @addon = Addon.all
+    @add_on = Add_on.all
   end
 
   def create

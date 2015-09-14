@@ -136,7 +136,10 @@ ActiveRecord::Schema.define(version: 20150914171352) do
     t.boolean  "plan1"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "merchant_id"
   end
+
+  add_index "payments", ["merchant_id"], name: "index_payments_on_merchant_id", using: :btree
 
   create_table "plans", force: true do |t|
     t.string   "name"

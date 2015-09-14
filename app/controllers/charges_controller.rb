@@ -1,4 +1,5 @@
 class ChargesController < ApplicationController
+  before_filter :authenticate_merchant!, except: [:home, :help]
   def new
   end
 

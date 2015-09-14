@@ -39,24 +39,6 @@
 
            <!-- show list of addons -->
 
-           <table class="table table-bordered table-hover table-responsive">
-             <tr>
-               <h4>Add-Ons</h4>
-               <th>Add-On Name</th>
-               <th>Description</th>
-               <th>Cost</th>
-
-             </tr>
-
-             <% @addon.each do |p| %>
-                 <tr>
-                   <td><%= p.name %></td><br>
-                   <td><%= p.description %></td><br>
-                   <td><%= p.cost %></td><br>
-                 </tr>
-             <% end %>
-           </table>
-
               <p class="form-textarea clearfix">
                 <%= f.label :add_on1, 'Include Add-on 1' %>
               </p>
@@ -110,6 +92,12 @@
                 <%= f.text_field :expiry_date %>
           </span>
       </p>
+
+      <% price = '0' %>
+
+
+
+
 
       <h4>Total Price:</h4>
 

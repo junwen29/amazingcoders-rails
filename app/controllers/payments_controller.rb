@@ -1,10 +1,16 @@
 class PaymentsController < ApplicationController
+  before_filter :authenticate_merchant!, except: [:home, :help]
   before_action :set_payment, only: [:show]
+ # before_action :show, only: [:calculate_price]
 
   def new
     @payment = Payment.new
     @plan = Plan.all
-    @addon = Addon.all
+   # @add_on = Add_on.all
+  end
+
+  def edit
+    @payment = Payment.find(params[:id])
   end
 
   def index
@@ -24,8 +30,15 @@ class PaymentsController < ApplicationController
     end
   end
 
+  def update
+  end
+
   def show
     @payment = Payment.find(params[:id])
+    @total_cost = @payment.total_cost
+  end
+
+  def destroy
   end
 
   private
@@ -34,9 +47,32 @@ class PaymentsController < ApplicationController
     @payment = Payment.find(params[:id])
   end
 
+  def calculate_price
+    @payment = Payment.find(params[:id])
+  #  @plan = Plan.all
+    total_cost = '0'
+
+  # hardcode
+    if @payment.plan1 == 'true'
+      total_cost = total_cost + 30
+    end
+    if @payment.add_on1 == 'true'
+      total_cost = total_cost + 5
+    end
+    if @payment.add_on2 == 'true'
+      total_cost = total_cost + 5
+    end
+    if @payment.add_on3 == 'true'
+      total_cost = total_cost + 5
+    end
+
+    @payment.total_cost = total_cost
+  end
+
+
   private
   def payment_params
-    params.require(:payment).permit(:plan1, :add_on1, :add_on2, :add_on3, :start_date, :expiry_date )
+    params.require(:payment).permit(:start_date, :expiry_date, :total_cost, :add_on1, :add_on2, :add_on3, :plan_id)
   end
 
 

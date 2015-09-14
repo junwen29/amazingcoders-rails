@@ -16,8 +16,13 @@
 
     <!-- Content Heading -->
     <div class="pull-left">
-      <p class="b2 content-title">PAY NOW</p>
-      <h4>Total Price: </h4>
+      <p class="b2 content-title">Make your payment</p>
+
+
+
+
+      <h4>Total Price:   <%= @total_cost %> </h4>
+
 
 
       <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -43,5 +48,3 @@
 
 <%= content_for :body_footer do %>
 <% end %>
-
-
