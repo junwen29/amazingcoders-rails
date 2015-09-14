@@ -29,9 +29,10 @@
       <% end -%>
 
       <div class="actions">
-        <%= f.submit "Log in" %>
+        <%= f.submit "Log in", class: "btn btn-lg btn-info" %>
       </div>
   <% end %>
-
   <%= render "merchants/shared/links" %>
+  Now yet a member?<%= link_to " Sign up!", new_registration_path(resource_name) %><br />
+
 </div>
