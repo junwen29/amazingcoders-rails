@@ -45,3 +45,10 @@ en:
 
       deal/deal_days/deal_times:
         started_at: "Start time"
+
+      venue:
+        name: "Name of restaurant"
+        street: "Street address"
+        address_2: "Mall/Unit number"
+        zipcode: "Postal code"
+        phone: "Contact number"

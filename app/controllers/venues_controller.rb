@@ -4,14 +4,12 @@ class VenuesController < ApplicationController
 
   def index
     # Get data required for form
-    @select_day_hours_string = "[]".html_safe
   end
 
   # GET /venues/new
   def new
     @venue = Venue.new
     # Get data required for form
-    @select_day_hours_string = "[]".html_safe
   end
 
   # GET /venues/1/edit
@@ -22,7 +20,6 @@ class VenuesController < ApplicationController
     @venues = Venue.all
 
     # Get data required for form
-    @select_day_hours_string = "[]".html_safe
   end
 
   # POST /venues
