@@ -43,11 +43,10 @@ class DealsController < ApplicationController
     end
 
     if @deal.save
-      # DealMailer.deal_email("Test Food Merchant", "Deal Listing Service").deliver
       flash[:success] = "Deal successfully created!"
       redirect_to @deal
       # Send out confirmation email
-      # DealMailer.deal_email("Test Food Merchant", @deal).deliver
+      # DealMailer.deal_email("Test Food Merchant", @deal, MerchantService.get_email(merchant_id)).deliver
     else
       flash[:error] = "Failed to create deal!"
       render 'new'
@@ -55,7 +54,6 @@ class DealsController < ApplicationController
   end
 
   def update
-
     # For drop down form
     @all_venues = MerchantService.get_all_venues(merchant_id)
     @deal_venue = @deal.deal_venues.build
@@ -76,6 +74,8 @@ class DealsController < ApplicationController
 
     if @deal.update(deal_params)
       flash[:success] = "Deal successfully updated!"
+      # Send out update email
+      # DealMailer.update_deal_email("Test Food Merchant", @deal, MerchantService.get_email(merchant_id)).deliver
       redirect_to @deal
     else
       flash[:error] = "Failed to update deal!"

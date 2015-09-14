@@ -10,6 +10,9 @@ class Deal < ActiveRecord::Base
   scope :active, -> {where("start_date <= ? AND expiry_date >= ?", Date.today, Date.today)}
   scope :expired, -> {where("expiry_date < ?", Date.today)}
 
+  # For adding images
+  has_attached_file :image
+
   # Validate input fields from form
   validates(:title, presence: true)
   validates(:type_of_deal, presence: true)
@@ -19,6 +22,9 @@ class Deal < ActiveRecord::Base
   # validates :venues, :presence => {message: "Please ensure that there is at least one venue selected"}
   validates(:t_c, presence: true)
   validates :deal_days, :presence => {message: "Please ensure that there is at least one deal period"}
+  validates :image, :presence => {message: "Please upload an image of your deal"}
+
+  validates_attachment_content_type :image, content_type: /\Aimage/
 
   # Process input fields and further validate
   validate :future_date
@@ -53,7 +59,7 @@ class Deal < ActiveRecord::Base
 
   def check_overlapping_deals
     errors.add(:start_date, 'You are not able to list any more deals within this period as during which you will
-have more then 5 active deals then.') if ((overlapping_deals) rescue ArgumentError == ArgumentError)
+have more than 5 active deals then.') if ((overlapping_deals) rescue ArgumentError == ArgumentError)
   end
 
   private
