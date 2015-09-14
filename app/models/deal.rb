@@ -22,6 +22,7 @@ class Deal < ActiveRecord::Base
   validate :ensuring_pushed_checked
   validate :ensuring_redeemable_checked
   validate :ensuring_multiple_use_checked
+  validate :check_overlapping_deals
 
   # Process Methods
   def ensuring_pushed_checked
@@ -39,10 +40,26 @@ class Deal < ActiveRecord::Base
   end
 
   def future_date
-    errors.add(:start_date, 'must be at least one day in advance') if ((start_date <= Date.today) rescue ArgumentError == ArgumentError)
+    errors.add(:start_date, 'Start date must be at least one day in advance') if ((start_date <= Date.today) rescue ArgumentError == ArgumentError)
   end
 
   def check_expiry_date
     errors.add(:expiry_date, 'has to be after start date') if ((expiry_date <= start_date) rescue ArgumentError == ArgumentError)
+  end
+
+  def check_overlapping_deals
+    errors.add(:start_date, 'You are not able to list any more deals within this period as during which you will
+have more then 5 active deals then.') if ((overlapping_deals) rescue ArgumentError == ArgumentError)
+  end
+
+  private
+  # find number of overlapping deals
+  def overlapping_deals
+   num = DealService.get_overlapping_deals(merchant_id, start_date, expiry_date)
+    if num >= 5
+      true
+    else
+      false
+    end
   end
 end
