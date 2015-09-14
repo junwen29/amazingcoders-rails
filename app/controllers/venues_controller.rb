@@ -1,4 +1,5 @@
 class VenuesController < ApplicationController
+  before_filter :authenticate_merchant!, except: [:home, :help]
   before_action :set_venue, only: [:index, :show, :edit, :update, :destroy]
   before_action :all_venues
 

@@ -1,4 +1,5 @@
 class DealsController < ApplicationController
+  before_filter :authenticate_merchant!, except: [:home, :help]
   before_action :set_deal, only: [:show, :edit, :update, :destroy]
 
   def new

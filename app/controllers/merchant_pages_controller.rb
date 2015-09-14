@@ -1,4 +1,5 @@
 class MerchantPagesController < ApplicationController
+  before_filter :authenticate_merchant!, except: [:home, :help]
   def home
     @merchant_page = true
     @html_title = "Amazing Coders - Home"

@@ -17,7 +17,15 @@
     <!-- Content Heading -->
     <div class="pull-left">
       <p class="b2 content-title">PAY NOW</p>
-      <%= link_to 'Click to pay', new_payment_path, class: "btn btn-big btn-success" %>
+      <h4>Total Price: </h4>
+
+      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+              data-description="A month's subscription"
+              data-amount="500"
+              data-locale="auto"></script>
+
+
     </div>
 
     <div class="clearfix"></div>
