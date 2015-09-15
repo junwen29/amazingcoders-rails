@@ -1,6 +1,6 @@
 class DealsController < ApplicationController
   before_filter :authenticate_merchant!, except: [:home, :help]
-  before_action :set_deal, only: [:show, :edit, :update, :destroy]
+  before_action :set_deal, only: [:show, :edit, :update, :destroy, :activate]
 
   def new
     @deal = Deal.new
@@ -95,6 +95,13 @@ class DealsController < ApplicationController
     redirect_to deals_path
   end
 
+  # Change non-active deal to active
+  def activate
+    @deal.update_attribute(:active, true)
+    flash[:success] = "Deal activated!"
+    redirect_to deals_path
+  end
+
   def format_days (deal_day)
     deal_days = [deal_day.mon, deal_day.tue, deal_day.wed, deal_day.thur, deal_day.fri, deal_day.sat, deal_day.sun ]
     days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
@@ -150,7 +157,7 @@ class DealsController < ApplicationController
   private
   def deal_params
     params.require(:deal).permit(:title, :redeemable, :multiple_use, :image, :type_of_deal, :description, :start_date,
-                                 :expiry_date, :location, :t_c, :pushed,
+                                 :expiry_date, :location, :t_c, :pushed, :active,
                                  deal_days_attributes: [:id, :mon, :tue, :wed, :thur, :fri, :sat, :sun, :_destroy,
                                                         deal_times_attributes: [:id, :started_at, :ended_at, :_destroy]],
                                  deal_venues_attributes: [:id, :qrCodeLink], venues_attributes: [:id, :location])
