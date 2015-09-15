@@ -1,6 +1,7 @@
 class DealsController < ApplicationController
   before_filter :authenticate_merchant!, except: [:home, :help]
   before_action :set_deal, only: [:show, :edit, :update, :destroy]
+  before_action :check_has_deal_access
 
   def new
     @deal = Deal.new
@@ -20,14 +21,7 @@ class DealsController < ApplicationController
   end
 
   def index
-    # Check if user has the subscribed to deal listing plan
-    @hasSubscribed = MerchantService.get_deal_plan(merchant_id)
-    if (@hasSubscribed.present?)
       @deals = MerchantService.get_all_deals(merchant_id)
-    else
-      render "deals/error"
-    end
-
   end
 
   def create
@@ -161,6 +155,15 @@ class DealsController < ApplicationController
                                  deal_days_attributes: [:id, :mon, :tue, :wed, :thur, :fri, :sat, :sun, :_destroy,
                                                         deal_times_attributes: [:id, :started_at, :ended_at, :_destroy]],
                                  deal_venues_attributes: [:id, :qrCodeLink], venues_attributes: [:id, :location])
+  end
+
+  private
+  def check_has_deal_access
+    # Check if user has the subscribed to deal listing plan
+    @hasSubscribed = MerchantService.get_deal_plan(merchant_id)
+    if (@hasSubscribed.blank?)
+      render "deals/error"
+    end
   end
 end
 
