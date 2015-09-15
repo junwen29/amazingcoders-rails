@@ -12,12 +12,13 @@
       </div>
 
       <div class = "row">
-        <div class="col-lg-1">
+        <div class="col-lg-4">
           <p class="form-textarea clearfix">
             <%= f.label :type_of_deal, "Type of Deal" %>
             <span>
-              <%= f.select :type_of_deal, [['1 for 1','1_for_1'],['10% off','10% off']] %>
+              <%= f.select :type_of_deal, [['Discount','discount'],['Freebies','freebis']] %><br>
             </span>
+            Please place the type of freebie or total discount in the description field.
           </p>
         </div>
       </div>
