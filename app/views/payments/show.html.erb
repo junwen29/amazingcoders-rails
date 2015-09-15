@@ -12,25 +12,13 @@
     <div class="pull-left">
       <p class="b2 content-title">Make your payment</p>
 
-
-
-
-      <h4>Total Price:   <%= @total_cost %> </h4>
-
-
-
-      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-              data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-              data-description="A month's subscription"
-              data-amount="500"
-              data-locale="auto"></script>
-
     </div>
 
     <div class="clearfix"></div>
     <div class="content-separator"></div>
 
     <!-- Content Body -->
+    <%= render :partial => 'form/payment_show_form' %>
 
     <%= link_to 'Back', payments_path, class: "btn btn-big btn-default" %>
 
