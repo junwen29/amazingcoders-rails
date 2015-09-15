@@ -19,18 +19,28 @@ class PaymentsController < ApplicationController
 
   def create
     #for database
-    @payment = Payment.new(payment_params)
+    @payment = Merchant.find(merchant_id).payments.new(payment_params)
+    #@payment = Payment.new(payment_params)
 
     if @payment.save
+      flash[:success] = "Your plan has been successfully upgraded!"
       redirect_to @payment
       # Send out confirmation email
       # DealMailer.deal_email("Test Food Merchant", @deal).deliver
     else
+      flash[:error] = "Failed to upgrade plan!"
       render 'new'
     end
   end
 
   def update
+    if payment.update(payment_params)
+      flash[:success] = "Payment successfully updated!"
+      redirect_to @venue
+    else
+      flash[:error] = "Failed to update payment!"
+      render 'new'
+    end
   end
 
   def show
@@ -40,6 +50,9 @@ class PaymentsController < ApplicationController
   end
 
   def destroy
+    @payment.destroy
+    flash[:success] = "Payment deleted!"
+    redirect_to payments_path
   end
 
   private

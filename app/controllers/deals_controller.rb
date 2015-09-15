@@ -20,7 +20,14 @@ class DealsController < ApplicationController
   end
 
   def index
-    @deals = MerchantService.get_all_deals(merchant_id)
+    # Check if user has the subscribed to deal listing plan
+    @hasSubscribed = MerchantService.get_deal_plan(merchant_id)
+    if (@hasSubscribed.present?)
+      @deals = MerchantService.get_all_deals(merchant_id)
+    else
+      render "deals/error"
+    end
+
   end
 
   def create

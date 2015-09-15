@@ -1,5 +1,4 @@
 <%= render 'layouts/biz/dash' %>
-
 <div class="contentWrapper">
   <div class="content">
 
@@ -10,29 +9,17 @@
 
     <!-- Content Heading -->
     <div class="pull-left">
-      <p class="b2 content-title">Make your payment</p>
-
-
-
-
-      <h4>Total Price:   <%= @total_cost %> </h4>
-
-
-
-      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-              data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-              data-description="A month's subscription"
-              data-amount="500"
-              data-locale="auto"></script>
-
+      <p class="b2 content-title">Deal Listing</p>
     </div>
 
     <div class="clearfix"></div>
     <div class="content-separator"></div>
 
     <!-- Content Body -->
-
-    <%= link_to 'Back', payments_path, class: "btn btn-big btn-default" %>
+    <div class = "well col-lg-6 col-lg-offset-3" style="text-align: center; font-weight: bold">
+      <p>Sorry, you have not subscribe to our Deal Listing Service </p>
+      <%= link_to 'Subscribe now', payments_path, class: "btn btn-lg btn-info" %>
+    </div>
 
   </div><!-- /content -->
 </div><!-- /contentWrapper -->
@@ -42,3 +29,5 @@
 
 <%= content_for :body_footer do %>
 <% end %>
+
+
