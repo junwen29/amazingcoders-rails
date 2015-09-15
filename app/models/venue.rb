@@ -4,4 +4,20 @@ class Venue < ActiveRecord::Base
   has_many :deals, through:  :deal_venues
 
   scope :neighbourhood, ->(location) {where("neighbourhood == ?", location)}
+
+  has_attached_file :photo
+
+  validates(:name, presence: true)
+  validates(:street, presence: true)
+  validates(:address_2, presence: true)
+  validates(:zipcode,presence: true)
+  validates(:city, presence: true)
+  validates(:state, presence: true)
+  validates(:country, presence: true)
+  validates(:neighbourhood, presence: true)
+  validates(:phone, presence: true)
+  validates(:phone, :numericality => {:only_integer => true})
+  validates :photo, :presence => {message: "Please upload an image of your deal"}
+
+  validates_attachment_content_type :photo, content_type: /\Aimage/
 end
