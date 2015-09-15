@@ -1,6 +1,25 @@
 Rails.application.routes.draw do
+  devise_for :users
+
+################# Android
+  namespace :api do
+    namespace :v1 do
+      devise_scope :user do
+        post 'registrations' => 'registrations#create', :as => 'register'
+        post 'sessions' => 'sessions#create', :as => 'login'
+        delete 'sessions' => 'sessions#destroy', :as => 'logout'
+        get 'tasks' => 'tasks#index', :as => 'tasks'
+      end
+    end
+  end
+
+################## Burpple Admin
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+
+
+
+################# Food Merchants
   devise_for :merchants, controllers: { sessions: "merchants/sessions", registrations: "merchants/registrations"}
   resources :venues
   resources :merchants
