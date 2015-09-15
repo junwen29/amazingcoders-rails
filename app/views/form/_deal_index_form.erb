@@ -37,7 +37,7 @@
                 <td><%= deal.pushed %></td>
                 <td>
                   <%= link_to 'Activate', active_deal_path(deal),
-                              data: { confirm: 'Once deal is activated, it will be published to users. You will not be able to edit or delete the deal until after expiry then. Do you wish to proceed?'},
+                              data: { confirm: 'Once deal is activated, it will be published to users and you will not be allowed to edit or delete this deal. Do you wish to proceed?'},
                               class: "btn btn-xs btn-success disabled"%>
                 </td>
                 <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>

@@ -102,7 +102,7 @@ class DealsController < ApplicationController
       flash[:error] = "As you currently have more than 5 active deals this process can not be processed!"
     elsif
       @deal.update_attribute(:active, true)
-      flash[:success] = "Deal has been successfully activated!"
+      flash[:success] = "Deal has been successfully activated! If you require to edit or delete the deal please email Burpple for admin help."
     end
     redirect_to deals_path
   end
