@@ -35,7 +35,8 @@ class PaymentsController < ApplicationController
 
   def show
     @payment = Payment.find(params[:id])
-    @total_cost = @payment.total_cost
+    @total_cost = calculate_price(@payment)
+    @payment.update(total_cost: @total_cost)
   end
 
   def destroy
@@ -47,32 +48,30 @@ class PaymentsController < ApplicationController
     @payment = Payment.find(params[:id])
   end
 
-  def calculate_price
-    @payment = Payment.find(params[:id])
-  #  @plan = Plan.all
-    total_cost = '0'
-
+  private
+  def calculate_price (payment)
+    total_cost = 0
   # hardcode
-    if @payment.plan1 == 'true'
+    if payment.plan1
       total_cost = total_cost + 30
     end
-    if @payment.add_on1 == 'true'
+    if payment.add_on1
       total_cost = total_cost + 5
     end
-    if @payment.add_on2 == 'true'
+    if payment.add_on2
       total_cost = total_cost + 5
     end
-    if @payment.add_on3 == 'true'
+    if payment.add_on3
       total_cost = total_cost + 5
     end
 
-    @payment.total_cost = total_cost
+    total_cost
   end
 
 
   private
   def payment_params
-    params.require(:payment).permit(:start_date, :expiry_date, :total_cost, :add_on1, :add_on2, :add_on3, :plan_id)
+    params.require(:payment).permit(:start_date, :expiry_date, :total_cost, :add_on1, :add_on2, :add_on3, :plan1)
   end
 
 

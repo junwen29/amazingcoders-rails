@@ -11,6 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+ActiveRecord::Schema.define(version: 20150914144558) do
 ActiveRecord::Schema.define(version: 20150914171352) do
 
   # These are extensions that must be enabled in order to support this database
@@ -32,12 +33,17 @@ ActiveRecord::Schema.define(version: 20150914171352) do
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
   create_table "add_ons", force: true do |t|
+    t.integer  "payment_id"
+    t.integer  "plan_id"
     t.string   "name"
-    t.integer  "cost"
+    t.decimal  "cost",        precision: 8, scale: 2
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "add_ons", ["payment_id"], name: "index_add_ons_on_payment_id", using: :btree
+  add_index "add_ons", ["plan_id"], name: "index_add_ons_on_plan_id", using: :btree
 
   create_table "admin_users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -133,7 +139,7 @@ ActiveRecord::Schema.define(version: 20150914171352) do
   create_table "payments", force: true do |t|
     t.date     "start_date"
     t.date     "expiry_date"
-    t.integer  "total_cost"
+    t.decimal  "total_cost",  precision: 8, scale: 2
     t.boolean  "add_on1"
     t.boolean  "add_on2"
     t.boolean  "add_on3"
@@ -146,12 +152,15 @@ ActiveRecord::Schema.define(version: 20150914171352) do
   add_index "payments", ["merchant_id"], name: "index_payments_on_merchant_id", using: :btree
 
   create_table "plans", force: true do |t|
+    t.integer  "payment_id"
     t.string   "name"
-    t.integer  "cost"
+    t.decimal  "cost",        precision: 8, scale: 2
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "plans", ["payment_id"], name: "index_plans_on_payment_id", using: :btree
 
   create_table "venues", force: true do |t|
     t.string   "name"
