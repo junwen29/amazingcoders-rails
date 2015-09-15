@@ -60,11 +60,4 @@ class DealMailer < ActionMailer::Base
     dealperiod
   end
   helper_method :format_days
-
-  def subscription_email(user, payment, email)
-    @user = user
-    @payment = payment
-    @url = payment_path
-    mail(to: email, subject: "You have subscribed to a premium service with Burpple!")
-  end
 end

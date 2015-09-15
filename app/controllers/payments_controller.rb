@@ -21,12 +21,14 @@ class PaymentsController < ApplicationController
     #for database
     @payment = Merchant.find(merchant_id).payments.new(payment_params)
     #@payment = Payment.new(payment_params)
+    @total_cost = calculate_price(@payment)
+    @payment.update(total_cost: @total_cost)
 
     if @payment.save
       flash[:success] = "Your plan has been successfully upgraded!"
       redirect_to @payment
       # Send out confirmation email
-      # DealMailer.subscription_email("valued merchant", @payment, MerchantService.get_email(merchant_id)).deliver
+      #PaymentMailer.subscription_email("valued merchant", @payment, MerchantService.get_email(merchant_id)).deliver
     else
       flash[:error] = "Failed to upgrade plan!"
       render 'new'
@@ -45,8 +47,6 @@ class PaymentsController < ApplicationController
 
   def show
     @payment = Payment.find(params[:id])
-    @total_cost = calculate_price(@payment)
-    @payment.update(total_cost: @total_cost)
   end
 
   def destroy
