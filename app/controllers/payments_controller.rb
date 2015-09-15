@@ -14,7 +14,7 @@ class PaymentsController < ApplicationController
   end
 
   def index
-    @payments = Payment.all
+    @payments = Payment.where(:merchant_id => merchant_id)
   end
 
   def create
@@ -26,7 +26,7 @@ class PaymentsController < ApplicationController
       flash[:success] = "Your plan has been successfully upgraded!"
       redirect_to @payment
       # Send out confirmation email
-      # DealMailer.deal_email("Test Food Merchant", @deal).deliver
+      # DealMailer.subscription_email("valued merchant", @payment, MerchantService.get_email(merchant_id)).deliver
     else
       flash[:error] = "Failed to upgrade plan!"
       render 'new'
