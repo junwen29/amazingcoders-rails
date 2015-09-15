@@ -1,0 +1,79 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title"  data-toggle="collapse" data-parent="#accordion" data-target="#plan">
+      <a class="accordion-toggle">
+        Your Current Plan
+      </a>
+    </h4>
+  </div>
+  <div id="plan" class="panel-collapse collapse">
+    <div class="panel-body">
+      <p>
+        <strong>Plan: </strong>
+        <% if (@current_payment.plan1) %>
+            <span class="label label-default">Deals Listing Service</span>
+        <% else %>
+            You have no plans at the moment. Upgrade your plan to enjoy some premium services!
+        <% end %>
+      </p>
+      <p>
+        <strong>Add-Ons: </strong>
+        <% if (@current_payment.add_on1) %>
+            <span class="label label-info">Push Notification</span>
+        <% end %>
+        <% if (@current_payment.add_on2) %>
+            <span class="label label-success">Deals Statistics</span>
+        <% end %>
+        <% if (@current_payment.add_on3) %>
+            <span class="label label-warning">Aggregate Trends</span>
+        <% end %>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Content Body -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4>Transaction History</h4>
+  </div>
+  <div class="panel-body">
+    <table class="table table-bordered table-hover table-responsive">
+      <tr>
+        <th>ID</th>
+        <th>Amount</th>
+        <th>Premium Service</th>
+        <th>Add Ons</th>
+        <th>Subscription Date</th>
+        <th>Expiry Date</th>
+        <th colspan="1"></th>
+      </tr>
+
+      <% @payments.each do |payment| %>
+          <tr>
+            <td><%= payment.id %></td>
+            <td><%= number_to_currency payment.total_cost %></td>
+            <td>
+              <% if (payment.plan1) %>
+                  Deals Listing Service
+              <% end %>
+            </td>
+            <td>
+              <% if (payment.add_on1) %>
+                  <span class="label label-info">Push Notification</span>
+              <% end %>
+              <% if (payment.add_on2) %>
+                  <span class="label label-success">Deals Statistics</span>
+              <% end %>
+              <% if (payment.add_on3) %>
+                  <span class="label label-warning">Aggregate Trends</span>
+              <% end %>
+            </td>
+            <td><%= payment.start_date %> </td>
+            <td><%= payment.expiry_date %> </td>
+            <td><%= link_to 'Show', payment_path(payment), class: "btn btn-xs btn-default" %></td>
+          </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
