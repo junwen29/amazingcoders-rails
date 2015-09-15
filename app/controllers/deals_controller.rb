@@ -151,10 +151,11 @@ class DealsController < ApplicationController
   # Check if user has the subscribed to deal listing plan
   private
   def check_has_deal_access
-    @hasSubscribed = MerchantService.get_deal_plan(merchant_id)
-    if (@hasSubscribed.blank?)
+    @payment = MerchantService.get_deal_plan(merchant_id)
+    if (@payment.blank?)
       render "deals/error"
     end
+    @payment
   end
 
   private
