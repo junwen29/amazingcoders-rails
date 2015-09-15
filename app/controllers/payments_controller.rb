@@ -36,7 +36,7 @@ class PaymentsController < ApplicationController
   def show
     @payment = Payment.find(params[:id])
     @total_cost = calculate_price(@payment)
-    @payment.total_cost = @total_cost
+    @payment.update(total_cost: @total_cost)
   end
 
   def destroy
