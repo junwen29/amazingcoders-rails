@@ -26,12 +26,8 @@
     <div class="content-separator"></div>
 
     <!-- Content Body -->
-    <%= form_for(@venue, url: venue_path,  :html => {:onSubmit => "return validate_getting_started(this);", :class => "venueForm"}) do |f| %>
+    <%= form_for(@venue, url: venue_path,  :html => {:onSubmit => "return validate_getting_started(this);", :class => "venueForm", :multipart => true}) do |f| %>
         <%= render :partial => 'form/venue_edit_form', :locals => { :f => f , :object => @select_day_hours_string, :venue_type => @venue_type } %>
-        <div style="margin-top: 30px">
-          <%= f.submit "Submit", :class => 'btn btn-lg btn-success' %>
-          <%= link_to 'Back', venues_path, class: "btn btn-lg btn-default" %>
-        </div>
 
         </div><!-- /content -->
         </div><!-- /contentWrapper -->
