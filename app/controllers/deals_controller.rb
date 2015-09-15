@@ -148,6 +148,15 @@ class DealsController < ApplicationController
     @deal = Deal.find(params[:id])
   end
 
+  # Check if user has the subscribed to deal listing plan
+  private
+  def check_has_deal_access
+    @hasSubscribed = MerchantService.get_deal_plan(merchant_id)
+    if (@hasSubscribed.blank?)
+      render "deals/error"
+    end
+  end
+
   private
   def deal_params
     params.require(:deal).permit(:title, :redeemable, :multiple_use, :image, :type_of_deal, :description, :start_date,
@@ -157,13 +166,5 @@ class DealsController < ApplicationController
                                  deal_venues_attributes: [:id, :qrCodeLink], venues_attributes: [:id, :location])
   end
 
-  private
-  def check_has_deal_access
-    # Check if user has the subscribed to deal listing plan
-    @hasSubscribed = MerchantService.get_deal_plan(merchant_id)
-    if (@hasSubscribed.blank?)
-      render "deals/error"
-    end
-  end
 end
 
