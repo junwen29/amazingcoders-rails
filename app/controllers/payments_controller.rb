@@ -20,14 +20,16 @@ class PaymentsController < ApplicationController
   def create
     #for database
     @payment = Payment.new(payment_params)
+    @total_cost = calculate_price(@payment)
+    @payment.update(total_cost: @total_cost)
 
-    if @payment.save
-      redirect_to @payment
+   # if @payment.save
+   #   redirect_to @payment
       # Send out confirmation email
       # DealMailer.deal_email("Test Food Merchant", @deal).deliver
-    else
-      render 'new'
-    end
+   # else
+   #   render 'new'
+   # end
   end
 
   def update
