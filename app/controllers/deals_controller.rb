@@ -97,8 +97,13 @@ class DealsController < ApplicationController
 
   # Change non-active deal to active
   def activate
-    @deal.update_attribute(:active, true)
-    flash[:success] = "Deal activated!"
+    num_active_deals = DealService.num_active_deals(@deal.merchant_id, @deal)
+    if num_active_deals >= 5
+      flash[:error] = "As you currently have more than 5 active deals this process can not be processed!"
+    elsif
+      @deal.update_attribute(:active, true)
+      flash[:success] = "Deal has been successfully activated!"
+    end
     redirect_to deals_path
   end
 
