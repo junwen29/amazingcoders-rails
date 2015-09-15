@@ -1,11 +1,11 @@
 class PaymentsController < ApplicationController
   before_filter :authenticate_merchant!, except: [:home, :help]
   before_action :set_payment, only: [:show]
+ # before_action :show, only: [:calculate_price]
 
   def new
     @payment = Payment.new
     @plan = Plan.all
-    #plans instead?
    # @add_on = Add_on.all
   end
 
@@ -18,25 +18,16 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    @payment = Payment.new(payment_params)
-   # @payment = Payment.find(params[:id])
-    @total_cost = calculate_price(@payment)
-   # @payment.update(total_cost: @total_cost)
-
-    # need to find from stripe token that it is successful, then i create the token
-    # can use status to check whether is is 'succeeded'
-
     #for database
+    @payment = Payment.new(payment_params)
 
-    #@payment = Payment.new(payment_params)
-
-   # if @payment.save
-    #  redirect_to @payment
+    if @payment.save
+      redirect_to @payment
       # Send out confirmation email
       # DealMailer.deal_email("Test Food Merchant", @deal).deliver
-   # else
-   #   render 'new'
-   # end
+    else
+      render 'new'
+    end
   end
 
   def update
