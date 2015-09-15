@@ -71,7 +71,7 @@
           <%= fields_for (@deal_venue) do |dv| %>
               <div class = "field">
                 <%= dv.label "Select Venues" %><br />
-                <%= collection_select(:venues, :id, @all_venues, :id, :neighbourhood, {}, {:multiple => true}) %>
+                <%= collection_select(:venues, :id, @all_venues, :id, :name, {}, {:multiple => true}) %>
               </div>
           <% end %>
         </div>
