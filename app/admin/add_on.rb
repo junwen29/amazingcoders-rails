@@ -4,6 +4,8 @@ ActiveAdmin.register AddOn do
   # Allow edit
   permit_params :name, :cost, :description
 
+  remove_filter :payment
+
   # INDEX
   index do
     selectable_column

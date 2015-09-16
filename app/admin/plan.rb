@@ -9,6 +9,8 @@ ActiveAdmin.register Plan do
     end
   end
 
+  remove_filter :payment
+
   # INDEX
   index do
     selectable_column
