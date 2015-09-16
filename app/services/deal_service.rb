@@ -10,6 +10,10 @@ class DealService
       overlapping_deals.count
     end
 
+    def get_active_deals
+      all_deals = Deal.active
+    end
+
   end
 
   class << self

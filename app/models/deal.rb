@@ -1,4 +1,7 @@
 class Deal < ActiveRecord::Base
+  # include methods from related modules
+  include Deal::Json
+
   belongs_to :merchant
 
   has_many :deal_venues, inverse_of: :deal, dependent: :destroy
