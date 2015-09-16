@@ -7,7 +7,8 @@ class PaymentsController < ApplicationController
     @payment = Payment.new
     @plan = Plan.all
     # Update join table
-    @add_on_payment = @payment.add_on_payments.build
+    @add_on_payment = @payment.add_on_payments.new
+    @plan_payment = @payment.plan_payments.new
   end
 
   # Disable
@@ -29,8 +30,8 @@ class PaymentsController < ApplicationController
     @total_cost = calculate_price(@payment)
     @payment.update(total_cost: @total_cost)
 
-    # Update join table
-    @add_on_payment = @payment.add_on_payments.build
+    # Update join table in addon_payment
+    @add_on_payment = @payment.add_on_payments.new
     if (params[:payment][:add_on1] == "true")
       @payment.add_on_payments.build(:add_on_id => 1)
     end
@@ -39,6 +40,12 @@ class PaymentsController < ApplicationController
     end
     if (params[:payment][:add_on3] == "true")
       @payment.add_on_payments.build(:add_on_id => 3)
+    end
+
+    # Update join table in plan_payment
+    @plan_payment = @payment.plan_payments.new
+    if (params[:payment][:plan1] == "true")
+      @payment.plan_payments.build(:plan_id => 1)
     end
 
     if @payment.save

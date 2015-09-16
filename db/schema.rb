@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150916150723) do
+ActiveRecord::Schema.define(version: 20150916165814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -160,6 +160,16 @@ ActiveRecord::Schema.define(version: 20150916150723) do
   end
 
   add_index "payments", ["merchant_id"], name: "index_payments_on_merchant_id", using: :btree
+
+  create_table "plan_payments", force: true do |t|
+    t.integer  "plan_id"
+    t.integer  "payment_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "plan_payments", ["payment_id"], name: "index_plan_payments_on_payment_id", using: :btree
+  add_index "plan_payments", ["plan_id"], name: "index_plan_payments_on_plan_id", using: :btree
 
   create_table "plans", force: true do |t|
     t.integer  "payment_id"
