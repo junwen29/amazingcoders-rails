@@ -17,7 +17,7 @@ class Deal < ActiveRecord::Base
   validates(:title, presence: true)
   validates(:type_of_deal, presence: true)
   validates(:description,presence: true, length: {minimum: 5})
-  validates(:start_date, presence: true)
+   validates(:start_date, presence: true)
   validates(:expiry_date, presence: true)
   # validates :venues, :presence => {message: "Please ensure that there is at least one venue selected"}
   validates(:t_c, presence: true)

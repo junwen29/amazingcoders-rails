@@ -17,7 +17,7 @@ class Venue < ActiveRecord::Base
   validates(:neighbourhood, presence: true)
   validates(:phone, presence: true)
   validates(:phone, :numericality => {:only_integer => true})
-  validates :photo, :presence => {message: "Please upload an image of your deal"}
+  validates :photo, :presence => {message: "Please upload a photo of your venue"}
 
   validates_attachment_content_type :photo, content_type: /\Aimage/
 end
