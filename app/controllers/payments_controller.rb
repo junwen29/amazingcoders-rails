@@ -6,12 +6,16 @@ class PaymentsController < ApplicationController
   def new
     @payment = Payment.new
     @plan = Plan.all
-   # @add_on = Add_on.all
+    # Update join table
+    @add_on_payment = @payment.add_on_payments.build
   end
 
+  # Disable
+=begin
   def edit
     @payment = Payment.find(params[:id])
   end
+=end
 
   def index
     @payments = Payment.where(:merchant_id => merchant_id)
@@ -25,6 +29,18 @@ class PaymentsController < ApplicationController
     @total_cost = calculate_price(@payment)
     @payment.update(total_cost: @total_cost)
 
+    # Update join table
+    @add_on_payment = @payment.add_on_payments.build
+    if (params[:payment][:add_on1] == "true")
+      @payment.add_on_payments.build(:add_on_id => 1)
+    end
+    if (params[:payment][:add_on2] == "true")
+      @payment.add_on_payments.build(:add_on_id => 2)
+    end
+    if (params[:payment][:add_on3] == "true")
+      @payment.add_on_payments.build(:add_on_id => 3)
+    end
+
     if @payment.save
       flash[:success] = "Your plan has been successfully upgraded!"
       redirect_to @payment
@@ -36,6 +52,8 @@ class PaymentsController < ApplicationController
     end
   end
 
+  # Disable
+=begin
   def update
     if payment.update(payment_params)
       flash[:success] = "Payment successfully updated!"
@@ -55,6 +73,7 @@ class PaymentsController < ApplicationController
     flash[:success] = "Payment deleted!"
     redirect_to payments_path
   end
+=end
 
   private
   # Use callbacks to share common setup or constraints between actions.
@@ -65,18 +84,22 @@ class PaymentsController < ApplicationController
   private
   def calculate_price (payment)
     total_cost = 0
-  # hardcode
+    deal_plan_cost = Plan.find(1).cost      # deal listing plan has id = 1
+    add_on1_cost = AddOn.find(1).cost
+    add_on2_cost = AddOn.find(2).cost
+    add_on3_cost = AddOn.find(3).cost
+
     if payment.plan1
-      total_cost = total_cost + 30
+      total_cost = total_cost + deal_plan_cost
     end
     if payment.add_on1
-      total_cost = total_cost + 5
+      total_cost = total_cost + add_on1_cost
     end
     if payment.add_on2
-      total_cost = total_cost + 5
+      total_cost = total_cost + add_on1_cost
     end
     if payment.add_on3
-      total_cost = total_cost + 5
+      total_cost = total_cost + add_on1_cost
     end
 
     total_cost
