@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 20150915142236) do
     t.string   "title"
     t.boolean  "redeemable"
     t.boolean  "multiple_use"
+    t.string   "image"
     t.string   "type_of_deal"
     t.string   "description"
     t.date     "start_date"

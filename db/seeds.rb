@@ -4,6 +4,8 @@
 Plan.create(name: 'Premium Deals Services', cost: '30', description: 'Allows unlimited creation of deals. Publishing
 of up to 5 active deals')
 
+AddOn.create(name: 'Push Notification Add-On', cost: '5', description: 'Allows 1 Push Notification per Deal')
+
 
 # Examples:
 #

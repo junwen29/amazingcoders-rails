@@ -1,5 +1,4 @@
 <%= render 'layouts/biz/dash' %>
-
 <div class="contentWrapper">
   <div class="content">
 
@@ -10,14 +9,17 @@
 
     <!-- Content Heading -->
     <div class="pull-left">
-      <p class="b2 content-title">Business Payments <%= link_to 'Upgrade Plan', new_payment_path, class: "btn btn-big btn-success" %></p>
+      <p class="b2 content-title">Deal Listing</p>
     </div>
 
     <div class="clearfix"></div>
     <div class="content-separator"></div>
 
     <!-- Content Body -->
-    <%= render :partial => 'form/payment_index_form' %>
+    <div class = "well col-lg-6 col-lg-offset-3" style="text-align: center; font-weight: bold">
+      <p>Sorry, you have not subscribe to our Deal Listing Service </p>
+      <%= link_to 'Subscribe now', payments_path, class: "btn btn-lg btn-info" %>
+    </div>
 
   </div><!-- /content -->
 </div><!-- /contentWrapper -->
