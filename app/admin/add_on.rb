@@ -4,7 +4,7 @@ ActiveAdmin.register AddOn do
   # Allow edit
   permit_params :name, :cost, :description
 
-  remove_filter :payment
+  remove_filter :payments, :add_on_payments
 
   # INDEX
   index do
