@@ -15,11 +15,11 @@
         <th>Redeemable</th>
         <th>Multiple Use</th>
         <th>Push to Wishlist</th>
-        <th colspan="3"></th>
+        <th colspan="4"></th>
       </tr>
 
       <% @deals.each do |deal| %>
-          <% if deal.start_date.today? || deal.expiry_date.today? || (deal.start_date.past? && deal.expiry_date.future?) %>
+          <% if deal.start_date.today? || deal.expiry_date.today? || (deal.start_date.past? && deal.expiry_date.future?) || (deal.expiry_date.future? && deal.active) %>
               <tr>
                 <td><%= deal.title %></td>
                 <td><%= image_tag deal.image.url, :size => "150x150" %></td>
@@ -29,19 +29,24 @@
                 <td><%= deal.expiry_date %></td>
                 <td>
                   <% deal.venues.each do |venue| %>
-                      <%= venue.neighbourhood %><br/>
+                      <%= venue.name %><br/>
                   <% end %>
                 </td>
                 <td><%= deal.redeemable %></td>
                 <td><%= deal.multiple_use %></td>
                 <td><%= deal.pushed %></td>
+                <td>
+                  <%= link_to 'Activate', active_deal_path(deal),
+                              data: { confirm: 'Once deal is activated, it will be published to users and you will not be allowed to edit or delete this deal. Do you wish to proceed?'},
+                              class: "btn btn-xs btn-success disabled"%>
+                </td>
                 <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
-                <td><%= link_to 'Edit', edit_deal_path(deal), class: "btn btn-xs btn-default disabled"%></td>
+                <td><%= link_to 'Edit', edit_deal_path(deal), class: 'btn btn-xs btn-default disabled'%></td>
                 <td>
                   <%= link_to 'Delete', deal_path(deal),
                               method: :delete,
                               data: { confirm: 'This deal is active now! Delete anyway?'},
-                              class: "btn btn-xs btn-danger"%>
+                              class: "btn btn-xs btn-danger disabled"%>
                 </td>
               </tr>
           <% end %>
@@ -67,11 +72,11 @@
         <th>Redeemable</th>
         <th>Multiple Use</th>
         <th>Push to Wishlist</th>
-        <th colspan="3"></th>
+        <th colspan="4"></th>
       </tr>
 
       <% @deals.each do |deal| %>
-          <% if deal.start_date.future? %>
+          <% if deal.start_date.future? && !deal.active %>
               <tr>
                 <td><%= deal.title %></td>
                 <td><%= image_tag deal.image.url, :size => "150x150" %></td>
@@ -81,12 +86,17 @@
                 <td><%= deal.expiry_date %></td>
                 <td>
                   <% deal.venues.each do |venue| %>
-                      <%= venue.neighbourhood %><br/>
+                      <%= venue.name %><br/>
                   <% end %>
                 </td>
                 <td><%= deal.redeemable %></td>
                 <td><%= deal.multiple_use %></td>
                 <td><%= deal.pushed %></td>
+                <td>
+                  <%= link_to 'Activate', active_deal_path(deal),
+                              data: { confirm: 'Once deal is activated, it will be published to users. You will not be able to edit or delete the deal until after expiry then. Do you wish to proceed?'},
+                              class: "btn btn-xs btn-success"%>
+                </td>
                 <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
                 <td><%= link_to 'Edit', edit_deal_path(deal), class: "btn btn-xs btn-default" %></td>
                 <td>
@@ -118,7 +128,7 @@
         <th>Redeemable</th>
         <th>Multiple Use</th>
         <th>Push to Wishlist</th>
-        <th colspan="3"></th>
+        <th colspan="4"></th>
       </tr>
 
       <% @deals.each do |deal| %>
@@ -132,12 +142,17 @@
                 <td><%= deal.expiry_date %></td>
                 <td>
                   <% deal.venues.each do |venue| %>
-                      <%= venue.neighbourhood %><br/>
+                      <%= venue.name %><br/>
                   <% end %>
                 </td>
                 <td><%= deal.redeemable %></td>
                 <td><%= deal.multiple_use %></td>
                 <td><%= deal.pushed %></td>
+                <td>
+                  <%= link_to 'Activate', active_deal_path(deal),
+                              data: { confirm: 'Once deal is activated, it will be published to users. You will not be able to edit or delete the deal until after expiry then. Do you wish to proceed?'},
+                              class: "btn btn-xs btn-success disabled"%>
+                </td>
                 <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
                 <td><%= link_to 'Edit', edit_deal_path(deal), class: "btn btn-xs btn-default disabled" %></td>
                 <td>
