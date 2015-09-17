@@ -1,61 +1,79 @@
 <p>
-  <strong>Title:</strong>
+  <strong><font size = "4">Title</font></strong><br>
   <%= @deal.title %>
 </p>
 
 <p>
-  <strong>Redeemable:</strong>
-  <%= @deal.redeemable.inspect %>
+  <strong><font size = "4">Type of Deal</font></strong><br>
+  <%= @deal.type_of_deal %><br>
 </p>
 
 <p>
-  <strong>Multiple Use:</strong>
-  <%= @deal.multiple_use %>
+  <strong><font size = "4">Description</font></strong><br>
+  <%= @deal.description %><br>
 </p>
 
 <p>
-  <strong>Image:</strong>
-  <%= @deal.image %>
+  <strong><font size = "4">Deal Period</font></strong><br>
+  <strong><%= @deal.start_date %></strong> to <strong><%= @deal.expiry_date %></strong>
+
+  <% for deal_day in @deal.deal_days%>
+      <br>
+      <strong><%= format_days (deal_day) %>:</strong>
+      <% for deal_time in deal_day.deal_times%>
+          <%=h deal_time.started_at.strftime("%H:%M") %> to <%=h deal_time.ended_at.strftime("%H:%M") %>&nbsp;&nbsp;
+      <% end %><% end %>
 </p>
 
 <p>
-  <strong>Type of Deal:</strong>
-  <%= @deal.type_of_deal %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @deal.description %>
-</p>
-
-<p>
-  <strong>Start Date:</strong>
-  <%= @deal.start_date %>
-</p>
-
-<p>
-  <strong>Expiry Date:</strong>
-  <%= @deal.expiry_date %>
-</p>
-
-<p>
-  <strong>Venue:</strong>
-  <% @deal.venues.each do |venue| %>
-      <span><%= venue.neighbourhood %></span>
+  <% if !@deal.redeemable %>
+      <strong><font size = "4">Venue</font></strong><br>
+      <% @deal.venues.each do |venue| %>
+          <span><%= venue.name %></span>&nbsp;&nbsp;
+      <% end %>
   <% end %>
 </p>
 
 <p>
-  <strong>Terms and Condition:</strong>
+  <strong><font size = "4">Terms and Condition</font></strong><br>
   <%= @deal.t_c %>
 </p>
 
 <p>
-  <strong>Number of Redeems:</strong>
-  <%= @deal.num_of_redeems %>
+  <strong><font size = "4">Deal Image</font></strong><br>
+  <%= image_tag @deal.image.url, :size => "150x150" %>
 </p>
 
 <p>
-  <strong>Pushed:</strong>
-  <%= @deal.pushed %>
+  <strong><font size = "4">Has the deal been pushed to users?</font></strong><br>
+  <% if @deal.pushed %>
+    Yes
+  <% else %>
+    No
+  <% end %>
+</p>
+
+<p>
+  <strong><font size = "4">Can your code be redeemed?</font></strong><br>
+  <% if @deal.redeemable %>
+      Yes <br>
+      <strong><font size = "4">How many times can this deal be redeemed per user?</font></strong><br>
+      <% if !@deal.multiple_use %>
+          Once per user <br>
+      <% else %>
+          Unlimited Redemptions <br>
+      <% end %>
+  <% else %>
+      No <br>
+  <% end %>
+</p>
+
+<p>
+  <% if @deal.redeemable %>
+      <% @deal.venues.each do |venue| %>
+          <strong>QR Code for <%= venue.name %></strong><br>
+          <% @qr = RQRCode::QRCode.new(@deal.id.to_s + "_" + venue.id.to_s + "_" + @deal.created_at.to_s).to_img.resize(100, 100).to_data_url %>
+          <span><%= image_tag @qr %><br></span>
+      <% end %>
+  <% end %>
 </p>

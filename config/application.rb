@@ -22,5 +22,7 @@ module AmazingcodersRails
 
     # load service layer
     config.autoload_paths += Dir["#{config.root}/app/services/**/"]
+    config.action_mailer.asset_host = 'http://localhost:3000.com'
+    config.time_zone = 'Singapore'
   end
 end

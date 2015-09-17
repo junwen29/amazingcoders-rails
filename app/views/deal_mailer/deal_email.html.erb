@@ -1,13 +1,86 @@
 <p> Hi  <%= @user %>!</p>
 
-<p>Congratulations! You have successfully listed a deal on Burpple!</p>
-<p>Type of Deal: <%= @deal_type %> </p>
-<p>Start Date: <%= @deal_start %></p>
-<p>Expiry Date: <%= @deal_end %></p>
-<p>Location: <%= @deal_location %></p>
-<p>Multiple Use: <%= @deal_multiple %></p>
-<p>QR Code Redeemable: <%= @deal_redeemable %></p>
-<p>To view your deal listing on Burpple, follow this link: <%= @url %> </p>
+<p>You have successfully listed a deal on Burpple!<br>Following which are the details of your deal.</p>
+<p>
+  <strong><font size = "2">Title</font></strong><br>
+  <%= @deal.title %>
+</p>
+
+<p>
+  <strong><font size = "2">Type of Deal</font></strong><br>
+  <%= @deal.type_of_deal %><br>
+</p>
+
+<p>
+  <strong><font size = "2">Description</font></strong><br>
+  <%= @deal.description %><br>
+</p>
+
+<p>
+  <strong><font size = "2">Deal Period</font></strong><br>
+  <strong><%= @deal.start_date %></strong> to <strong><%= @deal.expiry_date %></strong>
+
+  <% for deal_day in @deal.deal_days%>
+      <br>
+      <strong><%= format_days (deal_day) %>:</strong>
+      <% for deal_time in deal_day.deal_times%>
+          <%=h deal_time.started_at.strftime("%H:%M") %> to <%=h deal_time.ended_at.strftime("%H:%M") %>&nbsp;&nbsp;
+          <% end %><% end %>
+</p>
+
+<p>
+  <% if !@deal.redeemable %>
+      <strong><font size = "2">Venue</font></strong><br>
+      <% @deal.venues.each do |venue| %>
+          <span><%= venue.neighbourhood %></span>&nbsp;&nbsp;
+      <% end %>
+  <% end %>
+</p>
+
+<p>
+  <strong><font size = "2">Terms and Condition</font></strong><br>
+  <%= @deal.t_c %>
+</p>
+
+<p>
+  <strong><font size = "2">Has the deal been pushed to users?</font></strong><br>
+  <% if @deal.pushed %>
+      Yes
+  <% else %>
+      No
+  <% end %>
+</p>
+
+<p>
+  <strong><font size = "2">Can your code be redeemed?</font></strong><br>
+  <% if @deal.redeemable %>
+      Yes <br><br>
+      <strong><font size = "2">How many times can this deal be redeemed per user?</font></strong><br>
+      <% if !@deal.multiple_use %>
+          Once per user <br>
+      <% else %>
+          Unlimited Redemptions <br>
+      <% end %>
+  <% else %>
+      No <br>
+  <% end %>
+</p>
+
+<p>
+  <% if @deal.redeemable %>
+      Showed below are the QRcodes for each venue. Please ensure you download the correct QRcode for each venue.
+      To download the QRcode you can right click on it and choose save image. You can then print the QRcode out and when
+      your customers wish to redeem the deal, just ask your customer to scan the QR code using our customer scanner in our
+      app.<br>
+      <% @deal.venues.each do |venue| %>
+          <strong>QR Code for <%= venue.name %></strong><br>
+          <img src="https://chart.googleapis.com/chart?chs=100x100&amp;cht=qr&amp;chl=<%= @deal.id.to_s + '_' + venue.id.to_s + '_' + @deal.created_at.to_s%>" alt="QR code">
+          <br>
+      <% end %>
+  <% end %>
+</p>
+
+<p>To view your deal listing or edit your deal listing on Burpple, follow this link: <%= @url %> </p>
 
 <p>Thank you for using Burpple. Have a nice day!</p>
 

@@ -1,4 +1,4 @@
-<%= form_for(@venue) do |f| %>
+<%= form_for @venue,:html => {:multipart => true} do |f| %>
   <% if @venue.errors.any? %>
     <div id="error_explanation" class="alert alert-error">
       <h5><%= pluralize(@venue.errors.count, "error") %> prohibited this venue from being saved:</h5>

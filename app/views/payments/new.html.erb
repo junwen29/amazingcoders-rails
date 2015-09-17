@@ -1,0 +1,32 @@
+<%= render 'layouts/biz/dash' %>
+
+<div class="contentWrapper">
+  <div class="content">
+
+
+
+    <!-- Content Heading -->
+    <div class="pull-left">
+      <p class="b2 content-title">Upgrade your plan</p>
+      <h4>Enjoy more features when you upgrade your plan!</h4>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="content-separator"></div>
+
+    <!-- Content Body -->
+    <%= render :partial => 'form/payment_new_form' %>
+
+
+
+
+    <%= link_to 'Back', payments_path, class: "btn btn-big btn-default" %>
+
+  </div><!-- /content -->
+</div><!-- /contentWrapper -->
+
+<%= content_for :lean_overlay do %>
+<% end %>
+
+<%= content_for :body_footer do %>
+<% end %>

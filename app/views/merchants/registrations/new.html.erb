@@ -23,7 +23,8 @@
       </div>
 
       <div class="actions">
-        <%= f.submit "Sign up" %>
+        <%= f.submit "Sign up", class: "btn btn-lg btn-info" %>
       </div>
   <% end %>
+  Already a member?<%= link_to "Log In!", new_session_path(resource_name) %><br />
 </div>

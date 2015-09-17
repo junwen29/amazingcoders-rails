@@ -1,9 +1,15 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   devise_for :merchants, controllers: { sessions: "merchants/sessions", registrations: "merchants/registrations"}
   resources :venues
   resources :merchants
   resources :charges
   resources :deals
+  resources :payments
+
+  # To change a deal into active deal then going back to index page
+  get 'deals/:id/activate' => 'deals#activate', :as => 'active_deal'
 
   get 'merchant_pages/home' => 'merchant_pages#home', :as => :merchant_home
   get 'merchant_pages/help' => 'merchant_pages#help', :as => :merchant_help

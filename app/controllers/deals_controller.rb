@@ -1,24 +1,19 @@
 class DealsController < ApplicationController
-  before_action :set_deal, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_merchant!, except: [:home, :help]
+  before_action :check_has_deal_access
+  before_action :set_deal, only: [:show, :edit, :update, :destroy, :activate]
 
   def new
     @deal = Deal.new
-
-    # For drop down form
-    @all_venues = Venue.all
     @deal_venue = @deal.deal_venues.build
-    #DealMailer.deal_email("Test Food Merchant", "Deal Listing Service").deliver
-
-    # Get all venue locations from this merchant
-    @locations = Venue.pluck(:neighbourhood)
-
+    deal_day = @deal.deal_days.build
+    deal_day.deal_times.build
+    @all_venues = MerchantService.get_all_venues(merchant_id)
   end
 
   def edit
-    @deal = Deal.find(params[:id])
-
     # For drop down form
-    @all_venues = Venue.all
+    @all_venues = MerchantService.get_all_venues(merchant_id)
     @deal_venue = @deal.deal_venues.build
 
     # Get all venue locations from this merchant
@@ -26,16 +21,17 @@ class DealsController < ApplicationController
   end
 
   def index
-    @deal = Deal.all
+      @deals = MerchantService.get_all_deals(merchant_id)
   end
 
   def create
     #for database
-    @deal = Deal.new(deal_params)
+    @deal = Merchant.find(merchant_id).deals.new(deal_params)
+
     # Get all venue locations from this merchant
     @locations = Venue.pluck(:neighbourhood)
     # For drop down form
-    @all_venues = Venue.all
+    @all_venues = MerchantService.get_all_venues(merchant_id)
     @deal_venue = @deal.deal_venues.build
 
     # Add venue_id to deal_venue join table
@@ -51,7 +47,7 @@ class DealsController < ApplicationController
       flash[:success] = "Deal successfully created!"
       redirect_to @deal
       # Send out confirmation email
-      # DealMailer.deal_email("Test Food Merchant", @deal).deliver
+      # DealMailer.deal_email("Test Food Merchant", @deal, MerchantService.get_email(merchant_id)).deliver
     else
       flash[:error] = "Failed to create deal!"
       render 'new'
@@ -59,10 +55,8 @@ class DealsController < ApplicationController
   end
 
   def update
-    @deal = Deal.find(params[:id])
-
     # For drop down form
-    @all_venues = Venue.all
+    @all_venues = MerchantService.get_all_venues(merchant_id)
     @deal_venue = @deal.deal_venues.build
 
     # Find all previous associations in join table and delete them
@@ -81,6 +75,8 @@ class DealsController < ApplicationController
 
     if @deal.update(deal_params)
       flash[:success] = "Deal successfully updated!"
+      # Send out update email
+      # DealMailer.update_deal_email("Test Food Merchant", @deal, MerchantService.get_email(merchant_id)).deliver
       redirect_to @deal
     else
       flash[:error] = "Failed to update deal!"
@@ -89,11 +85,10 @@ class DealsController < ApplicationController
   end
 
   def show
-    @deal = Deal.find(params[:id])
+    @qr = RQRCode::QRCode.new(@deal.id.to_s + "_" + @deal.created_at.to_s).to_img.resize(200, 200).to_data_url
   end
 
   def destroy
-    @deal = Deal.find(params[:id])
     @deal.destroy
     flash[:success] = "Deal deleted!"
     #need not add a view for this action since redirecting to the index
@@ -101,17 +96,88 @@ class DealsController < ApplicationController
     redirect_to deals_path
   end
 
+  # Change non-active deal to active
+  def activate
+    num_active_deals = DealService.num_active_deals(@deal.merchant_id, @deal)
+    if num_active_deals >= 5
+      flash[:error] = "As you currently have more than 5 active deals this process can not be processed!"
+    elsif
+      @deal.update_attribute(:active, true)
+      flash[:success] = "Deal has been successfully activated! If you require to edit or delete the deal please email Burpple for admin help."
+    end
+    redirect_to deals_path
+  end
+
+  def format_days (deal_day)
+    deal_days = [deal_day.mon, deal_day.tue, deal_day.wed, deal_day.thur, deal_day.fri, deal_day.sat, deal_day.sun ]
+    days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
+    dealperiod = ""
+    i = 0
+
+    while i<7
+      # For first day which is selected, no need to put comma
+      if deal_days[i] && dealperiod == ""
+        dealperiod = dealperiod + days[i]
+        # If the string already contains thing, then need put comma
+      elsif deal_days[i] && dealperiod != ""
+        dealperiod = dealperiod + ", " + days[i]
+      end
+
+      # Inner while loop is to string consecutive days together if the current day is selected
+      if deal_days[i]
+        j = i + 1
+        while j<7
+          # If the day is not selected, break out of loop
+          if !deal_days[j]
+            break
+          elsif j == 6 && deal_days[j]
+            dealperiod = dealperiod + "-" + days[j]
+            i = j+1
+            break
+          elsif j == 6 && !deal_days[j]
+            i = j+1
+            break
+            # If the day is selected, and next one is selected, just continue
+          elsif deal_days[j] && deal_days[j+1]
+            j = j+1
+            # If day is selected, and next one is not, place "- day" and break
+          elsif deal_days[j] && !deal_days[j+1]
+            dealperiod = dealperiod + "-" + days[j]
+            i = j + 1
+            break
+          end
+        end
+      end
+      i = i +1
+    end
+    dealperiod
+  end
+  helper_method :format_days
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_deal
     @deal = Deal.find(params[:id])
   end
 
+  # Check if user has the subscribed to deal listing plan
+  private
+  def check_has_deal_access
+    @payment = MerchantService.get_deal_plan(merchant_id)
+    if (@payment.blank?)
+      render "deals/error"
+    end
+    @payment
+  end
+
   private
   def deal_params
-    params.require(:deal).permit(:title, :redeemable, :multiple_use, :image,
-      :type_of_deal, :description, :start_date, :expiry_date, :location, :t_c, 
-      :pushed)
+    params.require(:deal).permit(:title, :redeemable, :multiple_use, :image, :type_of_deal, :description, :start_date,
+                                 :expiry_date, :location, :t_c, :pushed, :active,
+                                 deal_days_attributes: [:id, :mon, :tue, :wed, :thur, :fri, :sat, :sun, :_destroy,
+                                                        deal_times_attributes: [:id, :started_at, :ended_at, :_destroy]],
+                                 deal_venues_attributes: [:id, :qrCodeLink], venues_attributes: [:id, :location])
   end
+
 end
 

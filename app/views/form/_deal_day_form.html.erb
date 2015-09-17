@@ -1,0 +1,15 @@
+<fieldset>
+  <%= f.check_box :mon %>Mon
+  <%= f.check_box :tue %>Tue
+  <%= f.check_box :wed %>Wed
+  <%= f.check_box :thur %>Thur
+  <%= f.check_box :fri %>Fri
+  <%= f.check_box :sat %>Sat
+  <%= f.check_box :sun %>Sun
+  <%= f.hidden_field :_destroy %>
+  <%= link_to 'Delete deal period', '#', class: 'remove_fields' %><br>
+  <%= f.fields_for :deal_times do |builder| %>
+      <%= render 'form/deal_time_form', f: builder %>
+  <% end %>
+  <%= link_to_add_time "Add timing", f, :deal_times %>
+</fieldset>

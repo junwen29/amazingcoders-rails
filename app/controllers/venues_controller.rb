@@ -1,17 +1,16 @@
 class VenuesController < ApplicationController
+  before_filter :authenticate_merchant!, except: [:home, :help]
   before_action :set_venue, only: [:index, :show, :edit, :update, :destroy]
   before_action :all_venues
 
   def index
     # Get data required for form
-    @select_day_hours_string = "[]".html_safe
   end
 
   # GET /venues/new
   def new
     @venue = Venue.new
     # Get data required for form
-    @select_day_hours_string = "[]".html_safe
   end
 
   # GET /venues/1/edit
@@ -22,7 +21,6 @@ class VenuesController < ApplicationController
     @venues = Venue.all
 
     # Get data required for form
-    @select_day_hours_string = "[]".html_safe
   end
 
   # POST /venues
@@ -82,7 +80,7 @@ class VenuesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def venue_params
-    params.require(:venue).permit(:name, :street, :zipcode,
+    params.require(:venue).permit(:name, :street, :zipcode, :photo,
                                   :city, :city, :state, :country, :neighbourhood, :bio,
                                   :phone, :address_2, :contact_number)
   end

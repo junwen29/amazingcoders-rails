@@ -1,0 +1,106 @@
+<!-- show list of plans -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4>Premium Services</h4>
+  </div>
+  <div class="panel-body">
+    <table class="table table-bordered table-hover table-responsive">
+      <tr>
+        <th>Plan Name</th>
+        <th>Description</th>
+        <th>Cost</th>
+      </tr>
+
+      <% @plan.each do |p| %>
+          <tr>
+            <td><%= p.name %></td>
+            <td><%= p.description %></td>
+            <td><%= number_to_currency p.cost %></td>
+          </tr>
+      <% end %>
+    </table>
+  </div><!--panel-body-->
+</div><!--panel panel-default-->
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4>Choose Plan upgrade</h4>
+  </div>
+  <div class="panel-body">
+    <div class="content-form">
+      <%= form_for @payment, url: payments_path do |f| %>
+          <div id="plan1">
+            <p class="form-select" style="margin-top: 0px;">
+              <%= f.label :plan1, "Premium Deals Services", :value => true %>
+              <%= f.radio_button :plan1, true%>
+            </p>
+
+            <div id="plan1_true">
+              <!-- show list of addons -->
+              <p class="form-textarea clearfix">
+                <%= f.label :add_on1, 'Include Wishlist Add-on' %>
+              <p style="font-style: italic">Push notify your deal listings to users who have wishlisted your restaurant in the Burpple app!</p>
+              </p>
+              <p class="form-select half" style="margin-top: 0px;">
+                <%= f.label :add_on1, "Yes", :value => true %>
+                <%= f.radio_button :add_on1, true%>
+              </p>
+              <p class="form-select" style="margin-top: 0px;">
+                <%= f.label :add_on1, "No", :value => false %>
+                <%= f.radio_button :add_on1, false%>
+              </p>
+
+              <p class="form-textarea clearfix">
+                <%= f.label :add_on2, 'Include Deals Statistics Add-on' %>
+              </p>
+              <p class="form-select half" style="margin-top: 0px;">
+                <%= f.label :add_on2, "Yes", :value => true %>
+                <%= f.radio_button :add_on2, true%>
+              </p>
+              <p class="form-select" style="margin-top: 0px;">
+                <%= f.label :add_on2, "No", :value => false %>
+                <%= f.radio_button :add_on2, false%>
+              </p>
+
+              <p class="form-textarea clearfix">
+                <%= f.label :add_on3, 'Include Aggregate Trends Add-on' %>
+              </p>
+              <p class="form-select half" style="margin-top: 0px;">
+                <%= f.label :add_on3, "Yes", :value => true %>
+                <%= f.radio_button :add_on3, true%>
+              </p>
+              <p class="form-select" style="margin-top: 0px;">
+                <%= f.label :add_on3, "No", :value => false %>
+                <%= f.radio_button :add_on3, false%>
+              </p>
+            </div>
+          </div>
+
+          <!-- choose start date -->
+          <p class="form-select half clearfix">
+            <%= f.label :start_date, "Start Date:" %>
+            <span>
+                <%= f.text_field :start_date%>
+          </span>
+          </p>
+
+          <!-- to be deleted and replaced with auto-fill -->
+          <p class="form-select clearfix">
+            <%= f.label :expiry_date, "End Date:" %>
+            <span>
+                <%= f.text_field :expiry_date %>
+          </span>
+          </p>
+
+
+          <h4>Total Price:</h4>
+
+
+
+          <p class="clearfix">
+            <%= f.submit "Proceed to Checkout", :class => 'btn btn-big btn-success' %>
+          </p>
+      <% end %>
+    </div><!-- content-form -->
+  </div><!--panel-body-->
+</div><!--panel panel-default-->
