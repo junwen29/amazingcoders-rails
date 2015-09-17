@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20150916165814) do
     t.string   "name"
     t.decimal  "cost",        precision: 8, scale: 2
     t.string   "description"
+    t.string   "addon_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
