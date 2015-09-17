@@ -29,7 +29,7 @@ class Deal < ActiveRecord::Base
   # Process input fields and further validate
   validate :future_date
   validate :check_expiry_date
-  validate :ensuring_pushed_checked
+  # validate :ensuring_pushed_checked
   validate :ensuring_redeemable_checked
   validate :ensuring_multiple_use_checked
   validate :check_overlapping_deals

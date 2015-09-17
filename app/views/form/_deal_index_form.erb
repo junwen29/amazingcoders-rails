@@ -15,7 +15,7 @@
         <th>Redeemable</th>
         <th>Multiple Use</th>
         <th>Push to Wishlist</th>
-        <th colspan="4"></th>
+        <th colspan="1"></th>
       </tr>
 
       <% @deals.each do |deal| %>
@@ -35,19 +35,7 @@
                 <td><%= deal.redeemable %></td>
                 <td><%= deal.multiple_use %></td>
                 <td><%= deal.pushed %></td>
-                <td>
-                  <%= link_to 'Activate', active_deal_path(deal),
-                              data: { confirm: 'Once deal is activated, it will be published to users and you will not be allowed to edit or delete this deal. Do you wish to proceed?'},
-                              class: "btn btn-xs btn-success disabled"%>
-                </td>
                 <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
-                <td><%= link_to 'Edit', edit_deal_path(deal), class: 'btn btn-xs btn-default disabled'%></td>
-                <td>
-                  <%= link_to 'Delete', deal_path(deal),
-                              method: :delete,
-                              data: { confirm: 'This deal is active now! Delete anyway?'},
-                              class: "btn btn-xs btn-danger disabled"%>
-                </td>
               </tr>
           <% end %>
       <% end %>
@@ -128,7 +116,7 @@
         <th>Redeemable</th>
         <th>Multiple Use</th>
         <th>Push to Wishlist</th>
-        <th colspan="4"></th>
+        <th colspan="1"></th>
       </tr>
 
       <% @deals.each do |deal| %>
@@ -148,19 +136,7 @@
                 <td><%= deal.redeemable %></td>
                 <td><%= deal.multiple_use %></td>
                 <td><%= deal.pushed %></td>
-                <td>
-                  <%= link_to 'Activate', active_deal_path(deal),
-                              data: { confirm: 'Once deal is activated, it will be published to users. You will not be able to edit or delete the deal until after expiry then. Do you wish to proceed?'},
-                              class: "btn btn-xs btn-success disabled"%>
-                </td>
                 <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
-                <td><%= link_to 'Edit', edit_deal_path(deal), class: "btn btn-xs btn-default disabled" %></td>
-                <td>
-                  <%= link_to 'Delete', deal_path(deal),
-                              method: :delete,
-                              data: { confirm: 'Are you sure?'},
-                              class: "btn btn-xs btn-danger disabled"%>
-                </td>
               </tr>
           <% end %>
       <% end %>
