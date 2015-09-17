@@ -1,6 +1,6 @@
-class P1::ApplicationController < ApplicationController
+class Api::P1::ApplicationController < ApplicationController
 
-  # include Burpple::ApiHelper
+  include Burpple::ApiHelper
 
   # protect_from_forgery, keep this order
   rescue_from StandardError, :with => :standard_error
