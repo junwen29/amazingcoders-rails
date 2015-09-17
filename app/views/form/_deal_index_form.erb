@@ -25,8 +25,8 @@
                 <td><%= image_tag deal.image.url, :size => "150x150" %></td>
                 <td><%= deal.type_of_deal %></td>
                 <td><%= deal.description %></td>
-                <td><%= deal.start_date %></td>
-                <td><%= deal.expiry_date %></td>
+                <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
+                <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
                 <td>
                   <% deal.venues.each do |venue| %>
                       <%= venue.name %><br/>
@@ -70,8 +70,8 @@
                 <td><%= image_tag deal.image.url, :size => "150x150" %></td>
                 <td><%= deal.type_of_deal %></td>
                 <td><%= deal.description %></td>
-                <td><%= deal.start_date %></td>
-                <td><%= deal.expiry_date %></td>
+                <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
+                <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
                 <td>
                   <% deal.venues.each do |venue| %>
                       <%= venue.name %><br/>
@@ -126,8 +126,8 @@
                 <td><%= image_tag deal.image.url, :size => "150x150" %></td>
                 <td><%= deal.type_of_deal %></td>
                 <td><%= deal.description %></td>
-                <td><%= deal.start_date %></td>
-                <td><%= deal.expiry_date %></td>
+                <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
+                <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
                 <td>
                   <% deal.venues.each do |venue| %>
                       <%= venue.name %><br/>

@@ -15,7 +15,7 @@
 
 <p>
   <strong><font size = "4">Deal Period</font></strong><br>
-  <strong><%= @deal.start_date %></strong> to <strong><%= @deal.expiry_date %></strong>
+  <strong><%= @deal.start_date.strftime("%d/%m/%Y") %></strong> to <strong><%= @deal.expiry_date.strftime("%d/%m/%Y") %></strong>
 
   <% for deal_day in @deal.deal_days%>
       <br>
