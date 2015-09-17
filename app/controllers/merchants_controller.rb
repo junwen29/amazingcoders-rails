@@ -12,7 +12,7 @@ class MerchantsController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @merchant = Mechant.find(params[:id])
   end
 
 end

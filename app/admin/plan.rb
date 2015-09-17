@@ -9,7 +9,7 @@ ActiveAdmin.register Plan do
     end
   end
 
-  remove_filter :payment
+  remove_filter :payments, :plan_payments
 
   # INDEX
   index do
