@@ -22,7 +22,6 @@ class Deal < ActiveRecord::Base
   # validates :venues, :presence => {message: "Please ensure that there is at least one venue selected"}
   validates(:t_c, presence: true)
   validates :deal_days, :presence => {message: "Please ensure that there is at least one deal period"}
-  validates :image, :presence => {message: "Please upload an image of your deal"}
 
   validates_attachment_content_type :image, content_type: /\Aimage/
 
