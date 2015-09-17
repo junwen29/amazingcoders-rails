@@ -8,14 +8,12 @@ Rails.application.routes.draw do
         post 'registrations' => 'registrations#create', :as => 'register'
         post 'sessions' => 'sessions#create', :as => 'login'
         delete 'sessions' => 'sessions#destroy', :as => 'logout'
-        # get 'tasks' => 'tasks#index', :as => 'tasks'
       end
+
+      get 'tasks' => 'tasks#index', :as => 'tasks'
+      get 'deals' => "deals#index", :as => 'index'
 
       # deals api
-      scope '/deals' do
-        get '' => "deals#index"
-      end
-
     end
   end
 
