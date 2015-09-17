@@ -32,9 +32,21 @@
                       <%= venue.name %><br/>
                   <% end %>
                 </td>
-                <td><%= deal.redeemable %></td>
-                <td><%= deal.multiple_use %></td>
-                <td><%= deal.pushed %></td>
+                <% if deal.redeemable %>
+                    <td>Yes</td>
+                <% else %>
+                    <td>No</td>
+                <% end %>
+                <% if deal.multiple_use %>
+                    <td>Unlimited Redemptions</td>
+                <% else %>
+                    <td>One redeem per customer</td>
+                <% end %>
+                <% if deal.pushed %>
+                    <td>Yes</td>
+                <% else %>
+                    <td>No</td>
+                <% end %>
                 <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
               </tr>
           <% end %>
@@ -77,9 +89,21 @@
                       <%= venue.name %><br/>
                   <% end %>
                 </td>
-                <td><%= deal.redeemable %></td>
-                <td><%= deal.multiple_use %></td>
-                <td><%= deal.pushed %></td>
+                <% if deal.redeemable %>
+                    <td>Yes</td>
+                <% else %>
+                    <td>No</td>
+                <% end %>
+                <% if deal.multiple_use %>
+                    <td>Unlimited Redemptions</td>
+                <% else %>
+                    <td>One redeem per customer</td>
+                <% end %>
+                <% if deal.pushed %>
+                    <td>Yes</td>
+                <% else %>
+                    <td>No</td>
+                <% end %>
                 <td>
                   <%= link_to 'Activate', active_deal_path(deal),
                               data: { confirm: 'Once deal is activated, it will be published to users. You will not be able to edit or delete the deal until after expiry then. Do you wish to proceed?'},
@@ -133,9 +157,21 @@
                       <%= venue.name %><br/>
                   <% end %>
                 </td>
-                <td><%= deal.redeemable %></td>
-                <td><%= deal.multiple_use %></td>
-                <td><%= deal.pushed %></td>
+                <% if deal.redeemable %>
+                    <td>Yes</td>
+                <% else %>
+                    <td>No</td>
+                <% end %>
+                <% if deal.multiple_use %>
+                    <td>Unlimited Redemptions</td>
+                <% else %>
+                    <td>One redeem per customer</td>
+                <% end %>
+                <% if deal.pushed %>
+                    <td>Yes</td>
+                <% else %>
+                    <td>No</td>
+                <% end %>
                 <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
               </tr>
           <% end %>
