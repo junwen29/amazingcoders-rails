@@ -4,9 +4,11 @@ Rails.application.routes.draw do
   devise_for :merchants, controllers: { sessions: "merchants/sessions", registrations: "merchants/registrations"}
   resources :venues
   resources :merchants
-  resources :charges
+
   resources :deals
-  resources :payments
+  resources :payments do
+    resources :charges
+  end
 
   # To change a deal into active deal then going back to index page
   get 'deals/:id/activate' => 'deals#activate', :as => 'active_deal'

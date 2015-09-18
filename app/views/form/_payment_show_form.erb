@@ -32,9 +32,3 @@
   Total Price:
   <strong><%= number_to_currency @payment.total_cost %></strong>
 </h3>
-
-<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-        data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-        data-description="A month's subscription"
-        data-amount="500"
-        data-locale="auto"></script>
