@@ -1,6 +1,5 @@
 class CreatePayments < ActiveRecord::Migration
   def change
-     drop_table :payments
     create_table :payments do |t|
       t.date        :start_date
       t.date        :expiry_date
@@ -9,8 +8,8 @@ class CreatePayments < ActiveRecord::Migration
       t.boolean     :add_on2
       t.boolean     :add_on3
       t.boolean     :plan1
-      t.timestamps
       t.boolean     :paid, :default => false
+      t.timestamps
       #paid is not being saved
     end
   end
