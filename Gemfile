@@ -66,7 +66,3 @@ gem 'carrierwave'
 
 # Active Admin
 gem 'activeadmin', '~> 1.0.0.pre1'
-
-# For PDF
-gem 'prawn'
-gem 'prawn-qrcode'
