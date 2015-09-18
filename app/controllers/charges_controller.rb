@@ -1,5 +1,6 @@
 class ChargesController < ApplicationController
   before_filter :authenticate_merchant!, except: [:home, :help]
+
   def new
     @payment = Payment.find(params[:payment_id])
     total_cost = @payment.total_cost
@@ -25,9 +26,10 @@ class ChargesController < ApplicationController
     flash[:error] = e.message
     redirect_to charges_path
 
-    @payment.update(paid: true)
-    redirect_to payment_path(@payment.id)
+  redirect_to payment_path(@payment.id)
   end
+
+
 
 
 end

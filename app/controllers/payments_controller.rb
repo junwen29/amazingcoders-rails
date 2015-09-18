@@ -1,6 +1,6 @@
 class PaymentsController < ApplicationController
   before_filter :authenticate_merchant!, except: [:home, :help]
-  before_action :set_payment, only: [:show]
+ # before_action :set_payment, only: [:show]
  # before_action :show, only: [:calculate_price]
 
   def new
@@ -21,6 +21,15 @@ class PaymentsController < ApplicationController
   def index
     @payments = Payment.where(:merchant_id => merchant_id)
     @current_payment = Payment.where("merchant_id = ? AND start_date <= ? AND expiry_date >= ?", merchant_id, Date.today, Date.today).last
+
+=begin
+    @payments.each do |p|
+      if !p.paid
+        p.destroy
+      end
+    end
+=end
+
   end
 
   def create
@@ -78,11 +87,13 @@ class PaymentsController < ApplicationController
   end
 
 
+=begin
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_payment
   #  @payment = Payment.find(params[:id])
   end
+=end
 
   private
   def calculate_price (payment)
