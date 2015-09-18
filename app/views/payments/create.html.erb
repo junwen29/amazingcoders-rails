@@ -3,33 +3,27 @@
 <div class="contentWrapper">
   <div class="content">
 
-    <!-- post back messages -->
-    <% unless flash.empty? %>
-        <div class="flashMessages">
-          <% unless flash[:error].blank? %>
-              <% flash[:error].each do |msg| %>
-                  <div class="alert alert--error"><span>Error! </span><%= msg %></div>
-              <% end %>
-          <% end %>
-        </div>
-    <% end %>
+
 
     <!-- Content Heading -->
+
+        <%= form_tag("/payments/:id", method: "get") do %>
+
     <div class="pull-left">
       <p class="b2 content-title">Make your payment</p>
 
-      <h4>Total Price:   <%= @total_cost %> </h4>
+      <h4>Total Price: $  </h4>
 
 
       <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
               data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
               data-description="A month's subscription"
-              data-amount="<%= @total_cost*100 %>"
+              data-amount="100"
               data-locale="auto"></script>
 
 
     </div>
-
+    <% end %>
     <div class="clearfix"></div>
     <div class="content-separator"></div>
 
