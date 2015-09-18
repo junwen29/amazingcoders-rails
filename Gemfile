@@ -69,3 +69,7 @@ gem 'activeadmin', '~> 1.0.0.pre1'
 
 # Server
 gem 'rollbar', '~> 1.4.4'
+
+# For PDF
+gem 'prawn'
+gem 'prawn-qrcode'

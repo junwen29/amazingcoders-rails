@@ -20,19 +20,18 @@ class Deal < ActiveRecord::Base
   validates(:title, presence: true)
   validates(:type_of_deal, presence: true)
   validates(:description,presence: true, length: {minimum: 5})
-  validates(:start_date, presence: true)
+   validates(:start_date, presence: true)
   validates(:expiry_date, presence: true)
   # validates :venues, :presence => {message: "Please ensure that there is at least one venue selected"}
   validates(:t_c, presence: true)
   validates :deal_days, :presence => {message: "Please ensure that there is at least one deal period"}
-  validates :image, :presence => {message: "Please upload an image of your deal"}
 
   validates_attachment_content_type :image, content_type: /\Aimage/
 
   # Process input fields and further validate
   validate :future_date
   validate :check_expiry_date
-  validate :ensuring_pushed_checked
+  # validate :ensuring_pushed_checked
   validate :ensuring_redeemable_checked
   validate :ensuring_multiple_use_checked
   validate :check_overlapping_deals

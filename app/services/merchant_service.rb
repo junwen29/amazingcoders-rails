@@ -12,6 +12,11 @@ class MerchantService
       Venue.where(:id => venue_id ,:merchant_id => merchant_id).first
     end
 
+    # for plan
+    def get_deal_plan(merchant_id)
+      Payment.where("merchant_id = ? AND start_date <= ? AND expiry_date >= ? AND plan1 = ?", merchant_id, Date.today, Date.today, true).last
+    end
+
     # for email
     def get_email(merchant_id)
       merchant = Merchant.find(merchant_id)
