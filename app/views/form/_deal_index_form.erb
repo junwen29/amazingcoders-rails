@@ -14,8 +14,11 @@
         <th>Venue</th>
         <th>Redeemable</th>
         <th>Multiple Use</th>
-        <th>Push to Wishlist</th>
-        <th colspan="1"></th>
+        <% if (@payment.add_on1) %>
+            <th colspan="2"></th>
+        <% else %>
+            <th colspan="2"></th>
+        <% end %>
       </tr>
 
       <% @deals.each do |deal| %>
@@ -42,10 +45,18 @@
                 <% else %>
                     <td>One redeem per customer</td>
                 <% end %>
-                <% if deal.pushed %>
-                    <td>Yes</td>
-                <% else %>
-                    <td>No</td>
+                <% if (@payment.add_on1) %>
+                    <% if deal.pushed %>
+                        <td>
+                          <%= link_to 'Pushed', push_deal_path(deal),
+                                      class: "btn btn-xs btn-default disabled"%>
+                        </td>
+                    <% else %>
+                        <td>
+                          <%= link_to 'Push Deal', push_deal_path(deal),
+                             class: "btn btn-xs btn-success"%>
+                        </td>
+                    <% end %>
                 <% end %>
                 <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
               </tr>
@@ -71,7 +82,6 @@
         <th>Venue</th>
         <th>Redeemable</th>
         <th>Multiple Use</th>
-        <th>Push to Wishlist</th>
         <th colspan="4"></th>
       </tr>
 
@@ -98,11 +108,6 @@
                     <td>Unlimited Redemptions</td>
                 <% else %>
                     <td>One redeem per customer</td>
-                <% end %>
-                <% if deal.pushed %>
-                    <td>Yes</td>
-                <% else %>
-                    <td>No</td>
                 <% end %>
                 <td>
                   <%= link_to 'Activate', active_deal_path(deal),
@@ -139,7 +144,6 @@
         <th>Venue</th>
         <th>Redeemable</th>
         <th>Multiple Use</th>
-        <th>Push to Wishlist</th>
         <th colspan="1"></th>
       </tr>
 
@@ -166,11 +170,6 @@
                     <td>Unlimited Redemptions</td>
                 <% else %>
                     <td>One redeem per customer</td>
-                <% end %>
-                <% if deal.pushed %>
-                    <td>Yes</td>
-                <% else %>
-                    <td>No</td>
                 <% end %>
                 <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
               </tr>

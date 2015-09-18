@@ -5,7 +5,8 @@ class Payment < ActiveRecord::Base
 
   has_many :plan_payments, dependent: :destroy
   has_many :plans, through:  :plan_payments
-
+  has_one :charge
+  
   belongs_to :merchant
   
   scope :active, -> {where("start_date <= ? AND expiry_date >= ?", Date.today, Date.today)}

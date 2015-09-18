@@ -51,6 +51,14 @@
         <th colspan="1"></th>
       </tr>
 
+      <% @payments.each do |p| %>
+        <% if !p.paid %>
+            <% p.destroy %>
+        <% end %>
+      <% end %>
+
+
+
       <% @payments.each do |payment| %>
           <tr>
             <td><%= payment.id %></td>
