@@ -15,7 +15,7 @@
 
 <p>
   <strong><font size = "4">Deal Period</font></strong><br>
-  <strong><%= @deal.start_date %></strong> to <strong><%= @deal.expiry_date %></strong>
+  <strong><%= @deal.start_date.strftime("%d/%m/%Y") %></strong> to <strong><%= @deal.expiry_date.strftime("%d/%m/%Y") %></strong>
 
   <% for deal_day in @deal.deal_days%>
       <br>
@@ -29,7 +29,7 @@
   <% if !@deal.redeemable %>
       <strong><font size = "4">Venue</font></strong><br>
       <% @deal.venues.each do |venue| %>
-          <span><%= venue.neighbourhood %></span>&nbsp;&nbsp;
+          <span><%= venue.name %></span>&nbsp;&nbsp;
       <% end %>
   <% end %>
 </p>
@@ -71,7 +71,7 @@
 <p>
   <% if @deal.redeemable %>
       <% @deal.venues.each do |venue| %>
-          <strong>QR Code for <%= venue.neighbourhood %></strong><br>
+          <strong>QR Code for <%= venue.name %></strong><br>
           <% @qr = RQRCode::QRCode.new(@deal.id.to_s + "_" + venue.id.to_s + "_" + @deal.created_at.to_s).to_img.resize(100, 100).to_data_url %>
           <span><%= image_tag @qr %><br></span>
       <% end %>

@@ -18,7 +18,7 @@
 
 <p>
   <strong><font size = "2">Deal Period</font></strong><br>
-  <strong><%= @deal.start_date %></strong> to <strong><%= @deal.expiry_date %></strong>
+  <strong><%= @deal.start_date.strftime("%d/%m/%Y") %></strong> to <strong><%= @deal.expiry_date.strftime("%d/%m/%Y") %></strong>
 
   <% for deal_day in @deal.deal_days%>
       <br>
@@ -73,7 +73,7 @@
       your customers wish to redeem the deal, just ask your customer to scan the QR code using our customer scanner in our
       app.<br>
       <% @deal.venues.each do |venue| %>
-          <strong>QR Code for <%= venue.neighbourhood %></strong><br>
+          <strong>QR Code for <%= venue.name %></strong><br>
           <img src="https://chart.googleapis.com/chart?chs=100x100&amp;cht=qr&amp;chl=<%= @deal.id.to_s + '_' + venue.id.to_s + '_' + @deal.created_at.to_s%>" alt="QR code">
           <br>
       <% end %>

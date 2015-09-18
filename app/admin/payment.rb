@@ -4,8 +4,11 @@ ActiveAdmin.register Payment do
   scope :active
   scope :expired
 
-  preserve_default_filters!
-  filter :merchant, :collection => proc {(Merchant.all).map{|m| [m.email, m.id]}}
+  # preserve_default_filters!
+  remove_filter :plan1, :add_on1, :add_on2, :add_on3, :add_on_payments, :plan_payments
+
+
+  # filter :merchant, :collection => proc {(Merchant.all).map{|m| [m.email, m.id]}}
   #filter :plan
   #filter :addons, :collection => AddOn.all.map(&:name)
   #filter :total_cost

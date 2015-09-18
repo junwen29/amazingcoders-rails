@@ -2,17 +2,21 @@ class PaymentsController < ApplicationController
   before_filter :authenticate_merchant!, except: [:home, :help]
   before_action :set_payment, only: [:show]
  # before_action :show, only: [:calculate_price]
-  #after_create :last_step
 
   def new
     @payment = Payment.new
     @plan = Plan.all
-   # @add_on = Add_on.all
+    # Update join table
+    @add_on_payment = @payment.add_on_payments.new
+    @plan_payment = @payment.plan_payments.new
   end
 
+  # Disable
+=begin
   def edit
     @payment = Payment.find(params[:id])
   end
+=end
 
   def index
     @payments = Payment.where(:merchant_id => merchant_id)
@@ -21,18 +25,37 @@ class PaymentsController < ApplicationController
 
   def create
     #for database
-   @payment = Merchant.find(merchant_id).payments.new(payment_params)
-    # @payment = Payment.new(payment_params)
-
-
+    @payment = Merchant.find(merchant_id).payments.new(payment_params)
+    #@payment = Payment.new(payment_params)
     @total_cost = calculate_price(@payment)
     @payment.update(total_cost: @total_cost)
+    @payment.update(paid: false)
 
+    # Update join table in addon_payment
+    @add_on_payment = @payment.add_on_payments.new
+    if (params[:payment][:add_on1] == "true")
+      @payment.add_on_payments.build(:add_on_id => 1)
+    end
+    if (params[:payment][:add_on2] == "true")
+      @payment.add_on_payments.build(:add_on_id => 2)
+    end
+    if (params[:payment][:add_on3] == "true")
+      @payment.add_on_payments.build(:add_on_id => 3)
+    end
+
+    # Update join table in plan_payment
+    @plan_payment = @payment.plan_payments.new
+    if (params[:payment][:plan1] == "true")
+      @payment.plan_payments.build(:plan_id => 1)
+    end
+    
    @payment.save
     redirect_to new_payment_charge_url(@payment)
     #if token is created successfully, go to show page and check if charge is created.
   end
 
+  # Disable
+=begin
   def update
     if payment.update(payment_params)
       flash[:success] = "Payment successfully updated!"
@@ -44,34 +67,7 @@ class PaymentsController < ApplicationController
   end
 
   def show
-   # @payment = Payment.find(params[:id])
-
-    #stripe sample code
-    customer = Stripe::Customer.create(
-        :email => 'example@stripe.com',
-        :card  => params[:stripeToken]
-    )
-
-    charge = Stripe::Charge.create(
-        :customer    => customer.id,
-        :amount      => @total_cost,
-        :source  => params[:stripeToken],
-        :description => 'Plan Upgrade',
-        :currency    => 'usd'
-    )
-
-  rescue Stripe::CardError => e
-    flash[:error] = e.message
-    # redirect_to charges_path
-
-    if payment.update(payment_params)
-      flash[:success] = "Payment successfully updated!"
-      redirect_to @venue
-    else
-      flash[:error] = "Failed to update payment!"
-      render 'new'
-    end
-
+    @payment = Payment.find(params[:id])
   end
 
   def destroy
@@ -79,36 +75,38 @@ class PaymentsController < ApplicationController
     flash[:success] = "Payment deleted!"
     redirect_to payments_path
   end
+=end
 
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_payment
- #   @payment = Payment.find(params[:id])
+    @payment = Payment.find(params[:id])
   end
 
   private
   def calculate_price (payment)
     total_cost = 0
-  # hardcode
+    deal_plan_cost = Plan.find(1).cost      # deal listing plan has id = 1
+    add_on1_cost = AddOn.find(1).cost
+    add_on2_cost = AddOn.find(2).cost
+    add_on3_cost = AddOn.find(3).cost
+
     if payment.plan1
-      total_cost = total_cost + 30
+      total_cost = total_cost + deal_plan_cost
     end
     if payment.add_on1
-      total_cost = total_cost + 5
+      total_cost = total_cost + add_on1_cost
     end
     if payment.add_on2
-      total_cost = total_cost + 5
+      total_cost = total_cost + add_on1_cost
     end
     if payment.add_on3
-      total_cost = total_cost + 5
+      total_cost = total_cost + add_on1_cost
     end
 
     total_cost
   end
 
-  def last_step
-    @payment.save if @video.save_with_payment(@total_cost)
-  end
 
   private
   def payment_params

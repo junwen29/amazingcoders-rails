@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     resources :charges
   end
 
+  # To change a deal into active deal then going back to index page
+  get 'deals/:id/activate' => 'deals#activate', :as => 'active_deal'
+
   get 'merchant_pages/home' => 'merchant_pages#home', :as => :merchant_home
   get 'merchant_pages/help' => 'merchant_pages#help', :as => :merchant_help
 
