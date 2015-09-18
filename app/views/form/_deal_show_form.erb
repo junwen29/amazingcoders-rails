@@ -15,14 +15,15 @@
 
 <p>
   <strong><font size = "4">Deal Period</font></strong><br>
-  <strong><%= @deal.start_date %></strong> to <strong><%= @deal.expiry_date %></strong>
+  <strong><%= @deal.start_date.strftime("%d/%m/%Y") %></strong> to <strong><%= @deal.expiry_date.strftime("%d/%m/%Y") %></strong>
 
   <% for deal_day in @deal.deal_days%>
       <br>
-      <strong><%= format_days (deal_day) %>:</strong>
+      <strong><%= DealService.format_days (deal_day) %>:</strong>
       <% for deal_time in deal_day.deal_times%>
           <%=h deal_time.started_at.strftime("%H:%M") %> to <%=h deal_time.ended_at.strftime("%H:%M") %>&nbsp;&nbsp;
-      <% end %><% end %>
+      <% end %>
+  <% end %>
 </p>
 
 <p>
@@ -70,10 +71,6 @@
 
 <p>
   <% if @deal.redeemable %>
-      <% @deal.venues.each do |venue| %>
-          <strong>QR Code for <%= venue.name %></strong><br>
-          <% @qr = RQRCode::QRCode.new(@deal.id.to_s + "_" + venue.id.to_s + "_" + @deal.created_at.to_s).to_img.resize(100, 100).to_data_url %>
-          <span><%= image_tag @qr %><br></span>
-      <% end %>
+    <%= link_to "Download QRcodes for your deal here", deal_path(@deal, format: "pdf") %>
   <% end %>
 </p>

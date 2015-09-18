@@ -4,7 +4,7 @@ ActiveAdmin.register AddOn do
   # Allow edit
   permit_params :name, :cost, :description
 
-  remove_filter :payment
+  remove_filter :payments, :add_on_payments
 
   # INDEX
   index do
@@ -43,6 +43,7 @@ ActiveAdmin.register AddOn do
   form do |f|
     f.semantic_errors
     f.inputs "Add On Information" do
+      f.input :addon_type, as: :select, collection: ['Notification','Statistics','Trends']
       f.input :name
       f.input :cost, as: :string, :hint => "No need to specify currency - defaulted to SGD $. Input to 2 decimal places. e.g. 10.00"
       f.input :description

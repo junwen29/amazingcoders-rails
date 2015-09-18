@@ -5,9 +5,9 @@ source 'https://rubygems.org'
 gem 'rails', '4.1.8'
 
 # Use postgres as the database for Heroku remote server purpose
-gem 'pg'
-
 gem 'rails_12factor', group: :production
+
+gem 'pg'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -67,3 +67,7 @@ gem 'carrierwave'
 
 # Active Admin
 gem 'activeadmin', '~> 1.0.0.pre1'
+
+# For PDF
+gem 'prawn'
+gem 'prawn-qrcode'
