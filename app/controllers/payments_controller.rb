@@ -54,33 +54,34 @@ class PaymentsController < ApplicationController
     #if token is created successfully, go to show page and check if charge is created.
   end
 
-  # Disable
-=begin
+  def show
+    @payment = Payment.find(params[:id])
+    @payment.update(paid: true)
+  end
+
   def update
     if payment.update(payment_params)
       flash[:success] = "Payment successfully updated!"
-      redirect_to @venue
+      redirect_to @payment
     else
       flash[:error] = "Failed to update payment!"
       render 'new'
     end
   end
 
-  def show
-    @payment = Payment.find(params[:id])
-  end
+
 
   def destroy
     @payment.destroy
     flash[:success] = "Payment deleted!"
     redirect_to payments_path
   end
-=end
+
 
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_payment
-    @payment = Payment.find(params[:id])
+  #  @payment = Payment.find(params[:id])
   end
 
   private

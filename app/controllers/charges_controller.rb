@@ -25,9 +25,9 @@ class ChargesController < ApplicationController
     flash[:error] = e.message
     redirect_to charges_path
 
-    redirect_to payment_url
+    @payment.update(paid: true)
+    redirect_to payment_path(@payment.id)
   end
-
 
 
 end
