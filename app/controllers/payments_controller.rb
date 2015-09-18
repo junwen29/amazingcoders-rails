@@ -50,7 +50,7 @@ class PaymentsController < ApplicationController
     end
     
    @payment.save
-    redirect_to new_payment_charge_url(@payment)
+    redirect_to new_payment_charge_path(@payment.id)
     #if token is created successfully, go to show page and check if charge is created.
   end
 
