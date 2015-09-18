@@ -12,7 +12,7 @@ class CreateDeals < ActiveRecord::Migration
       t.string :location
       t.string :t_c
       t.integer :num_of_redeems
-      t.boolean :pushed
+      t.boolean :pushed, :default => false
       t.timestamps
     end
   end

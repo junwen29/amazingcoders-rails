@@ -1,7 +1,7 @@
 class DealsController < ApplicationController
   before_filter :authenticate_merchant!, except: [:home, :help]
   before_action :check_has_deal_access
-  before_action :set_deal, only: [:show, :edit, :update, :destroy, :activate]
+  before_action :set_deal, only: [:show, :edit, :update, :destroy, :activate, :push]
 
   def new
     @deal = Deal.new
@@ -114,6 +114,13 @@ class DealsController < ApplicationController
       @deal.update_attribute(:active, true)
       flash[:success] = "Deal has been successfully activated! If you require to edit or delete the deal please email Burpple for admin help."
     end
+    redirect_to deals_path
+  end
+
+  # Change non-active deal to active
+  def push
+    @deal.update_attribute(:pushed, true)
+    flash[:success] = "Deal has been successfully pushed to wishlisted users"
     redirect_to deals_path
   end
 
