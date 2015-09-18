@@ -1,6 +1,6 @@
 class PaymentsController < ApplicationController
   before_filter :authenticate_merchant!, except: [:home, :help]
-  before_action :set_payment, only: [:show]
+ # before_action :set_payment, only: [:show]
  # before_action :show, only: [:calculate_price]
 
   def new
@@ -21,6 +21,15 @@ class PaymentsController < ApplicationController
   def index
     @payments = Payment.where(:merchant_id => merchant_id)
     @current_payment = Payment.where("merchant_id = ? AND start_date <= ? AND expiry_date >= ?", merchant_id, Date.today, Date.today).last
+
+=begin
+    @payments.each do |p|
+      if !p.paid
+        p.destroy
+      end
+    end
+=end
+
   end
 
   def create
@@ -29,6 +38,7 @@ class PaymentsController < ApplicationController
     #@payment = Payment.new(payment_params)
     @total_cost = calculate_price(@payment)
     @payment.update(total_cost: @total_cost)
+    @payment.update(paid: false)
 
     # Update join table in addon_payment
     @add_on_payment = @payment.add_on_payments.new
@@ -47,46 +57,43 @@ class PaymentsController < ApplicationController
     if (params[:payment][:plan1] == "true")
       @payment.plan_payments.build(:plan_id => 1)
     end
-
-    if @payment.save
-      flash[:success] = "Your plan has been successfully upgraded!"
-      redirect_to @payment
-      # Send out confirmation email
-      #PaymentMailer.subscription_email("valued merchant", @payment, MerchantService.get_email(merchant_id)).deliver
-    else
-      flash[:error] = "Failed to upgrade plan!"
-      render 'new'
-    end
+    
+   @payment.save
+    redirect_to new_payment_charge_path(@payment.id)
+    #if token is created successfully, go to show page and check if charge is created.
   end
 
-  # Disable
-=begin
+  def show
+    @payment = Payment.find(params[:id])
+    @payment.update(paid: true)
+  end
+
   def update
     if payment.update(payment_params)
       flash[:success] = "Payment successfully updated!"
-      redirect_to @venue
+      redirect_to @payment
     else
       flash[:error] = "Failed to update payment!"
       render 'new'
     end
   end
 
-  def show
-    @payment = Payment.find(params[:id])
-  end
+
 
   def destroy
     @payment.destroy
     flash[:success] = "Payment deleted!"
     redirect_to payments_path
   end
-=end
 
+
+=begin
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_payment
-    @payment = Payment.find(params[:id])
+  #  @payment = Payment.find(params[:id])
   end
+=end
 
   private
   def calculate_price (payment)
@@ -115,7 +122,7 @@ class PaymentsController < ApplicationController
 
   private
   def payment_params
-    params.require(:payment).permit(:start_date, :expiry_date, :total_cost, :add_on1, :add_on2, :add_on3, :plan1)
+    params.require(:payment).permit(:start_date, :expiry_date, :total_cost, :add_on1, :add_on2, :add_on3, :plan1, :paid)
   end
 
 
