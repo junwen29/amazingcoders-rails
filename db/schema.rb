@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(version: 20150916165814) do
     t.string   "description"
     t.date     "start_date"
     t.date     "expiry_date"
+    t.string   "location"
     t.string   "t_c"
     t.integer  "num_of_redeems"
     t.boolean  "pushed"
