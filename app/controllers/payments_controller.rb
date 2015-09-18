@@ -25,10 +25,11 @@ class PaymentsController < ApplicationController
     # @payment = Payment.new(payment_params)
 
 
-
     @total_cost = calculate_price(@payment)
     @payment.update(total_cost: @total_cost)
 
+   @payment.save
+    redirect_to new_payment_charge_url(@payment)
     #if token is created successfully, go to show page and check if charge is created.
   end
 
@@ -111,7 +112,7 @@ class PaymentsController < ApplicationController
 
   private
   def payment_params
-    params.require(:payment).permit(:start_date, :expiry_date, :total_cost, :add_on1, :add_on2, :add_on3, :plan1)
+    params.require(:payment).permit(:start_date, :expiry_date, :total_cost, :add_on1, :add_on2, :add_on3, :plan1, :paid)
   end
 
 

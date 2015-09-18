@@ -1,12 +1,12 @@
 class ChargesController < ApplicationController
   before_filter :authenticate_merchant!, except: [:home, :help]
   def new
-    @payment
+   # @payment = Payment.find(:id)
   end
 
   def create
     # Amount in cents
-    @amount = @payment.total_cost
+
 
     customer = Stripe::Customer.create(
         :email => 'example@stripe.com',
@@ -15,7 +15,7 @@ class ChargesController < ApplicationController
 
     charge = Stripe::Charge.create(
         :customer    => customer.id,
-        :amount      => @amount,
+        :amount      => '100',
         :description => 'Rails Stripe customer',
         :currency    => 'usd'
     )
@@ -24,7 +24,9 @@ class ChargesController < ApplicationController
     flash[:error] = e.message
     redirect_to charges_path
 
+    redirect_to payments_path
   end
+
 
 
 end
