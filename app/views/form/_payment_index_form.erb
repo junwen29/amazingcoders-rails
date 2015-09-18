@@ -5,8 +5,11 @@
     </h4>
   </div>
   <div class="panel-body">
-    <% if (!@current_payment) %>
-        <p style="color: red">Oops, you have not subscribed to any premium service at the moment. Upgrade your plan to unlock more awesome features from Burpple!</p>
+    <% if (@current_payment) %>
+        <div class="alert alert-danger" role="alert">
+          Oops, you have not subscribed to any premium service at the moment.
+          <a href="<%= new_payment_path %>">Upgrade your plan</a> to unlock more awesome features from Burpple!
+        </div>
     <% else %>
         <p>
           <strong>Plan: </strong>
@@ -75,8 +78,8 @@
                   <span class="label label-warning">Aggregate Trends</span>
               <% end %>
             </td>
-            <td><%= payment.start_date %> </td>
-            <td><%= payment.expiry_date %> </td>
+            <td><%= payment.start_date.strftime("%d/%m/%Y") %> </td>
+            <td><%= payment.expiry_date.strftime("%d/%m/%Y") %> </td>
             <td><%= link_to 'Show', payment_path(payment), class: "btn btn-xs btn-default" %></td>
           </tr>
       <% end %>
