@@ -70,18 +70,6 @@
         </div>
       </div>
 
-      <p class="form-textarea clearfix">
-        <%= f.label :pushed, 'Would you like to push to those who have wishlisted?' %>
-      </p>
-      <p class="form-select half" style="margin-top: 0px;">
-        <%= f.label :pushed, "Yes", :value => true %>
-        <%= f.radio_button :pushed, true%>
-      </p>
-      <p class="form-select" style="margin-top: 0px;">
-        <%= f.label :pushed, "No", :value => false %>
-        <%= f.radio_button :pushed, false%>
-      </p>
-
       <div id= "redeemable">
         <p class="form-textarea clearfix">
           <%= f.label :redeemable, "Would you like users to redeem through deal code? (Helps gather analytics)" %>
