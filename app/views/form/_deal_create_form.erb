@@ -68,7 +68,7 @@
 
       <div class = "row">
         <div class="col-lg-8">
-          <%= fields_for (@deal_venue) do |dv| %>
+          <%= fields_for :deal_venue do |dv| %>
               <div class = "field">
                 <%= dv.label "Select Venues" %><br />
                 <%= collection_select(:venues, :id, @all_venues, :id, :name, {}, {:multiple => true}) %>
