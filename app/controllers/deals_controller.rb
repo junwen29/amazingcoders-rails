@@ -32,14 +32,16 @@ class DealsController < ApplicationController
     @locations = Venue.pluck(:neighbourhood)
     # For drop down form
     @all_venues = MerchantService.get_all_venues(merchant_id)
-    @deal_venue = @deal.deal_venues.build
+    #@deal_venue = @deal.deal_venues.build
 
     # Add venue_id to deal_venue join table
     venues_arr = params[:venues][:id].drop(1)     # pop out initial null
     # raise venues_arr.inspect
-    venues_arr.each do |venue|
-      if !venue.empty?
-        @deal.deal_venues.build(:venue_id => venue)
+    if !venues_arr.blank?
+      venues_arr.each do |venue|
+        if !venue.empty?
+          @deal.deal_venues.build(:venue_id => venue)
+        end
       end
     end
 
@@ -57,7 +59,7 @@ class DealsController < ApplicationController
   def update
     # For drop down form
     @all_venues = MerchantService.get_all_venues(merchant_id)
-    @deal_venue = @deal.deal_venues.build
+    # @deal_venue = @deal.deal_venues.build
 
     # Find all previous associations in join table and delete them
     @deal_venues = DealVenue.where("deal_id = ?", params[:id])
