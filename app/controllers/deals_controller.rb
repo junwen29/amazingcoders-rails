@@ -4,11 +4,16 @@ class DealsController < ApplicationController
   before_action :set_deal, only: [:show, :edit, :update, :destroy, :activate, :push]
 
   def new
-    @deal = Deal.new
-    @deal_venue = @deal.deal_venues.build
-    deal_day = @deal.deal_days.build
-    deal_day.deal_times.build
     @all_venues = MerchantService.get_all_venues(merchant_id)
+    if @all_venues.blank?
+      flash[:error] = "Please ensure you have listed a venue before proceeding"
+      redirect_to deals_path
+    else
+      @deal = Deal.new
+      @deal_venue = @deal.deal_venues.build
+      deal_day = @deal.deal_days.build
+      deal_day.deal_times.build
+    end
   end
 
   def edit
