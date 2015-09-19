@@ -5,7 +5,7 @@
     </h4>
   </div>
   <div class="panel-body">
-    <% if (@current_payment) %>
+    <% if (!@current_payment) %>
         <div class="alert alert-danger" role="alert">
           Oops, you have not subscribed to any premium service at the moment.
           <a href="<%= new_payment_path %>">Upgrade your plan</a> to unlock more awesome features from Burpple!
