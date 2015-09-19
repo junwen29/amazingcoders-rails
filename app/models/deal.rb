@@ -11,7 +11,9 @@ class Deal < ActiveRecord::Base
   scope :expired, -> {where("expiry_date < ?", Date.today)}
 
   # For adding images
-  has_attached_file :image
+  has_attached_file :image,
+                    :default_url => 'biz/burpple_logo.png'
+
 
   # Validate input fields from form
   validates(:title, presence: true)
