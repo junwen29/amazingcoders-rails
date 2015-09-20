@@ -62,6 +62,10 @@ class DealService
       dealperiod
     end
 
+    def get_active_deals
+      all_deals = Deal.active
+    end
+
   end
 
   class << self
