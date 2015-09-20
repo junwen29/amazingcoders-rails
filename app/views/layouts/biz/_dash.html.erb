@@ -5,29 +5,33 @@
     </div>
 
     <% if (@venue)  %>
-    <div class="header-content-item venueDropdown">
-      <% @selectClass = ( @venues.count == 0 ? 'venueDropdown-noselect' : 'venueDropdown-select' ) %>
-      <div class="<%= @selectClass %>">
-        <a href="#" class="venueDropdown-item">
+        <div class="header-content-item venueDropdown">
+          <% @selectClass = ( @venues.count == 0 ? 'venueDropdown-noselect' : 'venueDropdown-select' ) %>
+          <div class="<%= @selectClass %>">
+            <a href="#" class="venueDropdown-item">
               <span class="venueDropdown-item-title"><%= @venue.name %></span>
               <span class="venueDropdown-item-subtitle"><%= @venue.street %></span>
-        </a>
-      </div>
+            </a>
+          </div>
 
-      <div class="venueDropdown-dropdown">
-        <% unless @venues.blank? or (@venues.count == 1 ) %>
-            <div class="venueDropdown-dropdown-header">Verified Venues</div>
-            <% @venues.each do |venue| %>
-                <% unless venue.id == @venue.id %>
-                    <%= link_to venue_path(venue.id), {class: "venueDropdown-item"} do %>
-                        <span class="venueDropdown-item-title"><%= venue.name %></span>
-                        <span class="venueDropdown-item-subtitle"><%= venue.street %></span>
+          <div class="venueDropdown-dropdown">
+            <% unless @venues.blank? or (@venues.count == 1 ) %>
+                <div class="venueDropdown-dropdown-header">Verified Venues</div>
+                <% @venues.each do |venue| %>
+                    <% unless venue.id == @venue.id %>
+                        <%= link_to venue_path(venue.id), {class: "venueDropdown-item"} do %>
+                            <span class="venueDropdown-item-title"><%= venue.name %></span>
+                            <span class="venueDropdown-item-subtitle"><%= venue.street %></span>
+                        <% end %>
                     <% end %>
                 <% end %>
             <% end %>
-        <% end %>
-      </div>
-    </div>
+          </div>
+        </div>
+    <% else %>
+        <div class="header-content-item" style="padding: 30px">
+          <span class="text-uppercase"><%= current_merchant.email %></span>
+        </div>
     <% end  %>
 
     <div class="header-content-item newBtn">
