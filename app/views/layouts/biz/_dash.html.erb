@@ -62,9 +62,9 @@
 
 <%= content_for :body_footer do %>
     <div class="navMobileFooter">
-      <%= link_to "Add Another Business or Outlet", new_venue_path, { :class=> "" } %>
-      <%= link_to "Help", venues_path, {:class => ""} %>
-      <%= link_to "Sign Out", destroy_merchant_session_path, { :class=> "", :method => :delete } %>
+      <%= link_to "Add Another Business or Outlet", new_venue_path, { :class=> "btn" } %>
+      <%= link_to "Help", nil, {:class => "help"} %>
+      <%= link_to "Sign Out", destroy_merchant_session_path, { :class=> "btn", :method => :delete } %>
     </div>
 
     <script>
