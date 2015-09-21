@@ -11,4 +11,5 @@ class Payment < ActiveRecord::Base
   
   scope :active, -> {where("start_date <= ? AND expiry_date >= ?", Date.today, Date.today)}
   scope :expired, -> {where("expiry_date < ?", Date.today)}
+  scope :paid, -> {where(paid: true)}
 end
