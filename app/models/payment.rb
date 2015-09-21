@@ -21,6 +21,7 @@ class Payment < ActiveRecord::Base
 
   validates(:start_date, presence: true)
   validate :start_date_not_past
+  validate :check_overlapping_plans
 
   # Process Validation Methods
   def ensure_plan_checked
@@ -42,4 +43,20 @@ class Payment < ActiveRecord::Base
   def start_date_not_past
     errors.add(:base, 'Start date must be at least one day in advance') if ((start_date <= Date.today) rescue ArgumentError == ArgumentError)
   end
+
+  def check_overlapping_plans
+    errors.add(:base, 'You already have a plan in this period') if ((overlapping_payment) rescue ArgumentError == ArgumentError)
+  end
+
+  private
+  # find number of overlapping payments
+  def overlapping_payment
+    num = PaymentService.get_overlapping_payments(merchant_id, start_date)
+    if num > 0
+      true
+    else
+      false
+    end
+  end
+
 end
