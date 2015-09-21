@@ -1,38 +1,61 @@
-<div class="container">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-  <h2>Log in</h2>
-  <br/><br/>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-  <!--Flash messages-->
-  <% flash.each do |key, value| %>
-      <% if(key == "alert") %>
-          <div class="alert alert-error"><%= value %></div>
-      <% end %>
-  <% end %>
-
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <div class="field">
-        <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true %>
+<div style="margin-top:100px; min-width:300px" class="container col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+  <div class="panel panel-danger">
+    <div class="panel-heading">
+      <div class="panel-body">
+        <div style = "float:right">
+          <div style="display:inline-block"><img class="profile-img" src="http://www.burpple.com/img/logo.png" height="100" width ="100"></div>
+        </div>
+        <div style="display:inline-block"><h3>Log In</h3></div>
       </div>
+    </div>
+    <div class="row" style="margin:5px">
+      <div class="col-lg-6">
+        <%= yield %>
 
-      <div class="field">
-        <%= f.label :password %><br />
-        <%= f.password_field :password, autocomplete: "off" %>
+        <!--Flash messages-->
+        <% flash.each do |key, value| %>
+            <% if(key == "alert") %>
+                <div class="alert alert-error"><%= value %></div>
+            <% end %>
+        <% end %>
+
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+            <br>
+            <div style="margin-bottom: 25px" class="input-group">
+              <%= f.label :email %> <br/>
+              <%= f.email_field :email, autofocus: true %>
+            </div>
+
+            <div style="margin-bottom: 25px" class="input-group">
+              <%= f.label :password %><br />
+              <%= f.password_field :password, autocomplete: "off" %>
+            </div>
+
+            <% if devise_mapping.rememberable? -%>
+                <div class="field">
+                  <%= f.check_box :remember_me %>
+                  <%= f.label :remember_me %>
+                </div>
+            <% end -%>
+
+            <div class="actions">
+              <%= f.submit "Log in", class: "btn btn-danger" %>
+            </div>
+        <% end %>
       </div>
-
-      <% if devise_mapping.rememberable? -%>
-          <div class="field">
-            <%= f.check_box :remember_me %>
-            <%= f.label :remember_me %>
-          </div>
-      <% end -%>
-
-      <div class="actions">
-        <%= f.submit "Log in", class: "btn btn-lg btn-info" %>
-      </div>
-  <% end %>
-  <%= render "merchants/shared/links" %>
-  Now yet a member?<%= link_to " Sign up!", new_registration_path(resource_name) %><br />
-
+    </div>
+    <div class="row-lg-6" style="font-size:85%;border-top: solid; border-width: thin;border-color:lightpink;padding:10px">
+      <%= render "merchants/shared/links" %>
+      Now yet a member?<%= link_to " Sign up!", new_registration_path(resource_name) %>
+    </div>
+  </div>
 </div>
+
+

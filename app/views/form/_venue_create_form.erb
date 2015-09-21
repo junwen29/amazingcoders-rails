@@ -1,149 +1,300 @@
-<div class="content-form">
+<div class="form-style-10">
+  <h1>Create Venue Form!<span> Do so much more with Burpple </span></h1>
   <%= form_for @venue,url: deals_path, :html => {:multipart => true} do |f| %>
+
       <div class = "row">
-        <div class="col-lg-4">
-          <p class="form-text clearfix">
-            <%= f.label "Name of Restaurant*" %>
-            <span>
-              <%= f.text_field :name %>
-            </span>
-          </p>
+        <div class="col">
+          <div class="section"><span>1</span> <b>Restaurant</b></div>
+          <div class="inner-wrap">
+
+            <!-- Names-->
+            <div class="col">
+              <label class="form-text clearfix">
+                <%= f.label "Name*" %>
+                <span>
+                               <%= f.text_field :name %>
+                            </span>
+              </label>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="b3 content-subtitle" id="location">Location</div>
-      <div class="content-separator"></div>
+      <div class = "row">
+        <div class="col">
+          <div class="section"><span>2</span> <b>Location</b></div>
+          <div class="inner-wrap">
 
-      <div class = "row">
-        <div class="col-lg-4">
-          <p class="form-text clearfix">
-            <%= f.label "Street Address*" %>
-            <span>
-              <%= f.text_field :street %>
-            </span>
-          </p>
-        </div>
-      </div>
-      <div class = "row">
-        <div class="col-lg-2">
-          <p class="form-text half clearfix">
-            <%= f.label "Mall / Unit Number*" %>
-            <span>
-              <%= f.text_field :address_2, :class => 'half' %>
-            </span>
-          </p>
-        </div>
-        <div class="col-lg-2">
-          <p class="form-text half clearfix">
-            <%= f.label "Postal Code*" %>
-            <span>
-              <%= f.text_field :zipcode, :class => 'half' %>
-            </span>
-          </p>
-        </div>
-        <div class="col-lg-2">
-          <p class="form-select clearfix">
-            <% neighbourhoods = [
-                    ["Choose..", ""], "Alexandra", "Ang Mo Kio", "Ann Siang Hill", "Arab Street",
-                    "Bayfront", "Bedok", "Bedok Reservoir", "Bencoolen", "Bishan", "Boat Quay", "Boon Keng", "Boon Lay", "Bras Brasah", "Buangkok", "Bugis", "Bukit Batok", "Bukit Merah", "Bukit Panjang", "Bukit Timah", "Buona Vista",
-                    "Changi", "Chinatown", "Choa Chu Kang", "City Hall", "Clarke Quay", "Clementi",
-                    "Dempsey", "Dhoby Ghaut", "Dover", "Duxton",
-                    "Eunos",
-                    "Farrer Park",
-                    "Geylang", "Ghim Moh",
-                    "Harbourfront", "Holland Village", "Hougang",
-                    "Joo Chiat", "Jurong East",
-                    "Kallang", "Katong", "Kembangan", "Kent Ridge", "Keppel",
-                    "Labrador Park", "Lavender", "Lim Chu Kang", "Little India",
-                    "Macpherson", "Mandai", "Marina Bay", "Marine Parade", "Mountbatten",
-                    "Newton", "Novena",
-                    "One North", "Orchard", "Outram",
-                    "Pasir Panjang", "Pasir Ris", "Paya Lebar", "Potong Pasir", "Pulau Ubin", "Punggol",
-                    "Queenstown",
-                    "Raffles Place", "Redhill", "River Valley", "Robertson Quay",
-                    "Sembawang", "Sengkang", "Sentosa", "Serangoon", "Serangoon Gardens", "Siglap", "Simei", "Simpang", "Sixth Avenue", "Somerset",
-                    "Tampines", "Tanglin", "Tanjong Pagar", "Telok Blangah", "Thomson", "Tiong Bahru", "Toa Payoh", "Tuas",
-                    "Upper Bukit Timah",
-                    "West Coast", "Woodlands",
-                    "Yio Chu Kang", "Yishun",
-                    "Others"
-            ] %>
-            <%= f.label "Neighbourhood*" %>
-            <span>
+              <!-- Street Address-->
+              <div class="col">
+                <label class="form-text clearfix">
+                  <%= f.label "Street Address*" %>
+                  <span>
+                              <%= f.text_field :street %>
+                            </span>
+                </label>
+              </div>
+
+              <!-- Mail-->
+              <div class="col">
+                <p class="form-text half clearfix">
+                  <%= f.label "Mail / Unit Number*" %>
+                  <span>
+                                <%= f.text_field :address_2, :class => 'half' %>
+                              </span>
+                </p>
+              </div>
+
+              <!-- postal code -->
+
+              <div class="col">
+                <p class="form-text half clearfix">
+                  <%= f.label "Postal Code*" %>
+                  <span>
+                            <%= f.text_field :zipcode, :class => 'half' %>
+                            </span>
+                </p>
+              </div>
+
+
+            <div class="col">
+              <p class="form-select clearfix">
+                <div>
+                <% neighbourhoods = [
+                        ["Choose..", ""], "Alexandra", "Ang Mo Kio", "Ann Siang Hill", "Arab Street",
+                        "Bayfront", "Bedok", "Bedok Reservoir", "Bencoolen", "Bishan", "Boat Quay", "Boon Keng", "Boon Lay", "Bras Brasah", "Buangkok", "Bugis", "Bukit Batok", "Bukit Merah", "Bukit Panjang", "Bukit Timah", "Buona Vista",
+                        "Changi", "Chinatown", "Choa Chu Kang", "City Hall", "Clarke Quay", "Clementi",
+                        "Dempsey", "Dhoby Ghaut", "Dover", "Duxton",
+                        "Eunos",
+                        "Farrer Park",
+                        "Geylang", "Ghim Moh",
+                        "Harbourfront", "Holland Village", "Hougang",
+                        "Joo Chiat", "Jurong East",
+                        "Kallang", "Katong", "Kembangan", "Kent Ridge", "Keppel",
+                        "Labrador Park", "Lavender", "Lim Chu Kang", "Little India",
+                        "Macpherson", "Mandai", "Marina Bay", "Marine Parade", "Mountbatten",
+                        "Newton", "Novena",
+                        "One North", "Orchard", "Outram",
+                        "Pasir Panjang", "Pasir Ris", "Paya Lebar", "Potong Pasir", "Pulau Ubin", "Punggol",
+                        "Queenstown",
+                        "Raffles Place", "Redhill", "River Valley", "Robertson Quay",
+                        "Sembawang", "Sengkang", "Sentosa", "Serangoon", "Serangoon Gardens", "Siglap", "Simei", "Simpang", "Sixth Avenue", "Somerset",
+                        "Tampines", "Tanglin", "Tanjong Pagar", "Telok Blangah", "Thomson", "Tiong Bahru", "Toa Payoh", "Tuas",
+                        "Upper Bukit Timah",
+                        "West Coast", "Woodlands",
+                        "Yio Chu Kang", "Yishun",
+                        "Others"
+                ] %>
+                <%= f.label "Neighbourhood*" %>
+                </div>
+                <span>
               <%= f.select :neighbourhood, neighbourhoods %>
             </span>
-          </p>
-        </div>
-      </div>
+              </p>
+            </div>
 
-      <div class = "row">
-        <div class="col-lg-2">
-          <p class="form-text half clearfix">
-            <%= f.label "City*" %>
-            <span>
+              <div class="col">
+                <p class="form-text half clearfix">
+                  <%= f.label "City*" %>
+                  <span>
               <%= f.text_field :city, :class => 'half' %>
             </span>
-          </p>
-        </div>
-        <div class="col-lg-2">
-          <p class="form-text half clearfix">
-            <%= f.label "State*" %>
-            <span>
+                </p>
+              </div>
+
+              <div class="col">
+                <p class="form-text half clearfix">
+                  <%= f.label "State*" %>
+                  <span>
               <%= f.text_field :state, :class => 'half' %>
             </span>
-          </p>
-        </div>
-        <div class="col-lg-2">
-          <p class="form-select clearfix">
-            <% countries = [ "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria","Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad", "Chile", "China", "Colombi", "Comoros", "Congo", "Costa Rica", "Cote d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "North Korea", "South Korea", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia and Montenegro", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"] %>
-            <%= f.label "Country*" %>
-            <% if @venue.country.blank? %>
-                <span><%= f.select :country, countries, :selected => "Singapore" %></span>
-            <% else %>
-                <span><%= f.select :country, countries %></span>
-            <% end %>
-          </p>
-        </div>
-      </div>
+                </p>
+              </div>
 
-      <div class="b3 content-subtitle" id="important-information">Important Information About Your Business</div>
-      <div class="content-separator"></div>
+            <div class="col">
+              <p class="form-select clearfix">
+                <div>
+                <% countries = [ "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria","Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad", "Chile", "China", "Colombi", "Comoros", "Congo", "Costa Rica", "Cote d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "North Korea", "South Korea", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia and Montenegro", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"] %>
+                <%= f.label "Country*" %>
+                </div>
+                <% if @venue.country.blank? %>
+                    <span><%= f.select :country, countries, :selected => "Singapore" %></span>
+                <% else %>
+                    <span><%= f.select :country, countries %></span>
+                <% end %>
+              </p>
+            </div>
 
-      <div class = "row">
-        <div class="col-lg-8">
-          <p class="form-textarea clearfix">
-            <%= f.label "Description" %>
-            <span>
+            </div>
+
+
+              <div class="section"><span>2</span> <b>Important Information About Your Business</b></div>
+              <div class="inner-wrap">
+
+            <div class="col" style="width:100%">
+              <p class="form-textarea clearfix">
+                <%= f.label "Description" %>
+                <span>
               <%= f.text_area :bio, :rows => '6', :cols => '32', :placeholder => 'Enter a short description of your business..' %>
             </span>
-          </p>
-        </div>
-      </div>
+              </p>
+            </div>
 
-      <div class = "row">
-        <div class="col-lg-2">
-          <p class="form-text clearfix">
-            <%= f.label "Contact Number*" %>
-            <span>
+            <div class="col">
+              <p class="form-text clearfix">
+                <%= f.label "Contact Number*" %>
+                <span>
               <%= f.text_field :phone %>
             </span>
-          </p>
-        </div>
-      </div>
+              </p>
+            </div>
 
-      <div class = "row">
-        <div class="col-lg-8">
-          <p class="form-text clearfix">
-            <%= f.label :photo, 'Upload an image of your venue!' %>
-          </p>
-          <%= f.file_field :photo %>
-          For best effect, upload an image of 150x150
-        </div>
-      </div>
+          <div class = "row">
+            <div class="col-lg-8">
+              <p class="form-text clearfix">
+                <%= f.label :photo, 'Upload an image of your venue' %>
+              </p>
+              <%= f.file_field :photo %>
+              For best effect, upload an image of 150x150
+            </div>
+          </div>
 
-      <div style="margin-top: 30px">
-        <%= f.submit "Create Venue", :class => 'btn btn-big btn-success' %>
-        <%= link_to 'Back', venues_path, class: "btn btn-big btn-default" %>
-      </div>
-    <% end %>
+          <div style="margin-top: 30px">
+            <%= f.submit "Create Venue", :class => 'btn btn-big btn-success' %>
+            <%= link_to 'Back', venues_path, class: "btn btn-big btn-default" %>
+          </div>
+  <% end %>
+  </div>
+
+  </div>
+  </div>
+
+
+  <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Form Style 10</title>
+    <link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+    <style type="text/css">
+        body{
+        }
+        .form-style-10{
+            max-width:60%;
+            min-width:450px;
+            padding:30px;
+            margin:40px auto;
+            background: #FFF;
+            border-radius: 10px;
+            -webkit-border-radius:10px;
+            -moz-border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
+            -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
+            -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
+        }
+        .form-style-10 .inner-wrap{
+            padding: 30px;
+            background: #F8F8F8;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            margin-left: 10px;
+        }
+        .form-style-10 h1{
+            background: #DC143C;
+            padding: 20px 30px 15px 30px;
+            margin: -30px -30px 30px -30px;
+            border-radius: 10px 10px 0 0;
+            -webkit-border-radius: 10px 10px 0 0;
+            -moz-border-radius: 10px 10px 0 0;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
+            font: normal 30px 'Bitter', serif;
+            -moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+            -webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+            box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+            border: 1px solid #DC143C;
+        }
+        .form-style-10 h1 > span{
+            display: block;
+            margin-top: 2px;
+            font: 13px Arial, Helvetica, sans-serif;
+        }
+        .form-style-10 label{
+            display: block;
+            font: 13px Arial, Helvetica, sans-serif;
+            color: #888;
+            margin-bottom: 15px;
+        }
+        .form-style-10 input[type="text"],
+        .form-style-10 input[type="date"],
+        .form-style-10 input[type="datetime"],
+        .form-style-10 input[type="email"],
+        .form-style-10 input[type="number"],
+        .form-style-10 input[type="search"],
+        .form-style-10 input[type="time"],
+        .form-style-10 input[type="url"],
+        .form-style-10 input[type="password"],
+        .form-style-10 textarea,
+        .form-style-10 select {
+            display: block;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            width: 100%;
+            max-width: 275px;
+            border-radius: 6px;
+            -webkit-border-radius:6px;
+            -moz-border-radius:6px;
+            border: 2px solid #fff;
+            box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+            -moz-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+            -webkit-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+        }
+
+        .form-style-10 .section{
+            font: normal 20px 'Bitter', serif;
+            color: #DC143C;
+            margin-bottom: 5px;
+            margin-left: 5px
+        }
+        .form-style-10 .section span {
+            background: #DC143C;
+            padding: 10px 10px 5px 10px;
+            position: absolute;
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border: 4px solid #fff;
+            font-size: 14px;
+            margin-left: -45px;
+            color: #fff;
+            margin-top: -3px;
+        }
+        .form-style-10 input[type="button"],
+        .form-style-10 input[type="submit"]{
+            background: #DC143C;
+            padding: 8px 20px 8px 20px;
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
+            font: normal 30px 'Bitter', serif;
+            -moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+            -webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+            box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+            border: 1px solid #DC143C;
+            font-size: 15px;
+        }
+        .form-style-10 input[type="button"]:hover,
+        .form-style-10 input[type="submit"]:hover{
+            background: #DB7093;
+            -moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
+            -webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
+            box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
+        }
+
+    </style>
+  </head>
+
+  </html>
 </div>
