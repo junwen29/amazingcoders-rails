@@ -37,6 +37,27 @@
 
             <div id="plan1_true">
               <!-- show list of addons -->
+
+
+              <div class="panel-body">
+                <table class="table table-bordered table-hover table-responsive">
+                  <tr>
+                    <th>Add-On Name</th>
+                    <th>Description</th>
+                    <th>Cost</th>
+                  </tr>
+
+                  <% @addon.each do |a| %>
+                      <tr>
+                        <td><%= a.name %></td>
+                        <td><%= a.description %></td>
+                        <td><%= number_to_currency a.cost %></td>
+                      </tr>
+                  <% end %>
+                </table>
+              </div><!--panel-body-->
+
+
               <p class="form-textarea clearfix">
                 <%= f.label :add_on1, 'Include Wishlist Add-on' %>
               <p style="font-style: italic">Push notify your deal listings to users who have wishlisted your restaurant in the Burpple app!</p>
