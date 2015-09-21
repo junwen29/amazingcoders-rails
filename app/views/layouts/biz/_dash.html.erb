@@ -5,29 +5,33 @@
     </div>
 
     <% if (@venue)  %>
-    <div class="header-content-item venueDropdown">
-      <% @selectClass = ( @venues.count == 0 ? 'venueDropdown-noselect' : 'venueDropdown-select' ) %>
-      <div class="<%= @selectClass %>">
-        <a href="#" class="venueDropdown-item">
+        <div class="header-content-item venueDropdown">
+          <% @selectClass = ( @venues.count == 0 ? 'venueDropdown-noselect' : 'venueDropdown-select' ) %>
+          <div class="<%= @selectClass %>">
+            <a href="#" class="venueDropdown-item">
               <span class="venueDropdown-item-title"><%= @venue.name %></span>
               <span class="venueDropdown-item-subtitle"><%= @venue.street %></span>
-        </a>
-      </div>
+            </a>
+          </div>
 
-      <div class="venueDropdown-dropdown">
-        <% unless @venues.blank? or (@venues.count == 1 ) %>
-            <div class="venueDropdown-dropdown-header">Verified Venues</div>
-            <% @venues.each do |venue| %>
-                <% unless venue.id == @venue.id %>
-                    <%= link_to venue_path(venue.id), {class: "venueDropdown-item"} do %>
-                        <span class="venueDropdown-item-title"><%= venue.name %></span>
-                        <span class="venueDropdown-item-subtitle"><%= venue.street %></span>
+          <div class="venueDropdown-dropdown">
+            <% unless @venues.blank? or (@venues.count == 1 ) %>
+                <div class="venueDropdown-dropdown-header">Verified Venues</div>
+                <% @venues.each do |venue| %>
+                    <% unless venue.id == @venue.id %>
+                        <%= link_to venue_path(venue.id), {class: "venueDropdown-item"} do %>
+                            <span class="venueDropdown-item-title"><%= venue.name %></span>
+                            <span class="venueDropdown-item-subtitle"><%= venue.street %></span>
+                        <% end %>
                     <% end %>
                 <% end %>
             <% end %>
-        <% end %>
-      </div>
-    </div>
+          </div>
+        </div>
+    <% else %>
+        <!--<div class="header-content-item" style="padding: 30px">
+          <span class="text-uppercase"><%= current_merchant.email %></span>
+        </div>-->
     <% end  %>
 
     <div class="header-content-item newBtn">
@@ -35,7 +39,7 @@
     </div>
 
     <div class="header-content-item logoutBtn">
-      <%= link_to "Help", venues_path , {:class => "help"} %>
+      <%= link_to "Help", nil , {:class => "help"} %>
       <%= link_to "Sign Out", destroy_merchant_session_path, { :class=> "btn", :method => :delete } %>
     </div>
   </div>
@@ -52,19 +56,19 @@
         <li><%= link_to "Billing", payments_path %></li>
       </ul>
     </li>
-    <li><%= link_to "Activity", venues_path %></li>
-    <li><%= link_to "View Listing",  venues_path%></li>
-    <li><%= link_to "Edit Listing", venues_path %></li>
-    <li><%= link_to "Premium Listing", venues_path %></li>
+    <li><%= link_to "Activity", nil %></li>
+    <li><%= link_to "View Listing", nil%></li>
+    <li><%= link_to "Edit Listing", nil %></li>
+    <li><%= link_to "Premium Listing", nil %></li>
     <li><%= link_to "List a deal", deals_path %></li>
   </ul>
 </div>
 
 <%= content_for :body_footer do %>
     <div class="navMobileFooter">
-      <%= link_to "Add Another Business or Outlet", new_venue_path, { :class=> "" } %>
-      <%= link_to "Help", venues_path, {:class => ""} %>
-      <%= link_to "Sign Out", destroy_merchant_session_path, { :class=> "", :method => :delete } %>
+      <%= link_to "Add Another Business or Outlet", new_venue_path, { :class=> "btn" } %>
+      <%= link_to "Help", nil, {:class => "help"} %>
+      <%= link_to "Sign Out", destroy_merchant_session_path, { :class=> "btn", :method => :delete } %>
     </div>
 
     <script>

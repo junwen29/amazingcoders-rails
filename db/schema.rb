@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(version: 20150916165814) do
     t.string   "title"
     t.boolean  "redeemable"
     t.boolean  "multiple_use"
+    t.string   "image"
     t.string   "type_of_deal"
     t.string   "description"
     t.date     "start_date"
@@ -154,9 +155,9 @@ ActiveRecord::Schema.define(version: 20150916165814) do
     t.boolean  "add_on2"
     t.boolean  "add_on3"
     t.boolean  "plan1"
+    t.boolean  "paid",                                default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "paid",                                default: false
     t.integer  "merchant_id"
   end
 
@@ -184,7 +185,9 @@ ActiveRecord::Schema.define(version: 20150916165814) do
   add_index "plans", ["payment_id"], name: "index_plans_on_payment_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "name",                   default: "", null: false
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "username"
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"

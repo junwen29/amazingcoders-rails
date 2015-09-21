@@ -2,8 +2,19 @@
 
 <div class="contentWrapper">
   <div class="content">
-
-
+    <!-- Flash Error Message -->
+    <% if @payment.errors.any? %>
+        <div id="error_explanation" class="alert alert-error">
+          <h5>
+            <%= pluralize(@payment.errors.count, "error") %> prohibited this payment from being saved:
+          </h5>
+          <ul>
+            <% @payment.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
 
     <!-- Content Heading -->
     <div class="pull-left">
