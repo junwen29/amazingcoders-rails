@@ -19,16 +19,16 @@ class PaymentsController < ApplicationController
 =end
 
   def index
-    @payments = Payment.where(merchant_id: merchant_id, paid: true)
-    @current_payment = Payment.where("merchant_id = ? AND paid = ? AND start_date <= ? AND expiry_date >= ?", merchant_id, true, Date.today, Date.today).last
+    @payments = Payment.all
 
-=begin
     @payments.each do |p|
       if !p.paid
         p.destroy
       end
     end
-=end
+
+    @payments = Payment.where(merchant_id: merchant_id, paid: true)
+    @current_payment = Payment.where("merchant_id = ? AND paid = ? AND start_date <= ? AND expiry_date >= ?", merchant_id, true, Date.today, Date.today).last
 
   end
 
