@@ -9,9 +9,6 @@ class PaymentsController < ApplicationController
     @addon1 = AddOn.find(1)
     @addon2 = AddOn.find(2)
     @addon3 = AddOn.find(3)
-    # Update join table
-    @add_on_payment = @payment.add_on_payments.new
-    @plan_payment = @payment.plan_payments.new
   end
 
   # Disable
@@ -44,7 +41,7 @@ class PaymentsController < ApplicationController
     @payment.update(paid: false)
 
     # Update join table in addon_payment
-    @add_on_payment = @payment.add_on_payments.new
+    @add_on_payment = @payment.add_on_payments.build
     if (params[:payment][:add_on1] == "true")
       @payment.add_on_payments.build(:add_on_id => 1)
     end
