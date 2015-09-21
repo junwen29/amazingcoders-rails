@@ -6,6 +6,9 @@ class PaymentsController < ApplicationController
   def new
     @payment = Payment.new
     @plan = Plan.all
+    @addon1 = AddOn.find(1)
+    @addon2 = AddOn.find(2)
+    @addon3 = AddOn.find(3)
     # Update join table
     @add_on_payment = @payment.add_on_payments.new
     @plan_payment = @payment.plan_payments.new

@@ -62,8 +62,8 @@
             <div id="plan1_true">
               <!-- show list of addons -->
               <p class="form-textarea clearfix">
-                <%= f.label :add_on1, 'Include Wishlist Add-on' %>
-              <p style="font-style: italic">Push notify your deal listings to users who have wishlisted your restaurant in the Burpple app!</p>
+                <%= f.label :add_on1, "Include Push Notification Add-on" %>
+                <em><%= @addon1.description %></em>
               </p>
               <p class="form-select half" style="margin-top: 0px;">
                 <%= f.label :add_on1, "Yes", :value => true %>
@@ -76,6 +76,7 @@
 
               <p class="form-textarea clearfix">
                 <%= f.label :add_on2, 'Include Deals Statistics Add-on' %>
+                <em><%= @addon2.description %></em>
               </p>
               <p class="form-select half" style="margin-top: 0px;">
                 <%= f.label :add_on2, "Yes", :value => true %>
@@ -88,6 +89,7 @@
 
               <p class="form-textarea clearfix">
                 <%= f.label :add_on3, 'Include Aggregate Trends Add-on' %>
+                <em><%= @addon3.description %></em>
               </p>
               <p class="form-select half" style="margin-top: 0px;">
                 <%= f.label :add_on3, "Yes", :value => true %>
