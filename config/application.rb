@@ -31,5 +31,10 @@ module AmazingcodersRails
     config.autoload_paths += Dir["#{config.root}/lib"]
     config.autoload_paths += Dir["#{config.root}/lib/burpple"]
 
+    # Override field_with_error class
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance|
+      html_tag
+    }
+
   end
 end
