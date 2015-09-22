@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150916165814) do
+ActiveRecord::Schema.define(version: 20150922064319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,9 @@ ActiveRecord::Schema.define(version: 20150916165814) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "charges", force: true do |t|
+  end
+
   create_table "deal_days", force: true do |t|
     t.integer  "deal_id"
     t.boolean  "mon"
@@ -108,6 +111,7 @@ ActiveRecord::Schema.define(version: 20150916165814) do
     t.string   "title"
     t.boolean  "redeemable"
     t.boolean  "multiple_use"
+    t.string   "image"
     t.string   "type_of_deal"
     t.string   "description"
     t.date     "start_date"
@@ -184,9 +188,7 @@ ActiveRecord::Schema.define(version: 20150916165814) do
   add_index "plans", ["payment_id"], name: "index_plans_on_payment_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "username"
+    t.string   "name",                   default: "", null: false
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
