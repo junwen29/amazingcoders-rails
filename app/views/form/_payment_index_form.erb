@@ -29,14 +29,6 @@
               <span class="label label-warning">Aggregate Trends</span>
           <% end %>
         </p>
-        <p>
-          <strong>Start Date: </strong>
-          <%= @current_payment.start_date.strftime("%d/%m/%Y") %>
-        </p>
-        <p>
-          <strong>Expiry Date: </strong>
-          <%= @current_payment.expiry_date.strftime("%d/%m/%Y") %>
-        </p>
     <% end %>
   </div>
 </div>
@@ -49,13 +41,12 @@
   <div class="panel-body">
     <table class="table table-bordered table-hover table-responsive">
       <tr>
-        <th>Payment ID</th>
-        <th>Total Amount</th>
+        <th>ID</th>
+        <th>Amount</th>
         <th>Premium Service</th>
-        <th>Add On(s)</th>
-        <th>Start Date</th>
+        <th>Add Ons</th>
+        <th>Subscription Date</th>
         <th>Expiry Date</th>
-        <th>Payment Date</th>
         <th colspan="1"></th>
       </tr>
 
@@ -89,7 +80,6 @@
             </td>
             <td><%= payment.start_date.strftime("%d/%m/%Y") %> </td>
             <td><%= payment.expiry_date.strftime("%d/%m/%Y") %> </td>
-            <td><%= payment.created_at.strftime("%d/%m/%Y %r")%></td>
             <td><%= link_to 'Show', payment_path(payment), class: "btn btn-xs btn-default" %></td>
           </tr>
       <% end %>
