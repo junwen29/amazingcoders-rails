@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
       # deals api
       get 'deals' => "deals#index", :as => 'index'
-
+      get 'venues' => "venues#index", :as => 'venues'
 
     end
   end
