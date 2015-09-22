@@ -3,7 +3,7 @@ class ChargesController < ApplicationController
 
   def new
     @payment = Payment.find(params[:payment_id])
-    total_cost = @payment.total_cost
+    #total_cost = @payment.total_cost
   end
 
   def create
@@ -17,7 +17,7 @@ class ChargesController < ApplicationController
 
     charge = Stripe::Charge.create(
         :customer    => customer.id,
-        :amount      => @payment.total_cost.to_i*100,
+        :amount      => @payment.total_cost.to_i*100*@payment.months,
         :description => 'Rails Stripe customer',
         :currency    => 'usd'
     )
