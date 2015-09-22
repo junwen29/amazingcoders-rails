@@ -78,6 +78,8 @@ class PaymentsController < ApplicationController
 
   def show
     @payment = Payment.find(params[:id])
+    #may have errors. should we update total cost only when showing?
+    @payment.update(total_cost: @payment.total_cost*@payment.months)
     @payment.update(paid: true)
   end
 
