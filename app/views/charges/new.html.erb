@@ -27,9 +27,9 @@
 
         <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                 data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-                data-description="A month's subscription"
-                data-amount= <%= number_to_currency @payment.total_cost %>
-                        data-locale="auto"></script>
+                data-description="Key in your information"
+                data-amount= <%= @payment.total_cost*100 %>
+                data-locale="auto"></script>
     <% end %>
     <%= link_to 'Back', new_payment_path, class: "btn btn-big btn-default" %>
 

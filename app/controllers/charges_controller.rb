@@ -19,7 +19,7 @@ class ChargesController < ApplicationController
         :customer    => customer.id,
         :amount      => @payment.total_cost.to_i*100,
         :description => 'Rails Stripe customer',
-        :currency    => 'usd'
+        :currency    => 'sgd'
     )
 
   rescue Stripe::CardError => e
