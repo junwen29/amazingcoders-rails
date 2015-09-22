@@ -2,9 +2,7 @@
   <%= form_for @venue,url: deals_path, :html => {:multipart => true} do |f| %>
       <p class="form-text clearfix">
         <%= f.label "Name of Restaurant*" %>
-        <span>
-          <%= f.text_field :name %>
-        </span>
+        <span><%= f.text_field :name %></span>
       </p>
 
       <div class="b3 content-subtitle" id="location">Location</div>
@@ -12,22 +10,18 @@
 
       <p class="form-text clearfix">
         <%= f.label "Street Address*" %>
-        <span>
-          <%= f.text_field :street %>
-        </span>
+        <span><%= f.text_field :street %></span>
       </p>
+
       <p class="form-text half clearfix">
         <%= f.label "Mall / Unit Number*" %>
-        <span>
-          <%= f.text_field :address_2, :class => 'half' %>
-        </span>
+        <span><%= f.text_field :address_2, :class => 'half' %></span>
       </p>
       <p class="form-text half clearfix">
         <%= f.label "Postal Code*" %>
-        <span>
-          <%= f.text_field :zipcode, :class => 'half' %>
-        </span>
+        <span><%= f.text_field :zipcode, :class => 'half' %></span>
       </p>
+
       <p class="form-select clearfix">
         <% neighbourhoods = [
                 ["Choose..", ""], "Alexandra", "Ang Mo Kio", "Ann Siang Hill", "Arab Street",
@@ -55,22 +49,20 @@
                 "Others"
         ] %>
         <%= f.label "Neighbourhood*" %>
-        <span>
-          <%= f.select :neighbourhood, neighbourhoods %>
-        </span>
+        <span><%= f.select :neighbourhood, neighbourhoods %></span>
       </p>
+
+
       <p class="form-text half clearfix">
         <%= f.label "City*" %>
-        <span>
-          <%= f.text_field :city, :class => 'half' %>
-        </span>
+        <span><%= f.text_field :city, :class => 'half' %></span>
       </p>
+
       <p class="form-text half clearfix">
         <%= f.label "State*" %>
-        <span>
-          <%= f.text_field :state, :class => 'half' %>
-        </span>
+        <span><%= f.text_field :state, :class => 'half' %></span>
       </p>
+
       <p class="form-select clearfix">
         <% countries = [ "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria","Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad", "Chile", "China", "Colombi", "Comoros", "Congo", "Costa Rica", "Cote d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "North Korea", "South Korea", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia and Montenegro", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"] %>
         <%= f.label "Country*" %>
@@ -84,34 +76,25 @@
       <div class="b3 content-subtitle" id="important-information">Important Information About Your Business</div>
       <div class="content-separator"></div>
 
-
       <p class="form-textarea clearfix">
         <%= f.label "Description" %>
-        <span>
-          <%= f.text_area :bio, :rows => '6', :cols => '32', :placeholder => 'Enter a short description of your business..' %>
-        </span>
+        <span><%= f.text_area :bio, :rows => '6', :cols => '32', :placeholder => 'Enter a short description of your business..' %></span>
       </p>
 
       <p class="form-text clearfix">
         <%= f.label "Contact Number*" %>
-        <span>
-          <%= f.text_field :phone %>
-        </span>
+        <span><%= f.text_field :phone %></span>
       </p>
 
-      <div class = "row">
-        <div class="col-lg-8">
-          <p class="form-text clearfix">
-            <%= f.label :photo, 'Upload an image of your venue!' %>
-          </p>
-          <%= f.file_field :photo %>
-          For best effect, upload an image of 150x150
-        </div>
-      </div>
+      <p class="form-text clearfix">
+        <%= f.label :photo, 'Upload an image of your venue!' %>
+      </p>
+      <%= f.file_field :photo %>
+      <em>For best effect, upload an image of 150x150</em>
 
       <div style="margin-top: 30px">
         <%= f.submit "Create Venue", :class => 'btn btn-big btn-success' %>
         <%= link_to 'Back', venues_path, class: "btn btn-big btn-default" %>
       </div>
   <% end %>
-</div><!-- content form -->
+</div>
