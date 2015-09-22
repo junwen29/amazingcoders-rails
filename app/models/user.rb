@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
 
+  has_many :wishlist, inverse_of: :venue, dependent: :destroy
+  has_many :users, through: :wishlist
+
   include User::Json
   include User::Authentication
 
