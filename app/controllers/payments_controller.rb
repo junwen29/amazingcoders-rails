@@ -35,12 +35,8 @@ class PaymentsController < ApplicationController
   def create
     #for database
     @payment = Merchant.find(merchant_id).payments.new(payment_params)
-    #@payment = Payment.new(payment_params)
-    @total_cost = calculate_price(@payment)
 
-    @payment.update(total_cost: @total_cost*@payment.months)
-    @payment.update(paid: false)
-    @payment.update(expiry_date: @payment.start_date.months_since(@payment.months))
+
 
 
     # Update join table in addon_payment
@@ -73,6 +69,13 @@ class PaymentsController < ApplicationController
       @addon3 = AddOn.find(3)
       render 'new'
     end
+
+    @total_cost = calculate_price(@payment)
+    @payment.update(total_cost: @total_cost*@payment.months)
+   # @payment.update(paid: false)
+    @payment.update(expiry_date: @payment.start_date.months_since(@payment.months))
+
+
   end
 
   def show

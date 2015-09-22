@@ -20,10 +20,10 @@ class Payment < ActiveRecord::Base
   validate :ensure_addon3_checked
 
   validates(:start_date, presence: true)
+  validates(:months, presence: true)
   validate :start_date_not_past
   validate :check_overlapping_plans
   validate :months_is_integer
-  #validates_numericality_of :months, :only_integer => true, :message => "Please ensure you input a digit in Number of Months (eg. 2)"
 
   # Process Validation Methods
   def ensure_plan_checked
@@ -51,7 +51,7 @@ class Payment < ActiveRecord::Base
   end
 
   def months_is_integer
-    errors.add(:base, 'Please ensure that you have typed in a positive digit for Number of Months') if ((months.to_i == 0) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'Please ensure that you have typed in a positive digit for Number of Months') if ((months.to_int == 0) rescue ArgumentError == ArgumentError)
   end
 
   private
