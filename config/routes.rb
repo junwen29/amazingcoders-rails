@@ -5,15 +5,20 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :p1 do
       devise_scope :user do
-        post 'registrations' => 'registrations#create', :as => 'register'
-        post 'sessions' => 'sessions#create', :as => 'login'
-        delete 'sessions' => 'sessions#destroy', :as => 'logout'
+        scope '/accounts' do
+          # post 'registrations' => 'registrations#create', :as => 'register'
+          post '/sign_in' => 'sessions#create'
+          delete '/sign_out' => 'sessions#destroy'
+          post '/sign_up' => "registrations#create"
+        end
       end
 
       get 'tasks' => 'tasks#index', :as => 'tasks'
-      get 'deals' => "deals#index", :as => 'index'
 
       # deals api
+      get 'deals' => "deals#index", :as => 'index'
+
+
     end
   end
 
@@ -33,10 +38,10 @@ Rails.application.routes.draw do
     resources :charges
   end
 
-  # To change a deal into active deal then going back to index page
+# To change a deal into active deal then going back to index page
   get 'deals/:id/activate' => 'deals#activate', :as => 'active_deal'
 
-  # To push a deal then goes back to index page
+# To push a deal then goes back to index page
   get 'deals/:id/push' => 'deals#push', :as => 'push_deal'
 
   get 'merchant_pages/home' => 'merchant_pages#home', :as => :merchant_home

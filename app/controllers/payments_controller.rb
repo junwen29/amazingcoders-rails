@@ -6,9 +6,9 @@ class PaymentsController < ApplicationController
   def new
     @payment = Payment.new
     @plan = Plan.all
-    # Update join table
-    @add_on_payment = @payment.add_on_payments.new
-    @plan_payment = @payment.plan_payments.new
+    @addon1 = AddOn.find(1)
+    @addon2 = AddOn.find(2)
+    @addon3 = AddOn.find(3)
   end
 
   # Disable
@@ -19,8 +19,8 @@ class PaymentsController < ApplicationController
 =end
 
   def index
-    @payments = Payment.where(:merchant_id => merchant_id)
-    @current_payment = Payment.where("merchant_id = ? AND start_date <= ? AND expiry_date >= ?", merchant_id, Date.today, Date.today).last
+    @payments = Payment.where(merchant_id: merchant_id, paid: true)
+    @current_payment = Payment.where("merchant_id = ? AND paid = ? AND start_date <= ? AND expiry_date >= ?", merchant_id, true, Date.today, Date.today).last
 
 =begin
     @payments.each do |p|
@@ -41,7 +41,7 @@ class PaymentsController < ApplicationController
     @payment.update(paid: false)
 
     # Update join table in addon_payment
-    @add_on_payment = @payment.add_on_payments.new
+    @add_on_payment = @payment.add_on_payments.build
     if (params[:payment][:add_on1] == "true")
       @payment.add_on_payments.build(:add_on_id => 1)
     end
@@ -57,10 +57,19 @@ class PaymentsController < ApplicationController
     if (params[:payment][:plan1] == "true")
       @payment.plan_payments.build(:plan_id => 1)
     end
-    
-   @payment.save
-    redirect_to new_payment_charge_path(@payment.id)
-    #if token is created successfully, go to show page and check if charge is created.
+
+    if @payment.save
+      flash[:success] = "Success in registering plan"
+      redirect_to new_payment_charge_path(@payment.id)
+      #if token is created successfully, go to show page and check if charge is created.
+    else
+      flash[:error] = "Failed to upgrade plan"
+      @plan = Plan.all
+      @addon1 = AddOn.find(1)
+      @addon2 = AddOn.find(2)
+      @addon3 = AddOn.find(3)
+      render 'new'
+    end
   end
 
   def show
