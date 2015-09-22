@@ -127,10 +127,10 @@ class PaymentsController < ApplicationController
       total_cost = total_cost + add_on1_cost
     end
     if payment.add_on2
-      total_cost = total_cost + add_on1_cost
+      total_cost = total_cost + add_on2_cost
     end
     if payment.add_on3
-      total_cost = total_cost + add_on1_cost
+      total_cost = total_cost + add_on3_cost
     end
 
     total_cost
