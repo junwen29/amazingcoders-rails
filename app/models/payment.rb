@@ -43,7 +43,7 @@ class Payment < ActiveRecord::Base
   end
 
   def start_date_not_past
-    errors.add(:base, 'Start date must be at least one day in advance') if ((start_date <= Date.today) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'Start date must be at least one day in advance') if ((start_date < Date.today) rescue ArgumentError == ArgumentError)
   end
 
   def check_overlapping_plans
