@@ -6,6 +6,8 @@ class Deal < ActiveRecord::Base
 
   has_many :deal_venues, inverse_of: :deal, dependent: :destroy
   has_many :venues, through: :deal_venues
+  accepts_nested_attributes_for :deal_venues, allow_destroy: true
+
   has_many :deal_days, :dependent => :destroy
   accepts_nested_attributes_for :deal_days, allow_destroy: true
 
@@ -14,17 +16,19 @@ class Deal < ActiveRecord::Base
   scope :expired, -> {where("expiry_date < ?", Date.today)}
 
   # For adding images
-  has_attached_file :image
+  has_attached_file :image,
+                    :default_url => 'biz/burpple_logo.png'
+
 
   # Validate input fields from form
   validates(:title, presence: true)
   validates(:type_of_deal, presence: true)
   validates(:description,presence: true, length: {minimum: 5})
-   validates(:start_date, presence: true)
+  validates(:start_date, presence: true)
   validates(:expiry_date, presence: true)
-  # validates :venues, :presence => {message: "Please ensure that there is at least one venue selected"}
   validates(:t_c, presence: true)
   validates :deal_days, :presence => {message: "Please ensure that there is at least one deal period"}
+  #validates :deal_venues, :presence => {message: "Please select at least one venue for your deal", models:""}
 
   validates_attachment_content_type :image, content_type: /\Aimage/
 
@@ -35,8 +39,13 @@ class Deal < ActiveRecord::Base
   validate :ensuring_redeemable_checked
   validate :ensuring_multiple_use_checked
   validate :check_overlapping_deals
+  validate :has_venues
 
   # Process Methods
+  def has_venues
+    errors.add(:base, 'Please select at least one venue for your deal') if ((deal_venues.blank?) rescue ArgumentError == ArgumentError)
+  end
+
   def ensuring_pushed_checked
     errors.add(:pushed, 'Please ensure you selected if you want to push deals to users') if ((pushed == nil) rescue ArgumentError == ArgumentError)
   end
@@ -67,7 +76,7 @@ have more than 5 active deals then.') if ((overlapping_deals) rescue ArgumentErr
   private
   # find number of overlapping deals
   def overlapping_deals
-   num = DealService.get_overlapping_deals(merchant_id, start_date, expiry_date)
+    num = DealService.get_overlapping_deals(merchant_id, start_date, expiry_date)
     if num >= 5
       true
     else

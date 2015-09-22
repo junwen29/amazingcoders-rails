@@ -1,10 +1,14 @@
 class VenuesController < ApplicationController
   before_filter :authenticate_merchant!, except: [:home, :help]
-  before_action :set_venue, only: [:index, :show, :edit, :update, :destroy]
+  before_action :set_venue, only: [:show, :edit, :update, :destroy]
   before_action :all_venues
 
   def index
-    # Get data required for form
+    @venues = Venue.where(:merchant_id => merchant_id)
+  end
+
+  def show
+    @venue = Venue.find(params[:id])
   end
 
   # GET /venues/new
@@ -55,6 +59,10 @@ class VenuesController < ApplicationController
       end
   end
 
+  def show
+
+  end
+
   # DELETE /venues/1
   # DELETE /venues/1.json
   def destroy
@@ -71,11 +79,7 @@ class VenuesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_venue
-    unless @venue.present?
-      @venue = all_venues.first
-    else
-      @venue = Venue.find(params[:id])
-    end
+    @venue = Venue.find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

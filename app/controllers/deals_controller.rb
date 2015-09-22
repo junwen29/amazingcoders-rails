@@ -4,11 +4,16 @@ class DealsController < ApplicationController
   before_action :set_deal, only: [:show, :edit, :update, :destroy, :activate, :push]
 
   def new
-    @deal = Deal.new
-    @deal_venue = @deal.deal_venues.build
-    deal_day = @deal.deal_days.build
-    deal_day.deal_times.build
     @all_venues = MerchantService.get_all_venues(merchant_id)
+    if @all_venues.blank?
+      flash[:error] = "Please ensure you have listed a venue before proceeding"
+      redirect_to deals_path
+    else
+      @deal = Deal.new
+      @deal_venue = @deal.deal_venues.build
+      deal_day = @deal.deal_days.build
+      deal_day.deal_times.build
+    end
   end
 
   def edit
@@ -32,14 +37,16 @@ class DealsController < ApplicationController
     @locations = Venue.pluck(:neighbourhood)
     # For drop down form
     @all_venues = MerchantService.get_all_venues(merchant_id)
-    @deal_venue = @deal.deal_venues.build
+    #@deal_venue = @deal.deal_venues.build
 
     # Add venue_id to deal_venue join table
     venues_arr = params[:venues][:id].drop(1)     # pop out initial null
     # raise venues_arr.inspect
-    venues_arr.each do |venue|
-      if !venue.empty?
-        @deal.deal_venues.build(:venue_id => venue)
+    if !venues_arr.blank?
+      venues_arr.each do |venue|
+        if !venue.empty?
+          @deal.deal_venues.build(:venue_id => venue)
+        end
       end
     end
 
@@ -57,7 +64,7 @@ class DealsController < ApplicationController
   def update
     # For drop down form
     @all_venues = MerchantService.get_all_venues(merchant_id)
-    @deal_venue = @deal.deal_venues.build
+    # @deal_venue = @deal.deal_venues.build
 
     # Find all previous associations in join table and delete them
     @deal_venues = DealVenue.where("deal_id = ?", params[:id])

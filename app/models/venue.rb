@@ -5,7 +5,8 @@ class Venue < ActiveRecord::Base
 
   scope :neighbourhood, ->(location) {where("neighbourhood == ?", location)}
 
-  has_attached_file :photo
+  has_attached_file :photo,
+                    :default_url => 'biz/burpple_logo.png'
 
   validates(:name, presence: true)
   validates(:street, presence: true)
