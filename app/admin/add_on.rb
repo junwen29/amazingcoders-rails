@@ -6,6 +6,11 @@ ActiveAdmin.register AddOn do
 
   remove_filter :payments, :add_on_payments
 
+  action_item :back do
+    link_to "Back", "/admin/plans"
+  end
+
+
   # INDEX
   index do
     selectable_column
