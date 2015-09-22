@@ -17,3 +17,6 @@
 
 # Ignore the .idea folder
 /.idea
+
+# Ignore picture upload
+/public/system

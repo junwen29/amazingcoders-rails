@@ -6,6 +6,7 @@ class CreateAddOns < ActiveRecord::Migration
       t.string      :name
       t.decimal     :cost, :precision => 8, :scale => 2
       t.string      :description
+      t.string      :addon_type
       t.timestamps
     end
   end

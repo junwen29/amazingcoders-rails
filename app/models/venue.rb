@@ -5,7 +5,8 @@ class Venue < ActiveRecord::Base
 
   scope :neighbourhood, ->(location) {where("neighbourhood == ?", location)}
 
-  has_attached_file :photo
+  has_attached_file :photo,
+                    :default_url => 'biz/burpple_logo.png'
 
   validates(:name, presence: true)
   validates(:street, presence: true)
@@ -17,7 +18,6 @@ class Venue < ActiveRecord::Base
   validates(:neighbourhood, presence: true)
   validates(:phone, presence: true)
   validates(:phone, :numericality => {:only_integer => true})
-  validates :photo, :presence => {message: "Please upload an image of your deal"}
 
   validates_attachment_content_type :photo, content_type: /\Aimage/
 end

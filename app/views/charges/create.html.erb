@@ -1,2 +1,28 @@
-<!--show users a success message-->
-<h2>Thanks, you paid <strong>$5.00</strong>!</h2>
+<%= render 'layouts/biz/dash' %>
+
+<div class="contentWrapper">
+  <div class="content">
+
+    <!--Flash messages-->
+    <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+    <% end %>
+
+
+    <div class="clearfix"></div>
+    <div class="content-separator"></div>
+
+    <!-- Content Body -->
+    <!--show users a success message-->
+    <h2>Thanks, you paid <strong><%= number_to_currency @payment.total_cost %></strong>!</h2>
+
+    <%= link_to 'View Payment Details', payment_path(@payment.id), class: "btn btn-big btn-default" %>
+
+  </div><!-- /content -->
+</div><!-- /contentWrapper -->
+
+<%= content_for :lean_overlay do %>
+<% end %>
+
+<%= content_for :body_footer do %>
+<% end %>

@@ -1,35 +1,132 @@
-<div class="content-form">
-  <%= form_for :payment, url: payments_path do |f| %>
+<!-- show list of plans -->
+<div class="panel-group" id="accordion1">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion1" href="#collapseTwo">
+        Premium Services <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+      </a></h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse">
+      <div class="panel-body">
+        <!-- Here we insert another nested accordion -->
+        <div class="panel-group" id="accordion2">
+          <% @plan.each do |p| %>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion2" href="#collapseInner_<%= p.id %>">
+                    <%= p.name %> <span class="label label-warning"><%= number_to_currency p.cost %></span>
+                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                  </a></h4>
+                  <h6><%= p.description %></h6>
+                </div>
+                <div id="collapseInner_<%= p.id %>" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <table class="table table-bordered table-hover table-responsive">
+                      <tr>
+                        <th>Addons</th>
+                        <th>Description</th>
+                        <th>Extra Cost</th>
+                      </tr>
 
-      <h4>Premium Services</h4>
+                      <% p.add_ons.each do |a| %>
+                          <tr>
+                            <td><%= a.name %></td>
+                            <td><%= a.description %></td>
+                            <td>+ <%= number_to_currency a.cost %></td>
+                          </tr>
+                      <% end %>
+                    </table>
+                  </div>
+                </div>
+              </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-      <%= @plan.each do |p| %>
-          <tr>
-            <td><%= p.name %></td><br>
-            <td><%= p.cost %></td><br>
-            <td><%= p.description %></td><br>
-          </tr>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4>Choose Plan upgrade</h4>
+  </div>
+  <div class="panel-body">
+    <div class="content-form">
+      <%= form_for @payment, url: payments_path do |f| %>
+          <div id="plan1">
+            <p class="form-select" style="margin-top: 0px;">
+              <%= f.label :plan1, "Premium Deals Services", :value => true %>
+              <%= f.radio_button :plan1, true%>
+            </p>
+
+            <div id="plan1_true">
+              <!-- show list of addons -->
+              <p class="form-textarea clearfix">
+                <%= f.label :add_on1, "Include Push Notification Add-on" %>
+                <em><%= @addon1.description %></em>
+              </p>
+              <p class="form-select half" style="margin-top: 0px;">
+                <%= f.label :add_on1, "Yes", :value => true %>
+                <%= f.radio_button :add_on1, true%>
+              </p>
+              <p class="form-select" style="margin-top: 0px;">
+                <%= f.label :add_on1, "No", :value => false %>
+                <%= f.radio_button :add_on1, false%>
+              </p>
+
+              <p class="form-textarea clearfix">
+                <%= f.label :add_on2, 'Include Deals Statistics Add-on' %>
+                <em><%= @addon2.description %></em>
+              </p>
+              <p class="form-select half" style="margin-top: 0px;">
+                <%= f.label :add_on2, "Yes", :value => true %>
+                <%= f.radio_button :add_on2, true%>
+              </p>
+              <p class="form-select" style="margin-top: 0px;">
+                <%= f.label :add_on2, "No", :value => false %>
+                <%= f.radio_button :add_on2, false%>
+              </p>
+
+              <p class="form-textarea clearfix">
+                <%= f.label :add_on3, 'Include Aggregate Trends Add-on' %>
+                <em><%= @addon3.description %></em>
+              </p>
+              <p class="form-select half" style="margin-top: 0px;">
+                <%= f.label :add_on3, "Yes", :value => true %>
+                <%= f.radio_button :add_on3, true%>
+              </p>
+              <p class="form-select" style="margin-top: 0px;">
+                <%= f.label :add_on3, "No", :value => false %>
+                <%= f.radio_button :add_on3, false%>
+              </p>
+            </div>
+          </div>
+
+          <!-- choose start date -->
+          <p class="form-select half clearfix">
+            <%= f.label :start_date, "Start Date:" %>
+            <span>
+                <%= f.text_field :start_date%>
+          </span>
+          </p>
+
+          <!-- to be deleted and replaced with auto-fill -->
+          <p class="form-select clearfix">
+            <%= f.label :expiry_date, "End Date:" %>
+            <span>
+                <%= f.text_field :expiry_date %>
+          </span>
+          </p>
+
+
+          <h4>Total Price:</h4>
+
+
+
+          <p class="clearfix">
+            <%= f.submit "Proceed to Checkout", :class => 'btn btn-big btn-success' %>
+          </p>
       <% end %>
-
-      <p class="form-textarea clearfix">
-        <%= f.label :plan1, 'Upgrade to enjoy premium services?' %>
-      </p>
-      <p class="form-select half" style="margin-top: 0px;">
-        <%= f.label :plan1, "Yes", :value => true %>
-        <%= f.radio_button :plan1, true%>
-      </p>
-      <p class="form-select" style="margin-top: 0px;">
-        <%= f.label :plan1, "No", :value => false %>
-        <%= f.radio_button :plan1, false%>
-      </p>
-
-
-      <h4>Total Price:</h4>
-
-
-
-      <p class="clearfix">
-        <%= f.submit "Proceed to Checkout", :class => 'btn btn-big btn-success' %>
-      </p>
-  <% end %>
-</div><!-- content-form -->
+    </div><!-- content-form -->
+  </div><!--panel-body-->
+</div><!--panel panel-default-->

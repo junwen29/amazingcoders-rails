@@ -1,5 +1,4 @@
 class AddOnsController < ApplicationController
-  before_filter :authenticate_merchant!, except: [:home, :help]
 
   def new
     @add_on = Add_on.new
@@ -46,7 +45,7 @@ class AddOnsController < ApplicationController
     @add_on.destroy
     #need not add a view for this action since redirecting to the index
     #action
-    redirect_to add_on_path
+    #redirect_to add_on_path
   end
 
   private

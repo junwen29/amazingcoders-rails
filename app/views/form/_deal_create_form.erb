@@ -1,165 +1,89 @@
 <div class="content-form">
   <%= form_for @deal, url: deals_path, :html => {:multipart => true} do |f| %>
-      <div class = "row">
-        <div class="col-lg-1">
-          <p class="form-textarea clearfix">
-            <%= f.label :title, "Title of deal" %>
-            <span>
-              <%= f.text_field :title%>
-            </span>
-          </p>
-        </div>
-      </div>
+      <p class="form-textarea clearfix">
+        <%= f.label :title, "Title of deal" %>
+        <span><%= f.text_field :title %></span>
+      </p>
 
-      <div class = "row">
-        <div class="col-lg-1">
-          <p class="form-textarea clearfix">
-            <%= f.label :type_of_deal, "Type of Deal" %>
-            <span>
-              <%= f.select :type_of_deal, [['1 for 1','1_for_1'],['10% off','10% off']] %>
-            </span>
-          </p>
-        </div>
-      </div>
+      <p class="form-textarea clearfix">
+        <%= f.label :type_of_deal, "Type of Deal" %>
+        <span><%= f.select :type_of_deal, [['Discount','discount'],['Freebies','freebis']] %></span>
+      </p>
 
-      <div class = "row">
-        <div class="col-lg-2">
-          <p class="form-textarea clearfix">
-            <%= f.label :description, "Description of your deal" %>
-            <span>
-                    <%= f.text_field :description%>
-              </span>
-          </p>
-        </div>
-      </div>
+      <p class="form-textarea clearfix">
+        <%= f.label :description, "Description of your deal" %>
+        <span><%= f.text_area :description, :placeholder => "Tell us more about your deals! Example: 10% off the total bill!" %></span>
+      </p>
 
-      <div class = "row">
-        <div class="col-lg-2">
-          <p class="form-select half clearfix">
-            <%= f.label :start_date, "Start Date:" %>
-            <span>
-              <%= f.text_field :start_date%>
-            </span>
-          </p>
-        </div>
-        <div class="col-lg-2">
-          <p class="form-select clearfix">
-            <%= f.label :expiry_date, "End Date:" %>
-            <span>
-              <%= f.text_field :expiry_date %>
-            </span>
-          </p>
-        </div>
-      </div>
+      <p class="form-select half clearfix">
+        <%= f.label :start_date, "Start Date:" %>
+        <span><%= f.text_field :start_date%></span>
+      </p>
+
+      <p class="form-select clearfix">
+        <%= f.label :expiry_date, "End Date:" %>
+        <span><%= f.text_field :expiry_date %></span>
+      </p>
 
       <!-- Following is a nested form of deal_day-->
-      <div class = "row">
-        <div class="col-lg-8">
+      <p class="form-textarea clearfix">
+        <%= f.label :deal_days, "Deal Period:" %>
+        <%= f.fields_for :deal_days do |builder| %>
+            <%= render 'form/deal_day_form', f: builder %>
+        <% end %>
+        <%= link_to_add_day "Add deal period", f, :deal_days %>
+      </p>
+
+      <%= fields_for :deal_venue do |dv| %>
+          <div class = "field form-textarea clearfix">
+            <%= dv.label "Select Venues" %><br />
+            <%= collection_select(:venues, :id, @all_venues, :id, :name, {}, {:multiple => true}) %>
+          </div>
+      <% end %>
+
+      <p class="form-textarea clearfix">
+        <%= f.label :t_c, 'Terms and Conditions' %>
+        <span><%= f.text_area :t_c, :placeholder => "Note your terms and conditions here" %></span>
+      </p>
+
+      <p class="form-text clearfix">
+        <%= f.label :image, 'Upload an image of your deal' %>
+      </p>
+      <%= f.file_field :image %>
+      <em>For best effect, upload an image of 150x150</em>
+
+      <div id= "redeemable">
+        <p class="form-textarea clearfix">
+          <%= f.label :redeemable, "Would you like users to redeem through deal code? (Helps gather analytics)" %>
+        </p>
+
+        <p class="form-select half" style="margin-top: 0px;">
+          <%= f.label :redeemable, "Yes", :value => true %>
+          <%= f.radio_button :redeemable, true%>
+        </p>
+
+        <p class="form-select" style="margin-top: 0px;">
+          <%= f.label :redeemable, "No", :value => false %>
+          <%= f.radio_button :redeemable, false%>
+        </p>
+      </div>
+
+
+      <div id= "redeemable">
+        <div id="redeemable_true">
           <p class="form-textarea clearfix">
-              <%= f.label :deal_days, "Deal Period:" %>
-              <%= f.fields_for :deal_days do |builder| %>
-                  <%= render 'form/deal_day_form', f: builder %>
-              <% end %>
-              <%= link_to_add_day "Add deal period", f, :deal_days %>
+            <%= f.label :multiple_use, "How many times can this deal be redeemed per user?" %><br>
           </p>
-        </div>
-      </div>
 
-      <div class = "row">
-        <div class="col-lg-8">
-          <%= fields_for (@deal_venue) do |dv| %>
-              <div class = "field">
-                <%= dv.label "Select Venues" %><br />
-                <%= collection_select(:venues, :id, @all_venues, :id, :neighbourhood, {}, {:multiple => true}) %>
-              </div>
-          <% end %>
-        </div>
-      </div>
-
-      <div class = "row">
-        <div class="col-lg-8">
-          <p class="form-textarea clearfix">
-            <%= f.label :t_c, 'Terms and Conditions' %>
-            <span>
-              <%= f.text_field :t_c%>
-            </span>
+          <p class="form-select half" style="margin-top: 0px;">
+            <%= f.label :multiple_use, "Unlimited", :value => true %>
+            <%= f.radio_button :multiple_use, true %>
           </p>
-        </div>
-      </div>
 
-      <div class = "row">
-        <div class="col-lg-8">
-          <p class="form-text clearfix">
-            <%= f.label :image, 'Upload an image of your deal!' %>
+          <p class="form-select" style="margin-top: 0px;">
+            <%= f.label :multiple_use, "Once", :value => false %>
+            <%= f.radio_button :multiple_use, false%>
           </p>
-          <%= f.file_field :image %>
-          For best effect, upload an image of 150x150
-        </div>
-      </div>
-
-      <div class = "row">
-        <div class="col-lg-8">
-          <p class="form-textarea clearfix">
-            <%= f.label :pushed, 'Would you like to push to those who have wishlisted?' %>
-          </p>
-          <div class="col-lg-1">
-              <p class="form-select half" style="margin-top: 0px;">
-                <%= f.label :pushed, "Yes", :value => true %>
-                <%= f.radio_button :pushed, true%>
-              </p>
-          </div>
-          <div class="col-lg-1">
-              <p class="form-select" style="margin-top: 0px;">
-                <%= f.label :pushed, "No", :value => false %>
-                <%= f.radio_button :pushed, false%>
-              </p>
-          </div>
-        </div>
-      </div>
-
-      <div class = "row">
-        <div class="col-lg-8">
-          <div id= "redeemable">
-            <p class="form-textarea clearfix">
-              <%= f.label :redeemable, "Would you like users to redeem through deal code? (Helps gather analytics)" %>
-            </p>
-            <div class="col-lg-1">
-                <p class="form-select half" style="margin-top: 0px;">
-                  <%= f.label :redeemable, "Yes", :value => true %>
-                  <%= f.radio_button :redeemable, true%>
-                </p>
-            </div>
-            <div class="col-lg-1">
-                <p class="form-select" style="margin-top: 0px;">
-                  <%= f.label :redeemable, "No", :value => false %>
-                  <%= f.radio_button :redeemable, false%>
-                </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class = "row">
-        <div class="col-lg-8">
-          <div id= "redeemable">
-            <div id="redeemable_true">
-              <p class="form-textarea clearfix">
-                <%= f.label :multiple_use, "How many times can this deal be redeemed per user?" %><br>
-              </p>
-              <div class="col-lg-1">
-                  <p class="form-select half" style="margin-top: 0px;">
-                    <%= f.label :multiple_use, "Unlimited", :value => true %>
-                    <%= f.radio_button :multiple_use, true %>
-                  </p>
-              </div>
-              <div class="col-lg-1">
-                <p class="form-select" style="margin-top: 0px;">
-                  <%= f.label :multiple_use, "Once", :value => false %>
-                  <%= f.radio_button :multiple_use, false%>
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
