@@ -37,8 +37,12 @@ class PaymentsController < ApplicationController
     @payment = Merchant.find(merchant_id).payments.new(payment_params)
     #@payment = Payment.new(payment_params)
     @total_cost = calculate_price(@payment)
+=begin
+    @start_date = @payment.start_date
+=end
     @payment.update(total_cost: @total_cost)
     @payment.update(paid: false)
+    @payment.update(expiry_date: @payment.start_date.months_since(@payment.months))
 
     # Update join table in addon_payment
     @add_on_payment = @payment.add_on_payments.build
@@ -131,7 +135,7 @@ class PaymentsController < ApplicationController
 
   private
   def payment_params
-    params.require(:payment).permit(:start_date, :expiry_date, :total_cost, :add_on1, :add_on2, :add_on3, :plan1, :paid)
+    params.require(:payment).permit(:start_date, :expiry_date, :total_cost, :add_on1, :add_on2, :add_on3, :plan1, :paid, :months)
   end
 
 

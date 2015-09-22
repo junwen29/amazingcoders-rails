@@ -149,6 +149,7 @@ ActiveRecord::Schema.define(version: 20150916165814) do
 
   create_table "payments", force: true do |t|
     t.date     "start_date"
+    t.integer  "months"
     t.date     "expiry_date"
     t.decimal  "total_cost",  precision: 8, scale: 2
     t.boolean  "add_on1"
