@@ -22,23 +22,24 @@ class Payment < ActiveRecord::Base
   validates(:start_date, presence: true)
   validate :start_date_not_past
   validate :check_overlapping_plans
-  validate :ensure_months_integer
+  validate :months_is_integer
+  #validates_numericality_of :months, :only_integer => true, :message => "Please ensure you input a digit in Number of Months (eg. 2)"
 
   # Process Validation Methods
   def ensure_plan_checked
-    errors.add(:base, 'Please ensure you have selected at least 1 premium plan') if ((plan1 == nil) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'Please ensure that you have selected at least 1 premium plan') if ((plan1 == nil) rescue ArgumentError == ArgumentError)
   end
 
   def ensure_addon1_checked
-    errors.add(:base, 'Please ensure you selected if you want Push Notification Addon') if ((add_on1 == nil) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'Please ensure that you selected if you want Push Notification Addon') if ((add_on1 == nil) rescue ArgumentError == ArgumentError)
   end
 
   def ensure_addon2_checked
-    errors.add(:base, 'Please ensure you selected if you want Deal Statistics Addon') if ((add_on2 == nil) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'Please ensure that you selected if you want Deal Statistics Addon') if ((add_on2 == nil) rescue ArgumentError == ArgumentError)
   end
 
   def ensure_addon3_checked
-    errors.add(:base, 'Please ensure you selected if you want Aggregate Trends Addon') if ((add_on3 == nil) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'Please ensure that you selected if you want Aggregate Trends Addon') if ((add_on3 == nil) rescue ArgumentError == ArgumentError)
   end
 
   def start_date_not_past
@@ -49,8 +50,8 @@ class Payment < ActiveRecord::Base
     errors.add(:base, 'You already have a plan in this period') if ((overlapping_payment) rescue ArgumentError == ArgumentError)
   end
 
-  def ensure_months_integer
-    errors.add(:base, 'Please insert a proper value for Number of Months (eg. 2)') if ((months.is_a? Integer) rescue ArgumentError == ArgumentError)
+  def months_is_integer
+    errors.add(:base, 'Please ensure that you have typed in a positive digit for Number of Months') if ((months.to_i == 0) rescue ArgumentError == ArgumentError)
   end
 
   private
