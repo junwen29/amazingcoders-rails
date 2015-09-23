@@ -103,7 +103,7 @@
           </div>
 
           <!-- choose start date -->
-          <p class="form-select half clearfix">
+          <p class="form-select clearfix">
             <%= f.label :start_date, "Start Date:" %>
             <span>
                 <%= f.text_field :start_date%>
@@ -114,7 +114,7 @@
           <p class="form-select clearfix">
             <%= f.label :months, "Number of months:" %>
             <span>
-                <%= f.select :months, options_for_select([["1","1"], ['2','2']]) %>
+              <%= f.select :months, (1..12) %>
           </span>
           </p>
 
