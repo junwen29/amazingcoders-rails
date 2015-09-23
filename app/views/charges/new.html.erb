@@ -3,11 +3,6 @@
 <div class="contentWrapper">
   <div class="content">
 
-    <!--Flash messages-->
-    <% flash.each do |key, value| %>
-        <div class="alert alert-<%= key %>"><%= value %></div>
-    <% end %>
-
     <!-- Content Heading -->
     <div class="pull-left">
       <p class="b2 content-title">Checkout Page</p>
@@ -55,12 +50,12 @@
           <strong><%= number_to_currency @payment.total_cost %></strong>
         </h3>
 
-        <p>Please check that the details are correct before proceeding to payment.</p>
+
         <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                 data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
                 data-description="Key in your information"
                 data-amount= <%= @payment.total_cost*100 %>
-                data-locale="auto"></script>
+                data-locale="auto"></script> Please check that the details are correct before proceeding to payment.
     <% end %>
     <%= link_to 'Back', new_payment_path, class: "btn btn-big btn-default" %>
 

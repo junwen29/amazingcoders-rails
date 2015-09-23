@@ -28,7 +28,7 @@ class ChargesController < ApplicationController
     rescue Stripe::CardError => e
       flash[:error] = e.message
   end
-
+    flash[:success] = "Plan upgrade completed!"
     @payment.update(paid: true)
     redirect_to payment_path(@payment.id)
   end
