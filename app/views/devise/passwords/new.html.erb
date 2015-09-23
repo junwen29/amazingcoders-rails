@@ -1,0 +1,32 @@
+<div style=" min-width:550px; max-width:50%; margin:100px auto" class="container">
+  <div class="panel panel-danger">
+    <div class="panel-heading">
+      <div class="panel-body">
+        <div style = "float:right">
+          <div style="display:inline-block"><img class="profile-img" src="http://www.burpple.com/img/logo.png" height="100" width ="100"></div>
+        </div>
+        <div style="display:inline-block"><h3>Forgot your password?</h3></div>
+      </div>
+    </div>
+    <div class="row" style="margin:5px">
+      <div class="col-lg-6">
+        <br/><br/>
+
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+            <%= devise_error_messages! %>
+
+            <div class="field">
+              <%= f.label :email %><br />
+              <%= f.email_field :email, autofocus: true %>
+            </div>
+
+            <div class="actions">
+              <%= f.submit "Send me reset password instructions" %>
+            </div>
+        <% end %>
+        Click the links below to:<br>
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
+</div>
