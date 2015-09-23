@@ -114,7 +114,7 @@
           <p class="form-select clearfix">
             <%= f.label :months, "Number of months:" %>
             <span>
-                <%= f.text_field :months %>
+                <%= f.select :months, options_for_select([["1","1"], ['2','2']]) %>
           </span>
           </p>
 

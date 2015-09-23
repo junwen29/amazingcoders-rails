@@ -4,6 +4,7 @@ class ChargesController < ApplicationController
   def new
     @payment = Payment.find(params[:payment_id])
     #total_cost = @payment.total_cost
+    @payment.update(expiry_date: @payment.start_date.months_since(@payment.months))
   end
 
   def create

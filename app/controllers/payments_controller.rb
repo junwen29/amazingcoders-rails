@@ -36,8 +36,8 @@ class PaymentsController < ApplicationController
     #for database
     @payment = Merchant.find(merchant_id).payments.new(payment_params)
 
-
-
+    @total_cost = calculate_price(@payment)
+      @payment.update(total_cost: @total_cost*@payment.months)
 
     # Update join table in addon_payment
     @add_on_payment = @payment.add_on_payments.build
@@ -70,19 +70,13 @@ class PaymentsController < ApplicationController
       render 'new'
     end
 
-    @total_cost = calculate_price(@payment)
-    @payment.update(total_cost: @total_cost*@payment.months)
-   # @payment.update(paid: false)
-    @payment.update(expiry_date: @payment.start_date.months_since(@payment.months))
-
-
   end
 
   def show
     @payment = Payment.find(params[:id])
-    #may have errors. should we update total cost only when showing?
-
+=begin
     @payment.update(paid: true)
+=end
   end
 
   def update

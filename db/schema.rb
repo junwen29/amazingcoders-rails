@@ -189,7 +189,9 @@ ActiveRecord::Schema.define(version: 20150922064319) do
   add_index "plans", ["payment_id"], name: "index_plans_on_payment_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "name",                   default: "", null: false
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "username"
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
