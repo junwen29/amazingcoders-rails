@@ -5,12 +5,14 @@ class ChargesController < ApplicationController
     @payment = Payment.find(params[:payment_id])
     #total_cost = @payment.total_cost
     @payment.update(expiry_date: @payment.start_date.months_since(@payment.months))
+
+
   end
 
   def create
     # Amount in cents
     @payment = Payment.find(params[:payment_id])
-
+  begin
     customer = Stripe::Customer.create(
         :email => 'example@stripe.com',
         :card  => params[:stripeToken]
@@ -23,11 +25,11 @@ class ChargesController < ApplicationController
         :currency    => 'sgd'
     )
 
-  rescue Stripe::CardError => e
-    flash[:error] = e.message
-    redirect_to charges_path
+    rescue Stripe::CardError => e
+      flash[:error] = e.message
+    end
 
-  redirect_to payment_path(@payment.id)
+    redirect_to payment_path(@payment.id)
   end
 
 
