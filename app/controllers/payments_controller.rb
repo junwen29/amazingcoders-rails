@@ -74,7 +74,7 @@ class PaymentsController < ApplicationController
 
   def show
     @payment = Payment.find(params[:id])
-    @payment.update(paid: true)
+
   end
 
   def update

@@ -27,8 +27,9 @@ class ChargesController < ApplicationController
 
     rescue Stripe::CardError => e
       flash[:error] = e.message
-    end
+  end
 
+    @payment.update(paid: true)
     redirect_to payment_path(@payment.id)
   end
 
