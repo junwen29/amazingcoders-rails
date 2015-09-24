@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   include User::Json
   include User::Authentication
 
+  has_many :devices, :dependent => :destroy
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

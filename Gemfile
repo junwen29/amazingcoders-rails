@@ -73,3 +73,6 @@ gem 'rollbar', '~> 1.4.4'
 # For PDF
 gem 'prawn'
 gem 'prawn-qrcode'
+
+# Google Cloud Messaging gem
+gem "gcm"

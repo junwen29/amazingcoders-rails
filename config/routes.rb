@@ -20,6 +20,16 @@ Rails.application.routes.draw do
       get 'venues' => "venues#index", :as => 'venues'
       get 'venue_show/:id' => "venues#show", :as => 'show'
 
+      ## to register device token
+      scope '/devices' do
+        post '' => "devices#create"
+        delete '' => "devices#destroy"
+      end
+
+      # TODO
+      # get '/notifications' => "activities#notifications"
+      # get '/notifications/count' => "activities#notification_count"
+
     end
   end
 
