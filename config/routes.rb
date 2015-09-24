@@ -9,21 +9,21 @@ Rails.application.routes.draw do
           # post 'registrations' => 'registrations#create', :as => 'register'
           post '/sign_in' => 'sessions#create'
           delete '/sign_out' => 'sessions#destroy'
-          post '/sign_up' => "registrations#create"
+          post '/sign_up' => 'registrations#create'
         end
       end
 
       get 'tasks' => 'tasks#index', :as => 'tasks'
 
       # deals api
-      get 'deals' => "deals#index", :as => 'index'
-      get 'venues' => "venues#index", :as => 'venues'
-      get 'venue_show/:id' => "venues#show", :as => 'show'
+      get 'deals' => 'deals#index', :as => 'index'
+      get 'venues' => 'venues#index', :as => 'venues'
+      get 'venue_show/:id' => 'venues#show', :as => 'show'
 
       ## to register device token
       scope '/devices' do
-        post '' => "devices#create"
-        delete '' => "devices#destroy"
+        post '' => 'devices#create'
+        delete '' => 'devices#destroy'
       end
 
       # TODO
