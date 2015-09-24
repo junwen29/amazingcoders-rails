@@ -1,4 +1,3 @@
-
 module Deal::Json
   extend ActiveSupport::Concern
 
@@ -15,6 +14,8 @@ module Deal::Json
       json.location self.location
       json.t_c self.t_c
       json.num_of_redeems self.num_of_redeems
+      json.start_date self.start_date
+      json.expiry_date self.expiry_date
     end
 
     def to_json(json, options = {})

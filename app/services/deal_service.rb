@@ -62,6 +62,13 @@ class DealService
       dealperiod
     end
 
+    def up_coming_deals
+      all_deals = Deal.all
+      valid_deals = all_deals.where('expiry_date >= ? AND active = true', DateTime.now)
+      future_date = Time.now + 7.days
+      valid_deals.where('start_date > ? AND start_date <= ?', DateTime.now, future_date)
+    end
+
     def get_active_deals
       all_deals = Deal.active
     end

@@ -29,12 +29,19 @@
 </p>
 
 <p>
+  <strong><font size = "4">Venue</font></strong><br>
+  <% @deal.venues.each do |venue| %>
+      <span><%= venue.name %></span>&nbsp;&nbsp;
+  <% end %>
+</p>
+
+<p>
   <strong><font size = "2">Terms and Condition</font></strong><br>
   <%= @deal.t_c %>
 </p>
 
 <p>
-  <strong><font size = "2">Can your code be redeemed?</font></strong><br>
+  <strong><font size = "2">Can your deal be redeemed?</font></strong><br>
   <% if @deal.redeemable %>
       Yes <br><br>
       <strong><font size = "2">How many times can this deal be redeemed per user?</font></strong><br>
@@ -50,7 +57,7 @@
 
 <p>
   <% if @deal.redeemable %>
-      To download your QRCodes, please press the following link <%= @pdf %><br>
+      To download your QRCodes, please go to the following link <%= @pdf %><br>
   <% end %>
 </p>
 

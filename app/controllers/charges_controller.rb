@@ -3,13 +3,16 @@ class ChargesController < ApplicationController
 
   def new
     @payment = Payment.find(params[:payment_id])
-    total_cost = @payment.total_cost
+    #total_cost = @payment.total_cost
+    @payment.update(expiry_date: @payment.start_date.months_since(@payment.months))
+
+
   end
 
   def create
     # Amount in cents
     @payment = Payment.find(params[:payment_id])
-
+  begin
     customer = Stripe::Customer.create(
         :email => 'example@stripe.com',
         :card  => params[:stripeToken]
@@ -19,14 +22,17 @@ class ChargesController < ApplicationController
         :customer    => customer.id,
         :amount      => @payment.total_cost.to_i*100,
         :description => 'Rails Stripe customer',
-        :currency    => 'usd'
+        :currency    => 'sgd'
     )
-
-  rescue Stripe::CardError => e
-    flash[:error] = e.message
-    redirect_to charges_path
-
-  redirect_to payment_path(@payment.id)
+      # Send out payment acknowledgement email
+      # PaymentMailer.subscription_email("valued merchant", @payment, MerchantService.get_email(merchant_id)).deliver
+    
+    rescue Stripe::CardError => e
+      flash[:error] = e.message
+  end
+    flash[:success] = "Plan upgrade completed!"
+    @payment.update(paid: true)
+    redirect_to payment_path(@payment.id)
   end
 
 
