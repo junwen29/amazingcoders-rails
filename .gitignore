@@ -20,6 +20,3 @@
 
 # Ignore picture upload
 /public/system
-
-# Temp ignore changes in development.rb to prevent others from committing this
-/config/environments/development.rb
