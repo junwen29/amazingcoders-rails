@@ -111,7 +111,6 @@ ActiveRecord::Schema.define(version: 20150923092439) do
     t.string   "title"
     t.boolean  "redeemable"
     t.boolean  "multiple_use"
-    t.string   "image"
     t.string   "type_of_deal"
     t.string   "description"
     t.date     "start_date"
@@ -119,7 +118,7 @@ ActiveRecord::Schema.define(version: 20150923092439) do
     t.string   "location"
     t.string   "t_c"
     t.integer  "num_of_redeems"
-    t.boolean  "pushed"
+    t.boolean  "pushed",             default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "merchant_id"
