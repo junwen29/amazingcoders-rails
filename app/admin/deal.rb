@@ -12,8 +12,10 @@ ActiveAdmin.register Deal do
   filter :multiple_use, label: 'Multiple Use'
   filter :redeemable, label: 'QR Code Redeemable'
   filter :pushed, label: 'Push Notification'
-  filter :created_at
-  filter :updated_at
+
+  action_item :only => :show do
+    link_to "Back", "/admin/deals"
+  end
 
   # INDEX
   index do
