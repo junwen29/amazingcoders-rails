@@ -19,7 +19,7 @@
       </p>
       <p class="form-text half clearfix">
         <%= f.label "Postal Code*" %>
-        <span><%= f.text_field :zipcode, :class => 'half' %></span>
+        <span><%= f.text_field :zipcode, :class => 'half', :placeholder => 'Only numbers' %></span>
       </p>
 
       <p class="form-select clearfix">
@@ -83,7 +83,7 @@
 
       <p class="form-text clearfix">
         <%= f.label "Contact Number*" %>
-        <span><%= f.text_field :phone %></span>
+        <span><%= f.text_field :phone, :placeholder => 'Only numbers, do not leave a space' %></span>
       </p>
 
       <p class="form-text clearfix">
