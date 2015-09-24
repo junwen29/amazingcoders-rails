@@ -16,9 +16,16 @@ Rails.application.routes.draw do
       get 'tasks' => 'tasks#index', :as => 'tasks'
 
       # deals api
-      get 'deals' => 'deals#index', :as => 'index'
-      get 'venues' => 'venues#index', :as => 'venues'
-      get 'venue_show/:id' => 'venues#show', :as => 'show'
+      scope '/deals' do
+        get '' => 'deals#index', :as => 'deals'
+        get '/:id' => 'deals#get_deal', :as => 'get_deal'
+      end
+
+      # venues api
+      scope '/venues' do
+        get '' => 'venues#index', :as => 'venues'
+        get '/:id' => 'venues#get_venue', :as => 'get_venue'
+      end
 
       ## to register device token
       scope '/devices' do
@@ -26,7 +33,7 @@ Rails.application.routes.draw do
         delete '' => 'devices#destroy'
       end
 
-      # TODO
+      # TODO notifications
       # get '/notifications' => "activities#notifications"
       # get '/notifications/count' => "activities#notification_count"
 

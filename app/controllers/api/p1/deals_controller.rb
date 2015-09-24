@@ -9,8 +9,8 @@ class Api::P1::DealsController < Api::P1::ApplicationController
     end
   end
 
-  def show
-    deal = Deal.find(params[:deal_id])
+  def get_deal
+    deal = Deal.find(params[:id])
     render_jbuilder do |json|
       deal.to_json json
     end

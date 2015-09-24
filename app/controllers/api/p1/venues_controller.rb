@@ -8,7 +8,7 @@ class Api::P1::VenuesController < Api::P1::ApplicationController
     end
   end
 
-  def show
+  def get_venue
     venue_to_show = Venue.find(params[:id])
     render_jbuilder do |json|
       venue_to_show.show_json_object json
