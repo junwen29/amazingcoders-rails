@@ -3,7 +3,8 @@ Rails.application.routes.draw do
 
 ################# Android
   namespace :api do
-    namespace :p1 do
+    namespace :p1, :constraints => {
+                     :user_id => /\d+/, :venue_id => /\d+/, :dish_id => /\d+/, :box_id => /\d+/, :food_id => /\d+/ } do
       devise_scope :user do
         scope '/accounts' do
           # post 'registrations' => 'registrations#create', :as => 'register'
@@ -18,6 +19,15 @@ Rails.application.routes.draw do
       # deals api
       get 'deals' => "deals#index", :as => 'index'
 
+      ## to register device token
+      scope '/devices' do
+        post '' => "devices#create"
+        delete '' => "devices#destroy"
+      end
+
+      # TODO
+      # get '/notifications' => "activities#notifications"
+      # get '/notifications/count' => "activities#notification_count"
 
     end
   end
