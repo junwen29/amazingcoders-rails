@@ -2,7 +2,7 @@ ActiveAdmin.register AddOn do
   belongs_to :plan
 
   # Allow edit
-  permit_params :name, :cost, :description
+  permit_params :name, :cost, :description, :addon_type
 
   remove_filter :payments, :add_on_payments
 
@@ -20,6 +20,7 @@ ActiveAdmin.register AddOn do
     selectable_column
     column :id
     column "Name", :name
+    column "Type", :addon_type
     column "Description", :description
     column "Cost", :cost do |plan|
       number_to_currency plan.cost
@@ -40,6 +41,9 @@ ActiveAdmin.register AddOn do
         row :cost do |add_on|
           number_to_currency add_on.cost
         end
+        row "Type" do
+          f.addon_type
+        end
         row :description
         row :created_at
         row :updated_at
@@ -52,7 +56,7 @@ ActiveAdmin.register AddOn do
   form do |f|
     f.semantic_errors
     f.inputs "Add On Information" do
-      f.input :addon_type, as: :select, collection: ['Notification','Statistics','Trends']
+      f.input :addon_type, as: :select, collection: ["Notification","Statistics","Trends"]
       f.input :name
       f.input :cost, as: :string, :hint => "No need to specify currency - defaulted to SGD $. Input to 2 decimal places. e.g. 10.00"
       f.input :description
