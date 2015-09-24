@@ -20,26 +20,25 @@ class PaymentsController < ApplicationController
 =end
 
   def index
-    @payments = Payment.where(merchant_id: merchant_id, paid: true)
-    @current_payment = Payment.where("merchant_id = ? AND paid = ? AND start_date <= ? AND expiry_date >= ?", merchant_id, true, Date.today, Date.today).last
+    @payments = Payment.all
 
-=begin
     @payments.each do |p|
       if !p.paid
         p.destroy
       end
     end
-=end
+
+    @payments = Payment.where(merchant_id: merchant_id, paid: true)
+    @current_payment = Payment.where("merchant_id = ? AND paid = ? AND start_date <= ? AND expiry_date >= ?", merchant_id, true, Date.today, Date.today).last
 
   end
 
   def create
     #for database
     @payment = Merchant.find(merchant_id).payments.new(payment_params)
-    #@payment = Payment.new(payment_params)
+
     @total_cost = calculate_price(@payment)
-    @payment.update(total_cost: @total_cost)
-    @payment.update(paid: false)
+      @payment.update(total_cost: @total_cost*@payment.months)
 
     # Update join table in addon_payment
     @add_on_payment = @payment.add_on_payments.build
@@ -66,16 +65,18 @@ class PaymentsController < ApplicationController
     else
       flash[:error] = "Failed to upgrade plan"
       @plan = Plan.all
+      @plan1 = Plan.find(1)
       @addon1 = AddOn.find(1)
       @addon2 = AddOn.find(2)
       @addon3 = AddOn.find(3)
       render 'new'
     end
+
   end
 
   def show
     @payment = Payment.find(params[:id])
-    @payment.update(paid: true)
+
   end
 
   def update
@@ -120,10 +121,10 @@ class PaymentsController < ApplicationController
       total_cost = total_cost + add_on1_cost
     end
     if payment.add_on2
-      total_cost = total_cost + add_on1_cost
+      total_cost = total_cost + add_on2_cost
     end
     if payment.add_on3
-      total_cost = total_cost + add_on1_cost
+      total_cost = total_cost + add_on3_cost
     end
 
     total_cost
@@ -132,7 +133,7 @@ class PaymentsController < ApplicationController
 
   private
   def payment_params
-    params.require(:payment).permit(:start_date, :expiry_date, :total_cost, :add_on1, :add_on2, :add_on3, :plan1, :paid)
+    params.require(:payment).permit(:start_date, :expiry_date, :total_cost, :add_on1, :add_on2, :add_on3, :plan1, :paid, :months)
   end
 
 

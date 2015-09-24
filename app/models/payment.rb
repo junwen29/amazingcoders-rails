@@ -20,28 +20,29 @@ class Payment < ActiveRecord::Base
   validate :ensure_addon3_checked
 
   validates(:start_date, presence: true)
+  validates(:months, presence: true)
   validate :start_date_not_past
   validate :check_overlapping_plans
 
   # Process Validation Methods
   def ensure_plan_checked
-    errors.add(:base, 'Please ensure you have selected at least 1 premium plan') if ((plan1 == nil) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'Please ensure that you have selected at least 1 premium plan') if ((plan1 != true) rescue ArgumentError == ArgumentError)
   end
 
   def ensure_addon1_checked
-    errors.add(:base, 'Please ensure you selected if you want Push Notification Addon') if ((add_on1 == nil) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'Please ensure that you selected if you want Push Notification Addon') if ((plan1)&&(add_on1 == nil) rescue ArgumentError == ArgumentError)
   end
 
   def ensure_addon2_checked
-    errors.add(:base, 'Please ensure you selected if you want Deal Statistics Addon') if ((add_on2 == nil) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'Please ensure that you selected if you want Deal Statistics Addon') if ((plan1)&&(add_on2 == nil) rescue ArgumentError == ArgumentError)
   end
 
   def ensure_addon3_checked
-    errors.add(:base, 'Please ensure you selected if you want Aggregate Trends Addon') if ((add_on3 == nil) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'Please ensure that you selected if you want Aggregate Trends Addon') if ((plan1)&&(add_on3 == nil) rescue ArgumentError == ArgumentError)
   end
 
   def start_date_not_past
-    errors.add(:base, 'Start date cannot be before today') if ((start_date < Date.today) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'Start date must be start from today onwards') if ((start_date < Date.today) rescue ArgumentError == ArgumentError)
   end
 
   def check_overlapping_plans
