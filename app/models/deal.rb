@@ -65,7 +65,7 @@ class Deal < ActiveRecord::Base
   end
 
   def check_expiry_date
-    errors.add(:expiry_date, 'has to be after start date') if ((expiry_date <= start_date) rescue ArgumentError == ArgumentError)
+    errors.add(:expiry_date, 'cannot be before start date') if ((expiry_date < start_date) rescue ArgumentError == ArgumentError)
   end
 
   def check_overlapping_deals
