@@ -97,7 +97,7 @@ ActiveAdmin.register Deal do
   form do |f|
     f.inputs "Deal Info" do
       f.input :title
-      f.input :type_of_deal
+      f.input :type_of_deal, as: :select, collection: ["Discount","Freebies"]
       f.input :description
       f.input :t_c, label: "Terms and Conditions"
     end
