@@ -11,6 +11,7 @@
           <a href="<%= new_payment_path %>">Upgrade your plan</a> to unlock more awesome features from Burpple!
         </div>
     <% else %>
+        <div class="col-lg-6">
         <p>
           <strong>Plan: </strong>
           <% if (@current_payment.plan1) %>
@@ -29,6 +30,11 @@
               <span class="label label-warning">Aggregate Trends</span>
           <% end %>
         </p>
+        </div><!-- col-lg-6 -->
+
+        <div class="col-lg-6">
+          <p><strong>Expires on: </strong> <%= @current_payment.expiry_date.strftime("%d/%m/%Y") %></p>
+        </div>
     <% end %>
   </div>
 </div>
