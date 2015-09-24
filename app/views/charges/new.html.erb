@@ -56,13 +56,16 @@
         </h3>
 
 
+    <p>Please check that the details are correct before proceeding with payment.</p>
         <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                 data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
                 data-description="Key in your information"
                 data-amount= <%= @payment.total_cost*100 %>
-                data-locale="auto"></script> Please check that the details are correct before proceeding to payment.
-    <% end %>
+                data-locale="auto"></script>
+
     <%= link_to 'Back', new_payment_path, class: "btn btn-big btn-default" %>
+    <% end %>
+
 
   </div><!-- /content -->
 </div><!-- /contentWrapper -->

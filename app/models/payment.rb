@@ -27,19 +27,19 @@ class Payment < ActiveRecord::Base
 
   # Process Validation Methods
   def ensure_plan_checked
-    errors.add(:base, 'Please ensure that you have selected at least 1 premium plan') if ((plan1 == nil) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'Please ensure that you have selected at least 1 premium plan') if ((plan1 != true) rescue ArgumentError == ArgumentError)
   end
 
   def ensure_addon1_checked
-    errors.add(:base, 'Please ensure that you selected if you want Push Notification Addon') if ((add_on1 == nil) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'Please ensure that you selected if you want Push Notification Addon') if ((plan1)&&(add_on1 == nil) rescue ArgumentError == ArgumentError)
   end
 
   def ensure_addon2_checked
-    errors.add(:base, 'Please ensure that you selected if you want Deal Statistics Addon') if ((add_on2 == nil) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'Please ensure that you selected if you want Deal Statistics Addon') if ((plan1)&&(add_on2 == nil) rescue ArgumentError == ArgumentError)
   end
 
   def ensure_addon3_checked
-    errors.add(:base, 'Please ensure that you selected if you want Aggregate Trends Addon') if ((add_on3 == nil) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'Please ensure that you selected if you want Aggregate Trends Addon') if ((plan1)&&(add_on3 == nil) rescue ArgumentError == ArgumentError)
   end
 
   def start_date_not_past
