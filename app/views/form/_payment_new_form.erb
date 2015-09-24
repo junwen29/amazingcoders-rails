@@ -48,15 +48,20 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4>Choose Plan upgrade</h4>
+    <h4>Choose Upgrades</h4>
   </div>
   <div class="panel-body">
     <div class="content-form">
       <%= form_for @payment, url: payments_path do |f| %>
           <div id="plan1">
+            <p class="form-select half" style="margin-top: 0px;">
+            <%= f.label :plan1, "Basic Plan", :value => false %>
+            <%= f.radio_button :plan1, false, checked: true%>
+          </p>
+
             <p class="form-select" style="margin-top: 0px;">
-              <%= f.label :plan1, "Premium Deals Services", :value => true %>
-              <%= f.radio_button :plan1, true%>
+              <%= f.label :plan1, "Deals Listing Premium Services", :value => true %>
+              <%= f.radio_button :plan1, true, checked: false%>
             </p>
 
             <div id="plan1_true">

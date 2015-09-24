@@ -19,14 +19,18 @@
         </p>
         <p>
           <strong>Add-Ons: </strong>
-          <% if (@current_payment.add_on1) %>
-              <span class="label label-info">Push Notification</span>
-          <% end %>
-          <% if (@current_payment.add_on2) %>
-              <span class="label label-success">Deals Statistics</span>
-          <% end %>
-          <% if (@current_payment.add_on3) %>
-              <span class="label label-warning">Aggregate Trends</span>
+          <% if !(@current_payment.add_on1) && !(@current_payment.add_on2) && !(@current_payment.add_on3)%>
+              <span class="label label-inverse">None</span>
+          <% else %>
+              <% if (@current_payment.add_on1) %>
+                  <span class="label label-info">Push Notification</span>
+              <% end %>
+              <% if (@current_payment.add_on2) %>
+                  <span class="label label-success">Deals Statistics</span>
+              <% end %>
+              <% if (@current_payment.add_on3) %>
+                  <span class="label label-warning">Aggregate Trends</span>
+              <% end %>
           <% end %>
         </p>
 
