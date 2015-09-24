@@ -56,19 +56,20 @@
       <%= form_for @payment, url: payments_path do |f| %>
           <div id="plan1">
             <p class="form-select half" style="margin-top: 0px;">
-            <%= f.label :plan1, "Basic Services", :value => false %>
-            <%= f.radio_button :plan1, false, checked: true%>
-          </p>
+              <%= f.label :plan1, "Basic Services", :value => false %>
+              <%= f.radio_button :plan1, false, checked: true%>
+            </p>
 
             <p class="form-select" style="margin-top: 0px;">
-              <%= f.label :plan1, "Deals Listing Premium Services", :value => true %>
-              <%= f.radio_button :plan1, true, checked: false%>
+            
+              <%= f.label :plan1, "Premium Deals Services ", :value => true %>
+              <%= f.radio_button :plan1, true%>
             </p>
 
             <div id="plan1_true">
               <!-- show list of addons -->
               <p class="form-textarea clearfix">
-                <%= f.label :add_on1, "Include Push Notification Add-on" %>
+                <%= f.label :add_on1, "Include Push Notification Add-on (#{number_to_currency @addon1.cost})" %>
                 <em><%= @addon1.description %></em>
               </p>
               <p class="form-select half" style="margin-top: 0px;">
@@ -81,7 +82,7 @@
               </p>
 
               <p class="form-textarea clearfix">
-                <%= f.label :add_on2, 'Include Deals Statistics Add-on' %>
+                <%= f.label :add_on2, "Include Deals Statistics Add-on (#{number_to_currency @addon2.cost})" %>
                 <em><%= @addon2.description %></em>
               </p>
               <p class="form-select half" style="margin-top: 0px;">
@@ -94,7 +95,7 @@
               </p>
 
               <p class="form-textarea clearfix">
-                <%= f.label :add_on3, 'Include Aggregate Trends Add-on' %>
+                <%= f.label :add_on3, "Include Aggregate Trends Add-on (#{number_to_currency @addon3.cost})" %>
                 <em><%= @addon3.description %></em>
               </p>
               <p class="form-select half" style="margin-top: 0px;">

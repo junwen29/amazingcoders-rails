@@ -23,7 +23,6 @@ class Payment < ActiveRecord::Base
   validates(:months, presence: true)
   validate :start_date_not_past
   validate :check_overlapping_plans
-  validate :months_is_integer
 
   # Process Validation Methods
   def ensure_plan_checked
@@ -48,10 +47,6 @@ class Payment < ActiveRecord::Base
 
   def check_overlapping_plans
     errors.add(:base, 'You already have a plan in this period') if ((overlapping_payment) rescue ArgumentError == ArgumentError)
-  end
-
-  def months_is_integer
-    errors.add(:base, 'Please ensure that you have typed in a positive digit for Number of Months') if ((months.to_int == 0) rescue ArgumentError == ArgumentError)
   end
 
   private
