@@ -6,8 +6,12 @@ ActiveAdmin.register AddOn do
 
   remove_filter :payments, :add_on_payments
 
-  action_item :back do
-    link_to "Back", "/admin/plans"
+  action_item :only => :index do
+    link_to "Back to Plans", "/admin/plans"
+  end
+
+  action_item :only => :show do
+    link_to "Back", admin_plan_add_ons_path
   end
 
 

@@ -7,6 +7,10 @@ ActiveAdmin.register Payment do
   # preserve_default_filters!
   remove_filter :plan1, :add_on1, :add_on2, :add_on3, :add_on_payments, :plan_payments, :charge
 
+  action_item :only => :show do
+    link_to "Back", "/admin/payments"
+  end
+
 
   # filter :merchant, :collection => proc {(Merchant.all).map{|m| [m.email, m.id]}}
   #filter :plan

@@ -9,6 +9,10 @@ ActiveAdmin.register Venue do
   filter :state
   filter :country
 
+  action_item :only => :show do
+    link_to "Back", "/admin/venues"
+  end
+
   index do
     selectable_column
     column "Deal Id", :id
