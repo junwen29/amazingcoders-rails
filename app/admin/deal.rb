@@ -32,8 +32,6 @@ ActiveAdmin.register Deal do
     column "Multiple Use", :multiple_use
     column "QR Code", :redeemable
     column "Push Notification", :pushed
-    column "Created At", :created_at
-    column "Updated At", :updated_at
     actions
   end
 
@@ -53,20 +51,28 @@ ActiveAdmin.register Deal do
         row :title
         row :type_of_deal
         row :description
-        row :t_c, label: "Terms and Conditions"
+        row "Terms and Conditions" do
+          f.t_c
+        end
       end
     end
 
     panel "Deal Schedule" do
       attributes_table_for f do
-        row :start_date
-        row :expiry_date
+        row "Active Date" do
+          f.start_date
+        end
+        row "Expiry Date" do
+          f.expiry_date
+        end
       end
     end
 
     panel "Deal Redemption" do
       attributes_table_for f do
-        row :num_of_redeems, label: "Number of Redeems"
+        row "Number of Redeems" do
+          f.num_of_redeems
+        end
         row "Multiple Use?" do
           f.multiple_use ? status_tag( "yes", :ok ) : status_tag( "no" )
         end
@@ -78,7 +84,7 @@ ActiveAdmin.register Deal do
         row "QR Code Redeemable?" do
           f.redeemable ? status_tag( "yes", :ok ) : status_tag( "no" )
         end
-        row "Push Notification to Wishlist?" do
+        row "Push Notification?" do
           f.pushed ? status_tag( "yes", :ok ) : status_tag( "no" )
         end
       end
