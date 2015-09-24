@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
       # deals api
       get 'deals' => "deals#index", :as => 'index'
+      get '/deals/:deal_id' => 'deals#show', :as => 'show'
 
 
     end
