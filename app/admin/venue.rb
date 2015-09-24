@@ -1,6 +1,14 @@
 ActiveAdmin.register Venue do
   menu :parent => "Merchant", :priority => 2
 
+  filter :merchant
+  filter :deals
+  filter :name
+  filter :neighbourhood
+  filter :city
+  filter :state
+  filter :country
+
   index do
     selectable_column
     column "Deal Id", :id
@@ -9,14 +17,9 @@ ActiveAdmin.register Venue do
     end
     column "Venue", :name
     column "Information", :bio
-    column "Neighbourhood", :neighbourhood
-    column "Street", :street
-    column "Unit No", :address_2
-    column "Zipcode", :zipcode
-    column "Country", :country
     column "Contact Number", :phone
-    column "Created At", :created_at
-    column "Updated At", :updated_at
+    column "Neighbourhood", :neighbourhood
+    column "Country", :country
     actions
   end
 
