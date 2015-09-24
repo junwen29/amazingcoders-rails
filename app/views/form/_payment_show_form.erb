@@ -7,14 +7,20 @@
 
 <p>
   Add Ons:
-  <% if (@payment.add_on1) %>
-      <span class="label label-info">Push Notification</span>
-  <% end %>
-  <% if (@payment.add_on2) %>
-      <span class="label label-success">Deal Statistics</span>
-  <% end %>
-  <% if (@payment.add_on3) %>
-      <span class="label label-warning">Aggregate Trends</span>
+
+  <% if !(@payment.add_on1) && !(@payment.add_on2) && !(@payment.add_on3)%>
+      <span class="label label-inverse">None</span>
+
+  <% else %>
+      <% if (@payment.add_on1) %>
+          <span class="label label-info">Push Notification</span>
+      <% end %>
+      <% if (@payment.add_on2) %>
+          <span class="label label-success">Deal Statistics</span>
+      <% end %>
+      <% if (@payment.add_on3) %>
+          <span class="label label-warning">Aggregate Trends</span>
+      <% end %>
   <% end %>
 </p>
 
