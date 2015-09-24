@@ -61,7 +61,7 @@ class Deal < ActiveRecord::Base
   end
 
   def future_date
-    errors.add(:start_date, 'Start date must be at least one day in advance') if ((start_date <= Date.today) rescue ArgumentError == ArgumentError)
+    errors.add(:start_date, 'must be at least one day in advance') if ((start_date <= Date.today) rescue ArgumentError == ArgumentError)
   end
 
   def check_expiry_date
@@ -69,7 +69,7 @@ class Deal < ActiveRecord::Base
   end
 
   def check_overlapping_deals
-    errors.add(:start_date, 'You are not able to list any more deals within this period as during which you will
+    errors.add('You are not able to list any more deals within this period as during which you will
 have more than 5 active deals then.') if ((overlapping_deals) rescue ArgumentError == ArgumentError)
   end
 
