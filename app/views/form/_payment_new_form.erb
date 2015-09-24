@@ -62,7 +62,7 @@
 
             <p class="form-select" style="margin-top: 0px;">
             
-              <%= f.label :plan1, "Premium Deals Services ", :value => true %>
+              <%= f.label :plan1, "Premium Deals Services (#{number_to_currency @plan1.cost})", :value => true %>
               <%= f.radio_button :plan1, true%>
             </p>
 
