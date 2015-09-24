@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150922064319) do
+ActiveRecord::Schema.define(version: 20150923092439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,6 +132,14 @@ ActiveRecord::Schema.define(version: 20150922064319) do
 
   add_index "deals", ["merchant_id"], name: "index_deals_on_merchant_id", using: :btree
 
+  create_table "devices", force: true do |t|
+    t.integer  "user_id"
+    t.string   "device_type"
+    t.string   "token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "merchants", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -235,5 +243,15 @@ ActiveRecord::Schema.define(version: 20150922064319) do
   end
 
   add_index "venues", ["merchant_id"], name: "index_venues_on_merchant_id", using: :btree
+
+  create_table "wishlists", force: true do |t|
+    t.integer  "venue_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "wishlists", ["user_id"], name: "index_wishlists_on_user_id", using: :btree
+  add_index "wishlists", ["venue_id"], name: "index_wishlists_on_venue_id", using: :btree
 
 end
