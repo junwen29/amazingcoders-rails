@@ -5,33 +5,39 @@
     </h4>
   </div>
   <div class="panel-body">
-    <% if (!@current_payment) %>
-        <div class="alert alert-danger" role="alert">
-          Oops, you have not subscribed to any premium service at the moment.
-          <a href="<%= new_payment_path %>">Upgrade your plan</a> to unlock more awesome features from Burpple!
+      <% if (!@current_payment) %>
+          <div class="alert alert-danger" role="alert">
+            Oops, you have not subscribed to any premium service at the moment.
+            <a href="<%= new_payment_path %>">Upgrade your plan</a> to unlock more awesome features from Burpple!
+          </div>
+      <% else %>
+        <div class="col-lg-6">
+          <p>
+            <strong>Plan: </strong>
+            <% if (@current_payment.plan1) %>
+                <span class="label label-default">Deals Listing Service</span>
+            <% end %>
+          </p>
+          <p>
+            <strong>Add-Ons: </strong>
+            <% if (@current_payment.add_on1) %>
+                <span class="label label-info">Push Notification</span>
+            <% end %>
+            <% if (@current_payment.add_on2) %>
+                <span class="label label-success">Deals Statistics</span>
+            <% end %>
+            <% if (@current_payment.add_on3) %>
+                <span class="label label-warning">Aggregate Trends</span>
+            <% end %>
+          </p>
+        </div><!-- col-lg-6 -->
+
+        <div class="col-lg-6">
+            <p><strong>Expires on: </strong> <%= @current_payment.expiry_date.strftime("%d/%m/%Y") %></p>
         </div>
-    <% else %>
-        <p>
-          <strong>Plan: </strong>
-          <% if (@current_payment.plan1) %>
-              <span class="label label-default">Deals Listing Service</span>
-          <% end %>
-        </p>
-        <p>
-          <strong>Add-Ons: </strong>
-          <% if (@current_payment.add_on1) %>
-              <span class="label label-info">Push Notification</span>
-          <% end %>
-          <% if (@current_payment.add_on2) %>
-              <span class="label label-success">Deals Statistics</span>
-          <% end %>
-          <% if (@current_payment.add_on3) %>
-              <span class="label label-warning">Aggregate Trends</span>
-          <% end %>
-        </p>
-    <% end %>
-  </div>
-</div>
+      <% end %>
+  </div><!-- panel-body -->
+</div><!-- panel panel-default -->
 
 <!-- Content Body -->
 <div class="panel panel-default">
