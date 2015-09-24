@@ -111,7 +111,6 @@ ActiveRecord::Schema.define(version: 20150923092439) do
     t.string   "title"
     t.boolean  "redeemable"
     t.boolean  "multiple_use"
-    t.string   "image"
     t.string   "type_of_deal"
     t.string   "description"
     t.date     "start_date"
@@ -119,7 +118,7 @@ ActiveRecord::Schema.define(version: 20150923092439) do
     t.string   "location"
     t.string   "t_c"
     t.integer  "num_of_redeems"
-    t.boolean  "pushed"
+    t.boolean  "pushed",             default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "merchant_id"
@@ -223,9 +222,6 @@ ActiveRecord::Schema.define(version: 20150923092439) do
     t.string   "name"
     t.string   "street"
     t.string   "zipcode"
-    t.string   "city"
-    t.string   "state"
-    t.string   "country"
     t.string   "neighbourhood"
     t.text     "bio"
     t.string   "phone"
@@ -240,6 +236,9 @@ ActiveRecord::Schema.define(version: 20150923092439) do
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+    t.string   "city"
+    t.string   "country"
+    t.string   "state"
   end
 
   add_index "venues", ["merchant_id"], name: "index_venues_on_merchant_id", using: :btree

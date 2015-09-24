@@ -3,9 +3,6 @@
     <th>Photo</th>
     <th>Name of Restaurant</th>
     <th>Street</th>
-    <th>City</th>
-    <th>State</th>
-    <th>Country</th>
     <th>Description</th>
     <th colspan="3"></th>
   </tr>
@@ -15,9 +12,6 @@
         <td><%= image_tag venue.photo.url, :size => "150x150"%></td>
         <td><%= venue.name %></td>
         <td><%= venue.street %></td>
-        <td><%= venue.city %></td>
-        <td><%= venue.state %></td>
-        <td><%= venue.country %></td>
         <td><%= venue.bio %></td>
         <td><%= link_to 'Show', venue_path(venue), class: "btn btn-xs btn-default" %></td>
         <td><%= link_to 'Edit', edit_venue_path(venue), class: "btn btn-xs btn-default" %></td>
