@@ -22,7 +22,7 @@
           <% if deal.start_date.today? || deal.expiry_date.today? || (deal.start_date.past? && deal.expiry_date.future?) || (deal.expiry_date.future? && deal.active) %>
               <tr>
                 <td><%= deal.title %></td>
-                <td><%= image_tag deal.image.url, :size => "150x150" %></td>
+                <td><%= image_tag deal.image.url, :size => "100x100" %></td>
                 <td><%= deal.description %></td>
                 <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
                 <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
@@ -72,7 +72,7 @@
           <% if !deal.active %>
               <tr>
                 <td><%= deal.title %></td>
-                <td><%= image_tag deal.image.url, :size => "150x150" %></td>
+                <td><%= image_tag deal.image.url, :size => "100x100" %></td>
                 <td><%= deal.description %></td>
                 <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
                 <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
@@ -120,7 +120,7 @@
           <% if deal.expiry_date.past? && deal.active %>
               <tr>
                 <td><%= deal.title %></td>
-                <td><%= image_tag deal.image.url, :size => "150x150" %></td>
+                <td><%= image_tag deal.image.url, :size => "100x100" %></td>
                 <td><%= deal.description %></td>
                 <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
                 <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
