@@ -1,9 +1,27 @@
 ActiveAdmin.register Payment do
   # actions :all, except: [:edit] # forbid edit to payment information
+  config.clear_action_items!
+  
   controller do
     def scoped_collection
       Payment.where(paid: true)
     end
+
+    def update
+      @payment = Payment.find(params[:id])
+      if @payment.update_columns(payment_params)
+        flash[:success] = "Payment successfully updated!"
+        redirect_to admin_payment_path
+      else
+        flash[:error] = "Failed to update payment!"
+      end
+    end
+
+    private
+    def payment_params
+      params.require(:payment).permit(:start_date, :expiry_date, :total_cost, :add_on1, :add_on2, :add_on3, :plan1, :paid, :months)
+    end
+
   end
   
   scope :active
@@ -113,7 +131,7 @@ ActiveAdmin.register Payment do
     active_admin_comments # Add this line for comment block
   end
 
-  # CREATE NEW
+  # EDIT
   form do |f|
     f.semantic_errors
     f.inputs "Payment Details" do
@@ -123,8 +141,6 @@ ActiveAdmin.register Payment do
       f.input :add_on2, label: "Deal Statistics Add On"
       f.input :add_on3, label: "Aggregate Trends Add On"
       f.input :total_cost, as: :string, :hint => "No need to specify currency - defaulted to SGD $. Input to 2 decimal places. e.g. 10.00"
-      f.input :start_date
-      f.input :expiry_date
     end
     f.actions
   end
