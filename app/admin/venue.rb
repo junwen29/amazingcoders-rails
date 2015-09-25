@@ -4,7 +4,6 @@ ActiveAdmin.register Venue do
   filter :merchant
   filter :deals
   filter :name
-  filter :neighbourhood
   filter :city
   filter :state
   filter :country
@@ -22,7 +21,7 @@ ActiveAdmin.register Venue do
     column "Venue", :name
     column "Information", :bio
     column "Contact Number", :phone
-    column "Neighbourhood", :neighbourhood
+    column "Street", :street
     column "Country", :country
     actions
   end
