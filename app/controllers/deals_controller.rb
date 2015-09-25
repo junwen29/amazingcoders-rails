@@ -26,7 +26,7 @@ class DealsController < ApplicationController
   end
 
   def index
-      @deals = MerchantService.get_all_deals(merchant_id)
+    @deals = MerchantService.get_all_deals(merchant_id)
   end
 
   def create
@@ -118,7 +118,7 @@ class DealsController < ApplicationController
     if num_active_deals >= 5
       flash[:error] = "As you currently have more than 5 active deals this process can not be processed!"
     elsif
-      @deal.update_attribute(:active, true)
+    @deal.update_attribute(:active, true)
       flash[:success] = "Deal has been successfully activated! If you require to edit or delete the deal please email Burpple for admin help."
     end
     redirect_to deals_path
