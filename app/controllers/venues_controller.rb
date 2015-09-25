@@ -66,9 +66,14 @@ class VenuesController < ApplicationController
   # DELETE /venues/1
   # DELETE /venues/1.json
   def destroy
-    @venue.destroy
-    flash[:success] = "Deal deleted!"
-    redirect_to venues_path
+    if VenueService.allow_delete(@venue.id)
+      @venue.destroy
+      flash[:success] = "Venue deleted!"
+      redirect_to venues_path
+    else
+      flash[:error] = "Venue cannot be deleted as there is a deal that is only associated with this venue. Please delete the deal first or contact Burpple admin for help"
+      redirect_to venues_path
+    end
   end
 
   private
@@ -84,8 +89,7 @@ class VenuesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def venue_params
-    params.require(:venue).permit(:name, :street, :zipcode, :photo,
-                                  :city, :city, :state, :country, :neighbourhood, :bio,
+    params.require(:venue).permit(:name, :street, :zipcode, :photo, :neighbourhood, :bio,
                                   :phone, :address_2, :contact_number)
   end
 end

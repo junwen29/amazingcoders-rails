@@ -26,6 +26,7 @@ module AmazingcodersRails
     
     # set default time zone
     config.time_zone = 'Singapore'
+    config.active_record.default_timezone = :Singapore
 
     # load api helpers
     config.autoload_paths += Dir["#{config.root}/lib"]

@@ -63,3 +63,7 @@
     <%= link_to "Download QRcodes for your deal here", deal_path(@deal, format: "pdf") %>
   <% end %>
 </p>
+
+<% if !@deal.active %>
+    <%= link_to 'Edit Deal', edit_deal_path, class: "btn btn-xs btn-default" %><br><br>
+<% end %>
