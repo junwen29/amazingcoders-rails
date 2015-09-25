@@ -1,10 +1,26 @@
 class Api::P1::DealsController < Api::P1::ApplicationController
 
   def index
-    # TODO change to active deals only
-    deals = Deal.all
+    # get deals according to params {active, freebies, discount, popular}
+
+    # params[:popular] = request.params[:popular]
+    # params[:type]  = request.params[:type]
+
+    case params[:type]
+      when 'popular'
+      deals = DealService.get_popular_deals
+
+      when 'discount'
+      deals = DealService.get_active_deals_by_type('discount')
+
+      when 'freebies'
+        deals = DealService.get_active_deals_by_type('freebie')
+
+      else
+        deals = DealService.get_active_deals
+    end
+
     render_jbuilders(deals) do |json,deal|
-      # json.(deal, :id, :title)
       deal.to_json json
     end
   end
@@ -15,4 +31,6 @@ class Api::P1::DealsController < Api::P1::ApplicationController
       deal.to_json json
     end
   end
+
+
 end
