@@ -14,7 +14,7 @@ class Api::P1::DealsController < Api::P1::ApplicationController
       deals = DealService.get_active_deals_by_type('discount')
 
       when 'freebies'
-        deals = DealService.get_active_deals_by_type('freebie')
+        deals = DealService.get_active_deals_by_type('freebies')
 
       else
         deals = DealService.get_active_deals
