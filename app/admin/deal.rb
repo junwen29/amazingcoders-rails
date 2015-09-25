@@ -7,13 +7,15 @@ ActiveAdmin.register Deal do
   filter :venues, label: 'Venues',:collection => proc {(Venue.all).map{|v| [v.name, v.id]}}
   filter :type_of_deal
   filter :description
-  filter :start_date, label: 'Active Date'
-  filter :expiry_date
+  filter :start_date, label: 'Start Date'
+  filter :expiry_date, label: 'Expiry Date'
   filter :multiple_use, label: 'Multiple Use'
   filter :redeemable, label: 'QR Code Redeemable'
-  filter :pushed, label: 'Push Notification'
-  filter :created_at
-  filter :updated_at
+  filter :pushed, label: 'Notification Pushed'
+
+  action_item :only => :show do
+    link_to "Back", "/admin/deals"
+  end
 
   # INDEX
   index do
@@ -27,13 +29,11 @@ ActiveAdmin.register Deal do
     column "Venues" do |deal|
       deal.venues.map{|v| v.name }.join(", ").html_safe
     end
-    column "Active Date", :start_date
+    column "Start Date", :start_date
     column "Expiry Date", :expiry_date
     column "Multiple Use", :multiple_use
     column "QR Code", :redeemable
-    column "Push Notification", :pushed
-    column "Created At", :created_at
-    column "Updated At", :updated_at
+    column "Notification pushed", :pushed
     actions
   end
 
@@ -53,20 +53,39 @@ ActiveAdmin.register Deal do
         row :title
         row :type_of_deal
         row :description
-        row :t_c, label: "Terms and Conditions"
+        row "Terms and Conditions" do
+          f.t_c
+        end
       end
     end
 
     panel "Deal Schedule" do
       attributes_table_for f do
-        row :start_date
-        row :expiry_date
+        row "Start Date" do
+          f.start_date
+        end
+        row "Expiry Date" do
+          f.expiry_date
+        end
+      end
+    end
+
+    panel "Deal Status" do
+      attributes_table_for f do
+        row "Deal Activated?" do
+          f.active ? status_tag( "yes", :ok ) : status_tag( "no" )
+        end
+        row "Notification Pushed?" do
+          f.pushed ? status_tag( "yes", :ok ) : status_tag( "no" )
+        end
       end
     end
 
     panel "Deal Redemption" do
       attributes_table_for f do
-        row :num_of_redeems, label: "Number of Redeems"
+        row "Number of Redeems" do
+          f.num_of_redeems
+        end
         row "Multiple Use?" do
           f.multiple_use ? status_tag( "yes", :ok ) : status_tag( "no" )
         end
@@ -78,9 +97,6 @@ ActiveAdmin.register Deal do
         row "QR Code Redeemable?" do
           f.redeemable ? status_tag( "yes", :ok ) : status_tag( "no" )
         end
-        row "Push Notification to Wishlist?" do
-          f.pushed ? status_tag( "yes", :ok ) : status_tag( "no" )
-        end
       end
     end
   end
@@ -89,14 +105,19 @@ ActiveAdmin.register Deal do
   form do |f|
     f.inputs "Deal Info" do
       f.input :title
-      f.input :type_of_deal
+      f.input :type_of_deal, as: :select, collection: ["Discount","Freebies"]
       f.input :description
       f.input :t_c, label: "Terms and Conditions"
     end
 
     f.inputs "Deal Schedule" do
-      f.input :start_date, label: "Active Date"
+      f.input :start_date, label: "Start Date"
       f.input :expiry_date, label: "Expiry Date"
+    end
+
+    f.inputs "Deal Status" do
+      f.input :active, label: "Deal Activated?"
+      f.input :pushed, label: "Notification pushed to users?"
     end
 
     f.inputs "Deal Redemption" do
@@ -106,14 +127,13 @@ ActiveAdmin.register Deal do
 
     f.inputs "Deal Add-ons" do
       f.input :redeemable, label: "QR Code Redeemable?"
-      f.input :pushed, label: "Push Notification to Wishlist?"
     end
 
     f.actions
   end
 
   # Allow edit
-  permit_params :title, :redeemable, :multiple_use, :image, :type_of_deal, :description, :start_date, :expiry_date, :location, :t_c, :pushed,
+  permit_params :active, :title, :redeemable, :multiple_use, :image, :type_of_deal, :description, :start_date, :expiry_date, :location, :t_c, :pushed,
                 deal_days_attributes: [:id, :mon, :tue, :wed, :thur, :fri, :sat, :sun, :_destroy,
                                        deal_times_attributes: [:id, :started_at, :ended_at, :_destroy]],
                 deal_venues_attributes: [:id, :qrCodeLink], venues_attributes: [:id, :location]
