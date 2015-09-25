@@ -69,7 +69,7 @@
             <div id="plan1_true">
               <!-- show list of addons -->
               <p class="form-textarea clearfix">
-                <%= f.label :add_on1, "Include Push Notification Add-on (#{number_to_currency @addon1.cost})" %>
+                <%= f.label :add_on1, "Include #{@addon1.name} Add-on (#{number_to_currency @addon1.cost})" %>
                 <em><%= @addon1.description %></em>
               </p>
               <p class="form-select half" style="margin-top: 0px;">
@@ -82,7 +82,7 @@
               </p>
 
               <p class="form-textarea clearfix">
-                <%= f.label :add_on2, "Include Deals Statistics Add-on (#{number_to_currency @addon2.cost})" %>
+                <%= f.label :add_on2, "Include #{@addon2.name} Add-on (#{number_to_currency @addon2.cost})" %>
                 <em><%= @addon2.description %></em>
               </p>
               <p class="form-select half" style="margin-top: 0px;">
@@ -95,7 +95,7 @@
               </p>
 
               <p class="form-textarea clearfix">
-                <%= f.label :add_on3, "Include Aggregate Trends Add-on (#{number_to_currency @addon3.cost})" %>
+                <%= f.label :add_on3, "Include #{@addon3.name} Add-on (#{number_to_currency @addon3.cost})" %>
                 <em><%= @addon3.description %></em>
               </p>
               <p class="form-select half" style="margin-top: 0px;">
