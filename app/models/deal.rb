@@ -72,7 +72,7 @@ class Deal < ActiveRecord::Base
   end
 
   def check_valid_period
-    errors.add(:blank, 'Deal period is not within the valid dates of your premium service period. Please input a valid period or extend your service.') if ((valid_period) rescue ArguementError == ArguementError)
+    errors.add(:blank, 'Deal period is not within the valid dates of your premium service period. Please input a valid period.') if ((valid_period) rescue ArgumentError == ArgumentError)
   end
 
   def valid_period
