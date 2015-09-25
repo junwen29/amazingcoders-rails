@@ -4,8 +4,11 @@ class Venue < ActiveRecord::Base
   belongs_to :merchant
   has_many :deal_venues, inverse_of: :venue, dependent: :destroy
   has_many :deals, through:  :deal_venues
-  has_many :wishlist, inverse_of: :venue, dependent: :destroy
-  has_many :users, through: :wishlist
+  has_many :wishes, inverse_of: :venue, dependent: :destroy
+  has_many :users, through: :wishes
+
+  attr_accessor :is_wishlist
+
 
   scope :neighbourhood, ->(location) {where("neighbourhood == ?", location)}
 
