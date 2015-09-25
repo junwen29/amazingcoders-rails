@@ -69,8 +69,7 @@ class Deal < ActiveRecord::Base
   end
 
   def check_overlapping_deals
-    errors.add('You are not able to list any more deals within this period as during which you will
-have more than 5 active deals then.') if ((overlapping_deals) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'You are not able to list any more deals within this period as during which you will have more than 5 active deals then.') if ((overlapping_deals) rescue ArgumentError == ArgumentError)
   end
 
   private
