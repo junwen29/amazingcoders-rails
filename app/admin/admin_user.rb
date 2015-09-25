@@ -1,6 +1,10 @@
 ActiveAdmin.register AdminUser do
   permit_params :email, :password, :password_confirmation
 
+  action_item :only => :show do
+    link_to "Back", "/admin/admin_users"
+  end
+
   index do
     selectable_column
     id_column

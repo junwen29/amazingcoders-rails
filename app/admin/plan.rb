@@ -11,6 +11,10 @@ ActiveAdmin.register Plan do
 
   remove_filter :payments, :plan_payments
 
+  action_item :only => :show do
+    link_to "Back", "/admin/plans"
+  end
+
   # INDEX
   index do
     selectable_column

@@ -9,7 +9,7 @@ default: &default
   pool: 5
   timeout: 5000
 
-development: &development
+development:
   <<: *default
   database: amazing_dev
   username: <%= Rails.application.secrets[:database][:user] %>
