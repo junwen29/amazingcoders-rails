@@ -5,9 +5,9 @@ class CreateVenues < ActiveRecord::Migration
       t.string :name
       t.string :street
       t.string :zipcode
-      t.string :city
-      t.string :state
-      t.string :country
+      t.string :city, :default => "Singapore"
+      t.string :state, :default => "Singapore"
+      t.string :country, :default => "Singapore"
       t.string :neighbourhood
       t.text :bio
       t.string :phone
