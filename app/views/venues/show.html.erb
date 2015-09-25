@@ -13,7 +13,10 @@
     <div class="content-separator"></div>
     <%= render :partial => 'form/venue_show_form' %>
 
-    <%= link_to 'See all outlets', venues_path, class: "btn btn-lg btn-default" %>
+    <div style="text-align:center">
+    <%= link_to 'Edit venue', edit_venue_path, class: "btn btn-xs btn-info" %>
+    <%= link_to 'See all outlets', venues_path, class: "btn btn-lg btn-info" %>
+    </div>
   </div>
 </div>
 

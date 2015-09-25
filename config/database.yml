@@ -19,9 +19,8 @@ development:
 test:
   <<: *default
   database: amazing_dev
-  database: <%= ENV['AMAZING_TEST_DATABASE_NAME'] %>
-  username: <%= ENV['AMAZING_TEST_DATABASE_'] %>
-  password: <%= ENV['AMAZING_TEST_DATABASE_PASSEWORD'] %>
+  username: <%= Rails.application.secrets[:database][:user] %>
+  password: <%= Rails.application.secrets[:database][:password] %>
 
 production:
   <<: *development

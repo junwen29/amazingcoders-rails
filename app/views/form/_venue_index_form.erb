@@ -1,16 +1,9 @@
 <table class="table table-bordered table-hover table-responsive">
-  <tr>
+  <tr bgcolor="lightpink">
     <th>Photo</th>
     <th>Name of Restaurant</th>
     <th>Street</th>
-    <th>Mall/Unit Number</th>
-    <th>Postal Code</th>
-    <th>City</th>
-    <th>State</th>
-    <th>Country</th>
-    <th>Neighbourhood</th>
     <th>Description</th>
-    <th>Contact Number</th>
     <th colspan="3"></th>
   </tr>
 
@@ -19,21 +12,14 @@
         <td><%= image_tag venue.photo.url, :size => "150x150"%></td>
         <td><%= venue.name %></td>
         <td><%= venue.street %></td>
-        <td><%= venue.address_2 %></td>
-        <td><%= venue.zipcode %></td>
-        <td><%= venue.city %></td>
-        <td><%= venue.state %></td>
-        <td><%= venue.country %></td>
-        <td><%= venue.neighbourhood %></td>
         <td><%= venue.bio %></td>
-        <td><%= venue.phone %></td>
         <td><%= link_to 'Show', venue_path(venue), class: "btn btn-xs btn-default" %></td>
         <td><%= link_to 'Edit', edit_venue_path(venue), class: "btn btn-xs btn-default" %></td>
         <td>
           <%= link_to 'Delete', venue_path(venue),
                       method: :delete,
                       data: { confirm: 'Are you sure?'},
-                      class: "btn btn-xs btn-anger"%>
+                      class: "btn btn-xs btn-danger"%>
         </td>
       </tr>
   <% end %>

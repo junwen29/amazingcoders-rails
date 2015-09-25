@@ -1,65 +1,195 @@
-<p>
-  <strong><font size = "4">Title</font></strong><br>
-  <%= @deal.title %>
-</p>
+<div class="form-style-10">
+  <h1>View Deal Form</h1>
+  <p>
+    <strong><font size = "4">Title</font></strong><br>
+    <%= @deal.title %>
+  </p>
 
-<p>
-  <strong><font size = "4">Type of Deal</font></strong><br>
-  <%= @deal.type_of_deal %><br>
-</p>
+  <p>
+    <strong><font size = "4">Type of Deal</font></strong><br>
+    <%= @deal.type_of_deal %><br>
+  </p>
 
-<p>
-  <strong><font size = "4">Description</font></strong><br>
-  <%= @deal.description %><br>
-</p>
+  <p>
+    <strong><font size = "4">Description</font></strong><br>
+    <%= @deal.description %><br>
+  </p>
 
-<p>
-  <strong><font size = "4">Deal Period</font></strong><br>
-  <strong><%= @deal.start_date.strftime("%d/%m/%Y") %></strong> to <strong><%= @deal.expiry_date.strftime("%d/%m/%Y") %></strong>
+  <p>
+    <strong><font size = "4">Deal Period</font></strong><br>
+    <strong><%= @deal.start_date.strftime("%d/%m/%Y") %></strong> to <strong><%= @deal.expiry_date.strftime("%d/%m/%Y") %></strong>
 
-  <% for deal_day in @deal.deal_days%>
-      <br>
-      <strong><%= DealService.format_days (deal_day) %>:</strong>
-      <% for deal_time in deal_day.deal_times%>
-          <%=h deal_time.started_at.strftime("%H:%M") %> to <%=h deal_time.ended_at.strftime("%H:%M") %>&nbsp;&nbsp;
-      <% end %>
-  <% end %>
-</p>
+    <% for deal_day in @deal.deal_days%>
+        <br>
+        <strong><%= DealService.format_days (deal_day) %>:</strong>
+        <% for deal_time in deal_day.deal_times%>
+            <%=h deal_time.started_at.strftime("%H:%M") %> to <%=h deal_time.ended_at.strftime("%H:%M") %>&nbsp;&nbsp;
+        <% end %>
+    <% end %>
+  </p>
 
-<p>
-  <strong><font size = "4">Venue</font></strong><br>
-  <% @deal.venues.each do |venue| %>
-      <span><%= venue.name %></span>&nbsp;&nbsp;
-  <% end %>
-</p>
+  <p>
+    <strong><font size = "4">Venue</font></strong><br>
+    <% @deal.venues.each do |venue| %>
+        <span><%= venue.name %></span>&nbsp;&nbsp;
+    <% end %>
+  </p>
 
-<p>
-  <strong><font size = "4">Terms and Condition</font></strong><br>
-  <%= @deal.t_c %>
-</p>
+  <p>
+    <strong><font size = "4">Terms and Condition</font></strong><br>
+    <%= @deal.t_c %>
+  </p>
 
-<p>
-  <strong><font size = "4">Deal Image</font></strong><br>
-  <%= image_tag @deal.image.url, :size => "150x150" %>
-</p>
+  <p>
+    <strong><font size = "4">Deal Image</font></strong><br>
+    <%= image_tag @deal.image.url, :size => "150x150" %>
+  </p>
 
-<p>
-  <strong><font size = "4">Can your code be redeemed?</font></strong><br>
-  <% if @deal.redeemable %>
-      Yes <br>
-      <strong><font size = "4">How many times can this deal be redeemed per user?</font></strong><br>
-      <% if !@deal.multiple_use %>
-          Once per user <br>
-      <% else %>
-          Unlimited Redemptions <br>
-      <% end %>
-  <% else %>
-      No <br>
-  <% end %>
-</p>
+  <p>
+    <strong><font size = "4">Can your code be redeemed?</font></strong><br>
+    <% if @deal.redeemable %>
+        Yes <br>
+        <strong><font size = "4">How many times can this deal be redeemed per user?</font></strong><br>
+        <% if !@deal.multiple_use %>
+            Once per user <br>
+        <% else %>
+            Unlimited Redemptions <br>
+        <% end %>
+    <% else %>
+        No <br>
+    <% end %>
+  </p>
 
-<p>
-  <% if @deal.redeemable %>
-    <%= link_to "Download QRcodes for your deal here", deal_path(@deal, format: "pdf") %>
-  <% end %>
-</p>
+  <p>
+    <% if @deal.redeemable %>
+        <%= link_to "Download QRcodes for your deal here", deal_path(@deal, format: "pdf") %>
+    <% end %>
+  </p>
+</div>
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Form Style 10</title>
+  <style type="text/css">
+      body{
+      }
+
+      .form-style-10{
+          max-width:50%;
+          min-width:450px;
+          padding:30px;
+          margin:40px auto;
+          background: #FFF;
+          border-radius: 10px;
+          -webkit-border-radius:10px;
+          -moz-border-radius: 10px;
+          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
+          -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
+          -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
+      }
+      .form-style-10 .inner-wrap{
+          padding: 30px;
+          background: #F8F8F8;
+          border-radius: 6px;
+          margin-bottom: 15px;
+          margin-left: 15px;
+      }
+      .form-style-10 h1{
+          background: #E4287C;
+          padding: 20px 30px 15px 30px;
+          margin: -30px -30px 30px -30px;
+          border-radius: 10px 10px 0 0;
+          -webkit-border-radius: 10px 10px 0 0;
+          -moz-border-radius: 10px 10px 0 0;
+          color: #fff;
+          text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
+          font: normal 30px 'Bitter', serif;
+          -moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+          -webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+          box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+          border: 1px solid #E4287C;
+          text-align:center;
+      }
+      .form-style-10 h1 > span{
+          display: block;
+          margin-top: 2px;
+          font: 13px Arial, Helvetica, sans-serif;
+      }
+      .form-style-10 label{
+          display: block;
+          font: 13px Arial, Helvetica, sans-serif;
+          color: #888;
+          margin-bottom: 15px;
+      }
+      .form-style-10 input[type="text"],
+      .form-style-10 input[type="date"],
+      .form-style-10 input[type="datetime"],
+      .form-style-10 input[type="email"],
+      .form-style-10 input[type="number"],
+      .form-style-10 input[type="search"],
+      .form-style-10 input[type="time"],
+      .form-style-10 input[type="url"],
+      .form-style-10 input[type="password"],
+      .form-style-10 textarea,
+
+      .form-style-10 select {
+          display: block;
+          box-sizing: border-box;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          width: 100%;
+          max-width: 275px;
+          border-radius: 6px;
+          -webkit-border-radius:6px;
+          -moz-border-radius:6px;
+          box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+          -moz-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+          -webkit-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+      }
+
+      .form-style-10 .section{
+          font: normal 20px 'Bitter', serif;
+          color: #E4287C;
+          margin-bottom: 5px;
+          margin-left: 5px
+      }
+      .form-style-10 .section span {
+          background: #E4287C;
+          padding: 10px 10px 5px 10px;
+          position: absolute;
+          border-radius: 50%;
+          -webkit-border-radius: 50%;
+          -moz-border-radius: 50%;
+          border: 4px solid #fff;
+          font-size: 14px;
+          margin-left: -45px;
+          color: #fff;
+          margin-top: -3px;
+      }
+      .form-style-10 input[type="button"],
+      .form-style-10 input[type="submit"]{
+          background: #E4287C;
+          padding: 8px 20px 8px 20px;
+          border-radius: 5px;
+          -webkit-border-radius: 5px;
+          -moz-border-radius: 5px;
+          color: #fff;
+          text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
+          font: normal 30px 'Bitter', serif;
+          -moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+          -webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+          box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+          border: 1px solid #E4287C;
+          font-size: 15px;
+      }
+      .form-style-10 input[type="button"]:hover,
+      .form-style-10 input[type="submit"]:hover{
+          background: #DB7093;
+          -moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
+          -webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
+          box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
+      }
+  </style>
+</head>
+</html>
