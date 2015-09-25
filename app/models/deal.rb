@@ -41,8 +41,8 @@ class Deal < ActiveRecord::Base
   # validate :ensuring_pushed_checked
   validate :ensuring_redeemable_checked
   validate :ensuring_multiple_use_checked
-  validate :check_overlapping_deals
   validate :has_venues
+  validate :check_valid_period
 
   # Process Methods
   def has_venues
@@ -64,26 +64,27 @@ class Deal < ActiveRecord::Base
   end
 
   def future_date
-    errors.add(:start_date, 'Start date must be at least one day in advance') if ((start_date <= Date.today) rescue ArgumentError == ArgumentError)
+    errors.add(:start_date, 'must be at least one day in advance') if ((start_date <= Date.today) rescue ArgumentError == ArgumentError)
   end
 
   def check_expiry_date
-    errors.add(:expiry_date, 'has to be after start date') if ((expiry_date <= start_date) rescue ArgumentError == ArgumentError)
+    errors.add(:expiry_date, 'cannot be before start date') if ((expiry_date < start_date) rescue ArgumentError == ArgumentError)
   end
 
-  def check_overlapping_deals
-    errors.add(:start_date, 'You are not able to list any more deals within this period as during which you will
-have more than 5 active deals then.') if ((overlapping_deals) rescue ArgumentError == ArgumentError)
+  def check_valid_period
+    errors.add(:blank, 'Deal period is not within the valid dates of your premium service period. Please input a valid period or extend your service.') if ((valid_period) rescue ArguementError == ArguementError)
   end
 
-  private
-  # find number of overlapping deals
-  def overlapping_deals
-    num = DealService.get_overlapping_deals(merchant_id, start_date, expiry_date)
-    if num >= 5
-      true
-    else
-      false
+  def valid_period
+    payment = Payment.where(:merchant_id => merchant_id)
+    payment.each do |p|
+      if DateTime.now >= p.start_date && DateTime.now <= p.expiry_date
+        if start_date >= p.start_date && start_date <= p.expiry_date && expiry_date >= p.start_date && expiry_date <= p.expiry_date
+          return false
+        end
+        true
+      end
     end
   end
+
 end

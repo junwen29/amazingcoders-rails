@@ -1,19 +1,16 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4>Active Deals</h4>
+    <h4>Active Deals (Deals that are now displayed to users)</h4>
   </div>
   <div class="panel-body">
     <table class="table table-bordered table-hover table-responsive">
       <tr>
         <th>Title</th>
         <th>Image</th>
-        <th>Type of Deal</th>
         <th>Description</th>
         <th>Start Date</th>
         <th>Expiry Date</th>
         <th>Venue</th>
-        <th>Redeemable</th>
-        <th>Multiple Use</th>
         <% if (@payment.add_on1) %>
             <th colspan="2"></th>
         <% else %>
@@ -26,7 +23,6 @@
               <tr>
                 <td><%= deal.title %></td>
                 <td><%= image_tag deal.image.url, :size => "150x150" %></td>
-                <td><%= deal.type_of_deal %></td>
                 <td><%= deal.description %></td>
                 <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
                 <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
@@ -35,16 +31,6 @@
                       <%= venue.name %><br/>
                   <% end %>
                 </td>
-                <% if deal.redeemable %>
-                    <td>Yes</td>
-                <% else %>
-                    <td>No</td>
-                <% end %>
-                <% if deal.multiple_use %>
-                    <td>Unlimited Redemptions</td>
-                <% else %>
-                    <td>One redeem per customer</td>
-                <% end %>
                 <% if (@payment.add_on1) %>
                     <% if deal.pushed %>
                         <td>
@@ -68,29 +54,25 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4>Waiting Deals</h4>
+    <h4>Waiting Deals (Deals that are not displayed to users until you press activate)</h4>
   </div>
   <div class="panel-body">
     <table class="table table-bordered table-hover table-responsive">
       <tr>
         <th>Title</th>
         <th>Image</th>
-        <th>Type of Deal</th>
         <th>Description</th>
         <th>Start Date</th>
         <th>Expiry Date</th>
         <th>Venue</th>
-        <th>Redeemable</th>
-        <th>Multiple Use</th>
         <th colspan="4"></th>
       </tr>
 
       <% @deals.each do |deal| %>
-          <% if deal.start_date.future? && !deal.active %>
+          <% if !deal.active %>
               <tr>
                 <td><%= deal.title %></td>
                 <td><%= image_tag deal.image.url, :size => "150x150" %></td>
-                <td><%= deal.type_of_deal %></td>
                 <td><%= deal.description %></td>
                 <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
                 <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
@@ -99,16 +81,6 @@
                       <%= venue.name %><br/>
                   <% end %>
                 </td>
-                <% if deal.redeemable %>
-                    <td>Yes</td>
-                <% else %>
-                    <td>No</td>
-                <% end %>
-                <% if deal.multiple_use %>
-                    <td>Unlimited Redemptions</td>
-                <% else %>
-                    <td>One redeem per customer</td>
-                <% end %>
                 <td>
                   <%= link_to 'Activate', active_deal_path(deal),
                               data: { confirm: 'Once deal is activated, it will be published to users. You will not be able to edit or delete the deal until after expiry then. Do you wish to proceed?'},
@@ -131,28 +103,24 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4>Past Deals</h4>
+    <h4>Past Deals (Deals that are expired)</h4>
   </div>
   <div class="panel-body">
     <table class="table table-bordered table-hover table-responsive">
         <th>Title</th>
         <th>Image</th>
-        <th>Type of Deal</th>
         <th>Description</th>
         <th>Start Date</th>
         <th>Expiry Date</th>
         <th>Venue</th>
-        <th>Redeemable</th>
-        <th>Multiple Use</th>
         <th colspan="1"></th>
       </tr>
 
       <% @deals.each do |deal| %>
-          <% if deal.expiry_date.past? %>
+          <% if deal.expiry_date.past? && deal.active %>
               <tr>
                 <td><%= deal.title %></td>
                 <td><%= image_tag deal.image.url, :size => "150x150" %></td>
-                <td><%= deal.type_of_deal %></td>
                 <td><%= deal.description %></td>
                 <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
                 <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
@@ -161,16 +129,6 @@
                       <%= venue.name %><br/>
                   <% end %>
                 </td>
-                <% if deal.redeemable %>
-                    <td>Yes</td>
-                <% else %>
-                    <td>No</td>
-                <% end %>
-                <% if deal.multiple_use %>
-                    <td>Unlimited Redemptions</td>
-                <% else %>
-                    <td>One redeem per customer</td>
-                <% end %>
                 <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
               </tr>
           <% end %>
