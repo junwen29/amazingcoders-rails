@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150923092439) do
+ActiveRecord::Schema.define(version: 20150924161841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -222,6 +222,9 @@ ActiveRecord::Schema.define(version: 20150923092439) do
     t.string   "name"
     t.string   "street"
     t.string   "zipcode"
+    t.string   "city",               default: "Singapore"
+    t.string   "state",              default: "Singapore"
+    t.string   "country",            default: "Singapore"
     t.string   "neighbourhood"
     t.text     "bio"
     t.string   "phone"
@@ -236,9 +239,6 @@ ActiveRecord::Schema.define(version: 20150923092439) do
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
-    t.string   "city"
-    t.string   "country"
-    t.string   "state"
   end
 
   add_index "venues", ["merchant_id"], name: "index_venues_on_merchant_id", using: :btree
