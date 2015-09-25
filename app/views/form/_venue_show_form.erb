@@ -1,7 +1,9 @@
-<p>
-  <strong>Venue Photo</strong><br>
-  <%= image_tag @venue.photo.url, :size => "150x150" %>
-</p>
+<div class="form-style-10">
+  <h1>View Venue Form</h1>
+  <p>
+    <strong>Venue Photo</strong><br>
+    <%= image_tag @venue.photo.url, :size => "150x150" %>
+  </p>
 
 <p>
   <strong>Name:</strong>
@@ -34,7 +36,9 @@
   <%= @venue.bio %>
 </p>
 
-<p>
-  <strong>Contact No</strong>
-  <%= @venue.phone %>
-</p>
+  <p>
+    <strong>Contact No</strong>
+    <%= @venue.phone %>
+  </p>
+</div>
+

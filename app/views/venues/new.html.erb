@@ -1,5 +1,6 @@
 <%= render 'layouts/biz/dash' %>
 
+
 <div class="contentWrapper">
   <div class="content">
     <!-- Content Heading -->
@@ -33,4 +34,8 @@
 
   </div>
 </div>
+
+<%= content_for :body_footer do %>
+    <%= render :partial => 'layouts/venues_forms_css' %>
+<% end %>
 

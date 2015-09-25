@@ -13,13 +13,17 @@
     <div class="content-separator"></div>
     <%= render :partial => 'form/venue_show_form' %>
 
-    <%= link_to 'Edit venue', edit_venue_path, class: "btn btn-xs btn-default" %><br><br>
-    <%= link_to 'See all outlets', venues_path, class: "btn btn-lg btn-default" %>
+    <div style="text-align:center">
+    <%= link_to 'Edit venue', edit_venue_path, class: "btn btn-xs btn-info" %>
+    <%= link_to 'See all outlets', venues_path, class: "btn btn-lg btn-info" %>
+    </div>
   </div>
 </div>
 
 <%= content_for :lean_overlay do %>
 <% end %>
 
+
 <%= content_for :body_footer do %>
+    <%= render :partial => 'layouts/venues_forms_css' %>
 <% end %>
