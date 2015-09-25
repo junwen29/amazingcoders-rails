@@ -56,9 +56,6 @@ ActiveAdmin.register Deal do
         row "Terms and Conditions" do
           f.t_c
         end
-        row "Notification Pushed?" do
-          f.pushed ? status_tag( "yes", :ok ) : status_tag( "no" )
-        end
       end
     end
 
@@ -69,6 +66,17 @@ ActiveAdmin.register Deal do
         end
         row "Expiry Date" do
           f.expiry_date
+        end
+      end
+    end
+
+    panel "Deal Status" do
+      attributes_table_for f do
+        row "Deal Activated?" do
+          f.active ? status_tag( "yes", :ok ) : status_tag( "no" )
+        end
+        row "Notification Pushed?" do
+          f.pushed ? status_tag( "yes", :ok ) : status_tag( "no" )
         end
       end
     end
@@ -100,12 +108,16 @@ ActiveAdmin.register Deal do
       f.input :type_of_deal, as: :select, collection: ["Discount","Freebies"]
       f.input :description
       f.input :t_c, label: "Terms and Conditions"
-      f.input :pushed, label: "Notification pushed to users?"
     end
 
     f.inputs "Deal Schedule" do
       f.input :start_date, label: "Start Date"
       f.input :expiry_date, label: "Expiry Date"
+    end
+
+    f.inputs "Deal Status" do
+      f.input :active, label: "Deal Activated?"
+      f.input :pushed, label: "Notification pushed to users?"
     end
 
     f.inputs "Deal Redemption" do
@@ -121,7 +133,7 @@ ActiveAdmin.register Deal do
   end
 
   # Allow edit
-  permit_params :title, :redeemable, :multiple_use, :image, :type_of_deal, :description, :start_date, :expiry_date, :location, :t_c, :pushed,
+  permit_params :active, :title, :redeemable, :multiple_use, :image, :type_of_deal, :description, :start_date, :expiry_date, :location, :t_c, :pushed,
                 deal_days_attributes: [:id, :mon, :tue, :wed, :thur, :fri, :sat, :sun, :_destroy,
                                        deal_times_attributes: [:id, :started_at, :ended_at, :_destroy]],
                 deal_venues_attributes: [:id, :qrCodeLink], venues_attributes: [:id, :location]
