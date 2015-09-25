@@ -54,7 +54,7 @@ class DealsController < ApplicationController
       flash[:success] = "Deal successfully created!"
       redirect_to @deal
       # Send out confirmation email
-      # DealMailer.deal_email("Test Food Merchant", @deal, MerchantService.get_email(merchant_id)).deliver
+      DealMailer.deal_email("Test Food Merchant", @deal, MerchantService.get_email(merchant_id)).deliver
     else
       flash[:error] = "Failed to create deal!"
       render 'new'
