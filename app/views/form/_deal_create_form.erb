@@ -1,95 +1,236 @@
-<div class="content-form">
+<div class="form-style-10">
+  <h1>Create Deals Form<span>Expand your marketing efforts by listing deals on Burpple!</span></h1>
   <%= form_for @deal, :html => {:multipart => true} do |f| %>
-      <p class="form-textarea clearfix">
-        <%= f.label :title, "Title of deal" %>
-        <span><%= f.text_field :title %></span>
-      </p>
-
-      <p class="form-textarea clearfix">
-        <%= f.label :type_of_deal, "Type of Deal" %>
-        <span><%= f.select :type_of_deal, [['Discount','Discount'],['Freebies','Freebies']] %></span>
-      </p>
-
-      <p class="form-textarea clearfix">
-        <%= f.label :description, "Description of your deal" %>
-        <span><%= f.text_area :description, :placeholder => "Tell us more about your deals! Example: 10% off the total bill!" %></span>
-      </p>
-
-      <p class="form-select half clearfix">
-        <%= f.label :start_date, "Start Date:" %>
-        <span><%= f.text_field :start_date%></span>
-      </p>
-
-      <p class="form-select clearfix">
-        <%= f.label :expiry_date, "End Date:" %>
-        <span><%= f.text_field :expiry_date %></span>
-      </p>
-
-      <!-- Following is a nested form of deal_day-->
-      <p class="form-textarea clearfix">
-        <%= f.label :deal_days, "Deal Period:" %>
-        <%= f.fields_for :deal_days do |builder| %>
-            <%= render 'form/deal_day_form', f: builder %>
-        <% end %>
-        <%= link_to_add_day "Add deal period", f, :deal_days %>
-      </p>
-
-      <%= fields_for :deal_venue do |dv| %>
-          <div class = "field form-textarea clearfix">
-            <%= dv.label "Select Venues" %><br />
-            <%= collection_select(:venues, :id, @all_venues, :id, :name, {}, {:multiple => true}) %>
-          </div>
-      <% end %>
-
-      <p class="form-textarea clearfix">
-        <%= f.label :t_c, 'Terms and Conditions' %>
-        <span><%= f.text_area :t_c, :placeholder => "Note your terms and conditions here" %></span>
-      </p>
-
-      <p class="form-text clearfix">
-        <%= f.label :image, 'Upload an image of your deal' %>
-      </p>
-      <%= f.file_field :image %>
-      <em>For best effect, upload an image of 150x150</em>
-
-      <div id= "redeemable">
+      <div class="inner-wrap">
         <p class="form-textarea clearfix">
-          <%= f.label :redeemable, "Would you like users to redeem through QR code? (Helps gather analytics)" %>
+          <%= f.label :title, "Title of deal" %>
+          <span><%= f.text_field :title %></span>
         </p>
 
-        <p class="form-select half" style="margin-top: 0px;">
-          <%= f.label :redeemable, "Yes", :value => true %>
-          <%= f.radio_button :redeemable, true%>
+        <p class="form-textarea clearfix">
+          <%= f.label :type_of_deal, "Type of Deal" %>
+          <span><%= f.select :type_of_deal, [['Discount','Discount'],['Freebies','Freebies']] %></span>
         </p>
 
-        <p class="form-select" style="margin-top: 0px;">
-          <%= f.label :redeemable, "No", :value => false %>
-          <%= f.radio_button :redeemable, false%>
+        <p class="form-textarea clearfix">
+          <%= f.label :description, "Description of your deal" %>
+          <span><%= f.text_area :description, :placeholder => "Tell us more about your deals! Example: 10% off the total bill!" %></span>
         </p>
-      </div>
 
+        <p class="form-select half clearfix">
+          <%= f.label :start_date, "Start Date:" %>
+          <span><%= f.text_field :start_date%></span>
+        </p>
 
-      <div id= "redeemable">
-        <div id="redeemable_true">
+        <p class="form-select half clearfix">
+          <%= f.label :expiry_date, "End Date:" %>
+          <span><%= f.text_field :expiry_date %></span>
+        </p>
+
+        <div class="row">
+        </div>
+
+        <div style="display:inline-block">
+
+          <!-- Following is a nested form of deal_day-->
           <p class="form-textarea clearfix">
-            <%= f.label :multiple_use, "How many times can this deal be redeemed through QRCode per user?" %><br>
+            <%= f.label :deal_days, "Deal Period:" %>
+            <%= f.fields_for :deal_days do |builder| %>
+                <%= render 'form/deal_day_form', f: builder %>
+            <% end %>
+            <%= link_to_add_day "Add deal period", f, :deal_days %>
+          </p>
+
+        </div>
+
+        <%= fields_for :deal_venue do |dv| %>
+            <div class = "field form-textarea clearfix">
+              <%= dv.label "Select Venues" %><br />
+              <%= collection_select(:venues, :id, @all_venues, :id, :name, {}, {:multiple => true}) %>
+            </div>
+        <% end %>
+
+        <p class="form-textarea clearfix">
+          <%= f.label :t_c, 'Terms and Conditions' %>
+          <span><%= f.text_area :t_c, :placeholder => "Note your terms and conditions here" %></span>
+        </p>
+
+        <p class="form-text clearfix">
+          <%= f.label :image, 'Upload an image of your deal' %>
+        </p>
+        <%= f.file_field :image %>
+        <em>For best effect, upload an image of 150x150</em>
+
+        <div id= "redeemable">
+          <p class="form-textarea clearfix">
+            <%= f.label :redeemable, "Would you like users to redeem through QR code? (Helps gather analytics)" %>
           </p>
 
           <p class="form-select half" style="margin-top: 0px;">
-            <%= f.label :multiple_use, "Unlimited", :value => true %>
-            <%= f.radio_button :multiple_use, true %>
+            <%= f.label :redeemable, "Yes", :value => true %>
+            <%= f.radio_button :redeemable, true%>
           </p>
 
           <p class="form-select" style="margin-top: 0px;">
-            <%= f.label :multiple_use, "Once", :value => false %>
-            <%= f.radio_button :multiple_use, false%>
+            <%= f.label :redeemable, "No", :value => false %>
+            <%= f.radio_button :redeemable, false%>
           </p>
         </div>
-      </div>
 
-      <div style="margin-top: 30px">
-        <%= f.submit "Create Deal", :class => 'btn btn-big btn-success' %>
-        <%= link_to 'Back', deals_path, class: "btn btn-big btn-default" %>
-      </div>
+
+        <div id= "redeemable">
+          <div id="redeemable_true">
+            <p class="form-textarea clearfix">
+              <%= f.label :multiple_use, "How many times can this deal be redeemed through QRCode per user?" %><br>
+            </p>
+
+            <p class="form-select half" style="margin-top: 0px;">
+              <%= f.label :multiple_use, "Unlimited", :value => true %>
+              <%= f.radio_button :multiple_use, true %>
+            </p>
+
+            <p class="form-select" style="margin-top: 0px;">
+              <%= f.label :multiple_use, "Once", :value => false %>
+              <%= f.radio_button :multiple_use, false%>
+            </p>
+          </div>
+        </div>
+
+        <div style="margin-top: 30px">
+          <%= f.submit "Create Deal", :class => 'btn btn-big btn-success' %>
+          <%= link_to 'Back', deals_path, class: "btn btn-big btn-default" %>
+        </div>
   <% end %>
-</div><!-- content-form -->
+  </div>
+</div>
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Form Style 10</title>
+  <link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+  <style type="text/css">
+      body{
+      }
+
+      .form-style-10{
+          max-width:80%;
+          min-width:450px;
+          padding:30px;
+          margin:40px auto;
+          background: #FFF;
+          border-radius: 10px;
+          -webkit-border-radius:10px;
+          -moz-border-radius: 10px;
+          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
+          -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
+          -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
+      }
+      .form-style-10 .inner-wrap{
+          padding: 30px;
+          background: #F8F8F8;
+          border-radius: 6px;
+          margin-bottom: 15px;
+          margin-left: -15px;
+          margin-right: -15px;
+      }
+      .form-style-10 h1{
+          background: #E4287C;
+          padding: 20px 30px 15px 30px;
+          margin: -30px -30px 30px -30px;
+          border-radius: 10px 10px 0 0;
+          -webkit-border-radius: 10px 10px 0 0;
+          -moz-border-radius: 10px 10px 0 0;
+          color: #fff;
+          text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
+          font: normal 30px 'Bitter', serif;
+          -moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+          -webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+          box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+          border: 1px solid #E4287C;
+          text-align:center;
+      }
+      .form-style-10 h1 > span{
+          display: block;
+          margin-top: 2px;
+          font: 13px Arial, Helvetica, sans-serif;
+      }
+      .form-style-10 label{
+          display: block;
+          font: 13px Arial, Helvetica, sans-serif;
+          color: #888;
+          margin-bottom: 15px;
+      }
+      .form-style-10 input[type="text"],
+      .form-style-10 input[type="date"],
+      .form-style-10 input[type="datetime"],
+      .form-style-10 input[type="email"],
+      .form-style-10 input[type="number"],
+      .form-style-10 input[type="search"],
+      .form-style-10 input[type="time"],
+      .form-style-10 input[type="url"],
+      .form-style-10 input[type="password"],
+
+
+      .form-style-10 select {
+          display:inline;
+          box-sizing: border-box;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          width: 100%;
+          max-width: 275px;
+          border-radius: 6px;
+          -webkit-border-radius:6px;
+          -moz-border-radius:6px;
+          box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+          -moz-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+          -webkit-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+      }
+
+      .form-style-10 section{
+          font: normal 20px 'Bitter', serif;
+          color: #E4287C;
+          margin-bottom: 5px;
+          margin-left: 5px
+      }
+      .form-style-10 .section span {
+          background: #E4287C;
+          padding: 10px 10px 5px 10px;
+          position: absolute;
+          border-radius: 50%;
+          -webkit-border-radius: 50%;
+          -moz-border-radius: 50%;
+          border: 4px solid #fff;
+          font-size: 14px;
+          margin-left: -45px;
+          color: #fff;
+          margin-top: -3px;
+      }
+      .form-style-10 input[type="button"],
+      .form-style-10 input[type="submit"]{
+          background: #E4287C;
+          padding: 8px 20px 8px 20px;
+          border-radius: 5px;
+          -webkit-border-radius: 5px;
+          -moz-border-radius: 5px;
+          color: #fff;
+          text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
+          font: normal 30px 'Bitter', serif;
+          -moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+          -webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+          box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+          border: 1px solid #E4287C;
+          font-size: 15px;
+      }
+      .form-style-10 input[type="button"]:hover,
+      .form-style-10 input[type="submit"]:hover{
+          background: #DB7093;
+          -moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
+          -webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
+          box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
+      }
+
+  </style>
+</head>
+
+</html>
