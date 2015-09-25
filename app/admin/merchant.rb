@@ -9,6 +9,10 @@ ActiveAdmin.register Merchant do
   filter :sign_in_count
   filter :created_at
 
+  action_item :only => :show do
+    link_to "Back", "/admin/merchants"
+  end
+
   # INDEX
   index do
     selectable_column
