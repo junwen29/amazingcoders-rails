@@ -65,6 +65,7 @@ class PaymentsController < ApplicationController
     else
       flash[:error] = "Failed to upgrade plan"
       @plan = Plan.all
+      @plan1 = Plan.find(1)
       @addon1 = AddOn.find(1)
       @addon2 = AddOn.find(2)
       @addon3 = AddOn.find(3)
