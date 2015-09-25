@@ -7,11 +7,11 @@ ActiveAdmin.register Deal do
   filter :venues, label: 'Venues',:collection => proc {(Venue.all).map{|v| [v.name, v.id]}}
   filter :type_of_deal
   filter :description
-  filter :start_date, label: 'Active Date'
-  filter :expiry_date
+  filter :start_date, label: 'Start Date'
+  filter :expiry_date, label: 'Expiry Date'
   filter :multiple_use, label: 'Multiple Use'
   filter :redeemable, label: 'QR Code Redeemable'
-  filter :pushed, label: 'Push Notification'
+  filter :pushed, label: 'Notification Pushed'
 
   action_item :only => :show do
     link_to "Back", "/admin/deals"
@@ -29,11 +29,11 @@ ActiveAdmin.register Deal do
     column "Venues" do |deal|
       deal.venues.map{|v| v.name }.join(", ").html_safe
     end
-    column "Active Date", :start_date
+    column "Start Date", :start_date
     column "Expiry Date", :expiry_date
     column "Multiple Use", :multiple_use
     column "QR Code", :redeemable
-    column "Push Notification", :pushed
+    column "Notification pushed", :pushed
     actions
   end
 
@@ -56,12 +56,15 @@ ActiveAdmin.register Deal do
         row "Terms and Conditions" do
           f.t_c
         end
+        row "Notification Pushed?" do
+          f.pushed ? status_tag( "yes", :ok ) : status_tag( "no" )
+        end
       end
     end
 
     panel "Deal Schedule" do
       attributes_table_for f do
-        row "Active Date" do
+        row "Start Date" do
           f.start_date
         end
         row "Expiry Date" do
@@ -86,9 +89,6 @@ ActiveAdmin.register Deal do
         row "QR Code Redeemable?" do
           f.redeemable ? status_tag( "yes", :ok ) : status_tag( "no" )
         end
-        row "Push Notification?" do
-          f.pushed ? status_tag( "yes", :ok ) : status_tag( "no" )
-        end
       end
     end
   end
@@ -100,10 +100,11 @@ ActiveAdmin.register Deal do
       f.input :type_of_deal, as: :select, collection: ["Discount","Freebies"]
       f.input :description
       f.input :t_c, label: "Terms and Conditions"
+      f.input :pushed, label: "Notification pushed to users?"
     end
 
     f.inputs "Deal Schedule" do
-      f.input :start_date, label: "Active Date"
+      f.input :start_date, label: "Start Date"
       f.input :expiry_date, label: "Expiry Date"
     end
 
@@ -114,7 +115,6 @@ ActiveAdmin.register Deal do
 
     f.inputs "Deal Add-ons" do
       f.input :redeemable, label: "QR Code Redeemable?"
-      f.input :pushed, label: "Push Notification to Wishlist?"
     end
 
     f.actions
