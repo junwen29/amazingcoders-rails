@@ -9,12 +9,11 @@ default: &default
   pool: 5
   timeout: 5000
 
-development: &development
+development:
   <<: *default
   database: amazing_dev
-  database: <%= ENV['AMAZING_DATABASE_NAME'] %>
-  username: <%= ENV['AMAZING_DATABASE_USER'] %>
-  password: <%= ENV['AMAZING_DATABASE_PASSEWORD'] %>
+  username: <%= Rails.application.secrets[:database][:user] %>
+  password: <%= Rails.application.secrets[:database][:password] %>
   encoding: UTF8
 
 test:
