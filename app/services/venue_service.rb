@@ -11,6 +11,8 @@ class VenueService
       end
       users
     end
+
+    # Delete active deals that only have that venue
   end
 
   class << self

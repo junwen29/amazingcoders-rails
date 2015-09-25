@@ -7,7 +7,7 @@
 
       <p class="form-textarea clearfix">
         <%= f.label :type_of_deal, "Type of Deal" %>
-        <span><%= f.select :type_of_deal, [['Discount','discount'],['Freebies','freebis']] %></span>
+        <span><%= f.select :type_of_deal, [['Discount','Discount'],['Freebies','Freebies']] %></span>
       </p>
 
       <p class="form-textarea clearfix">
@@ -54,7 +54,7 @@
 
       <div id= "redeemable">
         <p class="form-textarea clearfix">
-          <%= f.label :redeemable, "Would you like users to redeem through deal code? (Helps gather analytics)" %>
+          <%= f.label :redeemable, "Would you like users to redeem through QR code? (Helps gather analytics)" %>
         </p>
 
         <p class="form-select half" style="margin-top: 0px;">
@@ -72,7 +72,7 @@
       <div id= "redeemable">
         <div id="redeemable_true">
           <p class="form-textarea clearfix">
-            <%= f.label :multiple_use, "How many times can this deal be redeemed per user?" %><br>
+            <%= f.label :multiple_use, "How many times can this deal be redeemed through QRCode per user?" %><br>
           </p>
 
           <p class="form-select half" style="margin-top: 0px;">
