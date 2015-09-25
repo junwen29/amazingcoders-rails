@@ -15,4 +15,22 @@ class Api::P1::DealsController < Api::P1::ApplicationController
       deal.to_json json
     end
   end
+
+  def get_deals_for_venue
+    all_deal_venue = DealVenue.where(:venue_id => params[:id]).select(:deal_id)
+    deals = []
+    all_deal_venue.each do |d|
+      deal=Deal.find(d.deal_id)
+      deals << deal
+    end
+    #active_deals = []
+    #deals.each do
+    #  active_deal = Deal.where('expiry_date >= ? AND (start_date = ? OR expiry_date = ? OR (start_date < ? AND expiry_date > ?) OR (expiry_date > ? AND active = true))', DateTime.now, DateTime.now, DateTime.now, DateTime.now, DateTime.now, DateTime.now)
+    #  active_deals << active_deal
+    #end
+    render_jbuilders(deals) do |json, deal|
+      deal.to_json json
+    end
+  end
+
 end

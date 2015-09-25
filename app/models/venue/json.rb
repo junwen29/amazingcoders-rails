@@ -18,6 +18,7 @@ module Venue::Json
     end
 
     def to_full_json(json, options ={})
+      json.id self.id
       json.name self.name
       json.street self.street
       json.zipcode self.zipcode

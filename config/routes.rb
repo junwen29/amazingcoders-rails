@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       scope '/venues' do
         get '' => 'venues#index', :as => 'venues'
         get '/:id' => 'venues#get_venue', :as => 'get_venue'
+        get '/deals/:id' => 'deals#get_deals_for_venue', :as => 'get_deals_for_venue'
       end
 
       ## to register device token
