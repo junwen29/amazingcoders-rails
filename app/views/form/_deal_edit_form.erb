@@ -1,4 +1,5 @@
-<div class="content-form">
+<div class="form-style-10">
+  <h1>Edit Deals Form<span> Make changes to your deals before making them active!</span></h1>
   <%= form_for @deal, :html => {:multipart => true} do |f| %>
       <p class="form-textarea clearfix">
         <%= f.label :title, "Title of deal*" %>
@@ -7,7 +8,7 @@
 
       <p class="form-textarea clearfix">
         <%= f.label :type_of_deal, "Type of Deal*" %>
-        <span><%= f.select :type_of_deal, [['Discount','discount'],['Freebies','freebis']] %></span>
+        <span><%= f.select :type_of_deal, [['Discount','discount'],['Freebies','freebies']] %></span>
       </p>
 
       <p class="form-textarea clearfix">
@@ -20,10 +21,12 @@
         <span><%= f.text_field :start_date%></span>
       </p>
 
-      <p class="form-select clearfix">
+      <p class="form-select half clearfix">
         <%= f.label :expiry_date, "End Date*" %>
         <span><%= f.text_field :expiry_date %></span>
       </p>
+
+      <div class="clearfix"></div>
 
       <!-- Following is a nested form of deal_day-->
       <p class="form-textarea clearfix">
@@ -88,7 +91,7 @@
       </div>
 
       <div style="margin-top: 30px">
-        <%= f.submit "Create Deal", :class => 'btn btn-big btn-success' %>
+        <%= f.submit "Update Deal", :class => 'btn btn-big btn-success' %>
         <%= link_to 'Back', deals_path, class: "btn btn-big btn-default" %>
       </div>
   <% end %>

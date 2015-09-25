@@ -36,6 +36,7 @@ class PaymentsController < ApplicationController
   def create
     #for database
     @payment = Merchant.find(merchant_id).payments.new(payment_params)
+    @plan1 = Plan.find(1)
 
     @total_cost = calculate_price(@payment)
       @payment.update(total_cost: @total_cost*@payment.months)

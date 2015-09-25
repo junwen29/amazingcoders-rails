@@ -40,7 +40,7 @@
 
 <p>
   <strong><font size = "4">Deal Image</font></strong><br>
-  <%= image_tag @deal.image.url, :size => "150x150" %>
+  <%= image_tag @deal.image.url, :size => "100x100" %>
 </p>
 
 <p>
@@ -64,6 +64,9 @@
   <% end %>
 </p>
 
-<% if !@deal.active %>
-    <%= link_to 'Edit Deal', edit_deal_path, class: "btn btn-xs btn-default" %><br><br>
-<% end %>
+<div style="text-align: center">
+  <% if !@deal.active %>
+      <%= link_to 'Edit Deal', edit_deal_path, class: "btn btn-xs btn-success" %>
+  <% end %>
+  <%= link_to 'See all deals', deals_path, class: "btn btn-big btn-info" %>
+</div>
