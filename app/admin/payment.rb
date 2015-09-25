@@ -49,7 +49,7 @@ ActiveAdmin.register Payment do
   #filter :created_at
   #filter :updated_at
 
-  index do |payment|
+  index do
     selectable_column
     column "Id", :id
     column "Merchant", :merchant_id do |payment|
