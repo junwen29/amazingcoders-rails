@@ -1,11 +1,11 @@
 ActiveAdmin.register Payment do
-  actions :all, except: [:edit] # forbid edit to payment information
+  # actions :all, except: [:edit] # forbid edit to payment information
 
   scope :active
   scope :expired
 
   # preserve_default_filters!
-  remove_filter :plan1, :add_on1, :add_on2, :add_on3, :add_on_payments, :plan_payments, :charge
+  remove_filter :plan1, :add_on1, :add_on2, :add_on3, :add_on_payments, :plan_payments, :charge, :paid, :created_at, :updated_at
 
   action_item :only => :show do
     link_to "Back", "/admin/payments"
@@ -26,7 +26,7 @@ ActiveAdmin.register Payment do
   #filter :created_at
   #filter :updated_at
 
-  index do
+  index do |payment|
     selectable_column
     column "Id", :id
     column "Merchant", :merchant_id do |payment|
@@ -59,7 +59,7 @@ ActiveAdmin.register Payment do
     column "Premium Paid", :total_cost do |payment|
       number_to_currency payment.total_cost
     end
-    column "Subscription Date", :start_date
+    column "Start Date", :start_date
     column "Expiry Date", :expiry_date
     actions
   end
@@ -96,7 +96,7 @@ ActiveAdmin.register Payment do
           end
           output.join(', ').html_safe
         end
-        row :start_date, label: "Subscription Date"
+        row :start_date, label: "Start Date"
         row :expiry_date, label: "Expired Date"
         row('Total Paid') do |payment|
           number_to_currency payment.total_cost
