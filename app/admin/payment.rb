@@ -1,6 +1,11 @@
 ActiveAdmin.register Payment do
   # actions :all, except: [:edit] # forbid edit to payment information
-
+  controller do
+    def scoped_collection
+      Payment.where(paid: true)
+    end
+  end
+  
   scope :active
   scope :expired
 
