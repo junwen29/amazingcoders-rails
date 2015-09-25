@@ -78,7 +78,7 @@ ActiveAdmin.register Deal do
         row "QR Code Redeemable?" do
           f.redeemable ? status_tag( "yes", :ok ) : status_tag( "no" )
         end
-        row "Push Notification to Wishlist?" do
+        row "Push Notification to Wish?" do
           f.pushed ? status_tag( "yes", :ok ) : status_tag( "no" )
         end
       end
@@ -106,7 +106,7 @@ ActiveAdmin.register Deal do
 
     f.inputs "Deal Add-ons" do
       f.input :redeemable, label: "QR Code Redeemable?"
-      f.input :pushed, label: "Push Notification to Wishlist?"
+      f.input :pushed, label: "Push Notification to Wish?"
     end
 
     f.actions
