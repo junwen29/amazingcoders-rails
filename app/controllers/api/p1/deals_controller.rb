@@ -8,10 +8,10 @@ class Api::P1::DealsController < Api::P1::ApplicationController
 
     case params[:type]
       when 'popular'
-      deals = DealService.get_popular_deals
+        deals = DealService.get_popular_deals
 
       when 'discount'
-      deals = DealService.get_active_deals_by_type('discount')
+        deals = DealService.get_active_deals_by_type('discount')
 
       when 'freebies'
         deals = DealService.get_active_deals_by_type('freebies')
