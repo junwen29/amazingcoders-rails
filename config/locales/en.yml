@@ -38,6 +38,7 @@ en:
         redeemable: ""
         multiple_use: ""
         image: ""
+        blank: ""
 
       deal/deal_days:
         deal_times: ""
