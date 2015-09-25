@@ -13,8 +13,10 @@
 
     <!-- Content Body -->
     <%= render :partial => 'form/deal_show_form' %>
-    <%= link_to 'Edit Deal', edit_deal_path, class: "btn btn-xs btn-default" %><br><br>
-    <%= link_to 'See all deals', deals_path, class: "btn btn-big btn-default" %>
+    <div style="text-align:center">
+    <%= link_to 'Edit Deal', edit_deal_path, class: "btn btn-xs btn-info" %>
+    <%= link_to 'See all deals', deals_path, class: "btn btn-big btn-info" %>
+    </div>
   </div>
 </div>
 
