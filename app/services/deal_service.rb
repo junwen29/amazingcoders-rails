@@ -65,6 +65,14 @@ class DealService
       all_deals = Deal.active
     end
 
+    def get_popular_deals
+      deals = Deal.active.order("num_of_redeems DESC")
+    end
+
+    def get_active_deals_by_type (type)
+      deals = Deal.active.type(type).order("created_at DESC")
+    end
+
   end
 
   class << self
