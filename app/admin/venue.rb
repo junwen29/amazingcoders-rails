@@ -14,15 +14,13 @@ ActiveAdmin.register Venue do
 
   index do
     selectable_column
-    column "Deal Id", :id
+    column "Id", :id
     column "Merchant", :merchant_id do |venue|
       auto_link venue.merchant
     end
     column "Venue", :name
     column "Information", :bio
-    column "Contact Number", :phone
     column "Street", :street
-    column "Country", :country
     actions
   end
 
