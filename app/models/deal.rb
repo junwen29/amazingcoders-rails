@@ -11,7 +11,7 @@ class Deal < ActiveRecord::Base
   has_many :deal_days, :dependent => :destroy
   accepts_nested_attributes_for :deal_days, allow_destroy: true
 
-  scope :waiting, -> {where("start_date > ?", Date.today)}
+  scope :waiting, -> {where("start_date > ? AND active = ?", Date.today, false)}
   scope :active, -> {where("active = ?", true)}
   scope :expired, -> {where("expiry_date < ?", Date.today)}
 
