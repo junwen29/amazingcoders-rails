@@ -18,7 +18,15 @@ Rails.application.routes.draw do
       # deals api
       scope '/deals' do
         get '' => 'deals#index', :as => 'deals'
-        get '/:id' => 'deals#get_deal', :as => 'get_deal'
+
+        scope '/:id' do
+          get ''  => 'deals#get_deal', :as => 'get_deal'
+
+
+          # bookmark api
+          post    '/bookmarks' => "bookmarks#create"
+          delete  '/bookmarks' => "bookmarks#destroy"
+        end
       end
 
       # venues api
