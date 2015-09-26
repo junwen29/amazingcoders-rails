@@ -140,13 +140,13 @@ class DealsController < ApplicationController
     }
     gcm = GCM.new("AIzaSyBGQPh58s2ow6H_OabGrh4vRmzNaNkdRcU")
 
-    description = @deal.description
     item_type = "deal"
     item_id = @deal.id
     item_name = @deal.title
+    message = '**Check out the new deal now!** Click to view more details.'
 
     options = { data:
-                    { message: description, item_type: item_type, item_id: item_id.to_s, item_name: item_name.to_s }
+                    { message: message, item_type: item_type, item_id: item_id.to_s, item_name: item_name.to_s }
     }
     response = gcm.send(tokens,options)
 
