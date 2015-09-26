@@ -126,12 +126,18 @@ class DealsController < ApplicationController
 
   # Change non-active deal to active
   def push
-    @deal.update_attribute(:pushed, true)
-    tokens_array = Array.new
-    @devices = Device.all
-    @devices.each do|d|
-      tokens_array << d.token
-    end
+    tokens = []
+    venues = DealService.get_all_venues(@deal.id)
+
+    # load tokens via users wishes
+    venues.each{ |venue|
+      users = VenueService.wishes_by_venue(venue.id)
+      users.each{|user|
+        user.devices.each{ |device|
+          tokens << device.token
+        }
+      }
+    }
     gcm = GCM.new("AIzaSyBGQPh58s2ow6H_OabGrh4vRmzNaNkdRcU")
 
     description = @deal.description
@@ -139,11 +145,12 @@ class DealsController < ApplicationController
     item_id = @deal.id
     item_name = @deal.title
 
-
     options = { data:
                     { message: description, item_type: item_type, item_id: item_id.to_s, item_name: item_name.to_s }
     }
-    response = gcm.send(tokens_array,options)
+    response = gcm.send(tokens,options)
+
+    @deal.update_attribute(:pushed, true)
 
     flash[:success] = "Deal has been successfully pushed to wishlisted users"
     redirect_to deals_path

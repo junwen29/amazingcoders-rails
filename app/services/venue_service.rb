@@ -12,6 +12,11 @@ class VenueService
       users
     end
 
+    # get user list by venue, it returns Users
+    def wishes_by_venue(venue_id)
+      User.joins(:wishes).where('wishes.venue_id' => venue_id)
+    end
+
     def get(id, user_id = nil)
       venue = Venue.find(id)
       build_venue(venue,user_id)

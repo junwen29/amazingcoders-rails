@@ -87,6 +87,10 @@ class DealService
       deal
     end
 
+    def get_all_venues (deal_id)
+      Venue.joins(:deal_venues).where('deal_venues.deal_id' => deal_id)
+    end
+
   end
 
   class << self
