@@ -69,8 +69,22 @@ class DealService
       deals = Deal.active.order("num_of_redeems DESC")
     end
 
+    def get_bookmark_deals(user_id)
+      deals = BookmarkService.deals_by_user(user_id)
+    end
+
     def get_active_deals_by_type (type)
       deals = Deal.active.type(type).order("created_at DESC")
+    end
+
+    def get(id, user_id = nil)
+      deal = Deal.find(id)
+      build_deal(deal, user_id)
+    end
+
+    def build_deal (deal, user_id)
+      deal.is_bookmarked = BookmarkService.is_bookmarked?(deal.id, user_id) if user_id
+      deal
     end
 
   end
