@@ -11,6 +11,11 @@ class Deal < ActiveRecord::Base
   has_many :deal_days, :dependent => :destroy
   accepts_nested_attributes_for :deal_days, allow_destroy: true
 
+  has_many :bookmarks, inverse_of: :deal, dependent: :destroy
+  has_many :users, through: :bookmarks
+
+  attr_accessor :is_bookmarked
+
   scope :waiting, -> {where("start_date > ?", Date.today)}
   scope :active, -> {where("active = ?", true)}
   scope :expired, -> {where("expiry_date < ?", Date.today)}
