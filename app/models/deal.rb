@@ -15,11 +15,10 @@ class Deal < ActiveRecord::Base
   has_many :users, through: :bookmarks
 
   attr_accessor :is_bookmarked
-
-  scope :waiting, -> {where("start_date > ?", Date.today)}
-  scope :active, -> {where("active = ?", true)}
-  scope :expired, -> {where("expiry_date < ?", Date.today)}
-  scope :type, -> (type) {where(type_of_deal: type)}
+  
+  scope :waiting, -> {where("active = ?", false)}
+  scope :active, -> {where("active = ? AND expiry_date >= ?", true, Date.today)}
+  scope :expired, -> {where("expiry_date < ? AND active = ?", Date.today, true)}
 
   scope :started, -> {where("start_date <= ? AND expiry_date >= ?", Date.today, Date.today)}
   scope :pushed, -> {where("pushed = ?", true)}
