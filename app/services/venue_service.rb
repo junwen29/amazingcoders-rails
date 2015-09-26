@@ -26,7 +26,7 @@ class VenueService
       all_deal_venue = DealVenue.where(:venue_id => venue_id)
       active_deals = []
       all_deal_venue.each do |d|
-        active_deals << Deal.where('expiry_date > ? AND active = true', d.deal_id, Date.today)
+        active_deals << Deal.where('expiry_date >= ? AND active = true', Date.today)
       end
       active_deals
     end
