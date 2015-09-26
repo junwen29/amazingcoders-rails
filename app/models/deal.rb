@@ -22,6 +22,7 @@ class Deal < ActiveRecord::Base
 
   scope :started, -> {where("start_date <= ? AND expiry_date >= ?", Date.today, Date.today)}
   scope :pushed, -> {where("pushed = ?", true)}
+  scope :type, -> (type) {where(type_of_deal: type)}
 
   # For adding images
   has_attached_file :image,
