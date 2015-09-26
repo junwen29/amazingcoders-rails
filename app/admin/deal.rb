@@ -122,6 +122,7 @@ ActiveAdmin.register Deal do
         end
       end
     end
+    active_admin_comments # Add this line for comment block
   end
 
   # EDIT
