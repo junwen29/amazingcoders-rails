@@ -5,7 +5,7 @@ class DealService
     def num_active_deals (merchant_id, deal)
       all_deals = Deal.where(:merchant_id => merchant_id)
       valid_deals = all_deals.where('expiry_date >= ?', Date.today)
-      active_deals = valid_deals.where('expiry_date > ? AND active = true', Date.today)
+      active_deals = valid_deals.where('expiry_date >= ? AND active = true', Date.today)
       active_deals.count
     end
 
