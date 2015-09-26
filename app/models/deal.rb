@@ -79,7 +79,7 @@ class Deal < ActiveRecord::Base
   def valid_period
     payment = Payment.where(:merchant_id => merchant_id)
     payment.each do |p|
-      if DateTime.now.strftime('%Y/%m/%d') >= p.start_date.strftime('%Y/%m/%d') && DateTime.now.strftime('%Y/%m/%d') <= p.expiry_date.strftime('%Y/%m/%d')
+      if Date.today >= p.start_date && Date.today <= p.expiry_date
         if start_date >= p.start_date && start_date <= p.expiry_date && expiry_date >= p.start_date && expiry_date <= p.expiry_date
           return false
         end
