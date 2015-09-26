@@ -1,4 +1,7 @@
 ActiveAdmin.register Deal do
+  # Remove Create New Deal button
+  config.clear_action_items!
+
   controller do
     def update
       @deal = Deal.find(params[:id])
