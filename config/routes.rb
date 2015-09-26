@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       # deals api
       scope '/deals' do
         get '' => 'deals#index', :as => 'deals'
+        get 'venues/:id' => 'venues#get_venues_for_deal', :as => 'get_venues_for_deal'
 
         scope '/:id' do
           get ''  => 'deals#get_deal', :as => 'get_deal'
