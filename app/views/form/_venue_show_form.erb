@@ -13,10 +13,12 @@
   <%= @venue.street %>
 </p>
 
-<p>
-  <strong>Mall/Unit No</strong>
-  <%= @venue.address_2 %>
-</p>
+<% if !@venue.address_2.blank? %>
+    <p>
+      <strong>Mall/Unit No</strong>
+      <%= @venue.address_2 %>
+    </p>
+<% end %>
 
 <p>
   <strong>Postal Code</strong>
