@@ -19,7 +19,7 @@
       </tr>
 
       <% @deals.each do |deal| %>
-          <% if deal.start_date.today? || deal.expiry_date.today? || (deal.start_date.past? && deal.expiry_date.future?) || (deal.expiry_date.future? && deal.active) %>
+          <% if (deal.expiry_date.future?|| deal.expiry_date.today?) && deal.active %>
               <tr>
                 <td><%= deal.title %></td>
                 <td><%= image_tag deal.image.url, :size => "100x100" %></td>
