@@ -4,8 +4,8 @@ class DealService
 
     def num_active_deals (merchant_id, deal)
       all_deals = Deal.where(:merchant_id => merchant_id)
-      valid_deals = all_deals.where('expiry_date >= ?', DateTime.now)
-      active_deals = valid_deals.where('start_date = ? OR expiry_date = ? OR (start_date < ? AND expiry_date > ?) OR (expiry_date > ? AND active = true)', DateTime.now, DateTime.now, DateTime.now, DateTime.now, DateTime.now)
+      valid_deals = all_deals.where('expiry_date >= ?', Date.today)
+      active_deals = valid_deals.where('expiry_date >= ? AND active = true', Date.today)
       active_deals.count
     end
 
@@ -56,9 +56,9 @@ class DealService
 
     def up_coming_deals
       all_deals = Deal.all
-      valid_deals = all_deals.where('expiry_date >= ? AND active = true', DateTime.now)
+      valid_deals = all_deals.where('expiry_date >= ? AND active = true', Date.today)
       future_date = Time.now + 7.days
-      valid_deals.where('start_date > ? AND start_date <= ?', DateTime.now, future_date)
+      valid_deals.where('start_date > ? AND start_date <= ?', Date.today, future_date)
     end
 
     def get_active_deals
