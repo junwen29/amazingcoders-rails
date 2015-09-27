@@ -17,7 +17,6 @@ class Venue < ActiveRecord::Base
 
   validates(:name, presence: true)
   validates(:street, presence: true)
-  validates(:address_2, presence: true)
   validates(:zipcode,presence: true)
   validates(:zipcode, :numericality => {:only_integer => true})
   validates(:neighbourhood, presence: true)
