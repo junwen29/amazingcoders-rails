@@ -19,7 +19,7 @@
 
     <!-- Content Body -->
     <div class="form-style-10">
-      <h1>Edit Venue Form<span> Update the details of your food venues!</span></h1>
+      <h1>Edit Your Venue<span> Update the details of your food venues!</span></h1>
       <%= form_for(@venue, url: venue_path,  :html => {:onSubmit => "return validate_getting_started(this);", :class => "venueForm", :multipart => true}) do |f| %>
           <%= render :partial => 'form/venue_edit_form', :locals => { :f => f , :object => @select_day_hours_string, :venue_type => @venue_type } %>
       <% end %>
