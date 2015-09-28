@@ -11,6 +11,13 @@
 @import "active_admin/_mixins";
 @import "active_admin/_base";
 
+div.venuesCol {
+  width: 200px;
+}
+div.descriptionCol {
+  width: 200px;
+}
+
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //

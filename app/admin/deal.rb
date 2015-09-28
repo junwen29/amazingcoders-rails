@@ -45,12 +45,18 @@ ActiveAdmin.register Deal do
     selectable_column
     column "Title", :title
     column "Type", :type_of_deal
-    column "Description", :description
+    column "Description" do |deal|
+      div :class => "descriptionCol" do
+        deal.description
+      end
+    end
     column "Merchant", :merchant_id do |deal|
       auto_link deal.merchant
     end
     column "Venues" do |deal|
-      deal.venues.map{|v| v.name }.join(", ").html_safe
+      div :class => "venuesCol" do
+        deal.venues.map{|v| v.name }.join(", ").html_safe
+      end
     end
     column "Start Date", :start_date
     column "Expiry Date", :expiry_date
