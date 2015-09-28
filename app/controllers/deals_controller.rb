@@ -166,7 +166,7 @@ class DealsController < ApplicationController
   private
   def check_has_deal_access
     @payment = MerchantService.get_deal_plan(merchant_id)
-    if (@payment.blank?)
+    if (@payment.blank? || (!@payment.paid?))
       render "deals/error"
     end
     @payment

@@ -60,7 +60,7 @@ class PaymentsController < ApplicationController
     end
 
     if @payment.save
-      flash[:success] = "Success in registering plan"
+     # flash[:success] = "Success in registering plan"
       redirect_to new_payment_charge_path(@payment.id)
       #if token is created successfully, go to show page and check if charge is created.
     else
