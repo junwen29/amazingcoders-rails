@@ -1,4 +1,27 @@
 ActiveAdmin.register Deal do
+  # Remove Create New Deal button
+  config.clear_action_items!
+
+  controller do
+    def update
+      @deal = Deal.find(params[:id])
+      if @deal.update_columns(deal_params)
+        flash[:success] = "Deal successfully updated!"
+        redirect_to admin_deal_path
+      else
+        flash[:error] = "Failed to update deal!"
+      end
+    end
+
+    private
+    def deal_params
+      params.require(:deal).permit(:start_date, :title, :redeemable, :multiple_use, :image, :type_of_deal, :description, :location, :t_c, :pushed, :active,
+                                   deal_days_attributes: [:id, :mon, :tue, :wed, :thur, :fri, :sat, :sun, :_destroy,
+                                                          deal_times_attributes: [:id, :started_at, :ended_at, :_destroy]],
+                                   deal_venues_attributes: [:id, :qrCodeLink], venues_attributes: [:id, :location])
+    end
+  end
+
   scope :active
   scope :waiting
   scope :expired
@@ -99,6 +122,7 @@ ActiveAdmin.register Deal do
         end
       end
     end
+    active_admin_comments # Add this line for comment block
   end
 
   # EDIT
@@ -110,10 +134,13 @@ ActiveAdmin.register Deal do
       f.input :t_c, label: "Terms and Conditions"
     end
 
+=begin
+# Admin should NOT be able to edit datetime of deals
     f.inputs "Deal Schedule" do
-      f.input :start_date, label: "Start Date"
-      f.input :expiry_date, label: "Expiry Date"
+      f.input :start_date, label: "Start Date", :as => :string
+      f.input :expiry_date, label: "Expiry Date", :as => :string
     end
+=end
 
     f.inputs "Deal Status" do
       f.input :active, label: "Deal Activated?"
@@ -131,10 +158,4 @@ ActiveAdmin.register Deal do
 
     f.actions
   end
-
-  # Allow edit
-  permit_params :active, :title, :redeemable, :multiple_use, :image, :type_of_deal, :description, :start_date, :expiry_date, :location, :t_c, :pushed,
-                deal_days_attributes: [:id, :mon, :tue, :wed, :thur, :fri, :sat, :sun, :_destroy,
-                                       deal_times_attributes: [:id, :started_at, :ended_at, :_destroy]],
-                deal_venues_attributes: [:id, :qrCodeLink], venues_attributes: [:id, :location]
 end

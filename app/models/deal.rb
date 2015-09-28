@@ -11,12 +11,18 @@ class Deal < ActiveRecord::Base
   has_many :deal_days, :dependent => :destroy
   accepts_nested_attributes_for :deal_days, allow_destroy: true
 
-  scope :waiting, -> {where("start_date > ?", Date.today)}
-  scope :active, -> {where("active = ?", true)}
-  scope :expired, -> {where("expiry_date < ?", Date.today)}
+  has_many :bookmarks, inverse_of: :deal, dependent: :destroy
+  has_many :users, through: :bookmarks
+
+  attr_accessor :is_bookmarked
+  
+  scope :waiting, -> {where("active = ?", false)}
+  scope :active, -> {where("active = ? AND expiry_date >= ?", true, Date.today)}
+  scope :expired, -> {where("expiry_date < ? AND active = ?", Date.today, true)}
 
   scope :started, -> {where("start_date <= ? AND expiry_date >= ?", Date.today, Date.today)}
   scope :pushed, -> {where("pushed = ?", true)}
+  scope :type, -> (type) {where(type_of_deal: type)}
 
   # For adding images
   has_attached_file :image,
@@ -78,7 +84,7 @@ class Deal < ActiveRecord::Base
   def valid_period
     payment = Payment.where(:merchant_id => merchant_id)
     payment.each do |p|
-      if DateTime.now >= p.start_date && DateTime.now <= p.expiry_date
+      if Date.today >= p.start_date && Date.today <= p.expiry_date
         if start_date >= p.start_date && start_date <= p.expiry_date && expiry_date >= p.start_date && expiry_date <= p.expiry_date
           return false
         end

@@ -1,4 +1,5 @@
-<div class="content-form">
+<div class="form-style-10">
+  <h1>Create Deals Form <span>Expand your marketing efforts by listing deals on Burpple!</span></h1>
   <%= form_for @deal, :html => {:multipart => true} do |f| %>
       <p class="form-textarea clearfix">
         <%= f.label :title, "Title of deal*" %>
@@ -20,12 +21,13 @@
         <span><%= f.text_field :start_date%></span>
       </p>
 
-      <p class="form-select clearfix">
+      <p class="form-select half clearfix">
         <%= f.label :expiry_date, "End Date*" %>
         <span><%= f.text_field :expiry_date %></span>
       </p>
 
       <!-- Following is a nested form of deal_day-->
+      <div class="clearfix"></div>
       <p class="form-textarea clearfix">
         <%= f.label :deal_days, "Deal Period*" %>
         <%= f.fields_for :deal_days do |builder| %>
@@ -92,4 +94,4 @@
         <%= link_to 'Back', deals_path, class: "btn btn-big btn-default" %>
       </div>
   <% end %>
-</div><!-- content-form -->
+</div><!-- form-style-10 -->

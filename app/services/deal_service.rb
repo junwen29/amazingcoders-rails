@@ -4,8 +4,8 @@ class DealService
 
     def num_active_deals (merchant_id, deal)
       all_deals = Deal.where(:merchant_id => merchant_id)
-      valid_deals = all_deals.where('expiry_date >= ?', DateTime.now)
-      active_deals = valid_deals.where('start_date = ? OR expiry_date = ? OR (start_date < ? AND expiry_date > ?) OR (expiry_date > ? AND active = true)', DateTime.now, DateTime.now, DateTime.now, DateTime.now, DateTime.now)
+      valid_deals = all_deals.where('expiry_date >= ?', Date.today)
+      active_deals = valid_deals.where('expiry_date >= ? AND active = true', Date.today)
       active_deals.count
     end
 
@@ -56,13 +56,39 @@ class DealService
 
     def up_coming_deals
       all_deals = Deal.all
-      valid_deals = all_deals.where('expiry_date >= ? AND active = true', DateTime.now)
+      valid_deals = all_deals.where('expiry_date >= ? AND active = true', Date.today)
       future_date = Time.now + 7.days
-      valid_deals.where('start_date > ? AND start_date <= ?', DateTime.now, future_date)
+      valid_deals.where('start_date > ? AND start_date <= ?', Date.today, future_date)
     end
 
     def get_active_deals
       all_deals = Deal.active
+    end
+
+    def get_popular_deals
+      deals = Deal.active.order("num_of_redeems DESC")
+    end
+
+    def get_bookmark_deals(user_id)
+      deals = BookmarkService.deals_by_user(user_id)
+    end
+
+    def get_active_deals_by_type (type)
+      deals = Deal.active.type(type).order("created_at DESC")
+    end
+
+    def get(id, user_id = nil)
+      deal = Deal.find(id)
+      build_deal(deal, user_id)
+    end
+
+    def build_deal (deal, user_id)
+      deal.is_bookmarked = BookmarkService.is_bookmarked?(deal.id, user_id) if user_id
+      deal
+    end
+
+    def get_all_venues (deal_id)
+      Venue.joins(:deal_venues).where('deal_venues.deal_id' => deal_id)
     end
 
   end

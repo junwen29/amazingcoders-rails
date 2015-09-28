@@ -1,12 +1,13 @@
 class User < ActiveRecord::Base
 
-  has_many :wishlist, inverse_of: :venue, dependent: :destroy
-  has_many :users, through: :wishlist
-
   include User::Json
   include User::Authentication
 
+  has_many :wishes, inverse_of: :venue, dependent: :destroy
+  has_many :venues, through: :wishes
   has_many :devices, :dependent => :destroy
+  has_many :bookmarks, inverse_of: :deal, dependent: :destroy
+  has_many :deals, through: :bookmarks
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

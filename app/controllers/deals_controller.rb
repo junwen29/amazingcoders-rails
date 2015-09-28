@@ -26,7 +26,7 @@ class DealsController < ApplicationController
   end
 
   def index
-      @deals = MerchantService.get_all_deals(merchant_id)
+    @deals = MerchantService.get_all_deals(merchant_id)
   end
 
   def create
@@ -118,7 +118,7 @@ class DealsController < ApplicationController
     if num_active_deals >= 5
       flash[:error] = "As you currently have more than 5 active deals this process can not be processed!"
     elsif
-      @deal.update_attribute(:active, true)
+    @deal.update_attribute(:active, true)
       flash[:success] = "Deal has been successfully activated! If you require to edit or delete the deal please email Burpple for admin help."
     end
     redirect_to deals_path
@@ -126,24 +126,31 @@ class DealsController < ApplicationController
 
   # Change non-active deal to active
   def push
-    @deal.update_attribute(:pushed, true)
-    tokens_array = Array.new
-    @devices = Device.all
-    @devices.each do|d|
-      tokens_array << d.token
-    end
+    tokens = []
+    venues = DealService.get_all_venues(@deal.id)
+
+    # load tokens via users wishes
+    venues.each{ |venue|
+      users = VenueService.wishes_by_venue(venue.id)
+      users.each{|user|
+        user.devices.each{ |device|
+          tokens << device.token
+        }
+      }
+    }
     gcm = GCM.new("AIzaSyBGQPh58s2ow6H_OabGrh4vRmzNaNkdRcU")
 
-    description = @deal.description
     item_type = "deal"
     item_id = @deal.id
     item_name = @deal.title
-
+    message = '**Check out the new deal now!** Click to view more details.'
 
     options = { data:
-                    { message: description, item_type: item_type, item_id: item_id.to_s, item_name: item_name.to_s }
+                    { message: message, item_type: item_type, item_id: item_id.to_s, item_name: item_name.to_s }
     }
-    response = gcm.send(tokens_array,options)
+    response = gcm.send(tokens,options)
+
+    @deal.update_attribute(:pushed, true)
 
     flash[:success] = "Deal has been successfully pushed to wishlisted users"
     redirect_to deals_path

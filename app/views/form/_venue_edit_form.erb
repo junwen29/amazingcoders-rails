@@ -14,7 +14,7 @@
       </p>
 
       <p class="form-text half clearfix">
-        <%= f.label "Mall / Unit Number*" %>
+        <%= f.label "Mall / Unit Number" %>
         <span><%= f.text_field :address_2, :class => 'half' %></span>
       </p>
       <p class="form-text half clearfix">
@@ -72,7 +72,7 @@
       <em>For best effect, upload an image of 150x150</em>
 
       <div style="margin-top: 30px">
-        <%= f.submit "Create Venue", :class => 'btn btn-big btn-success' %>
+        <%= f.submit "Update Venue", :class => 'btn btn-big btn-success' %>
         <%= link_to 'Back', venues_path, class: "btn btn-big btn-default" %>
       </div>
   <% end %>
