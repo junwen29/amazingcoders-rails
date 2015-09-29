@@ -1,4 +1,7 @@
 ActiveAdmin.register Merchant do
+  # Remove Create New Deal button
+  config.clear_action_items!
+
   menu :parent => "Merchant", :priority => 1
   actions :all, except: [:edit]
 
