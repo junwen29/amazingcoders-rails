@@ -25,7 +25,7 @@ class ChargesController < ApplicationController
         :currency    => 'sgd'
     )
       # Send out payment acknowledgement email
-      PaymentMailer.subscription_email("valued merchant", @payment, MerchantService.get_email(merchant_id)).deliver
+      # PaymentMailer.subscription_email("valued merchant", @payment, MerchantService.get_email(merchant_id)).deliver
     
     rescue Stripe::CardError => e
       flash[:error] = e.message
