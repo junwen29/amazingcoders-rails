@@ -21,8 +21,6 @@ class DealsController < ApplicationController
     @all_venues = MerchantService.get_all_venues(merchant_id)
     @deal_venue = @deal.deal_venues.build
 
-    # Get all venue locations from this merchant
-    @locations = Venue.pluck(:neighbourhood)
   end
 
   def index
