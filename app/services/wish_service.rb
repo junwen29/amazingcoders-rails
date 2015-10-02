@@ -47,13 +47,13 @@ class WishService
       Wish.exists?(venue_id:venue_id, user_id: user_id)
     end
 
-    # Get num of users who wishlist a venue
+    # Get num of users who wish list a venue
     def num_wishlist_venue (venue_id)
       num = Wish.where(:venue_id => venue_id)
       num.count
     end
 
-    # Get num of users who wishlist a deal
+    # Total num of users who wish list the venues associated with a deal
     def num_wishlist_deal(deal_id)
       deal_venue = DealVenue.where(:deal_id => deal_id)
       num = 0
