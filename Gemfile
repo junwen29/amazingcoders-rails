@@ -77,3 +77,7 @@ gem 'prawn-qrcode'
 
 # Google Cloud Messaging gem
 gem "gcm"
+
+# Cloudinary Image Hosting gem
+gem 'cloudinary'
+gem 'attachinary'

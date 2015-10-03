@@ -21,6 +21,9 @@
 
   <%= yield :head %>
 
+  <!--Enable cloudinary services-->
+  <%= cloudinary_js_config %>
+
   <%= csrf_meta_tags %>
 </head>
 <body class="preload">
