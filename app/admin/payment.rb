@@ -1,7 +1,9 @@
 ActiveAdmin.register Payment do
   # actions :all, except: [:edit] # forbid edit to payment information
   config.clear_action_items!
-  
+
+  menu :parent => "Payment", :priority => 1
+
   controller do
     def scoped_collection
       Payment.where(paid: true)
@@ -23,7 +25,7 @@ ActiveAdmin.register Payment do
     end
 
   end
-  
+
   scope :active
   scope :expired
 
@@ -48,6 +50,7 @@ ActiveAdmin.register Payment do
   #filter :add_on3, label: 'Aggregate Trends'
   #filter :created_at
   #filter :updated_at
+
 
   index do
     selectable_column

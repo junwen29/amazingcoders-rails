@@ -8,6 +8,15 @@ class PaymentService
       overlapping_payments = valid_payments.where('expiry_date >= ?', new_start_date)
       overlapping_payments.count
     end
+
+    def count_total_payments()
+      Merchant.count
+    end
+
+    def count_plan_payments(plan_id = 1)
+      Payment.joins(:plan_payments).where('plan_payments.plan_id' => plan_id).count
+    end
+
   end
 
   class << self
