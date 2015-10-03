@@ -26,6 +26,10 @@ class PaymentService
       total_premiums
     end
 
+    def count_addon_payments(addon_id)
+      Payment.joins(:add_on_payments).where('add_on_payments.add_on_id' => addon_id).count
+    end
+
   end
 
   class << self
