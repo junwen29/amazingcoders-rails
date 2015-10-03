@@ -74,7 +74,7 @@
                 <td><%= deal.title %></td>
                 <td>
                   <% if deal.image.present? %>
-                      <%= cl_image_tag(deal.image.path, { size: '100x100', crop: :thumb, gravity: :face }) %>
+                      <%= cl_image_tag(deal.image.path, { size: '100x100', crop: :fit }) %>
                   <% else %>
                       <%= image_tag 'biz/burpple_logo.png', :size => '100x100' %>
                   <% end %>
