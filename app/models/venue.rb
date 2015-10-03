@@ -21,5 +21,4 @@ class Venue < ActiveRecord::Base
   validates(:phone, presence: true)
   validates(:phone, :numericality => {:only_integer => true})
 
-  # validates_attachment_content_type :photo, content_type: /\Aimage/
 end

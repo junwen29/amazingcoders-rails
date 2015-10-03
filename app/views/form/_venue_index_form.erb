@@ -10,7 +10,6 @@
   <% @venues.each do |venue| %>
       <tr>
         <td>
-          <!--<#%= image_tag venue.photo.url, :size => "100x100"%>-->
           <% if venue.photo.present? %>
               <%= cl_image_tag(venue.photo.path, { size: '100x100', crop: :thumb, gravity: :face }) %>
           <% else %>
