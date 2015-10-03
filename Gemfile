@@ -63,7 +63,6 @@ gem 'rqrcode_png'
 
 # For attaching images
 gem 'paperclip'
-gem 'carrierwave'
 
 # Active Admin
 gem 'activeadmin', '~> 1.0.0.pre1'
