@@ -17,6 +17,19 @@ class PaymentService
       Payment.joins(:plan_payments).where('plan_payments.plan_id' => plan_id).count
     end
 
+    def count_addon_payments(addon_id)
+      Payment.joins(:add_on_payments).where('add_on_payments.add_on_id' => addon_id).count
+    end
+
+    def get_total_payments()
+      all_payments = Payment.pluck(:total_cost)
+      total_premiums = 0
+      all_payments.each do |p|
+        total_premiums += p
+      end
+      total_premiums
+    end
+
     def get_plan_payments(plan_id = 1)
       plan_payments = Payment.joins(:plan_payments).where('plan_payments.plan_id' => plan_id).pluck(:total_cost)
       total_premiums = 0
@@ -26,8 +39,13 @@ class PaymentService
       total_premiums
     end
 
-    def count_addon_payments(addon_id)
-      Payment.joins(:add_on_payments).where('add_on_payments.add_on_id' => addon_id).count
+    def get_addon_payments(addon_id)
+      addon_payments = AddOn.joins(:add_on_payments).where('add_on_payments.add_on_id' => addon_id).pluck(:cost)
+      total_premiums = 0
+      addon_payments.each do |p|
+        total_premiums += p
+      end
+      total_premiums
     end
 
   end

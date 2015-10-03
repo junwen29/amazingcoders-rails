@@ -1,8 +1,8 @@
-<h2>Premium Services Analytics</h2>
+<div style="padding-bottom: 50px">
+    <h2>Premium Services Analytics</h2>
+</div>
 <div id="plan_subscribers" style="height: 400px; width:600px; float: left;"></div>
 <div id="plan_payments" style="height: 400px; width:600px; float: left;"></div>
-
-<h2>Addons</h2>
 
 <footer>
   <script src="http://code.highcharts.com/highcharts.js"></script>
@@ -44,7 +44,7 @@
                   colorByPoint: true,
                   data: [{
                       name: "Basic Plan",
-                      y: <%= plan_all %>,
+                      y: <%= plan0 %>,
                       drilldown: null
                   }, {
                       name: "Deal Listing Service",
@@ -71,21 +71,17 @@
                   enabled: false
               },
               chart: {
-                  type: 'pie',
-                  options3d: {
-                      enabled: true,
-                      alpha: 45,
-                      beta: 0
-                  }
+                  type: 'pie'
               },
               title: {
-                  text: 'Revenue from All Premium Services'
+                  text: 'Profits from All Premium Services'
               },
               subtitle: {
                   text: 'Contribution of each service to total revenue'
               },
               tooltip: {
-                  pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                  headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                  pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.percentage:.2f}%</b> of total<br/>'
               },
               plotOptions: {
                   pie: {
@@ -94,18 +90,34 @@
                       depth: 35,
                       dataLabels: {
                           enabled: true,
-                          format: '{point.name} ${point.y}'
+                          format: '{point.name} {point.y}'
                       }
                   }
               },
               series: [{
-                  type: 'pie',
-                  name: 'Subscribers',
-                  data: [
-                      ['Basic Service',  0],
-                      ['Deal Listing Service',  <%= plan1_cost %>]
-                  ]
-              }]
+                  name: "Plans",
+                  colorByPoint: true,
+                  data: [{
+                      name: "Basic Service",
+                      y: 0,
+                      drilldown: null
+                  }, {
+                      name: "Deal Listing Service",
+                      y: <%= plan1_cost %>,
+                      drilldown: "Addons"
+                  }]
+              }],
+              drilldown: {
+                  series: [{
+                      name: "Addons",
+                      id: "Addons",
+                      data: [
+                          ["Push Notification", <%= addon1_cost %>],
+                          ["Deal Statistics", <%= addon2_cost %>],
+                          ["Aggregate Trends", <%= addon3_cost %>]
+                      ]
+                  }]
+              }
           });
       });
   </script>
