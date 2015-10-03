@@ -17,6 +17,15 @@ class PaymentService
       Payment.joins(:plan_payments).where('plan_payments.plan_id' => plan_id).count
     end
 
+    def get_plan_payments(plan_id = 1)
+      plan_payments = Payment.joins(:plan_payments).where('plan_payments.plan_id' => plan_id).pluck(:total_cost)
+      total_premiums = 0
+      plan_payments.each do |p|
+        total_premiums += p
+      end
+      total_premiums
+    end
+
   end
 
   class << self
