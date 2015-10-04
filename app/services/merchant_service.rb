@@ -33,6 +33,10 @@ class MerchantService
       Deal.where(:merchant_id => merchant_id)
     end
 
+    def get_all_active_deals(merchant_id)
+      Deal.where(:merchant_id => merchant_id, :active => true)
+    end
+
     def update_venue(merchant_id, params)
       venue_id = params[:id]
       venue = get_venue(merchant_id, venue_id)
