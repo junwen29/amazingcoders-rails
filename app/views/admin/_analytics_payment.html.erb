@@ -1,8 +1,13 @@
 <div style="padding-bottom: 50px">
-    <h2>Premium Services Analytics</h2>
+  <h2 style="padding-bottom: 50px">Subscription Overview</h2>
+  <div id="monthly_subscriptions" style="height: 400px;"></div>
 </div>
-<div id="plan_subscribers" style="height: 400px; width:600px; float: left;"></div>
-<div id="plan_payments" style="height: 400px; width:600px; float: left;"></div>
+
+<div style="padding-bottom: 50px">
+  <h2 style="padding-bottom: 50px">Premium Services Analytics</h2>
+  <div id="plan_subscribers" style="height: 400px; width:600px; float: left;"></div>
+  <div id="plan_payments" style="height: 400px; width:600px;"></div>
+</div>
 
 <footer>
   <script src="http://code.highcharts.com/highcharts.js"></script>
@@ -91,7 +96,7 @@
                       depth: 35,
                       dataLabels: {
                           enabled: true,
-                          format: '{point.name} {point.y}'
+                          format: '{point.name} ${point.y}'
                       }
                   }
               },
@@ -119,6 +124,51 @@
                       ]
                   }]
               }
+          });
+      });
+  </script>
+
+  <!--Javascript for monthly subscriptions-->
+  <script>
+      $(function () {
+          $('#monthly_subscriptions').highcharts({
+              credits: {
+                  enabled: false
+              },
+              title: {
+                  text: 'Monthly Subscription Count',
+                  x: -20 //center
+              },
+              subtitle: {
+                  text: 'Burpple Premium Services for Merchants',
+                  x: -20
+              },
+              xAxis: {
+                  categories: <%= raw months.as_json %>
+              },
+              yAxis: {
+                  title: {
+                      text: 'Number of subscribers'
+                  },
+                  plotLines: [{
+                      value: 0,
+                      width: 1,
+                      color: '#808080'
+                  }]
+              },
+              tooltip: {
+                  valueSuffix: ' subscribers'
+              },
+              legend: {
+                  layout: 'vertical',
+                  align: 'right',
+                  verticalAlign: 'middle',
+                  borderWidth: 0
+              },
+              series: [{
+                  name: 'Deal Listing Service',
+                  data: <%= deal_subscription_count %>
+              }]
           });
       });
   </script>

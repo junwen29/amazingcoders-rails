@@ -21,6 +21,12 @@ class PaymentService
       Payment.joins(:add_on_payments).where('add_on_payments.add_on_id' => addon_id).count
     end
 
+    def count_active_premiums(date, plan_id=1)
+      all_premiums = Payment.where('start_date <= ? AND expiry_date >= ? AND paid = ?', date, date, true)
+      plan_premiums = all_premiums.joins(:plan_payments).where('plan_payments.plan_id' => plan_id)
+      plan_premiums.count
+    end
+
     def get_total_payments()
       all_payments = Payment.pluck(:total_cost)
       total_premiums = 0
@@ -47,7 +53,6 @@ class PaymentService
       end
       total_premiums
     end
-
   end
 
   class << self
