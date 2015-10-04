@@ -20,9 +20,6 @@ class DealsController < ApplicationController
     # For drop down form
     @all_venues = MerchantService.get_all_venues(merchant_id)
     @deal_venue = @deal.deal_venues.build
-
-    # Get all venue locations from this merchant
-    @locations = Venue.pluck(:neighbourhood)
   end
 
   def index
@@ -33,8 +30,6 @@ class DealsController < ApplicationController
     #for database
     @deal = Merchant.find(merchant_id).deals.new(deal_params)
 
-    # Get all venue locations from this merchant
-    @locations = Venue.pluck(:neighbourhood)
     # For drop down form
     @all_venues = MerchantService.get_all_venues(merchant_id)
     #@deal_venue = @deal.deal_venues.build
@@ -118,7 +113,8 @@ class DealsController < ApplicationController
     if num_active_deals >= 5
       flash[:error] = "As you currently have more than 5 active deals this process can not be processed!"
     elsif
-    @deal.update_attribute(:active, true)
+      @deal.update_attribute(:active, true)
+      @deal.create_deal_analytic
       flash[:success] = "Deal has been successfully activated! If you require to edit or delete the deal please email Burpple for admin help."
     end
     redirect_to deals_path
