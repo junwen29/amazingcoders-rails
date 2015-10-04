@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 20151004122729) do
   create_table "charges", force: true do |t|
   end
 
-  create_table "deal_analytics", force: true do |t|
+  create_table "analytics", force: true do |t|
     t.integer  "deal_id"
     t.integer  "view_count",       default: 0
     t.integer  "redemption_count", default: 0
