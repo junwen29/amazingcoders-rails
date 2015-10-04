@@ -1,4 +1,12 @@
-<div id="analytics" style="min-width: 310px; height: 600px; margin: 0 auto"></div>
+<div id="analytics" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<form>
+  <!--<input type="hidden" name="analytics" value="all">
+  <button class="btn btn-default" type="submit">View past deals</button>
+  <input type="submit" name="sb" value="View Past Deals too">
+  <input type="submit" name="sb" value="View Active Deals only">-->
+  <button name="scope" value="all" type="submit">View past deals too</button>
+  <button name="scope" value="active" type="submit">View active deals only</button>
+</form>
 
 <footer>
   <script src="http://code.highcharts.com/highcharts.js"></script>
@@ -127,7 +135,7 @@
                   }
               },
               xAxis: {
-                  categories: <%= raw @deals_names.as_json %>
+                  categories: <%= raw @active_deal_names.as_json %>
               },
               labels: {
                   items: [{
