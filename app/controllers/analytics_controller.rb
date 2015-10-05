@@ -70,7 +70,7 @@ class AnalyticsController < ApplicationController
   end
 
   def deal_statistics_deal_type
-    # Get deal type and redemption counts for chart
+=begin
     @merchant_deal_types = MerchantService.get_all_deals(merchant_id).pluck('DISTINCT type_of_deal')
     @all_redemption = Array.new
     @merchant_deal_types.each do |type|
@@ -78,7 +78,13 @@ class AnalyticsController < ApplicationController
       redemption = DealAnalytic.get_redemption_count(deal_ids)
       @all_redemption.push redemption
     end
-    raise @all_redemption.inspect
+    #raise @all_redemption.inspect
+=end
+    # Get deal type and redemption counts for chart
+    deal_ids = DealService.get_all_ids_by_type_and_merchant("Discount", merchant_id)
+    @redemption_discount = DealAnalytic.get_redemption_count(deal_ids)
+    deal_ids = DealService.get_all_ids_by_type_and_merchant("Freebies", merchant_id)
+    @redemption_freebies = DealAnalytic.get_redemption_count(deal_ids)
   end
 
 end
