@@ -2,6 +2,7 @@ class AnalyticsController < ApplicationController
   before_action :check_has_analytics_access
 
   def index
+    # TODO: Add all analytics methods
     # Deal Statistics
     deal_statistics
     deal_statistics_deal_type
