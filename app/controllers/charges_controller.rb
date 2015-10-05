@@ -7,6 +7,7 @@ class ChargesController < ApplicationController
     @payment.update(expiry_date: @payment.start_date.months_since(@payment.months))
 
 
+
   end
 
   def create
@@ -30,6 +31,13 @@ class ChargesController < ApplicationController
     rescue Stripe::CardError => e
       flash[:error] = e.message
   end
+
+    @merchant = Merchant.find(merchant_id)
+    total_points = @merchant.total_points
+    total_points += @payment.total_cost
+    @merchant.update(total_points: total_points)
+
+
     flash[:success] = "Plan upgrade completed!"
     @payment.update(paid: true)
     redirect_to payment_path(@payment.id)
