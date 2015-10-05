@@ -16,7 +16,12 @@ class DealAnalytic < ActiveRecord::Base
     if deal_analytics.empty?
       0
     else
-      deal_analytics.pluck(:redemption_count).to_param.to_i
+      total_redemption_count = 0
+      redemption = deal_analytics.pluck(:redemption_count)
+      redemption.each do |r|
+        total_redemption_count += r
+      end
+      total_redemption_count
     end
   end
 

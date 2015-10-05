@@ -22,6 +22,14 @@ class MerchantService
       Payment.where("merchant_id = ? AND start_date <= ? AND expiry_date >= ? AND (add_on2 = ? OR add_on3 = ?)", merchant_id, Date.today, Date.today, true, true).last
     end
 
+    def has_deal_statistics(merchant_id)
+      Payment.where("merchant_id = ? AND paid = ? AND start_date <= ? AND expiry_date >= ? AND add_on2 = ? ", merchant_id, true, Date.today, Date.today, true).last
+    end
+
+    def has_aggregate_trends(merchant_id)
+      Payment.where("merchant_id = ? AND paid = ? AND start_date <= ? AND expiry_date >= ? AND add_on3 = ?", merchant_id, true, Date.today, Date.today, true).last
+    end
+
     # for email
     def get_email(merchant_id)
       merchant = Merchant.find(merchant_id)
