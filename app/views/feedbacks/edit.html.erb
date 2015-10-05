@@ -1,0 +1,40 @@
+<h1>Editing feedback</h1>
+
+<div class="content-form">
+  <%= form_for @feedback, :html => {:multipart => true} do |f| %>
+      <p class="form-text clearfix">
+        <%= f.label "Title of Feedback*" %>
+        <span><%= f.text_field :title %></span>
+      </p>
+
+      <p class="form-textarea clearfix">
+        <%= f.label :category, "Category" %>
+        <span><%= f.select :category, [['Suggestion','Suggestion'],['Complaint','Complaint'],['Issue','Issue']] %></span>
+      </p>
+
+      <p class="form-text clearfix">
+        <%= f.label "Details*" %>
+        <span><%= f.text_field :content %></span>
+      </p>
+
+      <% if @feedback.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@feedback.errors.count, "error") %> prohibited this feedback from being saved:</h2>
+
+            <ul>
+              <% @feedback.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+
+      <div class="actions">
+        <%= f.submit "Update Feedback", :class => 'btn btn-big btn-success' %>
+      </div>
+  <% end %>
+</div>
+
+
+<%= link_to 'Show', @feedback %> |
+<%= link_to 'Back', feedbacks_path %>

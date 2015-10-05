@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :feedbacks
+
   devise_for :users
 
 ################# Android

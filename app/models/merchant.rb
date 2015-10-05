@@ -7,6 +7,7 @@ class Merchant < ActiveRecord::Base
   has_many :venues, dependent: :destroy
   has_many :deals
   has_many :payments
+  has_many :feedbacks
 
   def display_name
     self.email # or whatever column you want
