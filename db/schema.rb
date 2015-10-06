@@ -283,16 +283,6 @@ ActiveRecord::Schema.define(version: 20151006141408) do
   add_index "viewcounts", ["deal_id"], name: "index_viewcounts_on_deal_id", using: :btree
   add_index "viewcounts", ["user_id"], name: "index_viewcounts_on_user_id", using: :btree
 
-  create_table "views", force: true do |t|
-    t.integer  "deal_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "views", ["deal_id"], name: "index_views_on_deal_id", using: :btree
-  add_index "views", ["user_id"], name: "index_views_on_user_id", using: :btree
-
   create_table "wishes", force: true do |t|
     t.integer  "venue_id"
     t.integer  "user_id"
