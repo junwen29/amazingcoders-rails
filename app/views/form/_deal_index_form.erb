@@ -39,14 +39,10 @@
                         </td>
                     <% else %>
                         <td>
-                          <% if @payment.add_on2 %>
-                              <%= link_to push_deal_path(deal), {:style=>'color:#FFFFFF;', :class => "css_class"} do %>
-                                  <button class="btn btn-success" type="button" data-toggle="tooltip" data-placement="top" title="Push deal to total number of users who wishlisted the venues where deal is offered">
-                                    Push Deal <span class="badge"><%= WishService.num_wishlist_deal(deal.id) %></span></button>
-                              <% end %>
-                          <% else %>
-                              <%= link_to 'Push Deal', push_deal_path(deal),
-                                          class: "btn btn-xs btn-success"%>
+                          <%= link_to push_deal_path(deal), {:style => 'color:#FFFFFF;', :class => "css_class"} do %>
+                              <button class="btn btn-success" type="button" data-toggle="tooltip" data-placement="top" title="Push deal to total number of users who wishlisted the venues where deal is offered">
+                                Push Deal <span class="badge"><%= WishService.num_wishlist_deal(deal.id) %></span>
+                              </button>
                           <% end %>
                         </td>
                     <% end %>
