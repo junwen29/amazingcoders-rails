@@ -69,7 +69,9 @@
       <p class="form-text clearfix">
         <%= f.label :photo, 'Upload an image of your venue!' %>
       </p>
-      <%= f.file_field :photo %>
+
+      <%= f.attachinary_file_field :photo %>
+      <%= f.hidden_field(:photo_cache) %>
       <em>For best effect, upload an image of 150x150</em>
 
       <div style="margin-top: 30px">

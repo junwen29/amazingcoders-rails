@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # this will generate '/attachinary/cors' which will be used for iframe file transfers (for unsupported browsers).
+  mount Attachinary::Engine => '/attachinary'
+
   devise_for :users
 
 ################# Android

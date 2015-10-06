@@ -1,6 +1,10 @@
 <p>
   <strong>Venue Photo</strong><br>
-  <%= image_tag @venue.photo.url, :size => "100x100" %>
+  <% if @venue.photo.present? %>
+      <%= cl_image_tag(@venue.photo.path, { size: '100x100', crop: :fit }) %>
+  <% else %>
+      <%= image_tag 'biz/burpple_logo.png', :size => '100x100' %>
+  <% end %>
 </p>
 
 <p>
