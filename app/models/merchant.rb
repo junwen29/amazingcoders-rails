@@ -5,8 +5,8 @@ class Merchant < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :venues, dependent: :destroy
-  has_many :deals
-  has_many :payments
+  has_many :deals, dependent: :destroy
+  has_many :payments, dependent: :destroy
 
   def display_name
     self.email # or whatever column you want
