@@ -91,6 +91,11 @@ class DealService
       Venue.joins(:deal_venues).where('deal_venues.deal_id' => deal_id)
     end
 
+    def count_all_active_deals()
+      active_deals = Deal.where('expiry_date >= ? AND active = true', Date.today)
+      active_deals.count
+    end
+
   end
 
   class << self

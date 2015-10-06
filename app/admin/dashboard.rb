@@ -13,6 +13,23 @@ ActiveAdmin.register_page "Dashboard" do
     end
 =end
 
+    columns do
+      date = Date.today.beginning_of_month
+      @deal_subscription_count = PaymentService.count_active_premiums(date, 1)
+      @total_premiums = PaymentService.get_total_payments()
+      @active_deals = DealService.count_all_active_deals()
+      # TODO: Add dashboard figure for redeemed deals
+
+      column do
+        render partial: 'admin/analytics_dashboard',
+               :locals => {
+                   :deal_subscription_count => @deal_subscription_count,
+                   :premiums => @total_premiums,
+                   :active_deals => @active_deals
+               }
+      end
+    end
+
     panel "Recent Deals" do
       table_for Deal.order("created_at desc").limit(5) do
         column "Title", :title do |deal|

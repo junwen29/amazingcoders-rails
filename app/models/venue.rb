@@ -7,13 +7,11 @@ class Venue < ActiveRecord::Base
   has_many :wishes, inverse_of: :venue, dependent: :destroy
   has_many :users, through: :wishes
 
-  attr_accessor :is_wishlist
-
+  attr_accessor :is_wishlist, :photo, :photo_cache
 
   scope :neighbourhood, ->(location) {where("neighbourhood == ?", location)}
 
-  has_attached_file :photo,
-                    :default_url => 'biz/burpple_logo.png'
+  has_attachment :photo
 
   validates(:name, presence: true)
   validates(:street, presence: true)
@@ -23,5 +21,4 @@ class Venue < ActiveRecord::Base
   validates(:phone, presence: true)
   validates(:phone, :numericality => {:only_integer => true})
 
-  validates_attachment_content_type :photo, content_type: /\Aimage/
 end

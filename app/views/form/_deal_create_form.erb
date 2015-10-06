@@ -51,7 +51,8 @@
       <p class="form-text clearfix">
         <%= f.label :image, 'Upload an image of your deal' %>
       </p>
-      <%= f.file_field :image %>
+      <%= f.attachinary_file_field :image %>
+      <%= f.hidden_field(:image_cache) %>
       <em>For best effect, upload an image of 150x150</em>
 
       <div id= "redeemable">

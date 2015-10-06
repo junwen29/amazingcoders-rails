@@ -4,15 +4,24 @@
     <th>Name of Restaurant</th>
     <th>Street</th>
     <th>Description</th>
+    <th>No. Wishlisted Users</th>
     <th colspan="3"></th>
   </tr>
 
   <% @venues.each do |venue| %>
       <tr>
-        <td><%= image_tag venue.photo.url, :size => "100x100"%></td>
+        <td>
+          <% if venue.photo.present? %>
+              <%= cl_image_tag(venue.photo.path, { size: '100x100', crop: :fit }) %>
+          <% else %>
+              <%= image_tag 'biz/burpple_logo.png', :size => '100x100' %>
+          <% end %>
+        </td>
+
         <td><%= venue.name %></td>
         <td><%= venue.street %></td>
         <td><%= venue.bio %></td>
+        <td><%= WishService.num_wishlist_venue(venue.id) %></td>
         <td><%= link_to 'Show', venue_path(venue), class: "btn btn-xs btn-default" %></td>
         <td><%= link_to 'Edit', edit_venue_path(venue), class: "btn btn-xs btn-default" %></td>
         <td>

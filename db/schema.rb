@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150926053706) do
+ActiveRecord::Schema.define(version: 20150926085312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,11 +30,6 @@ ActiveRecord::Schema.define(version: 20150926053706) do
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
-
-  create_table "activities", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "add_on_payments", force: true do |t|
     t.integer  "add_on_id"
@@ -130,7 +125,7 @@ ActiveRecord::Schema.define(version: 20150926053706) do
     t.string   "location"
     t.string   "t_c"
     t.integer  "num_of_redeems"
-    t.boolean  "pushed"
+    t.boolean  "pushed",             default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "merchant_id"
@@ -169,13 +164,6 @@ ActiveRecord::Schema.define(version: 20150926053706) do
   add_index "merchants", ["email"], name: "index_merchants_on_email", unique: true, using: :btree
   add_index "merchants", ["reset_password_token"], name: "index_merchants_on_reset_password_token", unique: true, using: :btree
 
-  create_table "notifications", force: true do |t|
-    t.boolean  "pushed",     default: false
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "payments", force: true do |t|
     t.date     "start_date"
     t.date     "expiry_date"
@@ -188,6 +176,7 @@ ActiveRecord::Schema.define(version: 20150926053706) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "merchant_id"
+    t.integer  "months"
   end
 
   add_index "payments", ["merchant_id"], name: "index_payments_on_merchant_id", using: :btree
@@ -212,22 +201,6 @@ ActiveRecord::Schema.define(version: 20150926053706) do
   end
 
   add_index "plans", ["payment_id"], name: "index_plans_on_payment_id", using: :btree
-
-  create_table "promotions", force: true do |t|
-    t.string   "description"
-    t.string   "item_type"
-    t.integer  "item_id"
-    t.integer  "view_count",         default: 0
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
-    t.date     "started_at"
-    t.date     "ended_at"
-    t.boolean  "disable"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "users", force: true do |t|
     t.string   "first_name"
@@ -256,9 +229,9 @@ ActiveRecord::Schema.define(version: 20150926053706) do
     t.string   "name"
     t.string   "street"
     t.string   "zipcode"
-    t.string   "city"
-    t.string   "state"
-    t.string   "country"
+    t.string   "city",               default: "Singapore"
+    t.string   "state",              default: "Singapore"
+    t.string   "country",            default: "Singapore"
     t.string   "neighbourhood"
     t.text     "bio"
     t.string   "phone"
@@ -283,5 +256,15 @@ ActiveRecord::Schema.define(version: 20150926053706) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "wishlists", force: true do |t|
+    t.integer  "venue_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "wishlists", ["user_id"], name: "index_wishlists_on_user_id", using: :btree
+  add_index "wishlists", ["venue_id"], name: "index_wishlists_on_venue_id", using: :btree
 
 end
