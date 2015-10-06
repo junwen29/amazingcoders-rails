@@ -15,7 +15,7 @@ class Deal < ActiveRecord::Base
   has_many :users, through: :bookmarks
   has_one :deal_analytic, :dependent => :destroy
   has_many :redemptions, dependent: :destroy
-  has_many :views, dependent: :destroy
+  has_many :viewcounts, dependent: :destroy
 
   attr_accessor :is_bookmarked
   
