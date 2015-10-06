@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151006122812) do
+ActiveRecord::Schema.define(version: 20151006141408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,7 +137,7 @@ ActiveRecord::Schema.define(version: 20151006122812) do
     t.string   "location"
     t.string   "t_c"
     t.integer  "num_of_redeems"
-    t.boolean  "pushed",             default: false
+    t.boolean  "pushed"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "merchant_id"
@@ -272,6 +272,16 @@ ActiveRecord::Schema.define(version: 20151006122812) do
   end
 
   add_index "venues", ["merchant_id"], name: "index_venues_on_merchant_id", using: :btree
+
+  create_table "viewcounts", force: true do |t|
+    t.integer  "deal_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "viewcounts", ["deal_id"], name: "index_viewcounts_on_deal_id", using: :btree
+  add_index "viewcounts", ["user_id"], name: "index_viewcounts_on_user_id", using: :btree
 
   create_table "views", force: true do |t|
     t.integer  "deal_id"
