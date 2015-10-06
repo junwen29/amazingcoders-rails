@@ -22,7 +22,13 @@
           <% if (deal.expiry_date.future?|| deal.expiry_date.today?) && deal.active %>
               <tr>
                 <td><%= deal.title %></td>
-                <td><%= image_tag deal.image.url, :size => "100x100" %></td>
+                <td>
+                  <% if deal.image.present? %>
+                      <%= cl_image_tag(deal.image.path, { size: '100x100', crop: :fit }) %>
+                  <% else %>
+                      <%= image_tag 'biz/burpple_logo.png', :size => '100x100' %>
+                  <% end %>
+                </td>
                 <td><%= deal.description %></td>
                 <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
                 <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
@@ -75,7 +81,13 @@
           <% if !deal.active %>
               <tr>
                 <td><%= deal.title %></td>
-                <td><%= image_tag deal.image.url, :size => "100x100" %></td>
+                <td>
+                  <% if deal.image.present? %>
+                      <%= cl_image_tag(deal.image.path, { size: '100x100', crop: :fit }) %>
+                  <% else %>
+                      <%= image_tag 'biz/burpple_logo.png', :size => '100x100' %>
+                  <% end %>
+                </td>
                 <td><%= deal.description %></td>
                 <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
                 <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
@@ -126,7 +138,13 @@
           <% if deal.expiry_date.past? && deal.active %>
               <tr>
                 <td><%= deal.title %></td>
-                <td><%= image_tag deal.image.url, :size => "100x100" %></td>
+                <td>
+                  <% if deal.image.present? %>
+                      <%= cl_image_tag(deal.image.path, { size: '100x100', crop: :fit }) %>
+                  <% else %>
+                      <%= image_tag 'biz/burpple_logo.png', :size => '100x100' %>
+                  <% end %>
+                </td>
                 <td><%= deal.description %></td>
                 <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
                 <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
