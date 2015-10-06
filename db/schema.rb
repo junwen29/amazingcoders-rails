@@ -137,7 +137,7 @@ ActiveRecord::Schema.define(version: 20151006122812) do
     t.string   "location"
     t.string   "t_c"
     t.integer  "num_of_redeems"
-    t.boolean  "pushed"
+    t.boolean  "pushed",             default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "merchant_id"
