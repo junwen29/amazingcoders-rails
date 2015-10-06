@@ -65,8 +65,8 @@ class AnalyticsController < ApplicationController
     @view_counts = Array.new
     @redemption_counts = Array.new
     @active_deal_ids.each do |id|
-      @view_counts.push DealAnalytic.get_view_count(id)
-      @redemption_counts.push DealAnalytic.get_redemption_count(id)
+      @view_counts.push DealAnalyticService.get_view_count(id)
+      @redemption_counts.push DealAnalyticService.get_redemption_count(id)
     end
   end
 
@@ -76,16 +76,16 @@ class AnalyticsController < ApplicationController
     @all_redemption = Array.new
     @merchant_deal_types.each do |type|
       deal_ids = DealService.get_all_ids_by_type_and_merchant(type, merchant_id)
-      redemption = DealAnalytic.get_redemption_count(deal_ids)
+      redemption = DealAnalyticService.get_redemption_count(deal_ids)
       @all_redemption.push redemption
     end
     #raise @all_redemption.inspect
 =end
     # Get deal type and redemption counts for chart
     deal_ids = DealService.get_all_ids_by_type_and_merchant("Discount", merchant_id)
-    @redemption_discount = DealAnalytic.get_redemption_count(deal_ids)
+    @redemption_discount = DealAnalyticService.get_redemption_count(deal_ids)
     deal_ids = DealService.get_all_ids_by_type_and_merchant("Freebies", merchant_id)
-    @redemption_freebies = DealAnalytic.get_redemption_count(deal_ids)
+    @redemption_freebies = DealAnalyticService.get_redemption_count(deal_ids)
   end
 
 end
