@@ -7,7 +7,26 @@ class DealAnalyticService
       if deal_analytics.empty?
         0
       else
-        deal_analytics.pluck(:view_count).to_param.to_i
+        total_view_count = 0
+        view = deal_analytics.pluck(:view_count)
+        view.each do |v|
+          total_view_count += v
+        end
+        total_view_count
+      end
+    end
+
+    def get_unique_view_count(deal_id)
+      deal_analytics = DealAnalytic.where(:deal_id => deal_id)
+      if deal_analytics.empty?
+        0
+      else
+        total_unique_view_count = 0
+        unique_view = deal_analytics.pluck(:unique_view_count)
+        unique_view.each do |v|
+          total_unique_view_count += v
+        end
+        total_unique_view_count
       end
     end
 
@@ -34,6 +53,18 @@ class DealAnalyticService
         deal_id = deal_analytics.pluck(:id).to_param.to_i
         deal_view_count += increment
         deal_analytics.update(deal_id, {view_count: deal_view_count})
+      end
+    end
+
+    def set_unique_view_count(deal_id, increment = 1)
+      deal_analytics = DealAnalytic.where(:deal_id => deal_id)
+      if deal_analytics.empty?
+        DealAnalytic.create(deal_id: deal_id, unique_view_count: 1)
+      else
+        deal_unique_view_count = deal_analytics.pluck(:unique_view_count).to_param.to_i
+        deal_id = deal_analytics.pluck(:id).to_param.to_i
+        deal_unique_view_count += increment
+        deal_analytics.update(deal_id, {unique_view_count: deal_unique_view_count})
       end
     end
 
