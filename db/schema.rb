@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151004122729) do
+ActiveRecord::Schema.define(version: 20151006122812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,10 +83,11 @@ ActiveRecord::Schema.define(version: 20151004122729) do
   create_table "charges", force: true do |t|
   end
 
-  create_table "analytics", force: true do |t|
+  create_table "deal_analytics", force: true do |t|
     t.integer  "deal_id"
-    t.integer  "view_count",       default: 0
-    t.integer  "redemption_count", default: 0
+    t.integer  "view_count",        default: 0
+    t.integer  "unique_view_count", default: 0
+    t.integer  "redemption_count",  default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -213,6 +214,17 @@ ActiveRecord::Schema.define(version: 20151004122729) do
 
   add_index "plans", ["payment_id"], name: "index_plans_on_payment_id", using: :btree
 
+  create_table "redemptions", force: true do |t|
+    t.integer  "deal_id"
+    t.integer  "user_id"
+    t.integer  "venue_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "redemptions", ["deal_id"], name: "index_redemptions_on_deal_id", using: :btree
+  add_index "redemptions", ["user_id"], name: "index_redemptions_on_user_id", using: :btree
+
   create_table "users", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -260,6 +272,16 @@ ActiveRecord::Schema.define(version: 20151004122729) do
   end
 
   add_index "venues", ["merchant_id"], name: "index_venues_on_merchant_id", using: :btree
+
+  create_table "views", force: true do |t|
+    t.integer  "deal_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "views", ["deal_id"], name: "index_views_on_deal_id", using: :btree
+  add_index "views", ["user_id"], name: "index_views_on_user_id", using: :btree
 
   create_table "wishes", force: true do |t|
     t.integer  "venue_id"

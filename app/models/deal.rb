@@ -14,6 +14,8 @@ class Deal < ActiveRecord::Base
   has_many :bookmarks, inverse_of: :deal, dependent: :destroy
   has_many :users, through: :bookmarks
   has_one :deal_analytic, :dependent => :destroy
+  has_many :redemptions, dependent: :destroy
+  has_many :views, dependent: :destroy
 
   attr_accessor :is_bookmarked
   
