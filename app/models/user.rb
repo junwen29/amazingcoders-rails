@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_many :devices, :dependent => :destroy
   has_many :bookmarks, inverse_of: :deal, dependent: :destroy
   has_many :deals, through: :bookmarks
+  has_many :redemptions
+  has_many :viewcounts
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
