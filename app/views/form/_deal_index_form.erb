@@ -31,7 +31,7 @@
                       <%= venue.name %><br/>
                   <% end %>
                 </td>
-                <% if (@payment.add_on1) %>
+                <% if @payment.add_on1 %>
                     <% if deal.pushed %>
                         <td>
                           <%= link_to 'Pushed', push_deal_path(deal),
@@ -39,8 +39,11 @@
                         </td>
                     <% else %>
                         <td>
-                          <%= link_to 'Push Deal', push_deal_path(deal),
-                             class: "btn btn-xs btn-success"%>
+                          <%= link_to push_deal_path(deal), {:style => 'color:#FFFFFF;', :class => "css_class"} do %>
+                              <button class="btn btn-success" type="button" data-toggle="tooltip" data-placement="top" title="Push deal to total number of users who wishlisted the venues where deal is offered">
+                                Push Deal <span class="badge"><%= WishService.num_wishlist_deal(deal.id) %></span>
+                              </button>
+                          <% end %>
                         </td>
                     <% end %>
                 <% end %>
@@ -82,9 +85,12 @@
                   <% end %>
                 </td>
                 <td>
-                  <%= link_to 'Activate', active_deal_path(deal),
-                              data: { confirm: 'Once deal is activated, it will be published to users. You will not be able to edit or delete the deal until after expiry then. Do you wish to proceed?'},
-                              class: "btn btn-xs btn-success"%>
+                  <%= link_to active_deal_path(deal),
+                              data: { confirm: 'You will not be able to edit or delete the deal once activated. Do you wish to proceed?'} do%>
+                      <button class="btn btn-success" type="button" data-toggle="tooltip" data-placement="top" title="Once deal is activated, users will be able to view and search for the deal">
+                        Activate</button>
+                  <% end %>
+
                 </td>
                 <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
                 <td><%= link_to 'Edit', edit_deal_path(deal), class: "btn btn-xs btn-default" %></td>

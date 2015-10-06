@@ -47,6 +47,30 @@ class WishService
       Wish.exists?(venue_id:venue_id, user_id: user_id)
     end
 
+    # Get num of users who wish list a venue
+    def num_wishlist_venue (venue_id)
+      num = Wish.where(:venue_id => venue_id)
+      num.count
+    end
+
+    # Total num of users who wish list the venues associated with a deal
+    def num_wishlist_deal(deal_id)
+      deal_venue = DealVenue.where(:deal_id => deal_id)
+      num = 0
+      user_id = []
+      deal_venue.each do |dv|
+        wishes = Wish.where(:venue_id => dv.venue_id)
+        user_id.each do |u|
+          wishes = wishes.reject{|r| r.user_id == u}
+        end
+        wishes.each do |w|
+          user_id << w.user_id
+        end
+        num = num + wishes.count
+      end
+      num
+    end
+
   end
 
   class << self
