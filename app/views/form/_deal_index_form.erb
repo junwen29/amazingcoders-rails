@@ -24,7 +24,7 @@
                 <td><%= deal.title %></td>
                 <td>
                   <% if deal.image.present? %>
-                      <%= cl_image_tag(deal.image.path, { size: '100x100', crop: :fit }) %>
+                      <%= cl_image_tag(deal.image.path, {size: '100x100', crop: :fit}) %>
                   <% else %>
                       <%= image_tag 'biz/burpple_logo.png', :size => '100x100' %>
                   <% end %>
@@ -41,7 +41,7 @@
                     <% if deal.pushed %>
                         <td>
                           <%= link_to 'Pushed', push_deal_path(deal),
-                                      class: "btn btn-xs btn-default disabled"%>
+                                      class: "btn btn-xs btn-default disabled" %>
                         </td>
                     <% else %>
                         <td>
@@ -83,7 +83,7 @@
                 <td><%= deal.title %></td>
                 <td>
                   <% if deal.image.present? %>
-                      <%= cl_image_tag(deal.image.path, { size: '100x100', crop: :fit }) %>
+                      <%= cl_image_tag(deal.image.path, {size: '100x100', crop: :fit}) %>
                   <% else %>
                       <%= image_tag 'biz/burpple_logo.png', :size => '100x100' %>
                   <% end %>
@@ -97,20 +97,26 @@
                   <% end %>
                 </td>
                 <td>
-                  <%= link_to active_deal_path(deal),
-                              data: { confirm: 'You will not be able to edit or delete the deal once activated. Do you wish to proceed?'} do%>
-                      <button class="btn btn-success" type="button" data-toggle="tooltip" data-placement="top" title="Once deal is activated, users will be able to view and search for the deal">
-                        Activate</button>
+                  <% if DealService.num_active_deals(deal.merchant_id) >= 5 %>
+                      <button class="btn btn-default disabled" type="button" data-toggle="tooltip" data-placement="top" title="As you currently have more than 5 active deals you are not able to activate deal">
+                        Activate
+                      </button>
+                  <% else %>
+                      <%= link_to active_deal_path(deal),
+                                  data: {confirm: 'You will not be able to edit or delete the deal once activated. Do you wish to proceed?'} do %>
+                          <button class="btn btn-success" type="button" data-toggle="tooltip" data-placement="top" title="Once deal is activated, users will be able to view and search for the deal">
+                            Activate
+                          </button>
+                      <% end %>
                   <% end %>
-
                 </td>
                 <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
                 <td><%= link_to 'Edit', edit_deal_path(deal), class: "btn btn-xs btn-default" %></td>
                 <td>
                   <%= link_to 'Delete', deal_path(deal),
                               method: :delete,
-                              data: { confirm: 'Are you sure?'},
-                              class: "btn btn-xs btn-danger"%>
+                              data: {confirm: 'Are you sure?'},
+                              class: "btn btn-xs btn-danger" %>
                 </td>
               </tr>
           <% end %>
@@ -125,13 +131,13 @@
   </div>
   <div class="panel-body">
     <table class="table table-bordered table-hover table-responsive">
-        <th>Title</th>
-        <th>Image</th>
-        <th>Description</th>
-        <th>Start Date</th>
-        <th>Expiry Date</th>
-        <th>Venue</th>
-        <th colspan="1"></th>
+      <th>Title</th>
+      <th>Image</th>
+      <th>Description</th>
+      <th>Start Date</th>
+      <th>Expiry Date</th>
+      <th>Venue</th>
+      <th colspan="1"></th>
       </tr>
 
       <% @deals.each do |deal| %>
@@ -140,7 +146,7 @@
                 <td><%= deal.title %></td>
                 <td>
                   <% if deal.image.present? %>
-                      <%= cl_image_tag(deal.image.path, { size: '100x100', crop: :fit }) %>
+                      <%= cl_image_tag(deal.image.path, {size: '100x100', crop: :fit}) %>
                   <% else %>
                       <%= image_tag 'biz/burpple_logo.png', :size => '100x100' %>
                   <% end %>

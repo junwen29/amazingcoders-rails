@@ -2,7 +2,7 @@ class DealService
 
   module ClassMethods
 
-    def num_active_deals (merchant_id, deal)
+    def num_active_deals (merchant_id)
       all_deals = Deal.where(:merchant_id => merchant_id)
       valid_deals = all_deals.where('expiry_date >= ?', Date.today)
       active_deals = valid_deals.where('expiry_date >= ? AND active = true', Date.today)
