@@ -4,6 +4,7 @@ class CreatePoints < ActiveRecord::Migration
     create_table :points do |t|
       t.string :reason
       t.integer :burps
+      t.string :operation
       t.timestamps
       t.references :merchant
     end

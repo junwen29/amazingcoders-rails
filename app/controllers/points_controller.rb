@@ -1,9 +1,17 @@
 class PointsController < InheritedResources::Base
 
-  private
 
-    def point_params
-      params.require(:point).permit()
-    end
+  def index
+    @points = MerchantService.get_all_points(merchant_id)
+  end
+
+  def point_params
+    params.require(:point).permit(:burps, :operation, :reason
+
+
+    )
+  end
+
+
 end
 

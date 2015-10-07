@@ -73,6 +73,7 @@ Rails.application.routes.draw do
   devise_for :merchants, controllers: { sessions: "merchants/sessions", registrations: "merchants/registrations"}
   resources :venues
   resources :merchants
+  resources :points
 
   resources :deals
   resources :payments do
