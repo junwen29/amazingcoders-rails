@@ -35,7 +35,7 @@ class DealsController < ApplicationController
     #@deal_venue = @deal.deal_venues.build
 
     # Add venue_id to deal_venue join table
-    venues_arr = params[:venues][:id].drop(1)     # pop out initial null
+    venues_arr = params[:venues][:id].drop(1) # pop out initial null
     # raise venues_arr.inspect
     if !venues_arr.blank?
       venues_arr.each do |venue|
@@ -68,7 +68,7 @@ class DealsController < ApplicationController
     end
 
     # Add venue_id to deal_venue join table
-    venues_arr = params[:venues][:id].drop(1)     # pop out initial null
+    venues_arr = params[:venues][:id].drop(1) # pop out initial null
     venues_arr.each do |venue|
       if !venue.empty?
         @deal.deal_venues.build(:venue_id => venue)
@@ -109,14 +109,9 @@ class DealsController < ApplicationController
 
   # Change non-active deal to active
   def activate
-    num_active_deals = DealService.num_active_deals(@deal.merchant_id, @deal)
-    if num_active_deals >= 5
-      flash[:error] = "As you currently have more than 5 active deals this process can not be processed!"
-    elsif
-      @deal.update_attribute(:active, true)
-      @deal.create_deal_analytic
-      flash[:success] = "Deal has been successfully activated! If you require to edit or delete the deal please email Burpple for admin help."
-    end
+    @deal.update_attribute(:active, true)
+    @deal.create_deal_analytic
+    flash[:success] = "Deal has been successfully activated! If you require to edit or delete the deal please email Burpple for admin help."
     redirect_to deals_path
   end
 
@@ -126,10 +121,10 @@ class DealsController < ApplicationController
     venues = DealService.get_all_venues(@deal.id)
 
     # load tokens via users wishes
-    venues.each{ |venue|
+    venues.each { |venue|
       users = VenueService.wishes_by_venue(venue.id)
-      users.each{|user|
-        user.devices.each{ |device|
+      users.each { |user|
+        user.devices.each { |device|
           tokens << device.token
         }
       }
@@ -141,10 +136,10 @@ class DealsController < ApplicationController
     item_name = @deal.title
     message = '**Check out the new deal now!** Click to view more details.'
 
-    options = { data:
-                    { message: message, item_type: item_type, item_id: item_id.to_s, item_name: item_name.to_s }
+    options = {data:
+                   {message: message, item_type: item_type, item_id: item_id.to_s, item_name: item_name.to_s}
     }
-    response = gcm.send(tokens,options)
+    response = gcm.send(tokens, options)
 
     @deal.update_attribute(:pushed, true)
 
