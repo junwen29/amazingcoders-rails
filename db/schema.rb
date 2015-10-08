@@ -150,7 +150,6 @@ ActiveRecord::Schema.define(version: 20151005170021) do
     t.string   "title"
     t.string   "category"
     t.string   "content"
-    t.boolean  "resolved"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "merchant_id"

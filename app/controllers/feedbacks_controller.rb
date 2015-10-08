@@ -1,4 +1,5 @@
 class FeedbacksController < ApplicationController
+  before_filter :authenticate_merchant!, except: [:home, :help]
 
   def new
     @feedback = Feedback.new
@@ -33,23 +34,23 @@ class FeedbacksController < ApplicationController
     @feedback = Feedback.find(params[:id])
   end
 
-  def edit
-    @feedback = Feedback.find(params[:id])
-
-    # Get data required for dashboard
-    @feedbacks = Feedback.all
-
-    # Get data required for form
-  end
-
-  def update
-    if @feedback.update(feedback_params)
-      flash[:success] = "Feedback successfully updated!"
-      redirect_to @feedback
-    else
-      flash[:error] = "Failed to update feedback!"
-      render 'new'
-    end
-  end
+  # def edit
+  #   @feedback = Feedback.find(params[:id])
+  #
+  #   # Get data required for dashboard
+  #   @feedbacks = Feedback.all
+  #
+  #   # Get data required for form
+  # end
+  #
+  # def update
+  #   if @feedback.update(feedback_params)
+  #     flash[:success] = "Feedback successfully updated!"
+  #     redirect_to @feedback
+  #   else
+  #     flash[:error] = "Failed to update feedback!"
+  #     render 'new'
+  #   end
+  # end
 end
 

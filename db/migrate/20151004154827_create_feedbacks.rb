@@ -4,7 +4,6 @@ class CreateFeedbacks < ActiveRecord::Migration
       t.string :title
       t.string :category
       t.string :content
-      t.boolean :resolved
 
       t.timestamps
     end
