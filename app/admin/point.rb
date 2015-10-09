@@ -72,4 +72,14 @@ ActiveAdmin.register Point do
   end
 =end
 
+=begin
+  controller do
+    def create
+      super do |format|
+        redirect_to new_point_path(@point) and return if resource.valid?
+      end
+    end
+  end
+=end
+
 end
