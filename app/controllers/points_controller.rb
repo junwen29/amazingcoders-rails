@@ -9,6 +9,7 @@ class PointsController < InheritedResources::Base
   def point_params
     params.require(:point).permit(:burps, :operation, :reason)
   end
+=begin
 
   def new
     @point = Point.last
@@ -20,6 +21,7 @@ class PointsController < InheritedResources::Base
   def create
 
   end
+=end
 
 end
 

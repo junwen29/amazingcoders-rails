@@ -17,5 +17,13 @@ class Point < ActiveRecord::Base
 
     @merchant.update(total_points: total_points)
   end
+
+=begin
+  validate :check_operation
+
+  def check_operation
+    errors.add(:base, 'Operation must be either "Add" or "Minus"') if ((@point.operation != "Add" && @point.operation != "Minus") rescue ArgumentError == ArgumentError)
+  end
+=end
 end
 

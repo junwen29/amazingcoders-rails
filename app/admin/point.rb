@@ -1,9 +1,6 @@
 ActiveAdmin.register Point do
-  # Remove Create New Point button
-  # config.clear_action_items!
 
   # Allow edit
-
   permit_params :operation, :burps, :reason, :merchant_id
   actions :all, except: [:show, :destroy]
 
@@ -21,7 +18,7 @@ ActiveAdmin.register Point do
 
   # INDEX
   index do
-    selectable_column
+   # selectable_column
     id_column
     column "Merchant", :merchant_id do |point|
       auto_link point.merchant
@@ -57,29 +54,6 @@ ActiveAdmin.register Point do
     active_admin_comments
   end
 
-=begin
-  # EDIT
-  form do |f|
-    #f.semantic_errors
-    f.inputs "Point Information" do
-      f.input :merchant, as: :select, collection: proc { Merchant.all }
-      f.input :operation, as: :select, collection: ["Add", "Minus"]
-      f.input :burps, as: :string
-      f.input :reason
 
-    end
-    #  f.actions
-  end
-=end
-
-=begin
-  controller do
-    def create
-      super do |format|
-        redirect_to new_point_path(@point) and return if resource.valid?
-      end
-    end
-  end
-=end
 
 end
