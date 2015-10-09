@@ -21,11 +21,10 @@ Rails.application.routes.draw do
       # deals api
       scope '/deals' do
         get '' => 'deals#index', :as => 'deals'
-        get 'venues/:id' => 'venues#get_venues_for_deal', :as => 'get_venues_for_deal'
+        get '/venues/:id' => 'venues#get_venues_for_deal', :as => 'get_venues_for_deal'
 
         scope '/:id' do
           get ''  => 'deals#get_deal', :as => 'get_deal'
-
 
           # bookmark api
           post    '/bookmarks' => "bookmarks#create"
@@ -61,6 +60,10 @@ Rails.application.routes.draw do
       # get '/notifications' => "activities#notifications"
       # get '/notifications/count' => "activities#notification_count"
 
+      # analytics api
+      scope '/analytics' do
+        post '/deal' => 'view_count#create_deal_view_count'
+      end
     end
   end
 
