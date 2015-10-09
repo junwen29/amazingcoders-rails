@@ -9,7 +9,12 @@ class Point < ActiveRecord::Base
     @point = Point.last
     @merchant = Merchant.find(@point.merchant_id)
     total_points = @merchant.total_points
-    total_points += @point.burps
+    if @point.operation == "Add"
+      total_points += @point.burps
+    elsif @point.operation == "Minus"
+      total_points -= @point.burps
+    end
+
     @merchant.update(total_points: total_points)
   end
 end

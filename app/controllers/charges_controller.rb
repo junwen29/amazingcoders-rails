@@ -53,6 +53,12 @@ class ChargesController < ApplicationController
     #if milestone of 12 months is cleared, add 500 to total points
     if (((total_months.to_i + @payment.months.to_i)/12) - (total_months.to_i/12)) != 0
       total_points += 500
+      p = Point.new
+      p.reason = "12 months milestone reward"
+      p.burps = 500
+      p.operation = "Add"
+      p.merchant_id = merchant_id
+      p.save
       flash[:success] = "Plan upgrade completed! You have been awarded " + @payment.total_cost.to_i.to_s + " Burps! Thanks for being a loyal user! You have been credited an extra 500 Burps!"
     end
 
