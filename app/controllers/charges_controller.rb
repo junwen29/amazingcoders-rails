@@ -39,6 +39,7 @@ class ChargesController < ApplicationController
       total_months += p.months
     end
 
+
     p = Point.new
     p.reason = "Paid for a plan upgrade"
     p.burps = @payment.total_cost
@@ -46,21 +47,14 @@ class ChargesController < ApplicationController
     p.merchant_id = merchant_id
     p.save
 
-
-=begin
-    @merchant.points.build(:reason => "Paid for a plan upgrade", :burps => @payment.total_cost, :type => "Add")
-=end
-
     flash[:success] = "Plan upgrade completed! You have been awarded " + @payment.total_cost.to_i.to_s + " Burps!"
     @payment.update(paid: true)
 
     #if milestone of 12 months is cleared, add 500 to total points
-    if ((((total_months.to_i + @payment.months.to_i)/12) - (total_months.to_i/12)) != 0)
+    if (((total_months.to_i + @payment.months.to_i)/12) - (total_months.to_i/12)) != 0
       total_points += 500
       flash[:success] = "Plan upgrade completed! You have been awarded " + @payment.total_cost.to_i.to_s + " Burps! Thanks for being a loyal user! You have been credited an extra 500 Burps!"
     end
-
-
 
     @merchant.update(total_points: total_points)
     redirect_to payment_path(@payment.id)
