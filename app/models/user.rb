@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   validates :last_name, :presence => true, :length => {:maximum => 255}
   validate :username_valid, if: :username_changed?
   validates_uniqueness_of :username, allow_blank: true, allow_nil: true, case_sensitive: false, message: "%{value} is already taken", if: :username_changed?
+  validates_uniqueness_of :email, allow_blank: false, allow_nil: false, case_sensitive: true, message: "%{value} is already taken", if: :email_changed?
 
   def username_valid
     return if username.nil?
