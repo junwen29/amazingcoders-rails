@@ -91,12 +91,8 @@
                       pointInterval: 24 * 3600 * 1000,
                       data: <%= @deals_daily_count[num][3] %>,
                       visible: <%= visibility %>
-                  }
+                  },
                   <% num = num + 1 %>
-                  <% if num != num_active_deals %>
-                  ,
-                  <% end %>
-
                   <% visibility = false %>
                   <% end %>
               ]

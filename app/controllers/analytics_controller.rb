@@ -5,6 +5,7 @@ class AnalyticsController < ApplicationController
     # TODO: Add all analytics methods
     # Deal Statistics
     deal_analytics_by_day
+    deal_analytics_by_type_and_redemption
     deal_statistics
     deal_statistics_deal_type
     # Aggregate Trends
@@ -93,4 +94,7 @@ class AnalyticsController < ApplicationController
     @deals_daily_count = DealAnalyticService.get_analytics_for_line_graph(merchant_id, nil, Date.today.beginning_of_quarter, Date.today)
   end
 
+  def deal_analytics_by_type_and_redemption
+    @deals_popularity_by_type_and_redemption = DealAnalyticService.get_analytics_for_deals_pie_chart(merchant_id)
+  end
 end

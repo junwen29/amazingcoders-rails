@@ -145,6 +145,36 @@ class DealAnalyticService
       array << merchant_id
       array
     end
+
+    # Returns a nested array
+    # array[0] is first deal type. For example array[0] is for all the data of Discounts
+    # array[0][0] gives name of deal type. For example Discounts
+    # array[0][1] gives is the a deal of type discount
+    # array[0][1][0] gives title of deal
+    # array[0][1][1] gives redemption count of that deal
+    # array[0][last number of array] gives total redemption count for that deal type
+    def get_analytics_for_deals_pie_chart(merchant_id)
+      array = Array.new
+      deals = MerchantService.get_all_active_and_past_deals(merchant_id)
+      unique_deal_type = deals.uniq.pluck(:type_of_deal)
+      unique_deal_type.each do |udt|
+        type_array = Array.new
+        type_array << udt
+        total_redemption = 0
+        deal_type = deals.where(:type_of_deal => udt)
+        deal_type.each do |dt|
+          deal_info = Array.new
+          deal_info << dt.title
+          redemption_count = DealAnalytic.where(:deal_id => dt.id).pluck(:redemption_count)[0]
+          deal_info << redemption_count
+          type_array << deal_info
+          total_redemption = total_redemption + redemption_count
+        end
+        type_array << total_redemption
+        array << type_array
+      end
+      array
+    end
   end
 
   class << self
