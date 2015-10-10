@@ -1,0 +1,123 @@
+<div id="analytics_line" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<footer>
+  <script src="http://code.highcharts.com/stock/highstock.js"></script>
+  <script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+
+  <script>
+      $(function () {
+          Highcharts.setOptions({
+              global: {
+                  useUTC: false
+              }
+          });
+          $('#analytics_line').highcharts('StockChart', {
+              credits: {
+                  enabled: false
+              },
+              title: {
+                  text: 'Analytics of all Deals'
+              },
+              subtitle: {
+                  text: 'View Count and Redemption Count'
+              },
+              rangeSelector: {
+                  allButtonsEnabled: true,
+                  buttons: [{
+                      type: 'month',
+                      count: 3,
+                      text: 'Day',
+                      dataGrouping: {
+                          forced: true,
+                          units: [['day', [1]]]
+                      }
+                  }, {
+                      type: 'year',
+                      count: 1,
+                      text: 'Week',
+                      dataGrouping: {
+                          forced: true,
+                          units: [['week', [1]]]
+                      }
+                  }],
+                  buttonTheme: {
+                      width: 60
+                  },
+              },
+
+              yAxis: {
+                  floor: 0,
+                  title: {
+                      text: 'Number'
+                  }
+              },
+
+              plotOptions: {
+                  dataLabels: {
+                      visible: true
+                  }
+              },
+
+              tooltip: {
+                  pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+              },
+              legend: {
+                  enabled: true,
+                  align: 'right',
+                  backgroundColor: '#FCFFC5',
+                  borderColor: 'black',
+                  borderWidth: 2,
+                  layout: 'vertical',
+                  verticalAlign: 'top',
+                  y: 100,
+                  shadow: true
+              },
+
+              series: [
+                  <% num_active_deals = @deals_daily_count.size - 2 %>
+                  <% num = 0 %>
+                  <% visibility = true %>
+                  <% while num < num_active_deals %>
+                  {
+                      name: "<%= @deals_daily_count[num][0] %>" + " (View Count)",
+                      pointStart: <%= @deals_daily_count[num][1] %>,
+                      pointInterval: 24 * 3600 * 1000,
+                      data: <%= @deals_daily_count[num][2] %>,
+                      visible: <%= visibility %>
+                  }, {
+                      name: "<%= @deals_daily_count[num][0] %>" + ' (Redemption Count)',
+                      pointStart: <%= @deals_daily_count[num][1] %>,
+                      pointInterval: 24 * 3600 * 1000,
+                      data: <%= @deals_daily_count[num][3] %>,
+                      visible: <%= visibility %>
+                  }
+                  <% num = num + 1 %>
+                  <% if num != num_active_deals %>
+                  ,
+                  <% end %>
+
+                  <% visibility = false %>
+                  <% end %>
+              ]
+          }, function (chart) {
+
+              // apply the date pickers
+              setTimeout(function () {
+                  $('input.highcharts-range-selector', $(chart.container).parent())
+                          .datepicker();
+              }, 0);
+          });
+
+          // Set the datepicker's date format
+          $.datepicker.setDefaults({
+              dateFormat: 'yy-mm-dd',
+              onSelect: function () {
+                  this.onchange();
+                  this.onblur();
+              }
+          });
+      });
+
+  </script>
+</footer>

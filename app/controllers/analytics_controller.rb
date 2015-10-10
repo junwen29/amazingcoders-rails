@@ -4,6 +4,7 @@ class AnalyticsController < ApplicationController
   def index
     # TODO: Add all analytics methods
     # Deal Statistics
+    deal_analytics_by_day
     deal_statistics
     deal_statistics_deal_type
     # Aggregate Trends
@@ -86,6 +87,10 @@ class AnalyticsController < ApplicationController
     @redemption_discount = DealAnalyticService.get_redemption_count(deal_ids)
     deal_ids = DealService.get_all_ids_by_type_and_merchant("Freebies", merchant_id)
     @redemption_freebies = DealAnalyticService.get_redemption_count(deal_ids)
+  end
+
+  def deal_analytics_by_day
+    @deals_daily_count = DealAnalyticService.get_analytics_for_line_graph(merchant_id, nil, Date.today.beginning_of_quarter, Date.today)
   end
 
 end
