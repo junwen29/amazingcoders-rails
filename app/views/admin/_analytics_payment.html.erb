@@ -50,11 +50,11 @@
                   colorByPoint: true,
                   data: [{
                       name: "Basic Plan",
-                      y: <%= plan0 %>,
+                      y: <%= @plan0 %>,
                       drilldown: null
                   }, {
                       name: "Deal Listing Service",
-                      y: <%= plan1 %>,
+                      y: <%= @plan1 %>,
                       drilldown: "Addons"
                   }]
               }],
@@ -63,9 +63,9 @@
                       name: "Addons",
                       id: "Addons",
                       data: [
-                          ["Push Notification", <%= addon1 %>],
-                          ["Deal Statistics", <%= addon2 %>],
-                          ["Aggregate Trends", <%= addon3 %>]
+                          ["Push Notification", <%= @addon1 %>],
+                          ["Deal Statistics", <%= @addon2 %>],
+                          ["Aggregate Trends", <%= @addon3 %>]
                       ]
                   }]
               }
@@ -109,7 +109,7 @@
                       drilldown: null
                   }, {
                       name: "Deal Listing Service",
-                      y: <%= plan1_cost %>,
+                      y: <%= @plan1_cost %>,
                       drilldown: "Addons"
                   }]
               }],
@@ -118,9 +118,9 @@
                       name: "Addons",
                       id: "Addons",
                       data: [
-                          ["Push Notification", <%= addon1_cost %>],
-                          ["Deal Statistics", <%= addon2_cost %>],
-                          ["Aggregate Trends", <%= addon3_cost %>]
+                          ["Push Notification", <%= @addon1_cost %>],
+                          ["Deal Statistics", <%= @addon2_cost %>],
+                          ["Aggregate Trends", <%= @addon3_cost %>]
                       ]
                   }]
               }
@@ -144,7 +144,7 @@
                   x: -20
               },
               xAxis: {
-                  categories: <%= raw months.as_json %>
+                  categories: <%= raw @months.as_json %>
               },
               yAxis: {
                   title: {
@@ -167,7 +167,7 @@
               },
               series: [{
                   name: 'Deal Listing Service',
-                  data: <%= deal_subscription_count %>
+                  data: <%= @deal_subscription_count %>
               }]
           });
       });
