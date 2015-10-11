@@ -46,12 +46,17 @@ class PaymentService
     end
 
     def get_addon_payments(addon_id)
+      addon_cost = AddOn.find(addon_id).cost
+      addon_count = get_addon_months(addon_id)
+      addon_payment = addon_cost * addon_count
+=begin
       addon_payments = AddOn.joins(:add_on_payments).where('add_on_payments.add_on_id' => addon_id).pluck(:cost)
       total_premiums = 0
       addon_payments.each do |p|
         total_premiums += p
       end
       total_premiums
+=end
     end
 
     def get_plan_months(plan_id = 1)

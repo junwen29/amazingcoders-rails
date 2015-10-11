@@ -15,7 +15,7 @@
   <script src="http://code.highcharts.com/modules/data.js"></script>
   <script src="http://code.highcharts.com/modules/exporting.js"></script>
   <script src="http://code.highcharts.com/modules/drilldown.js"></script>
-  <!--Javascript for Plan Analytics -->
+  <!--Javascript for premium subscriptions -->
   <script>
       $(function () {
           $('#plan_subscribers').highcharts({
@@ -26,7 +26,7 @@
                   type: 'pie'
               },
               title: {
-                  text: 'Popularity of All Premium Services'
+                  text: 'Popularity of All Plans and Add Ons'
               },
               subtitle: {
                   text: 'Number of Subscribers'
@@ -50,11 +50,11 @@
                   name: "Plans",
                   colorByPoint: true,
                   data: [{
-                      name: "Basic Plan",
+                      name: "Basic Services",
                       y: <%= @plan0 %>,
                       drilldown: null
                   }, {
-                      name: "Deal Listing Service",
+                      name: "<%= @plan1_name %>",
                       y: <%= @plan1 %>,
                       drilldown: "Addons"
                   }]
@@ -63,15 +63,15 @@
                   series: [{
                       name: "Addons",
                       id: "Addons",
-                      data: [
-                          ["Push Notification", <%= @addon1 %>],
-                          ["Deal Statistics", <%= @addon2 %>],
-                          ["Aggregate Trends", <%= @addon3 %>]
-                      ]
+                      data: <%= raw @addon_data.as_json %>
                   }]
               }
           });
       });
+  </script>
+
+  <!--Javascript for premium profits-->
+  <script>
       $(function () {
           $('#plan_payments').highcharts({
               credits: {
@@ -81,7 +81,7 @@
                   type: 'pie'
               },
               title: {
-                  text: 'Profits from All Premium Services'
+                  text: 'Profits from All Plans and Add Ons'
               },
               subtitle: {
                   text: 'Contribution of each service to total revenue'
@@ -97,7 +97,7 @@
                       depth: 35,
                       dataLabels: {
                           enabled: true,
-                          format: '{point.name} ${point.y}'
+                          format: '{point.name} \${point.y}'
                       }
                   }
               },
@@ -109,7 +109,7 @@
                       y: 0,
                       drilldown: null
                   }, {
-                      name: "Deal Listing Service",
+                      name: "<%= @plan1_name %>",
                       y: <%= @plan1_cost %>,
                       drilldown: "Addons"
                   }]
@@ -167,7 +167,7 @@
                   borderWidth: 0
               },
               series: [{
-                  name: 'Deal Listing Service',
+                  name: "<%= @plan1_name %>",
                   data: <%= @deal_subscription_count %>
               }]
           });
@@ -189,7 +189,7 @@
                   text: 'Stickiness of Premium Services'
               },
               subtitle: {
-                  text: 'Months of subscription of premium services. Click to view addons.'
+                  text: 'Months of subscription of each plan and add on.'
               },
               xAxis: {
                   type: 'category'
