@@ -1,0 +1,48 @@
+<p>Hi valued merchant</p>
+
+<p>We are writing to inform you that we have updated your subscription service.</p>
+<p>Here are the details for your subscription service:</p>
+
+<p>
+  Plan subscribed:
+  <% if (@payment.plan1)  %>
+      <span class="label label-default">Deal Listing Service</span>
+  <% end %>
+</p>
+
+<p>
+  Add Ons:
+  <% if (@payment.add_on1) %>
+      <span class="label label-default">Push Notification</span>
+  <% end %>
+  <% if (@payment.add_on2) %>
+      <span class="label label-default">Deal Statistics</span>
+  <% end %>
+  <% if (@payment.add_on3) %>
+      <span class="label label-default">Aggregate Trends</span>
+  <% end %>
+</p>
+
+<p>
+  Start Date:
+  <strong><%= @payment.start_date %></strong>
+</p>
+
+<p>
+  Expiry Date:
+  <strong><%= @payment.expiry_date %></strong>
+</p>
+
+<p>
+  Total Price:
+  <strong><%= number_to_currency(@payment.total_cost) %></strong>
+</p>
+
+<p>Please log in to your Burpple account again to access your premium service</p>
+<p>To view your premium plans on Burpple, follow this link: https://amazingcodersrails.herokuapp.com<%= @url %> </p>
+
+<p>If you have any queries on your new subscription service, please contact our merchant support team at Burpple.</p>
+<p>Thank you for using Burpple. Have a nice day!</p>
+
+<p>Best regards,</p>
+<p>Dixon</p>
