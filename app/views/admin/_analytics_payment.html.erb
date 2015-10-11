@@ -7,6 +7,7 @@
   <h2 style="padding-bottom: 50px">Premium Services Analytics</h2>
   <div id="plan_subscribers" style="height: 400px; width:600px; float: left;"></div>
   <div id="plan_payments" style="height: 400px; width:600px;"></div>
+  <div id="plan_months" style="padding-top: 20px"></div>
 </div>
 
 <footer>
@@ -169,6 +170,71 @@
                   name: 'Deal Listing Service',
                   data: <%= @deal_subscription_count %>
               }]
+          });
+      });
+  </script>
+
+  <!--Javscript for Stickiness Analytics-->
+  <script>
+      $(function () {
+          // Create the chart
+          $('#plan_months').highcharts({
+              credits: {
+                  enabled: false
+              },
+              chart: {
+                  type: 'column'
+              },
+              title: {
+                  text: 'Stickiness of Premium Services'
+              },
+              subtitle: {
+                  text: 'Months of subscription of premium services. Click to view addons.'
+              },
+              xAxis: {
+                  type: 'category'
+              },
+              yAxis: {
+                  title: {
+                      text: 'Months of Subscription'
+                  }
+
+              },
+              legend: {
+                  enabled: true
+              },
+              plotOptions: {
+                  series: {
+                      pointWidth: 80,
+                      borderWidth: 0,
+                      dataLabels: {
+                          enabled: true,
+                          format: '{point.y} months'
+                      }
+                  }
+              },
+
+              tooltip: {
+                  headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                  pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> months<br/>'
+              },
+
+              series: [{
+                  name: "Premium Plans",
+                  colorByPoint: true,
+                  data: [{
+                      name: "<%= @plan1_name %>",
+                      y: <%= @plan1_months %>,
+                      drilldown: "<%= @plan1_name %>"
+                  }]
+              }],
+              drilldown: {
+                  series: [{
+                      name: "Add Ons",
+                      id: "<%= @plan1_name %>",
+                      data: <%= raw @addon_data.as_json %>
+                  }]
+              }
           });
       });
   </script>
