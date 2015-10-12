@@ -1,4 +1,6 @@
 ActiveAdmin.register Deal do
+  menu :parent => "Deals", :priority => 1
+
   # Remove Create New Deal button
   config.clear_action_items!
 
