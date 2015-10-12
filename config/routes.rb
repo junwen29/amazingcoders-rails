@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :points
+
   devise_for :users
 
 ################# Android
@@ -72,7 +74,6 @@ Rails.application.routes.draw do
   resources :venues
   resources :merchants
   resources :points
-  resources :packages
 
   resources :deals
   resources :payments do
