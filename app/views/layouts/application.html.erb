@@ -21,6 +21,9 @@
 
   <%= yield :head %>
 
+  <!--Enable cloudinary services-->
+  <%= cloudinary_js_config %>
+
   <%= csrf_meta_tags %>
 </head>
 <body class="preload">
@@ -40,6 +43,7 @@
 </body>
 
 <footer>
+  <%= yield :form_footer %>
   <script>
       $(document).ready(function(){
           // Initialize collapse button

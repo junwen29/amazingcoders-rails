@@ -20,27 +20,22 @@ class DealsController < ApplicationController
     # For drop down form
     @all_venues = MerchantService.get_all_venues(merchant_id)
     @deal_venue = @deal.deal_venues.build
-
-    # Get all venue locations from this merchant
-    @locations = Venue.pluck(:neighbourhood)
   end
 
   def index
-      @deals = MerchantService.get_all_deals(merchant_id)
+    @deals = MerchantService.get_all_deals(merchant_id)
   end
 
   def create
     #for database
     @deal = Merchant.find(merchant_id).deals.new(deal_params)
 
-    # Get all venue locations from this merchant
-    @locations = Venue.pluck(:neighbourhood)
     # For drop down form
     @all_venues = MerchantService.get_all_venues(merchant_id)
     #@deal_venue = @deal.deal_venues.build
 
     # Add venue_id to deal_venue join table
-    venues_arr = params[:venues][:id].drop(1)     # pop out initial null
+    venues_arr = params[:venues][:id].drop(1) # pop out initial null
     # raise venues_arr.inspect
     if !venues_arr.blank?
       venues_arr.each do |venue|
@@ -54,7 +49,7 @@ class DealsController < ApplicationController
       flash[:success] = "Deal successfully created!"
       redirect_to @deal
       # Send out confirmation email
-      # DealMailer.deal_email("Test Food Merchant", @deal, MerchantService.get_email(merchant_id)).deliver
+      # DealMailer.deal_email("valued merchant", @deal, MerchantService.get_email(merchant_id)).deliver
     else
       flash[:error] = "Failed to create deal!"
       render 'new'
@@ -73,7 +68,7 @@ class DealsController < ApplicationController
     end
 
     # Add venue_id to deal_venue join table
-    venues_arr = params[:venues][:id].drop(1)     # pop out initial null
+    venues_arr = params[:venues][:id].drop(1) # pop out initial null
     venues_arr.each do |venue|
       if !venue.empty?
         @deal.deal_venues.build(:venue_id => venue)
@@ -83,7 +78,7 @@ class DealsController < ApplicationController
     if @deal.update(deal_params)
       flash[:success] = "Deal successfully updated!"
       # Send out update email
-      # DealMailer.update_deal_email("Test Food Merchant", @deal, MerchantService.get_email(merchant_id)).deliver
+      # DealMailer.update_deal_email("valued merchant", @deal, MerchantService.get_email(merchant_id)).deliver
       redirect_to @deal
     else
       flash[:error] = "Failed to update deal!"
@@ -114,19 +109,40 @@ class DealsController < ApplicationController
 
   # Change non-active deal to active
   def activate
-    num_active_deals = DealService.num_active_deals(@deal.merchant_id, @deal)
-    if num_active_deals >= 5
-      flash[:error] = "As you currently have more than 5 active deals this process can not be processed!"
-    elsif
-      @deal.update_attribute(:active, true)
-      flash[:success] = "Deal has been successfully activated! If you require to edit or delete the deal please email Burpple for admin help."
-    end
+    @deal.update_attribute(:active, true)
+    @deal.create_deal_analytic
+    flash[:success] = "Deal has been successfully activated! If you require to edit or delete the deal please email Burpple for admin help."
     redirect_to deals_path
   end
 
   # Change non-active deal to active
   def push
+    tokens = []
+    venues = DealService.get_all_venues(@deal.id)
+
+    # load tokens via users wishes
+    venues.each { |venue|
+      users = VenueService.wishes_by_venue(venue.id)
+      users.each { |user|
+        user.devices.each { |device|
+          tokens << device.token
+        }
+      }
+    }
+    gcm = GCM.new("AIzaSyBGQPh58s2ow6H_OabGrh4vRmzNaNkdRcU")
+
+    item_type = "deal"
+    item_id = @deal.id
+    item_name = @deal.title
+    message = '**Check out the new deal now!** Click to view more details.'
+
+    options = {data:
+                   {message: message, item_type: item_type, item_id: item_id.to_s, item_name: item_name.to_s}
+    }
+    response = gcm.send(tokens, options)
+
     @deal.update_attribute(:pushed, true)
+
     flash[:success] = "Deal has been successfully pushed to wishlisted users"
     redirect_to deals_path
   end
@@ -141,7 +157,7 @@ class DealsController < ApplicationController
   private
   def check_has_deal_access
     @payment = MerchantService.get_deal_plan(merchant_id)
-    if (@payment.blank?)
+    if (@payment.blank? || (!@payment.paid?))
       render "deals/error"
     end
     @payment

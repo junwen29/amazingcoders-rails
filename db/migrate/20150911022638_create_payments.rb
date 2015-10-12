@@ -10,7 +10,7 @@ class CreatePayments < ActiveRecord::Migration
       t.boolean     :plan1
       t.boolean     :paid, :default => false
       t.timestamps
-      #paid is not being saved
+
     end
   end
 end

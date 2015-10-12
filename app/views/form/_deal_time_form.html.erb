@@ -1,6 +1,10 @@
 <fieldset>
-  From: <%= f.time_select :started_at, :minute_step => 30, :include_blank => true  %>
-  To:<%= f.time_select :ended_at, :minute_step => 30, :include_blank => true  %>
+  <div class="col-lg-4" style="display: inline-flex; padding-left: 0px">
+    From(HH:MM): <%= f.time_select :started_at, :minute_step => 30, :default => {:hour => '00', :minute => '00'} %>
+  </div>
+  <div class="col-lg-4" style="display: inline-flex; padding-left: 0px">
+    To(HH:MM):<%= f.time_select :ended_at, :minute_step => 30, :default => {:hour => '00', :minute => '00'} %>
+  </div>
   <%= f.hidden_field :_destroy %>
   <%= link_to "Delete timing", '#', class: 'remove_fields' %><br>
 </fieldset>

@@ -1,19 +1,16 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4>Active Deals</h4>
+    <h4>Active Deals (Deals that are now displayed to users)</h4>
   </div>
   <div class="panel-body">
     <table class="table table-bordered table-hover table-responsive">
       <tr>
         <th>Title</th>
         <th>Image</th>
-        <th>Type of Deal</th>
         <th>Description</th>
         <th>Start Date</th>
         <th>Expiry Date</th>
         <th>Venue</th>
-        <th>Redeemable</th>
-        <th>Multiple Use</th>
         <% if (@payment.add_on1) %>
             <th colspan="2"></th>
         <% else %>
@@ -22,11 +19,16 @@
       </tr>
 
       <% @deals.each do |deal| %>
-          <% if deal.start_date.today? || deal.expiry_date.today? || (deal.start_date.past? && deal.expiry_date.future?) || (deal.expiry_date.future? && deal.active) %>
+          <% if (deal.expiry_date.future?|| deal.expiry_date.today?) && deal.active %>
               <tr>
                 <td><%= deal.title %></td>
-                <td><%= image_tag deal.image.url, :size => "150x150" %></td>
-                <td><%= deal.type_of_deal %></td>
+                <td>
+                  <% if deal.image.present? %>
+                      <%= cl_image_tag(deal.image.path, {size: '100x100', crop: :fit}) %>
+                  <% else %>
+                      <%= image_tag 'biz/burpple_logo.png', :size => '100x100' %>
+                  <% end %>
+                </td>
                 <td><%= deal.description %></td>
                 <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
                 <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
@@ -35,26 +37,19 @@
                       <%= venue.name %><br/>
                   <% end %>
                 </td>
-                <% if deal.redeemable %>
-                    <td>Yes</td>
-                <% else %>
-                    <td>No</td>
-                <% end %>
-                <% if deal.multiple_use %>
-                    <td>Unlimited Redemptions</td>
-                <% else %>
-                    <td>One redeem per customer</td>
-                <% end %>
-                <% if (@payment.add_on1) %>
+                <% if @payment.add_on1 %>
                     <% if deal.pushed %>
                         <td>
                           <%= link_to 'Pushed', push_deal_path(deal),
-                                      class: "btn btn-xs btn-default disabled"%>
+                                      class: "btn btn-xs btn-default disabled" %>
                         </td>
                     <% else %>
                         <td>
-                          <%= link_to 'Push Deal', push_deal_path(deal),
-                             class: "btn btn-xs btn-success"%>
+                          <%= link_to push_deal_path(deal), {:style => 'color:#FFFFFF;', :class => "css_class"} do %>
+                              <button class="btn btn-success" type="button" data-toggle="tooltip" data-placement="top" title="Push deal to total number of users who wishlisted the venues where deal is offered">
+                                Push Deal <span class="badge"><%= WishService.num_wishlist_deal(deal.id) %></span>
+                              </button>
+                          <% end %>
                         </td>
                     <% end %>
                 <% end %>
@@ -68,29 +63,31 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4>Waiting Deals</h4>
+    <h4>Waiting Deals (Deals that are not displayed to users until you press activate)</h4>
   </div>
   <div class="panel-body">
     <table class="table table-bordered table-hover table-responsive">
       <tr>
         <th>Title</th>
         <th>Image</th>
-        <th>Type of Deal</th>
         <th>Description</th>
         <th>Start Date</th>
         <th>Expiry Date</th>
         <th>Venue</th>
-        <th>Redeemable</th>
-        <th>Multiple Use</th>
         <th colspan="4"></th>
       </tr>
 
       <% @deals.each do |deal| %>
-          <% if deal.start_date.future? && !deal.active %>
+          <% if !deal.active %>
               <tr>
                 <td><%= deal.title %></td>
-                <td><%= image_tag deal.image.url, :size => "150x150" %></td>
-                <td><%= deal.type_of_deal %></td>
+                <td>
+                  <% if deal.image.present? %>
+                      <%= cl_image_tag(deal.image.path, {size: '100x100', crop: :fit}) %>
+                  <% else %>
+                      <%= image_tag 'biz/burpple_logo.png', :size => '100x100' %>
+                  <% end %>
+                </td>
                 <td><%= deal.description %></td>
                 <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
                 <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
@@ -99,28 +96,27 @@
                       <%= venue.name %><br/>
                   <% end %>
                 </td>
-                <% if deal.redeemable %>
-                    <td>Yes</td>
-                <% else %>
-                    <td>No</td>
-                <% end %>
-                <% if deal.multiple_use %>
-                    <td>Unlimited Redemptions</td>
-                <% else %>
-                    <td>One redeem per customer</td>
-                <% end %>
                 <td>
-                  <%= link_to 'Activate', active_deal_path(deal),
-                              data: { confirm: 'Once deal is activated, it will be published to users. You will not be able to edit or delete the deal until after expiry then. Do you wish to proceed?'},
-                              class: "btn btn-xs btn-success"%>
+                  <% if DealService.num_active_deals(deal.merchant_id) >= 5 %>
+                      <button class="btn btn-default disabled" type="button" data-toggle="tooltip" data-placement="top" title="As you currently have more than 5 active deals you are not able to activate deal">
+                        Activate
+                      </button>
+                  <% else %>
+                      <%= link_to active_deal_path(deal),
+                                  data: {confirm: 'You will not be able to edit or delete the deal once activated. Do you wish to proceed?'} do %>
+                          <button class="btn btn-success" type="button" data-toggle="tooltip" data-placement="top" title="Once deal is activated, users will be able to view and search for the deal">
+                            Activate
+                          </button>
+                      <% end %>
+                  <% end %>
                 </td>
                 <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
                 <td><%= link_to 'Edit', edit_deal_path(deal), class: "btn btn-xs btn-default" %></td>
                 <td>
                   <%= link_to 'Delete', deal_path(deal),
                               method: :delete,
-                              data: { confirm: 'Are you sure?'},
-                              class: "btn btn-xs btn-danger"%>
+                              data: {confirm: 'Are you sure?'},
+                              class: "btn btn-xs btn-danger" %>
                 </td>
               </tr>
           <% end %>
@@ -131,28 +127,30 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4>Past Deals</h4>
+    <h4>Past Deals (Deals that are expired)</h4>
   </div>
   <div class="panel-body">
     <table class="table table-bordered table-hover table-responsive">
-        <th>Title</th>
-        <th>Image</th>
-        <th>Type of Deal</th>
-        <th>Description</th>
-        <th>Start Date</th>
-        <th>Expiry Date</th>
-        <th>Venue</th>
-        <th>Redeemable</th>
-        <th>Multiple Use</th>
-        <th colspan="1"></th>
+      <th>Title</th>
+      <th>Image</th>
+      <th>Description</th>
+      <th>Start Date</th>
+      <th>Expiry Date</th>
+      <th>Venue</th>
+      <th colspan="1"></th>
       </tr>
 
       <% @deals.each do |deal| %>
-          <% if deal.expiry_date.past? %>
+          <% if deal.expiry_date.past? && deal.active %>
               <tr>
                 <td><%= deal.title %></td>
-                <td><%= image_tag deal.image.url, :size => "150x150" %></td>
-                <td><%= deal.type_of_deal %></td>
+                <td>
+                  <% if deal.image.present? %>
+                      <%= cl_image_tag(deal.image.path, {size: '100x100', crop: :fit}) %>
+                  <% else %>
+                      <%= image_tag 'biz/burpple_logo.png', :size => '100x100' %>
+                  <% end %>
+                </td>
                 <td><%= deal.description %></td>
                 <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
                 <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
@@ -161,16 +159,6 @@
                       <%= venue.name %><br/>
                   <% end %>
                 </td>
-                <% if deal.redeemable %>
-                    <td>Yes</td>
-                <% else %>
-                    <td>No</td>
-                <% end %>
-                <% if deal.multiple_use %>
-                    <td>Unlimited Redemptions</td>
-                <% else %>
-                    <td>One redeem per customer</td>
-                <% end %>
                 <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
               </tr>
           <% end %>

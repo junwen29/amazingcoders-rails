@@ -8,17 +8,25 @@
         <div class="alert alert-<%= key %>"><%= value %></div>
     <% end %>
 
-    <p class="b2 content-title">View Venue</p>
+    <div class="form-style-10">
+      <h1><%= @venue.name %></h1>
+      <%= render :partial => 'form/venue_show_form' %>
+    </div>
 
-    <div class="content-separator"></div>
-    <%= render :partial => 'form/venue_show_form' %>
+    <div style="text-align:center">
+      <%= link_to 'Edit venue', edit_venue_path, class: "btn btn-xs btn-success" %>
+      <%= link_to 'See all outlets', venues_path, class: "btn btn-lg btn-info" %>
+    </div>
 
-    <%= link_to 'See all outlets', venues_path, class: "btn btn-lg btn-default" %>
-  </div>
-</div>
+  </div><!--content-->
+</div><!--contentWrapper -->
 
 <%= content_for :lean_overlay do %>
 <% end %>
 
 <%= content_for :body_footer do %>
+<% end %>
+
+<%= content_for :form_footer do %>
+    <%= render :partial => 'layouts/form_style' %>
 <% end %>

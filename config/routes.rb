@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # this will generate '/attachinary/cors' which will be used for iframe file transfers (for unsupported browsers).
+  mount Attachinary::Engine => '/attachinary'
+
   devise_for :users
 
 ################# Android
@@ -9,15 +12,54 @@ Rails.application.routes.draw do
           # post 'registrations' => 'registrations#create', :as => 'register'
           post '/sign_in' => 'sessions#create'
           delete '/sign_out' => 'sessions#destroy'
-          post '/sign_up' => "registrations#create"
+          post '/sign_up' => 'registrations#create'
         end
       end
 
       get 'tasks' => 'tasks#index', :as => 'tasks'
 
       # deals api
-      get 'deals' => "deals#index", :as => 'index'
+      scope '/deals' do
+        get '' => 'deals#index', :as => 'deals'
+        get 'venues/:id' => 'venues#get_venues_for_deal', :as => 'get_venues_for_deal'
 
+        scope '/:id' do
+          get ''  => 'deals#get_deal', :as => 'get_deal'
+
+
+          # bookmark api
+          post    '/bookmarks' => "bookmarks#create"
+          delete  '/bookmarks' => "bookmarks#destroy"
+        end
+      end
+
+      # venues api
+      scope '/venues' do
+        get '' => 'venues#index', :as => 'venues'
+        #### TODO change this route or fetching of venues should include associated json deals
+        get '/deals/:id' => 'deals#get_deals_for_venue', :as => 'get_deals_for_venue'
+
+        scope '/:id' do
+          get ''=> 'venues#get_venue', :as => 'get_venue'
+
+
+          # wish api
+          #get     '/wishes' => "wishes#wishes_by_venue" # based on venue
+          post    '/wishes' => "wishes#create"
+          delete  '/wishes' => "wishes#destroy"
+
+        end
+      end
+
+      ## to register device token
+      scope '/devices' do
+        post '' => 'devices#create'
+        delete '' => 'devices#destroy'
+      end
+
+      # TODO notifications
+      # get '/notifications' => "activities#notifications"
+      # get '/notifications/count' => "activities#notification_count"
 
     end
   end
@@ -37,6 +79,7 @@ Rails.application.routes.draw do
   resources :payments do
     resources :charges
   end
+  resources :analytics
 
 # To change a deal into active deal then going back to index page
   get 'deals/:id/activate' => 'deals#activate', :as => 'active_deal'

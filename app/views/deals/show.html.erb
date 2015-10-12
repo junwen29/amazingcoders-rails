@@ -8,12 +8,14 @@
         <div class="alert alert-<%= key %>"><%= value %></div>
     <% end %>
 
-    <p class="b2 content-title">View Deals</p>
-    <div class="content-separator"></div>
+    <div class="form-style-10">
+      <h1><%= @deal.title %></h1>
 
-    <!-- Content Body -->
-    <%= render :partial => 'form/deal_show_form' %>
-    <%= link_to 'Back', deals_path, class: "btn btn-big btn-default" %>
+      <!-- Content Body -->
+      <%= render :partial => 'form/deal_show_form' %>
+    </div>
+
+
   </div>
 </div>
 
@@ -21,4 +23,8 @@
 <% end %>
 
 <%= content_for :body_footer do %>
+<% end %>
+
+<%= content_for :form_footer do %>
+    <%= render :partial => 'layouts/form_style' %>
 <% end %>

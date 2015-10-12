@@ -1,0 +1,242 @@
+<div style="padding-bottom: 50px">
+  <h2 style="padding-bottom: 50px">Subscription Overview</h2>
+  <div id="monthly_subscriptions" style="height: 400px;"></div>
+</div>
+
+<div style="padding-bottom: 50px">
+  <h2 style="padding-bottom: 50px">Premium Services Analytics</h2>
+  <div id="plan_subscribers" style="height: 400px; width:600px; float: left;"></div>
+  <div id="plan_payments" style="height: 400px; width:600px;"></div>
+  <div id="plan_months" style="padding-top: 20px"></div>
+</div>
+
+<footer>
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src="http://code.highcharts.com/modules/data.js"></script>
+  <script src="http://code.highcharts.com/modules/exporting.js"></script>
+  <script src="http://code.highcharts.com/modules/drilldown.js"></script>
+
+  <!--Javascript for premium subscriptions -->
+  <script>
+      $(function () {
+          $('#plan_subscribers').highcharts({
+              credits: {
+                  enabled: false
+              },
+              chart: {
+                  type: 'pie'
+              },
+              title: {
+                  text: 'Popularity of All Plans and Add Ons'
+              },
+              subtitle: {
+                  text: 'Number of Subscribers'
+              },
+              tooltip: {
+                  headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                  pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.percentage:.2f}%</b> of total<br/>'
+              },
+              plotOptions: {
+                  pie: {
+                      allowPointSelect: true,
+                      cursor: 'pointer',
+                      depth: 35,
+                      dataLabels: {
+                          enabled: true,
+                          format: '{point.name} {point.y}'
+                      }
+                  }
+              },
+              series: [{
+                  name: "Plans",
+                  colorByPoint: true,
+                  data: [{
+                      name: "Basic Services",
+                      y: <%= @plan0 %>,
+                      drilldown: null
+                  }, {
+                      name: "<%= @plan1_name %>",
+                      y: <%= @plan1 %>,
+                      drilldown: "Addons"
+                  }]
+              }],
+              drilldown: {
+                  series: [{
+                      name: "Addons",
+                      id: "Addons",
+                      data: <%= raw @addon_data.as_json %>
+                  }]
+              }
+          });
+      });
+  </script>
+
+  <!--Javascript for premium profits-->
+  <script>
+      $(function () {
+          $('#plan_payments').highcharts({
+              credits: {
+                  enabled: false
+              },
+              chart: {
+                  type: 'pie'
+              },
+              title: {
+                  text: 'Profits from All Plans and Add Ons'
+              },
+              subtitle: {
+                  text: 'Contribution of each service to total revenue'
+              },
+              tooltip: {
+                  headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                  pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.percentage:.2f}%</b> of total<br/>'
+              },
+              plotOptions: {
+                  pie: {
+                      allowPointSelect: true,
+                      cursor: 'pointer',
+                      depth: 35,
+                      dataLabels: {
+                          enabled: true,
+                          format: '{point.name} \${point.y}'
+                      }
+                  }
+              },
+              series: [{
+                  name: "Plans",
+                  colorByPoint: true,
+                  data: [{
+                      name: "Basic Service",
+                      y: 0,
+                      drilldown: null
+                  }, {
+                      name: "<%= @plan1_name %>",
+                      y: <%= @plan1_cost %>,
+                      drilldown: "Addons"
+                  }]
+              }],
+              drilldown: {
+                  series: [{
+                      name: "Addons",
+                      id: "Addons",
+                      data: [
+                          ["Push Notification", <%= @addon1_cost %>],
+                          ["Deal Statistics", <%= @addon2_cost %>],
+                          ["Aggregate Trends", <%= @addon3_cost %>]
+                      ]
+                  }]
+              }
+          });
+      });
+  </script>
+
+  <!--Javascript for monthly subscriptions-->
+  <script>
+      $(function () {
+          $('#monthly_subscriptions').highcharts({
+              credits: {
+                  enabled: false
+              },
+              title: {
+                  text: 'Monthly Subscription Count',
+                  x: -20 //center
+              },
+              subtitle: {
+                  text: 'Burpple Premium Services for Merchants',
+                  x: -20
+              },
+              xAxis: {
+                  categories: <%= raw @months.as_json %>
+              },
+              yAxis: {
+                  title: {
+                      text: 'Number of subscribers'
+                  },
+                  plotLines: [{
+                      value: 0,
+                      width: 1,
+                      color: '#808080'
+                  }]
+              },
+              tooltip: {
+                  valueSuffix: ' subscribers'
+              },
+              legend: {
+                  layout: 'vertical',
+                  align: 'right',
+                  verticalAlign: 'middle',
+                  borderWidth: 0
+              },
+              series: [{
+                  name: "<%= @plan1_name %>",
+                  data: <%= @deal_subscription_count %>
+              }]
+          });
+      });
+  </script>
+
+  <!--Javscript for Stickiness Analytics-->
+  <script>
+      $(function () {
+          // Create the chart
+          $('#plan_months').highcharts({
+              credits: {
+                  enabled: false
+              },
+              chart: {
+                  type: 'column'
+              },
+              title: {
+                  text: 'Stickiness of Premium Services'
+              },
+              subtitle: {
+                  text: 'Months of subscription of each plan and add on'
+              },
+              xAxis: {
+                  type: 'category'
+              },
+              yAxis: {
+                  title: {
+                      text: 'Months of Subscription'
+                  }
+
+              },
+              legend: {
+                  enabled: true
+              },
+              plotOptions: {
+                  series: {
+                      pointWidth: 80,
+                      borderWidth: 0,
+                      dataLabels: {
+                          enabled: true,
+                          format: '{point.y} months'
+                      }
+                  }
+              },
+
+              tooltip: {
+                  headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                  pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> months<br/>'
+              },
+
+              series: [{
+                  name: "Premium Plans",
+                  colorByPoint: true,
+                  data: [{
+                      name: "<%= @plan1_name %>",
+                      y: <%= @plan1_months %>,
+                      drilldown: "<%= @plan1_name %>"
+                  }]
+              }],
+              drilldown: {
+                  series: [{
+                      name: "Add Ons",
+                      id: "<%= @plan1_name %>",
+                      data: <%= raw @addon_data.as_json %>
+                  }]
+              }
+          });
+      });
+  </script>
+</footer>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150922064319) do
+ActiveRecord::Schema.define(version: 20151006141408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,8 +73,42 @@ ActiveRecord::Schema.define(version: 20150922064319) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "attachinary_files", force: true do |t|
+    t.integer  "attachinariable_id"
+    t.string   "attachinariable_type"
+    t.string   "scope"
+    t.string   "public_id"
+    t.string   "version"
+    t.integer  "width"
+    t.integer  "height"
+    t.string   "format"
+    t.string   "resource_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "attachinary_files", ["attachinariable_type", "attachinariable_id", "scope"], name: "by_scoped_parent", using: :btree
+
+  create_table "bookmarks", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "deal_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "charges", force: true do |t|
   end
+
+  create_table "deal_analytics", force: true do |t|
+    t.integer  "deal_id"
+    t.integer  "view_count",        default: 0
+    t.integer  "unique_view_count", default: 0
+    t.integer  "redemption_count",  default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "deal_analytics", ["deal_id"], name: "index_deal_analytics_on_deal_id", using: :btree
 
   create_table "deal_days", force: true do |t|
     t.integer  "deal_id"
@@ -111,7 +145,6 @@ ActiveRecord::Schema.define(version: 20150922064319) do
     t.string   "title"
     t.boolean  "redeemable"
     t.boolean  "multiple_use"
-    t.string   "image"
     t.string   "type_of_deal"
     t.string   "description"
     t.date     "start_date"
@@ -119,7 +152,7 @@ ActiveRecord::Schema.define(version: 20150922064319) do
     t.string   "location"
     t.string   "t_c"
     t.integer  "num_of_redeems"
-    t.boolean  "pushed"
+    t.boolean  "pushed",             default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "merchant_id"
@@ -131,6 +164,14 @@ ActiveRecord::Schema.define(version: 20150922064319) do
   end
 
   add_index "deals", ["merchant_id"], name: "index_deals_on_merchant_id", using: :btree
+
+  create_table "devices", force: true do |t|
+    t.integer  "user_id"
+    t.string   "device_type"
+    t.string   "token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "merchants", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -162,6 +203,7 @@ ActiveRecord::Schema.define(version: 20150922064319) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "merchant_id"
+    t.integer  "months"
   end
 
   add_index "payments", ["merchant_id"], name: "index_payments_on_merchant_id", using: :btree
@@ -187,8 +229,21 @@ ActiveRecord::Schema.define(version: 20150922064319) do
 
   add_index "plans", ["payment_id"], name: "index_plans_on_payment_id", using: :btree
 
+  create_table "redemptions", force: true do |t|
+    t.integer  "deal_id"
+    t.integer  "user_id"
+    t.integer  "venue_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "redemptions", ["deal_id"], name: "index_redemptions_on_deal_id", using: :btree
+  add_index "redemptions", ["user_id"], name: "index_redemptions_on_user_id", using: :btree
+
   create_table "users", force: true do |t|
-    t.string   "name",                   default: "", null: false
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "username"
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -212,9 +267,9 @@ ActiveRecord::Schema.define(version: 20150922064319) do
     t.string   "name"
     t.string   "street"
     t.string   "zipcode"
-    t.string   "city"
-    t.string   "state"
-    t.string   "country"
+    t.string   "city",               default: "Singapore"
+    t.string   "state",              default: "Singapore"
+    t.string   "country",            default: "Singapore"
     t.string   "neighbourhood"
     t.text     "bio"
     t.string   "phone"
@@ -232,5 +287,22 @@ ActiveRecord::Schema.define(version: 20150922064319) do
   end
 
   add_index "venues", ["merchant_id"], name: "index_venues_on_merchant_id", using: :btree
+
+  create_table "viewcounts", force: true do |t|
+    t.integer  "deal_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "viewcounts", ["deal_id"], name: "index_viewcounts_on_deal_id", using: :btree
+  add_index "viewcounts", ["user_id"], name: "index_viewcounts_on_user_id", using: :btree
+
+  create_table "wishes", force: true do |t|
+    t.integer  "venue_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

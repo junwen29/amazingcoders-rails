@@ -19,4 +19,3 @@ jQuery ->
     else
       $("#plan1_true").hide();
 
-

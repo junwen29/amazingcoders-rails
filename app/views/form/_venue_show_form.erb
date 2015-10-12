@@ -1,6 +1,10 @@
 <p>
   <strong>Venue Photo</strong><br>
-  <%= image_tag @venue.photo.url, :size => "150x150" %>
+  <% if @venue.photo.present? %>
+      <%= cl_image_tag(@venue.photo.path, { size: '100x100', crop: :fit }) %>
+  <% else %>
+      <%= image_tag 'biz/burpple_logo.png', :size => '100x100' %>
+  <% end %>
 </p>
 
 <p>
@@ -13,30 +17,18 @@
   <%= @venue.street %>
 </p>
 
-<p>
-  <strong>Mall/Unit No</strong>
-  <%= @venue.address_2 %>
-</p>
+<% if !@venue.address_2.blank? %>
+    <p>
+      <strong>Mall/Unit No</strong>
+      <%= @venue.address_2 %>
+    </p>
+<% end %>
 
 <p>
   <strong>Postal Code</strong>
   <%= @venue.zipcode %>
 </p>
 
-<p>
-  <strong>City</strong>
-  <%= @venue.city %>
-</p>
-
-<p>
-  <strong>State</strong>
-  <%= @venue.state%>
-</p>
-
-<p>
-  <strong>Country</strong>
-  <%= @venue.country %>
-</p>
 
 <p>
   <strong>Neighbourhood</strong>

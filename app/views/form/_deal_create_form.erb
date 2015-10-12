@@ -1,33 +1,35 @@
-<div class="content-form">
-  <%= form_for @deal, url: deals_path, :html => {:multipart => true} do |f| %>
+<div class="form-style-10">
+  <h1>List a new deal <span>Expand your marketing efforts by listing deals on Burpple!</span></h1>
+  <%= form_for @deal, :html => {:multipart => true} do |f| %>
       <p class="form-textarea clearfix">
-        <%= f.label :title, "Title of deal" %>
+        <%= f.label :title, "Title of deal*" %>
         <span><%= f.text_field :title %></span>
       </p>
 
       <p class="form-textarea clearfix">
-        <%= f.label :type_of_deal, "Type of Deal" %>
-        <span><%= f.select :type_of_deal, [['Discount','discount'],['Freebies','freebis']] %></span>
+        <%= f.label :type_of_deal, "Type of Deal*" %>
+        <span><%= f.select :type_of_deal, [['Discount','Discount'],['Freebies','Freebies']] %></span>
       </p>
 
       <p class="form-textarea clearfix">
-        <%= f.label :description, "Description of your deal" %>
+        <%= f.label :description, "Description of your deal*" %>
         <span><%= f.text_area :description, :placeholder => "Tell us more about your deals! Example: 10% off the total bill!" %></span>
       </p>
 
       <p class="form-select half clearfix">
-        <%= f.label :start_date, "Start Date:" %>
+        <%= f.label :start_date, "Start Date*" %>
         <span><%= f.text_field :start_date%></span>
       </p>
 
-      <p class="form-select clearfix">
-        <%= f.label :expiry_date, "End Date:" %>
+      <p class="form-select half clearfix">
+        <%= f.label :expiry_date, "End Date*" %>
         <span><%= f.text_field :expiry_date %></span>
       </p>
 
       <!-- Following is a nested form of deal_day-->
+      <div class="clearfix"></div>
       <p class="form-textarea clearfix">
-        <%= f.label :deal_days, "Deal Period:" %>
+        <%= f.label :deal_days, "Deal Period*" %>
         <%= f.fields_for :deal_days do |builder| %>
             <%= render 'form/deal_day_form', f: builder %>
         <% end %>
@@ -36,25 +38,26 @@
 
       <%= fields_for :deal_venue do |dv| %>
           <div class = "field form-textarea clearfix">
-            <%= dv.label "Select Venues" %><br />
+            <%= dv.label "Select Venues*" %><br />
             <%= collection_select(:venues, :id, @all_venues, :id, :name, {}, {:multiple => true}) %>
           </div>
       <% end %>
 
       <p class="form-textarea clearfix">
-        <%= f.label :t_c, 'Terms and Conditions' %>
+        <%= f.label :t_c, 'Terms and Conditions*' %>
         <span><%= f.text_area :t_c, :placeholder => "Note your terms and conditions here" %></span>
       </p>
 
       <p class="form-text clearfix">
         <%= f.label :image, 'Upload an image of your deal' %>
       </p>
-      <%= f.file_field :image %>
+      <%= f.attachinary_file_field :image %>
+      <%= f.hidden_field(:image_cache) %>
       <em>For best effect, upload an image of 150x150</em>
 
       <div id= "redeemable">
         <p class="form-textarea clearfix">
-          <%= f.label :redeemable, "Would you like users to redeem through deal code? (Helps gather analytics)" %>
+          <%= f.label :redeemable, "Would you like users to redeem through QR code? (Helps gather analytics)*" %>
         </p>
 
         <p class="form-select half" style="margin-top: 0px;">
@@ -72,7 +75,7 @@
       <div id= "redeemable">
         <div id="redeemable_true">
           <p class="form-textarea clearfix">
-            <%= f.label :multiple_use, "How many times can this deal be redeemed per user?" %><br>
+            <%= f.label :multiple_use, "How many times can this deal be redeemed through QRCode per user?*" %><br>
           </p>
 
           <p class="form-select half" style="margin-top: 0px;">
@@ -92,4 +95,4 @@
         <%= link_to 'Back', deals_path, class: "btn btn-big btn-default" %>
       </div>
   <% end %>
-</div><!-- content-form -->
+</div><!-- form-style-10 -->

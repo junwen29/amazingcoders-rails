@@ -17,15 +17,6 @@
         </div>
     <% end %>
 
-    <!-- Content Heading -->
-    <div class="pull-left">
-      <p class="b2 content-title">List a deal</p>
-      <h4>Get more customers excited about your place by simply listing a deal on your page. It's free!</h4>
-    </div>
-
-    <div class="clearfix"></div>
-    <div class="content-separator"></div>
-
     <!-- Content Body -->
     <%= render :partial => 'form/deal_create_form' %>
 
@@ -37,4 +28,8 @@
 <% end %>
 
 <%= content_for :body_footer do %>
+<% end %>
+
+<%= content_for :form_footer do %>
+    <%= render :partial => 'layouts/form_style' %>
 <% end %>

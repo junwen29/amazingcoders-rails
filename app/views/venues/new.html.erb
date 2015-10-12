@@ -2,13 +2,6 @@
 
 <div class="contentWrapper">
   <div class="content">
-    <!-- Content Heading -->
-    <div class="pull-left">
-      <p class="b2 content-title">Add another business or outlet</p>
-    </div>
-
-    <div class="clearfix"></div>
-    <div class="content-separator"></div>
 
     <!-- Content Body --><!--executing a javascript at the end of the file to do validation when the form is submitted-->
     <%= form_for(@venue,url: venues_path, :html => {:onSubmit => "return validate_getting_started(this);", :class => "venueForm", :multipart => true}) do |f| %>
@@ -27,10 +20,17 @@
             </div>
         <% end %>
 
-        <%= render :partial => 'form/venue_create_form' %>
+        <div class="form-style-10">
+          <h1> List a new venue!</h1>
+          <%= render :partial => 'form/venue_create_form' %>
+        </div>
 
     <% end %>
 
   </div>
 </div>
+
+<%= content_for :form_footer do %>
+    <%= render :partial => 'layouts/form_style' %>
+<% end %>
 

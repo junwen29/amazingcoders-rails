@@ -1,4 +1,7 @@
 ActiveAdmin.register Merchant do
+  # Remove Create New Deal button
+  config.clear_action_items!
+
   menu :parent => "Merchant", :priority => 1
   actions :all, except: [:edit]
 
@@ -8,6 +11,10 @@ ActiveAdmin.register Merchant do
   filter :current_sign_in_at
   filter :sign_in_count
   filter :created_at
+
+  action_item :only => :show do
+    link_to "Back", "/admin/merchants"
+  end
 
   # INDEX
   index do

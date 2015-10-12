@@ -11,14 +11,23 @@ class Deal < ActiveRecord::Base
   has_many :deal_days, :dependent => :destroy
   accepts_nested_attributes_for :deal_days, allow_destroy: true
 
-  scope :waiting, -> {where("start_date > ?", Date.today)}
-  scope :active, -> {where("start_date <= ? AND expiry_date >= ?", Date.today, Date.today)}
-  scope :expired, -> {where("expiry_date < ?", Date.today)}
+  has_many :bookmarks, inverse_of: :deal, dependent: :destroy
+  has_many :users, through: :bookmarks
+  has_one :deal_analytic
+  has_many :redemptions
+  has_many :viewcounts
 
-  # For adding images
-  has_attached_file :image,
-                    :default_url => 'biz/burpple_logo.png'
+  attr_accessor :is_bookmarked, :image, :image_cache
+  
+  scope :waiting, -> {where("active = ?", false)}
+  scope :active, -> {where("active = ? AND expiry_date >= ?", true, Date.today)}
+  scope :expired, -> {where("expiry_date < ? AND active = ?", Date.today, true)}
 
+  scope :started, -> {where("start_date <= ? AND expiry_date >= ?", Date.today, Date.today)}
+  scope :pushed, -> {where("pushed = ?", true)}
+  scope :type, -> (type) {where(type_of_deal: type)}
+
+  has_attachment :image
 
   # Validate input fields from form
   validates(:title, presence: true)
@@ -30,16 +39,14 @@ class Deal < ActiveRecord::Base
   validates :deal_days, :presence => {message: "Please ensure that there is at least one deal period"}
   #validates :deal_venues, :presence => {message: "Please select at least one venue for your deal", models:""}
 
-  validates_attachment_content_type :image, content_type: /\Aimage/
-
   # Process input fields and further validate
   validate :future_date
   validate :check_expiry_date
   # validate :ensuring_pushed_checked
   validate :ensuring_redeemable_checked
   validate :ensuring_multiple_use_checked
-  validate :check_overlapping_deals
   validate :has_venues
+  validate :check_valid_period
 
   # Process Methods
   def has_venues
@@ -61,26 +68,27 @@ class Deal < ActiveRecord::Base
   end
 
   def future_date
-    errors.add(:start_date, 'Start date must be at least one day in advance') if ((start_date <= Date.today) rescue ArgumentError == ArgumentError)
+    errors.add(:start_date, 'must be at least one day in advance') if ((start_date <= Date.today) rescue ArgumentError == ArgumentError)
   end
 
   def check_expiry_date
-    errors.add(:expiry_date, 'has to be after start date') if ((expiry_date <= start_date) rescue ArgumentError == ArgumentError)
+    errors.add(:expiry_date, 'cannot be before start date') if ((expiry_date < start_date) rescue ArgumentError == ArgumentError)
   end
 
-  def check_overlapping_deals
-    errors.add(:start_date, 'You are not able to list any more deals within this period as during which you will
-have more than 5 active deals then.') if ((overlapping_deals) rescue ArgumentError == ArgumentError)
+  def check_valid_period
+    errors.add(:blank, 'Deal period is not within the valid dates of your premium service period. Please input a valid period.') if ((valid_period) rescue ArgumentError == ArgumentError)
   end
 
-  private
-  # find number of overlapping deals
-  def overlapping_deals
-    num = DealService.get_overlapping_deals(merchant_id, start_date, expiry_date)
-    if num >= 5
-      true
-    else
-      false
+  def valid_period
+    payment = Payment.where(:merchant_id => merchant_id)
+    payment.each do |p|
+      if Date.today >= p.start_date && Date.today <= p.expiry_date
+        if start_date >= p.start_date && start_date <= p.expiry_date && expiry_date >= p.start_date && expiry_date <= p.expiry_date
+          return false
+        end
+        true
+      end
     end
   end
+
 end

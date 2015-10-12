@@ -27,11 +27,9 @@
 </p>
 
 <p>
-  <% if !@deal.redeemable %>
-      <strong><font size = "4">Venue</font></strong><br>
-      <% @deal.venues.each do |venue| %>
-          <span><%= venue.name %></span>&nbsp;&nbsp;
-      <% end %>
+  <strong><font size = "4">Venue</font></strong><br>
+  <% @deal.venues.each do |venue| %>
+      <span><%= venue.name %></span>&nbsp;&nbsp;
   <% end %>
 </p>
 
@@ -42,7 +40,11 @@
 
 <p>
   <strong><font size = "4">Deal Image</font></strong><br>
-  <%= image_tag @deal.image.url, :size => "150x150" %>
+  <% if @deal.image.present? %>
+      <%= cl_image_tag(@deal.image.path, { size: '100x100', crop: :fit }) %>
+  <% else %>
+      <%= image_tag 'biz/burpple_logo.png', :size => '100x100' %>
+  <% end %>
 </p>
 
 <p>
@@ -65,3 +67,10 @@
     <%= link_to "Download QRcodes for your deal here", deal_path(@deal, format: "pdf") %>
   <% end %>
 </p>
+
+<div style="text-align: center">
+  <% if !@deal.active %>
+      <%= link_to 'Edit Deal', edit_deal_path, class: "btn btn-xs btn-success" %>
+  <% end %>
+  <%= link_to 'See all deals', deals_path, class: "btn btn-big btn-info" %>
+</div>

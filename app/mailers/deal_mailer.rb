@@ -4,16 +4,24 @@ class DealMailer < ActionMailer::Base
   def deal_email(user, deal, email)
     @user = user
     @deal = deal
-    @url = "http://localhost:3000/deals"
-    @pdf = "http://localhost:3000/deals/" + @deal.id.to_s + ".pdf"
+    @url = "https://amazingcodersrails.herokuapp.com/deals"
+    @pdf = "https://amazingcodersrails.herokuapp.com/deals/" + @deal.id.to_s + ".pdf"
     mail(to: email, subject: "Congratulations! You have successfully listed a deal on Burpple!")
   end
 
   def update_deal_email(user, deal, email)
     @user = user
     @deal = deal
-    @url = "http://localhost:3000/deals"
-    @pdf = "http://localhost:3000/deals/" + @deal.id.to_s + ".pdf"
+    @url = "https://amazingcodersrails.herokuapp.com/deals"
+    @pdf = "https://amazingcodersrails.herokuapp.com/deals/" + @deal.id.to_s + ".pdf"
+    mail(to: email, subject: "Your deal has been successfully updated!")
+  end
+
+  def update_deal_email_admin(user, deal, email)
+    @user = user
+    @deal = deal
+    @url = "https://amazingcodersrails.herokuapp.com/deals"
+    @pdf = "https://amazingcodersrails.herokuapp.com/deals/" + @deal.id.to_s + ".pdf"
     mail(to: email, subject: "Your deal has been successfully updated!")
   end
 end

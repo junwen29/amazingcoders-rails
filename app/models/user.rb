@@ -3,6 +3,14 @@ class User < ActiveRecord::Base
   include User::Json
   include User::Authentication
 
+  has_many :wishes, inverse_of: :venue, dependent: :destroy
+  has_many :venues, through: :wishes
+  has_many :devices, :dependent => :destroy
+  has_many :bookmarks, inverse_of: :deal, dependent: :destroy
+  has_many :deals, through: :bookmarks
+  has_many :redemptions
+  has_many :viewcounts
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

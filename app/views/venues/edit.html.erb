@@ -17,45 +17,44 @@
         </div>
     <% end %>
 
-    <!-- Content Heading -->
-    <div class="pull-left">
-      <p class="b2 content-title">Add another business or outlet</p>
-    </div>
-
-    <div class="clearfix"></div>
-    <div class="content-separator"></div>
-
     <!-- Content Body -->
-    <%= form_for(@venue, url: venue_path,  :html => {:onSubmit => "return validate_getting_started(this);", :class => "venueForm", :multipart => true}) do |f| %>
-        <%= render :partial => 'form/venue_edit_form', :locals => { :f => f , :object => @select_day_hours_string, :venue_type => @venue_type } %>
+    <div class="form-style-10">
+      <h1>Edit Your Venue<span> Update the details of your food venues!</span></h1>
+      <%= form_for(@venue, url: venue_path,  :html => {:onSubmit => "return validate_getting_started(this);", :class => "venueForm", :multipart => true}) do |f| %>
+          <%= render :partial => 'form/venue_edit_form', :locals => { :f => f , :object => @select_day_hours_string, :venue_type => @venue_type } %>
+      <% end %>
+    </div><!--/form-style-10-->
 
-        </div><!-- /content -->
-        </div><!-- /contentWrapper -->
+  </div><!-- /content -->
+</div><!-- /contentWrapper -->
 
-        <%= content_for :lean_overlay do %>
-        <% end %>
+<%= content_for :lean_overlay do %>
+<% end %>
 
-        <%= content_for :body_footer do %>
-            <script>
-                $('html').css('background', '#f0f0f0');
+<%= content_for :body_footer do %>
+    <script>
+        $('html').css('background', '#f0f0f0');
 
-                function validate_getting_started(){
-                    $venue_name = $('#temp_venue_name').val();
+        function validate_getting_started(){
+            $venue_name = $('#temp_venue_name').val();
 
-                    $formErrors = $("#merchantErrors");
-                    $oldAlerts = $(".alert");
+            $formErrors = $("#merchantErrors");
+            $oldAlerts = $(".alert");
 
-                    if ($venue_name != ""){
-                        return validate();
-                    }
-                    else{
-                        $oldAlerts.remove();
-                        if ($venue_name == "")
-                            $formErrors.append( "<div class='alert alert--error'><strong>Error!</strong> Name of restaurant can't be blank</div>" );
-                    }
+            if ($venue_name != ""){
+                return validate();
+            }
+            else{
+                $oldAlerts.remove();
+                if ($venue_name == "")
+                    $formErrors.append( "<div class='alert alert--error'><strong>Error!</strong> Name of restaurant can't be blank</div>" );
+            }
 
-                    return false;
-                }
-            </script>
-        <% end %>
-    <% end %>
+            return false;
+        }
+    </script>
+<% end %>
+
+<%= content_for :form_footer do %>
+    <%= render :partial => 'layouts/form_style' %>
+<% end %>

@@ -3,11 +3,12 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.8'
-# Use postgres as the database for Heroku remote server purpose
 
-group :development, :test, :production do
-  gem 'pg'
-end
+# Use postgres as the database for Heroku remote server purpose
+gem 'rails_12factor', group: :production
+
+gem 'pg'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '>= 3.3.4'
@@ -62,7 +63,6 @@ gem 'rqrcode_png'
 
 # For attaching images
 gem 'paperclip'
-gem 'carrierwave'
 
 # Active Admin
 gem 'activeadmin', '~> 1.0.0.pre1'
@@ -73,3 +73,10 @@ gem 'rollbar', '~> 1.4.4'
 # For PDF
 gem 'prawn'
 gem 'prawn-qrcode'
+
+# Google Cloud Messaging gem
+gem "gcm"
+
+# Cloudinary Image Hosting gem
+gem 'cloudinary'
+gem 'attachinary'
