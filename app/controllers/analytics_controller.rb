@@ -13,6 +13,11 @@ class AnalyticsController < ApplicationController
     #raise @past_deal_names.inspect
   end
 
+  def show
+    deal_analytics_by_venue
+    render "analytics/venue"
+  end
+
   # Check if user has the subscribed to any deal analytics addons
   private
   def check_has_analytics_access
@@ -96,5 +101,9 @@ class AnalyticsController < ApplicationController
 
   def deal_analytics_by_type_and_redemption
     @deals_popularity_by_type_and_redemption = DealAnalyticService.get_analytics_for_deals_pie_chart(merchant_id)
+  end
+
+  def deal_analytics_by_venue
+    @deals_by_venue = DealAnalyticService.get_analytics_for_deaals_by_venue(merchant_id)
   end
 end

@@ -175,6 +175,44 @@ class DealAnalyticService
       end
       array
     end
+
+    # Returns a nested array
+    # array[0] is first venue of the merchant that contains all data
+    # array[0][0] is the venue name
+    # array[0][1] is first deal in the venue
+    # array[0][1][0] is the name of first deal
+    # array[0][1][1] is the view count of the deal
+    # array[0][1][2] is the redemption count of the deal
+    # array[0][1][3] is the total view count
+    # array[0][1][4] is the total redemption count
+    def get_analytics_for_deaals_by_venue(merchant_id)
+      array = Array.new
+      venues = Venue.where(:merchant_id => merchant_id)
+      venues.each do |v|
+        venue_array = Array.new
+        venue_total_view_count = 0
+        venue_total_redemption_count = 0
+        venue_array << v.name
+        deal_array = Array.new
+        deals = VenueService.get_active_and_past_deals_for_venue(v.id)
+        deals.each do |d|
+          deal_array = Array.new
+          deal_array << d[0].title
+          analytics = DealAnalytic.where(:deal_id => d[0].id)[0]
+          view_count = analytics.view_count
+          redemption_count = analytics.redemption_count
+          venue_total_redemption_count = venue_total_redemption_count + redemption_count
+          venue_total_view_count = venue_total_view_count + view_count
+          deal_array << view_count
+          deal_array << redemption_count
+          venue_array << deal_array
+        end
+        venue_array << venue_total_view_count
+        venue_array << venue_total_redemption_count
+        array << venue_array
+      end
+      array
+    end
   end
 
   class << self
