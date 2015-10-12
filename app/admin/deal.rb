@@ -7,6 +7,9 @@ ActiveAdmin.register Deal do
       @deal = Deal.find(params[:id])
       if @deal.update_columns(deal_params)
         flash[:success] = "Deal successfully updated!"
+        # TODO - DEMO: Uncomment on demonstration
+        # merchant_id = @deal.merchant_id
+        # DealMailer.update_deal_email_admin("valued merchant", @deal, MerchantService.get_email(merchant_id)).deliver
         redirect_to admin_deal_path
       else
         flash[:error] = "Failed to update deal!"
