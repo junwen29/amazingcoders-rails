@@ -13,7 +13,7 @@
         <th>Transaction Date</th>
       </tr>
 
-      <% @points.each do |p| %>
+      <% @points.find_each do |p| %>
           <tr>
             <td>
               <% if p.operation == "Add" %>
