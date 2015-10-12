@@ -64,13 +64,24 @@ ActiveAdmin.register DealAnalytic do
         row "Merchant" do
           f.deal.merchant
         end
+        row "Venues" do
+          f.deal.venues.map{|v| v.name }.join(", ").html_safe
+        end
       end
     end
 
-    panel "Deal Analytics" do
+    panel "View Count" do
       attributes_table_for f do
         row :view_count
+        row "Users" do
+          f.deal.viewcounts.map{|vc| vc.user_id}
+        end
         row :unique_view_count
+      end
+    end
+
+    panel "Redemption" do
+      attributes_table_for f do
         row :redemption_count
       end
     end
