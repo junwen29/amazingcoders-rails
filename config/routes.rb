@@ -63,6 +63,7 @@ Rails.application.routes.draw do
       # analytics api
       scope '/analytics' do
         post '/deal' => 'view_count#create_deal_view_count'
+        post '/query' => 'user_query#register_query'
       end
     end
   end
