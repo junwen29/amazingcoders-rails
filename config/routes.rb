@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :packages
+
   resources :points
 
   devise_for :users
