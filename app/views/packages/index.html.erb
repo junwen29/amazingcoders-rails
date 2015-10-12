@@ -10,15 +10,36 @@
 
     <!-- Content Heading -->
     <div class="pull-left">
-      <p class="b2 content-title">Burps</p>
+      <p class="b2 content-title">Packages</p>
     </div>
 
     <div class="clearfix"></div>
     <div class="content-separator"></div>
 
     <!-- Content Body -->
-    <%= render :partial => 'form/point_index_form' %>
-    <%= link_to 'Redeem Packages', packages_path, class: "btn btn-big btn-default" %>
+    <h4 class="panel-title">
+      Total Burps: <%= @merchant.total_points%>
+    </h4>
+
+    <div class="panel-body">
+      <table class="table table-bordered table-hover table-responsive">
+        <tr>
+          <th>Package Name</th>
+          <th>Points Required</th>
+          <th>Description</th>
+          <th></th>
+        </tr>
+
+        <% @packages.find_each do |p| %>
+            <tr>
+              <td><%= p.name %></td>
+              <td><%= p.points %></td>
+              <td><%= p.description %></td>
+              <td><%= link_to 'Redeem', packages_path, class: "btn btn-xs btn-default" %></td>
+            </tr>
+        <% end %>
+      </table>
+    </div>
 
   </div><!-- /content -->
 </div><!-- /contentWrapper -->

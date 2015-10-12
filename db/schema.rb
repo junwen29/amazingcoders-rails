@@ -166,9 +166,10 @@ ActiveRecord::Schema.define(version: 20151012173305) do
   add_index "merchants", ["reset_password_token"], name: "index_merchants_on_reset_password_token", unique: true, using: :btree
 
   create_table "packages", force: true do |t|
+    t.string   "name"
     t.integer  "points"
     t.string   "description"
-    t.string   "type"
+    t.string   "package_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
