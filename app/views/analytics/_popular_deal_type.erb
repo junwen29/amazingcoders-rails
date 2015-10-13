@@ -4,22 +4,22 @@
   <!--Pie Chart-->
   <script>
       $(function () {
-         var chart = new Highcharts.Chart({
+          var chart = new Highcharts.Chart({
               credits: {
                   enabled: false
               },
-             chart: {
-                 type: 'pie',
-                 renderTo: 'deal_type',
-                 events: {
-                     drilldown: function(e) {
-                         chart.setTitle({ text: "Popularity of Deal of Deal Type " + e.point.name });
-                     },
-                     drillup: function(e) {
-                         chart.setTitle({ text: 'Popularity of Deal Types' });
-                     }
-                 }
-             },
+              chart: {
+                  type: 'pie',
+                  renderTo: 'deal_type',
+                  events: {
+                      drilldown: function (e) {
+                          chart.setTitle({text: "Popularity of Deal of Deal Type " + e.point.name});
+                      },
+                      drillup: function (e) {
+                          chart.setTitle({text: 'Popularity of Deal Types'});
+                      }
+                  }
+              },
               title: {
                   text: 'Popularity of Deal Types'
               },
@@ -49,13 +49,13 @@
                       <% num_of_deal_types = @deals_popularity_by_type_and_redemption.size %>
                       <% loop = 0 %>
                       <% while loop < num_of_deal_types %>
-                          <% last_variable = @deals_popularity_by_type_and_redemption[loop].size - 1 %>
-                              {
-                                  name: "<%= @deals_popularity_by_type_and_redemption[loop][0] %>",
-                                  y: <%= @deals_popularity_by_type_and_redemption[loop][last_variable]%>,
-                                  drilldown: "<%= @deals_popularity_by_type_and_redemption[loop][0] %>"
-                              },
-                          <% loop = loop + 1 %>
+                      <% last_variable = @deals_popularity_by_type_and_redemption[loop].size - 1 %>
+                      {
+                          name: "<%= @deals_popularity_by_type_and_redemption[loop][0] %>",
+                          y: <%= @deals_popularity_by_type_and_redemption[loop][last_variable]%>,
+                          drilldown: "<%= @deals_popularity_by_type_and_redemption[loop][0] %>"
+                      },
+                      <% loop = loop + 1 %>
                       <% end %>
                   ]
               }],
@@ -64,19 +64,19 @@
                   series: [
                       <% loop = 0 %>
                       <% while loop < num_of_deal_types %>
-                        <% num_of_deal_in_deal_type = @deals_popularity_by_type_and_redemption[loop].size - 1 %>
-                        <% inner_loop = 1 %>
-                          {
+                      <% num_of_deal_in_deal_type = @deals_popularity_by_type_and_redemption[loop].size - 1 %>
+                      <% inner_loop = 1 %>
+                      {
                           name: "<%= @deals_popularity_by_type_and_redemption[loop][0] %>",
                           id: "<%= @deals_popularity_by_type_and_redemption[loop][0] %>",
                           data: [
-                                  <% while inner_loop < num_of_deal_in_deal_type %>
-                                    ["<%= @deals_popularity_by_type_and_redemption[loop][inner_loop][0] %>", <%=@deals_popularity_by_type_and_redemption[loop][inner_loop][1] %>],
-                                    <% inner_loop = inner_loop + 1 %>
-                                  <% end %>
+                              <% while inner_loop < num_of_deal_in_deal_type %>
+                              ["<%= @deals_popularity_by_type_and_redemption[loop][inner_loop][0] %>", <%=@deals_popularity_by_type_and_redemption[loop][inner_loop][1] %>],
+                              <% inner_loop = inner_loop + 1 %>
+                              <% end %>
                           ]
-                          },
-                          <% loop = loop + 1 %>
+                      },
+                      <% loop = loop + 1 %>
                       <% end %>
                   ]
               }

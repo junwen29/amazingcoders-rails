@@ -44,7 +44,6 @@ class DealAnalyticService
       end
     end
 
-    # TODO: Remove method afterwards as it is for seeding data
     def set_view_count(deal_id, increment = 1)
       deal_analytics = DealAnalytic.where(:deal_id => deal_id)
       if deal_analytics.empty?
@@ -57,7 +56,6 @@ class DealAnalyticService
       end
     end
 
-    # TODO: Remove method afterwards as it is for seeding data
     def set_unique_view_count(deal_id, increment = 1)
       deal_analytics = DealAnalytic.where(:deal_id => deal_id)
       if deal_analytics.empty?
@@ -70,7 +68,6 @@ class DealAnalyticService
       end
     end
 
-    # TODO: Remove method afterwards as it is for seeding data
     def set_redemption_count(deal_id, increment = 1)
       deal_analytics = DealAnalytic.where(:deal_id => deal_id)
       if deal_analytics.empty?
@@ -85,64 +82,106 @@ class DealAnalyticService
 
     # This method return a 2d array of active deals and their view count and redemption count for usage in analytics graph
     # Each data is sorted by day
-    # array[0] is first deal
-    # array[0][0] gives deal title
-    # array[0][1] gives start_date in utc format
-    # array [0][2] gives array of view count
-    # array [0][3] gives array of redemption count
-    # array [5] gives array of expired deal names (If have 5 active deals)
-    # array [6] gives merchant_id (if have 5 active deals)
-    def get_analytics_for_line_graph(merchant_id, deal_name, start_date, end_date)
+    # array[0] is active deals
+    # array[1] is past deals
+    # array[0][0] is first active deal
+    # array[0][0][0] gives deal title
+    # array[0][0][1] gives start_date in utc format
+    # array [0][0][2] gives array of view count
+    # array [0][0][3] gives array of redemption count
+    # array [2] gives array of expired deal names
+    def get_analytics_for_line_graph(merchant_id, start_date, end_date)
       array = Array.new
-      if deal_name != nil
-        deals = Deal.where(('merchant_id = ? AND title = ?'), merchant_id, deal_name)
-      else
-        deals = MerchantService.get_all_active_and_past_deals(merchant_id)
-      end
-      deals.each do |ad|
+      active_deals_array = Array.new
+      past_deals_array = Array.new
+      active_deals = MerchantService.get_all_active_deals(merchant_id)
+      past_deals = MerchantService .get_past_deals(merchant_id)
+      active_deals.each do |ad|
         temp_start_date = start_date
         temp_end_date = end_date
-        numView = 0
-        numRedemption = 0
+        num_view = 0
+        num_redemption = 0
         first_view = true
         first_redeem = true
-        numViewArray = Array.new
-        numRedeemArray = Array.new
-        temparray = Array.new
+        num_view_array = Array.new
+        num_redeem_array = Array.new
+        deal_array = Array.new
         nothing = [0]
 
-        temparray << ad.title
-        temparray << Time.parse(start_date.to_s).to_f * 1000
+        deal_array << ad.title
+        deal_array << Time.parse(start_date.to_s).to_f * 1000
         while temp_start_date <= temp_end_date
 
-          numView = numView + Viewcount.where(deal_id: ad.id).where(created_at: temp_start_date..temp_start_date.end_of_day).count
-          if numView != 0 && first_view
+          num_view = num_view + Viewcount.where(deal_id: ad.id).where(created_at: temp_start_date..temp_start_date.end_of_day).count
+          if num_view != 0 && first_view
             first_view = false
           end
           if !first_view
-            numViewArray << numView
+            num_view_array << num_view
           else
-            numViewArray << nothing
+            num_view_array << nothing
           end
 
-          numRedemption = numRedemption + Redemption.where(deal_id: ad.id).where(created_at: temp_start_date..temp_start_date.end_of_day).count
-          if numRedemption != 0 && first_redeem
+          num_redemption = num_redemption + Redemption.where(deal_id: ad.id).where(created_at: temp_start_date..temp_start_date.end_of_day).count
+          if num_redemption != 0 && first_redeem
             first_redeem = false
           end
           if !first_redeem
-            numRedeemArray << numRedemption
+            num_redeem_array << num_redemption
           else
-            numRedeemArray << nothing
+            num_redeem_array << nothing
           end
           temp_start_date = temp_start_date + 1.days
         end
-        temparray << numViewArray
-        temparray << numRedeemArray
-        array << temparray
+        deal_array << num_view_array
+        deal_array << num_redeem_array
+        active_deals_array << deal_array
       end
-      expired_deals = MerchantService.get_past_deals(merchant_id).pluck(:title)
+      past_deals.each do |ad|
+        temp_start_date = start_date
+        temp_end_date = end_date
+        num_view = 0
+        num_redemption = 0
+        first_view = true
+        first_redeem = true
+        num_view_array = Array.new
+        num_redeem_array = Array.new
+        deal_array = Array.new
+        nothing = [0]
+
+        deal_array << ad.title
+        deal_array << Time.parse(start_date.to_s).to_f * 1000
+        while temp_start_date <= temp_end_date
+
+          num_view = num_view + Viewcount.where(deal_id: ad.id).where(created_at: temp_start_date..temp_start_date.end_of_day).count
+          if num_view != 0 && first_view
+            first_view = false
+          end
+          if !first_view
+            num_view_array << num_view
+          else
+            num_view_array << nothing
+          end
+
+          num_redemption = num_redemption + Redemption.where(deal_id: ad.id).where(created_at: temp_start_date..temp_start_date.end_of_day).count
+          if num_redemption != 0 && first_redeem
+            first_redeem = false
+          end
+          if !first_redeem
+            num_redeem_array << num_redemption
+          else
+            num_redeem_array << nothing
+          end
+          temp_start_date = temp_start_date + 1.days
+        end
+        deal_array << num_view_array
+        deal_array << num_redeem_array
+        past_deals_array << deal_array
+      end
+      expired_deals = past_deals.pluck(:title)
+      array << active_deals_array
+      array << past_deals_array
       array << expired_deals
-      array << merchant_id
       array
     end
 

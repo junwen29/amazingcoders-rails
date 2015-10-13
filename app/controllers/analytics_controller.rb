@@ -96,7 +96,7 @@ class AnalyticsController < ApplicationController
   end
 
   def deal_analytics_by_day
-    @deals_daily_count = DealAnalyticService.get_analytics_for_line_graph(merchant_id, nil, Date.today.beginning_of_quarter, Date.today)
+    @deals_daily_count = DealAnalyticService.get_analytics_for_line_graph(merchant_id, Date.today.beginning_of_quarter, Date.today)
   end
 
   def deal_analytics_by_type_and_redemption
