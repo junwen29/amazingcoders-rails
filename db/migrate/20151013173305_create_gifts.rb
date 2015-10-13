@@ -1,10 +1,10 @@
-class CreatePackages < ActiveRecord::Migration
+class CreateGifts < ActiveRecord::Migration
   def change
-    create_table :packages do |t|
+    create_table :gifts do |t|
       t.string :name
       t.integer :points
       t.string :description
-      t.string :package_type
+      t.string :gift_type
       t.timestamps
     end
   end

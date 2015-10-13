@@ -1,7 +1,7 @@
-ActiveAdmin.register Package do
+ActiveAdmin.register Gift do
 
   # Allow edit
-  permit_params :name, :points, :description, :package_type
+  permit_params :name, :points, :description, :gift_type
   actions :all, except: [:show]
 
   # remove_filter :payments, :updated_at
@@ -15,7 +15,7 @@ ActiveAdmin.register Package do
 
 
   action_item :only => :show do
-    link_to "Back", "/admin/packages"
+    link_to "Back", "/admin/gifts"
   end
 
   # INDEX
@@ -25,18 +25,18 @@ ActiveAdmin.register Package do
     column :name
     column :points
     column :description
-    column :package_type
+    column :gift_type
     actions
   end
 
   # EDIT, NEW
   form do |f|
     f.semantic_errors
-    f.inputs "Package Information" do
+    f.inputs "Gift Information" do
       f.input :name
-      f.input :points, as: :string, :hint => "State the number of points required to redeem this package"
+      f.input :points, as: :string, :hint => "State the number of points required to redeem this gift"
       f.input :description
-      f.input :package_type, as: :select, collection: ["Merchant", "User"]
+      f.input :gift_type, as: :select, collection: ["Merchant", "User"]
     end
     f.actions
   end
