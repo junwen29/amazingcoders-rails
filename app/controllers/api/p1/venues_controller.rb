@@ -18,12 +18,12 @@ class Api::P1::VenuesController < Api::P1::ApplicationController
     end
   end
 
-  def get_venues_for_deal
-    deal = Deal.find(params[:id])
-    venues = deal.venues
-    render_jbuilders(venues) do |json, venue|
-      venue.to_json json
-    end
-  end
+  # def get_venues_for_deal
+  #   deal = Deal.find(params[:id])
+  #   venues = deal.venues
+  #   render_jbuilders(venues) do |json, venue|
+  #     venue.to_json json
+  #   end
+  # end
 
 end

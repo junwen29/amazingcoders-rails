@@ -29,6 +29,18 @@ module Venue::Json
       json.phone          self.phone
       json.contact_number self.contact_number
       json.is_wishlist    self.is_wishlist unless self.is_wishlist == nil
+
+      deals_json json
+    end
+
+    def deals_json(json)
+      json.set! :deals do
+        json.array! self.deals do |deal|
+          json.id           deal.id
+          json.title        deal.title
+          json.type_of_deal deal.type_of_deal
+        end
+      end
     end
 
   end
