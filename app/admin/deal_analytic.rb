@@ -44,6 +44,70 @@ ActiveAdmin.register DealAnalytic do
   end
 
   show do |f|
+    panel "Deal Associations" do
+      attributes_table_for f do
+        row "Merchant" do
+          f.deal.merchant
+        end
+        row "Venues" do
+          f.deal.venues.map{|v| v.name }.join(", ").html_safe
+        end
+      end
+    end
+
+    panel "Deal Info" do
+      attributes_table_for f.deal do
+        row :title
+        row :type_of_deal
+        row :description
+        row "Terms and Conditions" do
+          f.deal.t_c
+        end
+      end
+    end
+
+    panel "Deal Schedule" do
+      attributes_table_for f do
+        row "Start Date" do
+          f.deal.start_date
+        end
+        row "Expiry Date" do
+          f.deal.expiry_date
+        end
+      end
+    end
+
+    panel "Deal Status" do
+      attributes_table_for f do
+        row "Deal Activated?" do
+          f.deal.active ? status_tag( "yes", :ok ) : status_tag( "no" )
+        end
+        row "Notification Pushed?" do
+          f.deal.pushed ? status_tag( "yes", :ok ) : status_tag( "no" )
+        end
+      end
+    end
+
+    panel "Deal Redemption" do
+      attributes_table_for f do
+        row "Number of Redeems" do
+          f.deal.num_of_redeems
+        end
+        row "Multiple Use?" do
+          f.deal.multiple_use ? status_tag( "yes", :ok ) : status_tag( "no" )
+        end
+      end
+    end
+
+    panel "Deal Add-ons" do
+      attributes_table_for f do
+        row "QR Code Redeemable?" do
+          f.deal.redeemable ? status_tag( "yes", :ok ) : status_tag( "no" )
+        end
+      end
+    end
+
+=begin
     panel "Deal Information" do
       attributes_table_for f do
         row "Deal Id" do
@@ -69,6 +133,7 @@ ActiveAdmin.register DealAnalytic do
         end
       end
     end
+=end
 
     panel "Deal Analytics" do
       attributes_table_for f do
