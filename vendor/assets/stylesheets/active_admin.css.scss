@@ -18,6 +18,10 @@ div.descriptionCol {
   width: 200px;
 }
 
+div.numberCol {
+  max-width: 20px !important;
+}
+
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //
