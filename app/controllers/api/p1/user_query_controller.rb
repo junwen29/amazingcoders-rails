@@ -5,10 +5,7 @@ class Api::P1::UserQueryController < Api::P1::ApplicationController
     query = params[:query]
     type = params[:type]
 
-    auth_token = params[:auth_token]
-    user = User.find_by_authentication_token auth_token
-
-    user_query = UserQuery.save(user,query,type)
+    user_query = UserQuery.save(query,type)
     if user_query.persisted?
       head_ok
       return

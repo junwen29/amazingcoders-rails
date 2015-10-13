@@ -1,6 +1,6 @@
 class UserQuery < ActiveRecord::Base
 
-  def self.save(user, query, type)
+  def self.save(query, type)
     user_query = UserQuery.where(:query => query, :query_type => type).first
 
     unless user_query
