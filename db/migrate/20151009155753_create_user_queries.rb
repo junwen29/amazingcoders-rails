@@ -1,7 +1,6 @@
 class CreateUserQueries < ActiveRecord::Migration
   def change
     create_table :user_queries do |t|
-      t.belongs_to :user, index: true
       t.string  :query
       t.integer :num_count
       t.string  :query_type
