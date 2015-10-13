@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_many :devices, :dependent => :destroy
   has_many :bookmarks, inverse_of: :deal, dependent: :destroy
   has_many :deals, through: :bookmarks
+  has_many :redemptions
+  has_many :viewcounts
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -19,6 +21,7 @@ class User < ActiveRecord::Base
   validates :last_name, :presence => true, :length => {:maximum => 255}
   validate :username_valid, if: :username_changed?
   validates_uniqueness_of :username, allow_blank: true, allow_nil: true, case_sensitive: false, message: "%{value} is already taken", if: :username_changed?
+  validates_uniqueness_of :email, allow_blank: false, allow_nil: false, case_sensitive: true, message: "%{value} is already taken", if: :email_changed?
 
   def username_valid
     return if username.nil?
