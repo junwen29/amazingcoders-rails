@@ -1,5 +1,7 @@
 ActiveAdmin.register Point do
 
+  menu :parent => "Merchant", :priority => 3
+
   # Allow edit
   permit_params :operation, :points, :reason, :merchant_id
   actions :all, except: [:show, :destroy]
