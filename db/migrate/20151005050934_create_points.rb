@@ -3,7 +3,7 @@ class CreatePoints < ActiveRecord::Migration
     #points refer to the receipt of points
     create_table :points do |t|
       t.string :reason
-      t.integer :burps
+      t.integer :points
       t.string :operation
       t.timestamps
       t.references :merchant

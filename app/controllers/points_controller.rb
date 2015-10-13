@@ -7,7 +7,7 @@ class PointsController < InheritedResources::Base
   end
 
   def point_params
-    params.require(:point).permit(:burps, :operation, :reason)
+    params.require(:point).permit(:points, :operation, :reason)
   end
 
   def new

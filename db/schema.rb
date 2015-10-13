@@ -214,7 +214,7 @@ ActiveRecord::Schema.define(version: 20151012173305) do
 
   create_table "points", force: true do |t|
     t.string   "reason"
-    t.integer  "burps"
+    t.integer  "points"
     t.string   "operation"
     t.datetime "created_at"
     t.datetime "updated_at"
