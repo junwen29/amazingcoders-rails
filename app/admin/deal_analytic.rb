@@ -70,21 +70,14 @@ ActiveAdmin.register DealAnalytic do
       end
     end
 
-    panel "View Count" do
+    panel "Deal Analytics" do
       attributes_table_for f do
         row :view_count
-        row "Users" do
-          f.deal.viewcounts.map{|vc| vc.user_id}
-        end
         row :unique_view_count
-      end
-    end
-
-    panel "Redemption" do
-      attributes_table_for f do
         row :redemption_count
       end
     end
+
     active_admin_comments # Add this line for comment block
   end
 
