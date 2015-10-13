@@ -24,18 +24,18 @@
     <div class="panel-body">
       <table class="table table-bordered table-hover table-responsive">
         <tr>
-          <th>Gift Name</th>
+          <th>Package Name</th>
           <th>Points Required</th>
           <th>Description</th>
           <th></th>
         </tr>
 
-        <% @gifts.where(gift_type: "Merchant").find_each do |p| %>
+        <% @packages.where(package_type: "Merchant").find_each do |p| %>
             <tr>
               <td><%= p.name %></td>
               <td><%= p.points %></td>
               <td><%= p.description %></td>
-              <td><%= link_to 'Redeem', gift_path(p), class: "btn btn-xs btn-default" %></td>
+              <td><%= link_to 'Redeem', package_path(p), class: "btn btn-xs btn-default" %></td>
             </tr>
         <% end %>
       </table>

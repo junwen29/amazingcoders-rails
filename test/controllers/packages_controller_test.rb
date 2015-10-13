@@ -8,7 +8,7 @@ class PackagesControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:gifts)
+    assert_not_nil assigns(:packages)
   end
 
   test "should get new" do
@@ -17,7 +17,7 @@ class PackagesControllerTest < ActionController::TestCase
   end
 
   test "should create package" do
-    assert_difference('Gift.count') do
+    assert_difference('Package.count') do
       post :create, package: {  }
     end
 
@@ -40,7 +40,7 @@ class PackagesControllerTest < ActionController::TestCase
   end
 
   test "should destroy package" do
-    assert_difference('Gift.count', -1) do
+    assert_difference('Package.count', -1) do
       delete :destroy, id: @package
     end
 
