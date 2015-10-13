@@ -30,12 +30,12 @@
           <th></th>
         </tr>
 
-        <% @packages.find_each do |p| %>
+        <% @packages.where(package_type: "Merchant").find_each do |p| %>
             <tr>
               <td><%= p.name %></td>
               <td><%= p.points %></td>
               <td><%= p.description %></td>
-              <td><%= link_to 'Redeem', packages_path, class: "btn btn-xs btn-default" %></td>
+              <td><%= link_to 'Redeem', package_path(p), class: "btn btn-xs btn-default" %></td>
             </tr>
         <% end %>
       </table>

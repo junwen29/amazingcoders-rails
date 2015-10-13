@@ -17,6 +17,8 @@ class PointsController < InheritedResources::Base
   def create
 
   end
+
+
 =begin
 
   def new
