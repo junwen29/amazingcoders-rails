@@ -21,7 +21,6 @@ Rails.application.routes.draw do
       # deals api
       scope '/deals' do
         get '' => 'deals#index', :as => 'deals'
-        get '/venues/:id' => 'venues#get_venues_for_deal', :as => 'get_venues_for_deal'
 
         scope '/:id' do
           get ''  => 'deals#get_deal', :as => 'get_deal'
@@ -35,8 +34,6 @@ Rails.application.routes.draw do
       # venues api
       scope '/venues' do
         get '' => 'venues#index', :as => 'venues'
-        #### TODO change this route or fetching of venues should include associated json deals
-        get '/deals/:id' => 'deals#get_deals_for_venue', :as => 'get_deals_for_venue'
 
         scope '/:id' do
           get ''=> 'venues#get_venue', :as => 'get_venue'

@@ -20,6 +20,18 @@ module Deal::Json
 
     def to_json(json, options = {})
       self.to_simple_json(json, options)
+
+      venues_json json
+    end
+
+    def venues_json(json)
+      json.set! :venues do
+        json.array! self.venues do |venue|
+          json.id             venue.id
+          json.name             venue.name
+          json.neighbourhood  venue.neighbourhood
+        end
+      end
     end
 
   end
