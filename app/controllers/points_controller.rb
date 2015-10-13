@@ -18,20 +18,5 @@ class PointsController < InheritedResources::Base
 
   end
 
-
-=begin
-
-  def new
-    @point = Point.last
-    @merchant = Merchant.find(@point.merchant_id)
-    total_points = @merchant.total_points
-    total_points += @point.burps
-  end
-
-  def create
-
-  end
-=end
-
 end
 

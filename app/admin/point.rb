@@ -54,6 +54,16 @@ ActiveAdmin.register Point do
     active_admin_comments
   end
 
-
+  # EDIT
+  form do |f|
+    f.semantic_errors
+    f.inputs "Point Details" do
+      f.input :merchant
+      f.input :reason
+      f.input :points, as: :string, :hint => "Please input an integer value"
+      f.input :operation, as: :select, collection: ["Add", "Minus"]
+    end
+    f.actions
+  end
 
 end
