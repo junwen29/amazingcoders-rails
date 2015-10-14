@@ -12,6 +12,20 @@ ActiveAdmin.register Venue do
     link_to "Back", "/admin/venues"
   end
 
+  controller do
+    def destroy
+      @venue = Venue.find(params[:id])
+      if VenueService.allow_delete(@venue.id)
+        @venue.destroy
+        flash[:success] = "Venue deleted!"
+        redirect_to admin_venues_path
+      else
+        flash[:error] = "Venue cannot be deleted as there is a deal that is only associated with this venue. Please delete associated deal first!"
+        redirect_to admin_venues_path
+      end
+    end
+  end
+
   index do
     selectable_column
     column "Id", :id

@@ -13,8 +13,11 @@ class Deal < ActiveRecord::Base
 
   has_many :bookmarks, inverse_of: :deal, dependent: :destroy
   has_many :users, through: :bookmarks
+  has_one :deal_analytic
+  has_many :redemptions
+  has_many :viewcounts
 
-  attr_accessor :is_bookmarked
+  attr_accessor :is_bookmarked, :image, :image_cache
   
   scope :waiting, -> {where("active = ?", false)}
   scope :active, -> {where("active = ? AND expiry_date >= ?", true, Date.today)}
@@ -24,10 +27,7 @@ class Deal < ActiveRecord::Base
   scope :pushed, -> {where("pushed = ?", true)}
   scope :type, -> (type) {where(type_of_deal: type)}
 
-  # For adding images
-  has_attached_file :image,
-                    :default_url => 'biz/burpple_logo.png'
-
+  has_attachment :image
 
   # Validate input fields from form
   validates(:title, presence: true)
@@ -38,8 +38,6 @@ class Deal < ActiveRecord::Base
   validates(:t_c, presence: true)
   validates :deal_days, :presence => {message: "Please ensure that there is at least one deal period"}
   #validates :deal_venues, :presence => {message: "Please select at least one venue for your deal", models:""}
-
-  validates_attachment_content_type :image, content_type: /\Aimage/
 
   # Process input fields and further validate
   validate :future_date

@@ -40,7 +40,7 @@
       <%= fields_for :deal_venue do |dv| %>
           <div class = "field form-textarea clearfix">
             <%= dv.label "Select Venues*" %><br />
-            <%= collection_select(:venues, :id, @all_venues, :id, :name, {}, {:multiple => true}) %>
+            <%= collection_select(:venues, :id, @all_venues, :id, :name, {:prompt => true, :selected => @deal.venues.map(&:id)}, {:multiple => true}) %>
           </div>
       <% end %>
 

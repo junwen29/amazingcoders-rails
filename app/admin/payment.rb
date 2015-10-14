@@ -1,7 +1,9 @@
 ActiveAdmin.register Payment do
   # actions :all, except: [:edit] # forbid edit to payment information
   config.clear_action_items!
-  
+
+  menu :parent => "Payment", :priority => 1
+
   controller do
     def scoped_collection
       Payment.where(paid: true)
@@ -11,6 +13,9 @@ ActiveAdmin.register Payment do
       @payment = Payment.find(params[:id])
       if @payment.update_columns(payment_params)
         flash[:success] = "Payment successfully updated!"
+        # TODO - DEMO: Uncomment for demonstration
+        # merchant_id = @payment.merchant_id
+        # PaymentMailer.update_subscription_admin("valued merchant", @payment, MerchantService.get_email(merchant_id)).deliver
         redirect_to admin_payment_path
       else
         flash[:error] = "Failed to update payment!"
@@ -23,7 +28,7 @@ ActiveAdmin.register Payment do
     end
 
   end
-  
+
   scope :active
   scope :expired
 
@@ -48,6 +53,7 @@ ActiveAdmin.register Payment do
   #filter :add_on3, label: 'Aggregate Trends'
   #filter :created_at
   #filter :updated_at
+
 
   index do
     selectable_column

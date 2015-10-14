@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # this will generate '/attachinary/cors' which will be used for iframe file transfers (for unsupported browsers).
+  mount Attachinary::Engine => '/attachinary'
+
   resources :gifts
 
   resources :points
@@ -22,11 +25,10 @@ Rails.application.routes.draw do
       # deals api
       scope '/deals' do
         get '' => 'deals#index', :as => 'deals'
-        get 'venues/:id' => 'venues#get_venues_for_deal', :as => 'get_venues_for_deal'
+        get '/venues/:id' => 'venues#get_venues_for_deal', :as => 'get_venues_for_deal'
 
         scope '/:id' do
           get ''  => 'deals#get_deal', :as => 'get_deal'
-
 
           # bookmark api
           post    '/bookmarks' => "bookmarks#create"
@@ -62,6 +64,11 @@ Rails.application.routes.draw do
       # get '/notifications' => "activities#notifications"
       # get '/notifications/count' => "activities#notification_count"
 
+      # analytics api
+      scope '/analytics' do
+        post '/deal' => 'view_count#create_deal_view_count'
+        post '/query' => 'user_query#register_query'
+      end
     end
   end
 
@@ -81,6 +88,7 @@ Rails.application.routes.draw do
   resources :payments do
     resources :charges
   end
+  resources :analytics
 
 # To change a deal into active deal then going back to index page
   get 'deals/:id/activate' => 'deals#activate', :as => 'active_deal'
