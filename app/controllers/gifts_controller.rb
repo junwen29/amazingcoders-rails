@@ -21,7 +21,8 @@ class GiftsController < InheritedResources::Base
     end
   end
 
-  def package_params
+  private
+  def gift_params
     params.require(:gift).permit(:name, :points, :description, :gift_type)
   end
 end
