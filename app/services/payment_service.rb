@@ -14,7 +14,7 @@ class PaymentService
     end
 
     def count_plan_payments(plan_id = 1)
-      Payment.joins(:plan_payments).where('plan_payments.plan_id' => plan_id).count
+      Payment.joins(:plan_payments).where('plan_payments.plan_id' => plan_id).select(:merchant_id).distinct.count
     end
 
     def count_addon_payments(addon_id)
