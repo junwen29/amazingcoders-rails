@@ -1,4 +1,4 @@
-ActiveAdmin.register Point do
+ActiveAdmin.register MerchantPoint do
 
   menu :parent => "Merchant", :priority => 3
 
@@ -44,7 +44,7 @@ ActiveAdmin.register Point do
 
   # SHOW
   show do |f|
-    panel "Point Details" do
+    panel "MerchantPoint Details" do
       attributes_table_for f do
         row :id
         column :operation
@@ -59,7 +59,7 @@ ActiveAdmin.register Point do
   # EDIT
   form do |f|
     f.semantic_errors
-    f.inputs "Point Details" do
+    f.inputs "MerchantPoint Details" do
       f.input :merchant
       f.input :reason
       f.input :points, as: :string, :hint => "Please input an integer value"

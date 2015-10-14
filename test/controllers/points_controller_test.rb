@@ -8,7 +8,7 @@ class PointsControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:points)
+    assert_not_nil assigns(:merchant_points)
   end
 
   test "should get new" do
@@ -17,7 +17,7 @@ class PointsControllerTest < ActionController::TestCase
   end
 
   test "should create point" do
-    assert_difference('Point.count') do
+    assert_difference('MerchantPoint.count') do
       post :create, point: {  }
     end
 
@@ -40,7 +40,7 @@ class PointsControllerTest < ActionController::TestCase
   end
 
   test "should destroy point" do
-    assert_difference('Point.count', -1) do
+    assert_difference('MerchantPoint.count', -1) do
       delete :destroy, id: @point
     end
 

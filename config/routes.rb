@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   resources :gifts
 
-  resources :points
+  resources :merchant_points
 
   devise_for :users
 
@@ -82,7 +82,7 @@ Rails.application.routes.draw do
   devise_for :merchants, controllers: { sessions: "merchants/sessions", registrations: "merchants/registrations"}
   resources :venues
   resources :merchants
-  resources :points
+  resources :merchant_points
 
   resources :deals
   resources :payments do

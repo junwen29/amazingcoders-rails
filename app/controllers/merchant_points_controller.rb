@@ -1,4 +1,4 @@
-class PointsController < InheritedResources::Base
+class MerchantPointsController < InheritedResources::Base
 
 
   def index

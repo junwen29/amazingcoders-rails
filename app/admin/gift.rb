@@ -34,7 +34,7 @@ ActiveAdmin.register Gift do
     f.semantic_errors
     f.inputs "Gift Information" do
       f.input :name
-      f.input :points, as: :string, :hint => "State the number of points required to redeem this gift"
+      f.input :points, as: :string, :hint => "State the number of MerchantPoints required to redeem this gift"
       f.input :description
       f.input :gift_type, as: :select, collection: ["Merchant", "User"]
     end

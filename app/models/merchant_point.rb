@@ -1,4 +1,4 @@
-class Point < ActiveRecord::Base
+class MerchantPoint < ActiveRecord::Base
 
   belongs_to :merchant
   after_create :edit_total
@@ -6,7 +6,7 @@ class Point < ActiveRecord::Base
 
   private
   def edit_total
-    @point = Point.last
+    @point = MerchantPoint.last
     @merchant = Merchant.find(@point.merchant_id)
     total_points = @merchant.total_points
     if @point.operation == "Add"

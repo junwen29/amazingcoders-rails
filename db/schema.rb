@@ -182,6 +182,15 @@ ActiveRecord::Schema.define(version: 20151013173305) do
     t.datetime "updated_at"
   end
 
+  create_table "merchant_points", force: true do |t|
+    t.string   "reason"
+    t.integer  "points"
+    t.string   "operation"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "merchant_id"
+  end
+
   create_table "merchants", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -238,15 +247,6 @@ ActiveRecord::Schema.define(version: 20151013173305) do
   end
 
   add_index "plans", ["payment_id"], name: "index_plans_on_payment_id", using: :btree
-
-  create_table "points", force: true do |t|
-    t.string   "reason"
-    t.integer  "points"
-    t.string   "operation"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "merchant_id"
-  end
 
   create_table "redemptions", force: true do |t|
     t.integer  "deal_id"

@@ -12,7 +12,7 @@ class GiftsController < InheritedResources::Base
     if points >= gift.points
       flash[:success] = "Gift Redeemed!"
       reason = "Redeemed " + gift.name
-      PointService.new_point(reason, gift.points, "Minus", merchant_id)
+      MerchantPointService.new_point(reason, gift.points, "Minus", merchant_id)
 
       redirect_to gifts_path
     else

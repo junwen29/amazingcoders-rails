@@ -49,9 +49,9 @@ class MerchantService
       Deal.where(:merchant_id => merchant_id, :active => true)
     end
 
-    #for points
+    #for MerchantPoints
     def get_all_points(merchant_id)
-      Point.where(:merchant_id => merchant_id)
+      MerchantPoint.where(:merchant_id => merchant_id)
     end
 
     def update_venue(merchant_id, params)

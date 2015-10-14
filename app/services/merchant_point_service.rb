@@ -1,9 +1,9 @@
-class PointService
+class MerchantPointService
 
   module ClassMethods
 
     def new_point(reason, point, operation, merchant_id)
-      p = Point.new
+      p = MerchantPoint.new
       p.reason = reason
       p.points = point
       p.operation = operation

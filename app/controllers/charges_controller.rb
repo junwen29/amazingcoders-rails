@@ -39,15 +39,15 @@ class ChargesController < ApplicationController
       total_months += p.months
     end
 
-    PointService.new_point("Paid for a plan upgrade", @payment.total_cost, "Add", merchant_id)
+    MerchantPointService.new_point("Paid for a plan upgrade", @payment.total_cost, "Add", merchant_id)
 
     flash[:success] = "Plan upgrade completed! You have been awarded " + @payment.total_cost.to_i.to_s + " Burps!"
     @payment.update(paid: true)
 
-    #if milestone of 12 months is cleared, add 500 to total points
+    #if milestone of 12 months is cleared, add 500 to total MerchantPoints
     if (((total_months.to_i + @payment.months.to_i)/12) - (total_months.to_i/12)) != 0
       total_points += 500
-      PointService.new_point("12 months milestone reward", 500, "Add", merchant_id)
+      MerchantPointService.new_point("12 months milestone reward", 500, "Add", merchant_id)
       flash[:success] = "Plan upgrade completed! You have been awarded " + @payment.total_cost.to_i.to_s + " Burps! Thanks for being a loyal user! You have been credited an extra 500 Burps!"
     end
 
