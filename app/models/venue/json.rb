@@ -7,6 +7,7 @@ module Venue::Json
     def to_simple_json(json, options = {})
       json.name           self.name
       json.id             self.id
+      json.neighbourhood  self.neighbourhood
       json.is_wishlist    self.is_wishlist unless self.is_wishlist == nil
     end
 

@@ -13,6 +13,9 @@ ActiveAdmin.register Payment do
       @payment = Payment.find(params[:id])
       if @payment.update_columns(payment_params)
         flash[:success] = "Payment successfully updated!"
+        # TODO - DEMO: Uncomment for demonstration
+        # merchant_id = @payment.merchant_id
+        # PaymentMailer.update_subscription_admin("valued merchant", @payment, MerchantService.get_email(merchant_id)).deliver
         redirect_to admin_payment_path
       else
         flash[:error] = "Failed to update payment!"
