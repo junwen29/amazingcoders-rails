@@ -232,9 +232,8 @@ class DealAnalyticService
         deals = VenueService.get_active_and_past_deals_for_venue(v.id)
         deals.each do |d|
           deal_array = Array.new
-          deal_array << d[0].title
-          analytics = DealAnalytic.where(:deal_id => d[0].id)[0]
-          redemption_count = analytics.redemption_count
+          deal_array << d.title
+          redemption_count = Redemption.where(:venue_id => v.id, :deal_id => d.id).count
           venue_total_redemption_count = venue_total_redemption_count + redemption_count
           deal_array << redemption_count
           venue_array << deal_array
