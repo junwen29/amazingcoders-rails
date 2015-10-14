@@ -15,6 +15,7 @@ class AnalyticsController < ApplicationController
 
   def show
     deal_analytics_by_venue
+    deal_analytics_by_deals_for_venues
     render "analytics/venue"
   end
 
@@ -104,6 +105,10 @@ class AnalyticsController < ApplicationController
   end
 
   def deal_analytics_by_venue
-    @deals_by_venue = DealAnalyticService.get_analytics_for_deaals_by_venue(merchant_id)
+    @deals_by_venue = DealAnalyticService.get_analytics_for_deals_by_venue(merchant_id)
+  end
+
+  def deal_analytics_by_deals_for_venues
+    @deals_for_venue = DealAnalyticService.get_analytics_for_venues_by_deals(merchant_id)
   end
 end

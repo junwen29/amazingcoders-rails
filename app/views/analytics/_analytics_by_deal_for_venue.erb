@@ -1,0 +1,152 @@
+<div id="deal_venue_chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<form action="">
+  <p><strong>Add/Remove past deals data into Popularity of Deals in Venues chart!</strong></p>
+
+  <div class="container">
+    <% num_of_expired_deals = @deals_for_venue[1].size %>
+    <% loop = 0 %>
+    <% while loop < num_of_expired_deals %>
+        <input id="expired_deal_for_venues<%= loop %>" type="checkbox" value="<%= @deals_for_venue[1][loop][0] %>"><%= @deals_for_venue[1][loop][0] %>
+        <br/>
+        <% loop = loop + 1 %>
+    <% end %>
+  </div>
+</form>
+<footer>
+  <style type="text/css">
+      .container {
+          border: 2px solid #ccc;
+          width: 500px;
+          height: 100px;
+          overflow-y: scroll;
+          float: left;
+      }
+  </style>
+  <script>
+      $(function () {
+          var chart = new Highcharts.Chart({
+              chart: {
+                  type: 'column',
+                  renderTo: 'deal_venue_chart',
+              },
+              credits: {
+                  enabled: false
+              },
+              title: {
+                  text: 'Popularity of Deals in Venues'
+              },
+              subtitle: {
+                  text: 'Redemption Count'
+              },
+              yAxis: {
+                  allowDecimals: false,
+                  min: 0,
+                  title: {
+                      text: 'Number of Users'
+                  }
+              },
+              xAxis: {
+                  type: "category"
+              },
+              labels: {
+                  items: [{
+                      style: {
+                          left: '50px',
+                          top: '18px',
+                          color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
+                      }
+                  }]
+              },
+
+              series: [
+                  <% loop = 0 %>
+                  <% num_of_active_deals = @deals_for_venue[0].size%>
+                  <% while loop < num_of_active_deals %>
+                  <% redeem_placement = @deals_for_venue[0][loop].size - 1 %>
+                  {
+                      name: '<%= @deals_for_venue[0][loop][0] %>',
+                      data: [
+                          {
+                              name: "<%= @deals_for_venue[0][loop][0] %>",
+                              y: <%= @deals_for_venue[0][loop][redeem_placement] %>,
+                              drilldown: "<%= @deals_for_venue[0][loop][0] %>" + " active"
+                          }
+                      ]
+                  },
+                  <% loop = loop + 1 %>
+                  <% end %>
+              ],
+              drilldown: {
+                  series: [
+                      <% loop = 0 %>
+                      <% while loop < num_of_active_deals %>
+                      {
+                          name: "<%= @deals_for_venue[0][loop][0] %>",
+                          id: "<%= @deals_for_venue[0][loop][0] %>" + " active",
+                          data: [
+                              <% inner_loop = 1 %>
+                              <% num_of_deals = @deals_for_venue[0][loop].size - 1 %>
+                              <% while inner_loop < num_of_deals %>
+                              [
+                                  "<%= @deals_for_venue[0][loop][inner_loop][0] %>", <%= @deals_for_venue[0][loop][inner_loop][1] %>
+                              ],
+                              <% inner_loop = inner_loop + 1 %>
+                              <% end %>
+                          ]
+                      },
+                      <% loop = loop + 1 %>
+                      <% end %>
+
+                      <% loop = 0 %>
+                      <% while loop < num_of_expired_deals %>
+                      {
+                          name: "<%= @deals_for_venue[1][loop][0] %>",
+                          id: "<%= @deals_for_venue[1][loop][0] %>" + " past",
+                          data: [
+                              <% inner_loop = 1 %>
+                              <% num_of_deals = @deals_for_venue[1][loop].size - 1 %>
+                              <% while inner_loop < num_of_deals %>
+                              [
+                                  "<%= @deals_for_venue[1][loop][inner_loop][0] %>", <%= @deals_for_venue[1][loop][inner_loop][1] %>
+                              ],
+                              <% inner_loop = inner_loop + 1 %>
+                              <% end %>
+                          ]
+                      },
+                      <% loop = loop + 1 %>
+                      <% end %>
+
+                  ]
+              }
+          });
+
+          <% loop = 0 %>
+          <% while loop < num_of_expired_deals %>
+          <% redeem_placement = @deals_for_venue[1][loop].size - 1 %>
+          $('#expired_deal_for_venues' + '<%=loop%>').click(function () {
+              var chart = $('#deal_venue_chart').highcharts();
+              if ($(this).is(':checked')) {
+                  chart.addSeries({
+                      id: "<%= @deals_for_venue[1][loop][0] %>" + ' (Redemption Count)',
+                      name: '<%= @deals_for_venue[1][loop][0] %>',
+                      data: [
+                          {
+                              name: "<%= @deals_for_venue[1][loop][0] %>",
+                              y: <%= @deals_for_venue[1][loop][redeem_placement] %>,
+                              drilldown: "<%= @deals_for_venue[1][loop][0] %>" + " past"
+                          }
+                      ]
+                  });
+              }
+              else {
+                  var redeem_series = chart.get("<%= @deals_for_venue[1][loop][0] %>" + ' (Redemption Count)')
+                  redeem_series.remove();
+              }
+
+          });
+          <% loop = loop + 1 %>
+          <% end %>
+      });
+  </script>
+</footer>
