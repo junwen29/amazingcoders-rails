@@ -122,7 +122,7 @@
                   text: 'Popularity of Venues'
               },
               subtitle: {
-                  text: 'View and Redemption Count'
+                  text: 'Redemption Count'
               },
               yAxis: {
                   allowDecimals: false,
@@ -145,24 +145,10 @@
               },
               series: [
                   {
-                      name: 'View Count',
-                      data: [
-                          <% loop = 0 %>
-                          <% num_of_venues = @deals_by_venue.size%>
-                          <% while loop < num_of_venues %>
-                          <% view_placement = @deals_by_venue[loop].size - 2 %>
-                          {
-                              name: "<%= @deals_by_venue[loop][0] %>",
-                              y: <%= @deals_by_venue[loop][view_placement] %>,
-                              drilldown: "<%= @deals_by_venue[loop][0] %>" + " view"
-                          },
-                          <% loop = loop + 1 %>
-                          <% end %>
-                      ]
-                  }, {
                       name: 'Redemption Count',
                       data: [
                           <% loop = 0 %>
+                          <% num_of_venues = @deals_by_venue.size%>
                           <% while loop < num_of_venues %>
                           <% redeem_placement = @deals_by_venue[loop].size - 1 %>
                           {
@@ -173,25 +159,12 @@
                           <% loop = loop + 1 %>
                           <% end %>
                       ]
-                  }],
+                  }
+              ],
               drilldown: {
                   series: [
                       <% loop = 0 %>
                       <% while loop < num_of_venues %>
-                      {
-                          name: "View Count",
-                          id: "<%= @deals_by_venue[loop][0] %>" + " view",
-                          data: [
-                              <% inner_loop = 1 %>
-                              <% num_of_deals = @deals_by_venue[loop].size - 2 %>
-                              <% while inner_loop < num_of_deals %>
-                              [
-                                  "<%= @deals_by_venue[loop][inner_loop][0] %>", <%= @deals_by_venue[loop][inner_loop][1] %>
-                              ],
-                              <% inner_loop = inner_loop + 1 %>
-                              <% end %>
-                          ]
-                      },
                       {
                           name: "Redemption Count",
                           id: "<%= @deals_by_venue[loop][0] %>" + " redeem",
@@ -200,7 +173,7 @@
                               <% num_of_deals = @deals_by_venue[loop].size - 2 %>
                               <% while inner_loop < num_of_deals %>
                               [
-                                  "<%= @deals_by_venue[loop][inner_loop][0] %>", <%= @deals_by_venue[loop][inner_loop][2] %>
+                                  "<%= @deals_by_venue[loop][inner_loop][0] %>", <%= @deals_by_venue[loop][inner_loop][1] %>
                               ],
                               <% inner_loop = inner_loop + 1 %>
                               <% end %>
