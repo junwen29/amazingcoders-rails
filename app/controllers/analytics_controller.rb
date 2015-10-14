@@ -6,7 +6,7 @@ class AnalyticsController < ApplicationController
     deal_statistics_by_deal
   end
 
-  def show
+  def venue
     # Deal Statistics by Venues
     deal_statistics_by_venue
     render "analytics/venue"
