@@ -4,11 +4,18 @@ class AnalyticsController < ApplicationController
   def index
     # TODO: Add all analytics methods
     # Deal Statistics
+    deal_analytics_by_day
+    deal_analytics_by_type_and_redemption
     deal_statistics
     deal_statistics_deal_type
     # Aggregate Trends
 
     #raise @past_deal_names.inspect
+  end
+
+  def show
+    deal_analytics_by_venue
+    render "analytics/venue"
   end
 
   # Check if user has the subscribed to any deal analytics addons
@@ -88,4 +95,15 @@ class AnalyticsController < ApplicationController
     @redemption_freebies = DealAnalyticService.get_redemption_count(deal_ids)
   end
 
+  def deal_analytics_by_day
+    @deals_daily_count = DealAnalyticService.get_analytics_for_line_graph(merchant_id, Date.today.beginning_of_quarter, Date.today)
+  end
+
+  def deal_analytics_by_type_and_redemption
+    @deals_popularity_by_type_and_redemption = DealAnalyticService.get_analytics_for_deals_pie_chart(merchant_id)
+  end
+
+  def deal_analytics_by_venue
+    @deals_by_venue = DealAnalyticService.get_analytics_for_deaals_by_venue(merchant_id)
+  end
 end

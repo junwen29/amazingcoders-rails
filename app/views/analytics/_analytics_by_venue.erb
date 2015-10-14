@@ -1,0 +1,216 @@
+<div id="venue_chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<footer>
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src="http://code.highcharts.com/modules/exporting.js"></script>
+  <script src="http://code.highcharts.com/modules/drilldown.js"></script>
+
+  <!--Sand-Signika theme for Highcharts JS-->
+  <script>
+      // Load the fonts
+      Highcharts.createElement('link', {
+          href: '//fonts.googleapis.com/css?family=Signika:400,700',
+          rel: 'stylesheet',
+          type: 'text/css'
+      }, null, document.getElementsByTagName('head')[0]);
+
+      // Add the background image to the container
+      Highcharts.wrap(Highcharts.Chart.prototype, 'getContainer', function (proceed) {
+          proceed.call(this);
+          this.container.style.background = 'url(http://www.highcharts.com/samples/graphics/sand.png)';
+      });
+
+
+      Highcharts.theme = {
+          colors: ["#f45b5b", "#8085e9", "#8d4654", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
+              "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
+          chart: {
+              backgroundColor: null,
+              style: {
+                  fontFamily: "Signika, serif"
+              }
+          },
+          title: {
+              style: {
+                  color: 'black',
+                  fontSize: '16px',
+                  fontWeight: 'bold'
+              }
+          },
+          subtitle: {
+              style: {
+                  color: 'black'
+              }
+          },
+          tooltip: {
+              borderWidth: 0
+          },
+          legend: {
+              itemStyle: {
+                  fontWeight: 'bold',
+                  fontSize: '13px'
+              }
+          },
+          xAxis: {
+              labels: {
+                  style: {
+                      color: '#6e6e70'
+                  }
+              }
+          },
+          yAxis: {
+              labels: {
+                  style: {
+                      color: '#6e6e70'
+                  }
+              }
+          },
+          plotOptions: {
+              series: {
+                  shadow: true
+              },
+              candlestick: {
+                  lineColor: '#404048'
+              },
+              map: {
+                  shadow: false
+              }
+          },
+
+          // Highstock specific
+          navigator: {
+              xAxis: {
+                  gridLineColor: '#D0D0D8'
+              }
+          },
+          rangeSelector: {
+              buttonTheme: {
+                  fill: 'white',
+                  stroke: '#C0C0C8',
+                  'stroke-width': 1,
+                  states: {
+                      select: {
+                          fill: '#D0D0D8'
+                      }
+                  }
+              }
+          },
+          scrollbar: {
+              trackBorderColor: '#C0C0C8'
+          },
+
+          // General
+          background2: '#E0E0E8'
+
+      };
+
+      // Apply the theme
+      Highcharts.setOptions(Highcharts.theme);
+  </script>
+
+  <script>
+      $(function () {
+          var chart = new Highcharts.Chart({
+              chart: {
+                  type: 'column',
+                  renderTo: 'venue_chart',
+              },
+              credits: {
+                  enabled: false
+              },
+              title: {
+                  text: 'Popularity of Venues'
+              },
+              subtitle: {
+                  text: 'View and Redemption Count'
+              },
+              yAxis: {
+                  allowDecimals: false,
+                  min: 0,
+                  title: {
+                      text: 'Number of Users'
+                  }
+              },
+              xAxis: {
+                  type: "category"
+              },
+              labels: {
+                  items: [{
+                      style: {
+                          left: '50px',
+                          top: '18px',
+                          color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
+                      }
+                  }]
+              },
+              series: [
+                  {
+                      name: 'View Count',
+                      data: [
+                          <% loop = 0 %>
+                          <% num_of_venues = @deals_by_venue.size%>
+                          <% while loop < num_of_venues %>
+                          <% view_placement = @deals_by_venue[loop].size - 2 %>
+                          {
+                              name: "<%= @deals_by_venue[loop][0] %>",
+                              y: <%= @deals_by_venue[loop][view_placement] %>,
+                              drilldown: "<%= @deals_by_venue[loop][0] %>" + " view"
+                          },
+                          <% loop = loop + 1 %>
+                          <% end %>
+                      ]
+                  }, {
+                      name: 'Redemption Count',
+                      data: [
+                          <% loop = 0 %>
+                          <% while loop < num_of_venues %>
+                          <% redeem_placement = @deals_by_venue[loop].size - 1 %>
+                          {
+                              name: "<%= @deals_by_venue[loop][0] %>",
+                              y: <%= @deals_by_venue[loop][redeem_placement] %>,
+                              drilldown: "<%= @deals_by_venue[loop][0] %>" + " redeem"
+                          },
+                          <% loop = loop + 1 %>
+                          <% end %>
+                      ]
+                  }],
+              drilldown: {
+                  series: [
+                      <% loop = 0 %>
+                      <% while loop < num_of_venues %>
+                      {
+                          name: "View Count",
+                          id: "<%= @deals_by_venue[loop][0] %>" + " view",
+                          data: [
+                              <% inner_loop = 1 %>
+                              <% num_of_deals = @deals_by_venue[loop].size - 2 %>
+                              <% while inner_loop < num_of_deals %>
+                              [
+                                  "<%= @deals_by_venue[loop][inner_loop][0] %>", <%= @deals_by_venue[loop][inner_loop][1] %>
+                              ],
+                              <% inner_loop = inner_loop + 1 %>
+                              <% end %>
+                          ]
+                      },
+                      {
+                          name: "Redemption Count",
+                          id: "<%= @deals_by_venue[loop][0] %>" + " redeem",
+                          data: [
+                              <% inner_loop = 1 %>
+                              <% num_of_deals = @deals_by_venue[loop].size - 2 %>
+                              <% while inner_loop < num_of_deals %>
+                              [
+                                  "<%= @deals_by_venue[loop][inner_loop][0] %>", <%= @deals_by_venue[loop][inner_loop][2] %>
+                              ],
+                              <% inner_loop = inner_loop + 1 %>
+                              <% end %>
+                          ]
+                      },
+                      <% loop = loop + 1 %>
+                      <% end %>
+                  ]
+              }
+          });
+      });
+  </script>
+</footer>
