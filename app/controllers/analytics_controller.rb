@@ -70,9 +70,9 @@ class AnalyticsController < ApplicationController
     end
   end
 
-  def trends
+  def aggregate_trends
     if check_has_aggregate_trends
-
+      get_top_active_deals
     else
       render "analytics/error"
     end
@@ -96,5 +96,10 @@ class AnalyticsController < ApplicationController
   private
   def deal_analytics_by_deals_for_venues
     @deals_for_venue = DealAnalyticService.get_analytics_for_venues_by_deals(merchant_id)
+  end
+
+  private
+  def get_top_active_deals
+    @top_deals = DealAnalyticService.get_top_active_deals
   end
 end

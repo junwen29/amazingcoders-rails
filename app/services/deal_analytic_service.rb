@@ -298,6 +298,13 @@ class DealAnalyticService
       array << past_deals_array
       array
     end
+
+    def get_top_active_deals
+      active_deals = DealService.get_active_deals.pluck(:id)
+      top_10_deal_ids = DealAnalytic.where(deal_id: active_deals).order(redemption_count: :desc).limit(10).pluck(:deal_id)
+      top_active_deals = Deal.find(top_10_deal_ids)
+      top_active_deals
+    end
   end
 
   class << self
