@@ -86,6 +86,7 @@ Rails.application.routes.draw do
   resources :analytics do
     collection do
       get :venue
+      get :trends
     end
   end
 
@@ -98,8 +99,11 @@ Rails.application.routes.draw do
   get 'merchant_pages/home' => 'merchant_pages#home', :as => :merchant_home
   get 'merchant_pages/help' => 'merchant_pages#help', :as => :merchant_help
 
-  # Get analytics by deals
+  # Get analytics by venues
   get 'analytics/venue' => 'analytics#venue', :as => :analytics_venue
+
+# Get analytics by trends
+  get 'analytics/trends' => 'analytics#trends', :as => :analytics_trends
 
   resources :merchant_pages
   root :to => 'merchant_pages#home'

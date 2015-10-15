@@ -12,6 +12,11 @@ class AnalyticsController < ApplicationController
     render "analytics/venue"
   end
 
+  def trends
+    aggregate_trends
+    render"analytics/trends"
+  end
+
   # Check if user has the subscribed to any deal analytics addons
   private
   def check_has_analytics_access
@@ -60,6 +65,14 @@ class AnalyticsController < ApplicationController
       deal_analytics_by_venue
       # Show popularity of deals in venue
       deal_analytics_by_deals_for_venues
+    else
+      render "analytics/error"
+    end
+  end
+
+  def trends
+    if check_has_aggregate_trends
+
     else
       render "analytics/error"
     end
