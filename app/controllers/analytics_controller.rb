@@ -73,6 +73,7 @@ class AnalyticsController < ApplicationController
   def aggregate_trends
     if check_has_aggregate_trends
       get_top_active_deals
+      get_top_queries
     else
       render "analytics/error"
     end
@@ -101,5 +102,10 @@ class AnalyticsController < ApplicationController
   private
   def get_top_active_deals
     @top_deals = DealAnalyticService.get_top_active_deals
+  end
+
+  private
+  def get_top_queries
+    @top_query = DealAnalyticService.get_top_queries
   end
 end

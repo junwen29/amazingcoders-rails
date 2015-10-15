@@ -305,6 +305,11 @@ class DealAnalyticService
       top_active_deals = Deal.find(top_10_deal_ids)
       top_active_deals
     end
+
+    def get_top_queries
+      top_user_queries = UserQuery.order(num_count: :desc).limit(10)
+      top_user_queries
+    end
   end
 
   class << self
