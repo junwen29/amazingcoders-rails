@@ -204,7 +204,12 @@ class DealAnalyticService
         deal_type.each do |dt|
           deal_info = Array.new
           deal_info << dt.title
-          redemption_count = DealAnalytic.where(:deal_id => dt.id).pluck(:redemption_count)[0]
+          analytics = DealAnalytic.where(:deal_id => dt.id).take
+          if analytics == nil
+            redemption_count = 0
+          else
+            redemption_count = analytics.redemption_count
+          end
           deal_info << redemption_count
           type_array << deal_info
           total_redemption = total_redemption + redemption_count
