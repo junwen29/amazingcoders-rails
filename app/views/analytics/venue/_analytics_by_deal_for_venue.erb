@@ -50,7 +50,7 @@
                   <% while loop < num_of_active_deals %>
                   <% redeem_placement = @deals_for_venue[0][loop].size - 1 %>
                   {
-                      name: '<%= @deals_for_venue[0][loop][0] %>',
+                      name: '<span style="color: #00910c">Active: </span>' + '<%= @deals_for_venue[0][loop][0] %>',
                       data: [
                           {
                               name: "<%= @deals_for_venue[0][loop][0] %>",
@@ -68,7 +68,7 @@
                   <% redeem_placement = @deals_for_venue[1][loop].size - 1 %>
                   {
                       id: "<%= @deals_for_venue[1][loop][0] %>" + ' (Redemption Count)',
-                      name: '<%= @deals_for_venue[1][loop][0] %>',
+                      name: '<span style="color: #df1007">Expired: </span>' + '<%= @deals_for_venue[1][loop][0] %>',
                       data: [
                           {
                               name: "<%= @deals_for_venue[1][loop][0] %>",

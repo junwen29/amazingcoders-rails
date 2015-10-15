@@ -132,34 +132,33 @@
                   }
               },
               xAxis: {
-                  type: "category"
+                  labels: {
+                      enabled: false
+                  }
               },
-              labels: {
-                  items: [{
-                      style: {
-                          left: '50px',
-                          top: '18px',
-                          color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
-                      }
-                  }]
+              legend: {
+                  layout: 'vertical',
+                  align: 'right',
+                  verticalAlign: 'top',
+                  y: 30
               },
               series: [
+                  <% loop = 0 %>
+                  <% num_of_venues = @deals_by_venue.size%>
+                  <% while loop < num_of_venues %>
+                  <% redeem_placement = @deals_by_venue[loop].size - 1 %>
                   {
-                      name: 'Redemption Count',
+                      name: "<%= @deals_by_venue[loop][0] %>",
                       data: [
-                          <% loop = 0 %>
-                          <% num_of_venues = @deals_by_venue.size%>
-                          <% while loop < num_of_venues %>
-                          <% redeem_placement = @deals_by_venue[loop].size - 1 %>
                           {
                               name: "<%= @deals_by_venue[loop][0] %>",
                               y: <%= @deals_by_venue[loop][redeem_placement] %>,
                               drilldown: "<%= @deals_by_venue[loop][0] %>" + " redeem"
-                          },
-                          <% loop = loop + 1 %>
-                          <% end %>
+                          }
                       ]
-                  }
+                  },
+                  <% loop = loop + 1 %>
+                  <% end %>
               ],
               drilldown: {
                   series: [
