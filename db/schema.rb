@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151006141408) do
+ActiveRecord::Schema.define(version: 20151009155753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -240,6 +240,14 @@ ActiveRecord::Schema.define(version: 20151006141408) do
   add_index "redemptions", ["deal_id"], name: "index_redemptions_on_deal_id", using: :btree
   add_index "redemptions", ["user_id"], name: "index_redemptions_on_user_id", using: :btree
 
+  create_table "user_queries", force: true do |t|
+    t.string   "query"
+    t.integer  "num_count"
+    t.string   "query_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -293,6 +301,7 @@ ActiveRecord::Schema.define(version: 20151006141408) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "entry"
   end
 
   add_index "viewcounts", ["deal_id"], name: "index_viewcounts_on_deal_id", using: :btree
@@ -304,5 +313,15 @@ ActiveRecord::Schema.define(version: 20151006141408) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "wishlists", force: true do |t|
+    t.integer  "venue_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "wishlists", ["user_id"], name: "index_wishlists_on_user_id", using: :btree
+  add_index "wishlists", ["venue_id"], name: "index_wishlists_on_venue_id", using: :btree
 
 end

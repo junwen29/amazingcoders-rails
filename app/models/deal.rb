@@ -22,6 +22,7 @@ class Deal < ActiveRecord::Base
   scope :waiting, -> {where("active = ?", false)}
   scope :active, -> {where("active = ? AND expiry_date >= ?", true, Date.today)}
   scope :expired, -> {where("expiry_date < ? AND active = ?", Date.today, true)}
+  scope :active_and_expired, -> {where("active = ?", true)}
 
   scope :started, -> {where("start_date <= ? AND expiry_date >= ?", Date.today, Date.today)}
   scope :pushed, -> {where("pushed = ?", true)}
