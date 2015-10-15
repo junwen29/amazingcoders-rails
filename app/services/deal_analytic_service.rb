@@ -95,7 +95,7 @@ class DealAnalyticService
       active_deals_array = Array.new
       past_deals_array = Array.new
       active_deals = MerchantService.get_all_active_deals(merchant_id)
-      past_deals = MerchantService .get_past_deals(merchant_id)
+      past_deals = MerchantService.get_past_deals(merchant_id)
       active_deals.each do |ad|
         temp_start_date = start_date
         temp_end_date = end_date
@@ -204,7 +204,12 @@ class DealAnalyticService
         deal_type.each do |dt|
           deal_info = Array.new
           deal_info << dt.title
-          redemption_count = DealAnalytic.where(:deal_id => dt.id).pluck(:redemption_count)[0]
+          analytics = DealAnalytic.where(:deal_id => dt.id).take
+          if analytics == nil
+            redemption_count = 0
+          else
+            redemption_count = analytics.redemption_count
+          end
           deal_info << redemption_count
           type_array << deal_info
           total_redemption = total_redemption + redemption_count
@@ -220,36 +225,77 @@ class DealAnalyticService
     # array[0][0] is the venue name
     # array[0][1] is first deal in the venue
     # array[0][1][0] is the name of first deal
-    # array[0][1][1] is the view count of the deal
-    # array[0][1][2] is the redemption count of the deal
-    # array[0][1][3] is the total view count
-    # array[0][1][4] is the total redemption count
-    def get_analytics_for_deaals_by_venue(merchant_id)
+    # array[0][1][1] is the redemption count of the deal
+    # array[0][size-1]
+    def get_analytics_for_deals_by_venue(merchant_id)
       array = Array.new
       venues = Venue.where(:merchant_id => merchant_id)
       venues.each do |v|
         venue_array = Array.new
-        venue_total_view_count = 0
         venue_total_redemption_count = 0
         venue_array << v.name
-        deal_array = Array.new
         deals = VenueService.get_active_and_past_deals_for_venue(v.id)
         deals.each do |d|
           deal_array = Array.new
-          deal_array << d[0].title
-          analytics = DealAnalytic.where(:deal_id => d[0].id)[0]
-          view_count = analytics.view_count
-          redemption_count = analytics.redemption_count
+          deal_array << d.title
+          redemption_count = Redemption.where(:venue_id => v.id, :deal_id => d.id).count
           venue_total_redemption_count = venue_total_redemption_count + redemption_count
-          venue_total_view_count = venue_total_view_count + view_count
-          deal_array << view_count
           deal_array << redemption_count
           venue_array << deal_array
         end
-        venue_array << venue_total_view_count
         venue_array << venue_total_redemption_count
         array << venue_array
       end
+      array
+    end
+
+    # Returns a nested array
+    # array[0] is active deals of the merchant
+    # array[1] is past deals of the merchant
+    # array[0][0] is the first venue of active deal
+    # array[0][0][0] is name of the first venue
+    # array[0][0][1] is the redemption count of the venue
+    # array [0][size -1] is the total redemption count of the deal
+    def get_analytics_for_venues_by_deals(merchant_id)
+      array = Array.new
+      active_deals_array = Array.new
+      past_deals_array = Array.new
+      active_deals = MerchantService.get_all_active_deals(merchant_id)
+      past_deals = MerchantService.get_past_deals(merchant_id)
+      active_deals.each do |ad|
+        deal_array = Array.new
+        deal_total_redemption_count = 0
+        deal_array << ad.title
+        venues = DealService.get_all_venues(ad.id)
+        venues.each do |v|
+          venue_array = Array.new
+          venue_array << v.name
+          redemption_count = Redemption.where(:venue_id => v.id, :deal_id => ad.id).count
+          venue_array << redemption_count
+          deal_total_redemption_count = deal_total_redemption_count + redemption_count
+          deal_array << venue_array
+        end
+        deal_array << deal_total_redemption_count
+        active_deals_array << deal_array
+      end
+      past_deals.each do |pd|
+        deal_array = Array.new
+        deal_total_redemption_count = 0
+        deal_array << pd.title
+        venues = DealService.get_all_venues(pd.id)
+        venues.each do |v|
+          venue_array = Array.new
+          venue_array << v.name
+          redemption_count = Redemption.where(:venue_id => v.id, :deal_id => pd.id).count
+          venue_array << redemption_count
+          deal_total_redemption_count = deal_total_redemption_count + redemption_count
+          deal_array << venue_array
+        end
+        deal_array << deal_total_redemption_count
+        past_deals_array << deal_array
+      end
+      array << active_deals_array
+      array << past_deals_array
       array
     end
   end

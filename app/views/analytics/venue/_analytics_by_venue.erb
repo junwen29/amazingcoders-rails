@@ -1,15 +1,9 @@
-<div id="analytics" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-<form>
-  <!--<input type="hidden" name="analytics" value="all">
-  <button class="btn btn-default" type="submit">View past deals</button>
-  <input type="submit" name="sb" value="View Past Deals too">
-  <input type="submit" name="sb" value="View Active Deals only">-->
-  <button name="scope" value="all" type="submit">View past deals too</button>
-  <button name="scope" value="active" type="submit">View active deals only</button>
-</form>
+<div id="venue_chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 <footer>
   <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src="http://code.highcharts.com/modules/exporting.js"></script>
+  <script src="http://code.highcharts.com/modules/drilldown.js"></script>
 
   <!--Sand-Signika theme for Highcharts JS-->
   <script>
@@ -116,15 +110,19 @@
 
   <script>
       $(function () {
-          $('#analytics').highcharts({
+          var chart = new Highcharts.Chart({
+              chart: {
+                  type: 'column',
+                  renderTo: 'venue_chart',
+              },
               credits: {
                   enabled: false
               },
               title: {
-                  text: 'Analytics of all Active Deals'
+                  text: 'Popularity of Venues'
               },
               subtitle: {
-                  text: 'View Count and Redemption Count'
+                  text: 'Redemption Count'
               },
               yAxis: {
                   allowDecimals: false,
@@ -134,26 +132,56 @@
                   }
               },
               xAxis: {
-                  categories: <%= raw @active_deal_names.as_json %>
+                  labels: {
+                      enabled: false
+                  }
               },
-              labels: {
-                  items: [{
-                      style: {
-                          left: '50px',
-                          top: '18px',
-                          color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
-                      }
-                  }]
+              legend: {
+                  layout: 'vertical',
+                  align: 'right',
+                  verticalAlign: 'top',
+                  y: 30
               },
-              series: [{
-                  type: 'column',
-                  name: 'View Count',
-                  data: <%= @view_counts %>
-              }, {
-                  type: 'column',
-                  name: 'Redemption Count',
-                  data: <%= @redemption_counts %>
-              }]
+              series: [
+                  <% loop = 0 %>
+                  <% num_of_venues = @deals_by_venue.size%>
+                  <% while loop < num_of_venues %>
+                  <% redeem_placement = @deals_by_venue[loop].size - 1 %>
+                  {
+                      name: "<%= @deals_by_venue[loop][0] %>",
+                      data: [
+                          {
+                              name: "<%= @deals_by_venue[loop][0] %>",
+                              y: <%= @deals_by_venue[loop][redeem_placement] %>,
+                              drilldown: "<%= @deals_by_venue[loop][0] %>" + " redeem"
+                          }
+                      ]
+                  },
+                  <% loop = loop + 1 %>
+                  <% end %>
+              ],
+              drilldown: {
+                  series: [
+                      <% loop = 0 %>
+                      <% while loop < num_of_venues %>
+                      {
+                          name: "Redemption Count",
+                          id: "<%= @deals_by_venue[loop][0] %>" + " redeem",
+                          data: [
+                              <% inner_loop = 1 %>
+                              <% num_of_deals = @deals_by_venue[loop].size - 2 %>
+                              <% while inner_loop < num_of_deals %>
+                              [
+                                  "<%= @deals_by_venue[loop][inner_loop][0] %>", <%= @deals_by_venue[loop][inner_loop][1] %>
+                              ],
+                              <% inner_loop = inner_loop + 1 %>
+                              <% end %>
+                          ]
+                      },
+                      <% loop = loop + 1 %>
+                      <% end %>
+                  ]
+              }
           });
       });
   </script>

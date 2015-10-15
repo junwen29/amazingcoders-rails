@@ -83,7 +83,11 @@ Rails.application.routes.draw do
   resources :payments do
     resources :charges
   end
-  resources :analytics
+  resources :analytics do
+    collection do
+      get :venue
+    end
+  end
 
 # To change a deal into active deal then going back to index page
   get 'deals/:id/activate' => 'deals#activate', :as => 'active_deal'

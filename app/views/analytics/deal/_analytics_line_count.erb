@@ -1,23 +1,12 @@
-<div id="analytics_line" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-
-<form action="">
-  <p><strong>Add/Remove past deals data into Analytics of Deals chart!</strong></p>
-
-  <div class="container">
-    <% num_of_expired_deals = @deals_daily_count[2].size %>
-    <% loops = 0 %>
-    <% while loops < num_of_expired_deals %>
-        <input id="expired_deal<%= loops %>" type="checkbox" value="<%= @deals_daily_count[2][loops] %>"><%= @deals_daily_count[2][loops] %>
-        <br/>
-        <% loops = loops + 1 %>
-    <% end %>
-  </div>
-</form>
-
-<footer>
+<head>
   <script src="http://code.highcharts.com/stock/highstock.js"></script>
   <script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
   <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+</head>
+
+<div id="analytics_line" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<footer>
 
   <style type="text/css">
       .container {
@@ -81,10 +70,13 @@
                   dataLabels: {
                       visible: true
                   },
+                  series: {
+                      compare: 'value'
+                  }
               },
-
               tooltip: {
-                  pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>'
+                  pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',
+                  valueDecimals: 2
               },
               legend: {
                   enabled: true,
@@ -101,25 +93,44 @@
               series: [
                   <% num_active_deals = @deals_daily_count[0].size %>
                   <% num = 0 %>
-                  <% visibility = true %>
                   <% while num < num_active_deals %>
                   {
                       id: "<%= @deals_daily_count[0][num][0] %>" + ' (View Count)',
-                      name: "<%= @deals_daily_count[0][num][0] %>" + " (View Count)",
+                      name: '<span style="color: #00910c">Active: </span>' + "<%= @deals_daily_count[0][num][0] %>" + '<span style="color: #9d1bcf"> (View Count)</span>',
                       pointStart: <%= @deals_daily_count[0][num][1] %>,
                       pointInterval: 24 * 3600 * 1000,
                       data: <%= @deals_daily_count[0][num][2] %>,
-                      visible: <%= visibility %>
+                      visible: true
                   }, {
                       id: "<%= @deals_daily_count[0][num][0] %>" + ' (Redemption Count)',
-                      name: "<%= @deals_daily_count[0][num][0] %>" + ' (Redemption Count)',
+                      name: '<span style="color: #00910c">Active: </span>' + "<%= @deals_daily_count[0][num][0] %>" + '<span style="color: #eb8100"> (Redemption Count)</span>',
                       pointStart: <%= @deals_daily_count[0][num][1] %>,
                       pointInterval: 24 * 3600 * 1000,
                       data: <%= @deals_daily_count[0][num][3] %>,
-                      visible: <%= visibility %>
+                      visible: true
                   },
                   <% num = num + 1 %>
-                  <% visibility = false %>
+                  <% end %>
+
+                  <% num_of_expired_deals = @deals_daily_count[2].size %>
+                  <% loops = 0 %>
+                  <% while loops < num_of_expired_deals %>
+                  {
+                      id: "<%= @deals_daily_count[1][loops][0] %>" + ' (View Count)',
+                      name: '<span style="color: #df1007">Expired: </span>' + "<%= @deals_daily_count[1][loops][0] %>" + '<span style="color: #9d1bcf"> (View Count)</span>',
+                      pointStart: <%= @deals_daily_count[1][loops][1] %>,
+                      pointInterval: 24 * 3600 * 1000,
+                      data: <%= @deals_daily_count[1][loops][2] %>,
+                      visible: false
+                  }, {
+                      id: "<%= @deals_daily_count[1][loops][0] %>" + ' (Redemption Count)',
+                      name: '<span style="color: #df1007">Expired: </span>' + "<%= @deals_daily_count[1][loops][0] %>" + '<span style="color: #eb8100"> (Redemption Count)</span>',
+                      pointStart: <%= @deals_daily_count[1][loops][1] %>,
+                      pointInterval: 24 * 3600 * 1000,
+                      data: <%= @deals_daily_count[1][loops][3] %>,
+                      visible: false
+                  },
+                  <% loops = loops + 1 %>
                   <% end %>
               ]
           }, function (chart) {
@@ -139,38 +150,6 @@
                   this.onblur();
               }
           });
-
-          <% loops = 0 %>
-          <% while loops < num_of_expired_deals %>
-          $('#expired_deal' + '<%=loops%>').click(function () {
-              var chart = $('#analytics_line').highcharts();
-              if ($(this).is(':checked')) {
-                  chart.addSeries({
-                      id: "<%= @deals_daily_count[1][loops][0] %>" + ' (View Count)',
-                      name: "<%= @deals_daily_count[1][loops][0] %>" + ' (View Count)',
-                      pointStart: <%= @deals_daily_count[1][loops][1] %>,
-                      pointInterval: 24 * 3600 * 1000,
-                      data: <%= @deals_daily_count[1][loops][2] %>
-                  });
-                  chart.addSeries({
-                      id: "<%= @deals_daily_count[1][loops][0] %>" + ' (Redemption Count)',
-                      name: "<%= @deals_daily_count[1][loops][0] %>" + ' (Redemption Count)',
-                      pointStart: <%= @deals_daily_count[1][loops][1] %>,
-                      pointInterval: 24 * 3600 * 1000,
-                      data: <%= @deals_daily_count[1][loops][3] %>
-                  });
-              }
-              else {
-                  var view_series = chart.get("<%= @deals_daily_count[1][loops][0] %>" + ' (View Count)')
-                  var redeem_series = chart.get("<%= @deals_daily_count[1][loops][0] %>" + ' (Redemption Count)')
-                  view_series.remove();
-                  redeem_series.remove();
-              }
-
-          });
-          <% loops = loops + 1 %>
-          <% end %>
       });
-
   </script>
 </footer>

@@ -9,14 +9,15 @@
 
     <!-- Content Heading -->
     <div class="pull-left">
-      <p class="b2 content-title">Deal Analytics</p>
+      <p class="b2 content-title">Deal Analytics by Venues</p>
     </div>
 
     <div class="clearfix"></div>
     <div class="content-separator"></div>
 
     <!-- Content Body -->
-    <%= render :partial => 'analytics_by_venue' %>
+    <%= render :partial => 'analytics/venue/analytics_by_venue' %><br>
+    <%= render :partial => 'analytics/venue/analytics_by_deal_for_venue' %>
 
 
   </div><!-- /content -->
