@@ -93,14 +93,14 @@
                   <% while num < num_active_deals %>
                   {
                       id: "<%= @deals_daily_count[0][num][0] %>" + ' (View Count)',
-                      name: '<span style="color: #00910c">Active: </span>' + "<%= @deals_daily_count[0][num][0] %>" + " (View Count)",
+                      name: '<span style="color: #00910c">Active: </span>' + "<%= @deals_daily_count[0][num][0] %>" + '<span style="color: #9d1bcf"> (View Count)</span>',
                       pointStart: <%= @deals_daily_count[0][num][1] %>,
                       pointInterval: 24 * 3600 * 1000,
                       data: <%= @deals_daily_count[0][num][2] %>,
                       visible: true
                   }, {
                       id: "<%= @deals_daily_count[0][num][0] %>" + ' (Redemption Count)',
-                      name: '<span style="color: #00910c">Active: </span>' + "<%= @deals_daily_count[0][num][0] %>" + ' (Redemption Count)',
+                      name: '<span style="color: #00910c">Active: </span>' + "<%= @deals_daily_count[0][num][0] %>" + '<span style="color: #eb8100"> (Redemption Count)</span>',
                       pointStart: <%= @deals_daily_count[0][num][1] %>,
                       pointInterval: 24 * 3600 * 1000,
                       data: <%= @deals_daily_count[0][num][3] %>,
@@ -114,14 +114,14 @@
                   <% while loops < num_of_expired_deals %>
                   {
                       id: "<%= @deals_daily_count[1][loops][0] %>" + ' (View Count)',
-                      name: '<span style="color: #df1007">Expired: </span>' + "<%= @deals_daily_count[1][loops][0] %>" + ' (View Count)',
+                      name: '<span style="color: #df1007">Expired: </span>' + "<%= @deals_daily_count[1][loops][0] %>" + '<span style="color: #9d1bcf"> (View Count)</span>',
                       pointStart: <%= @deals_daily_count[1][loops][1] %>,
                       pointInterval: 24 * 3600 * 1000,
                       data: <%= @deals_daily_count[1][loops][2] %>,
                       visible: false
                   }, {
                       id: "<%= @deals_daily_count[1][loops][0] %>" + ' (Redemption Count)',
-                      name: '<span style="color: #df1007">Expired: </span>' + "<%= @deals_daily_count[1][loops][0] %>" + ' (Redemption Count)',
+                      name: '<span style="color: #df1007">Expired: </span>' + "<%= @deals_daily_count[1][loops][0] %>" + '<span style="color: #eb8100"> (Redemption Count)</span>',
                       pointStart: <%= @deals_daily_count[1][loops][1] %>,
                       pointInterval: 24 * 3600 * 1000,
                       data: <%= @deals_daily_count[1][loops][3] %>,
