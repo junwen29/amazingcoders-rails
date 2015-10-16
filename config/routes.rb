@@ -21,7 +21,6 @@ Rails.application.routes.draw do
       # deals api
       scope '/deals' do
         get '' => 'deals#index', :as => 'deals'
-        get '/venues/:id' => 'venues#get_venues_for_deal', :as => 'get_venues_for_deal'
 
         scope '/:id' do
           get ''  => 'deals#get_deal', :as => 'get_deal'
@@ -35,8 +34,6 @@ Rails.application.routes.draw do
       # venues api
       scope '/venues' do
         get '' => 'venues#index', :as => 'venues'
-        #### TODO change this route or fetching of venues should include associated json deals
-        get '/deals/:id' => 'deals#get_deals_for_venue', :as => 'get_deals_for_venue'
 
         scope '/:id' do
           get ''=> 'venues#get_venue', :as => 'get_venue'
@@ -83,7 +80,11 @@ Rails.application.routes.draw do
   resources :payments do
     resources :charges
   end
-  resources :analytics
+  resources :analytics do
+    collection do
+      get :venue
+    end
+  end
 
 # To change a deal into active deal then going back to index page
   get 'deals/:id/activate' => 'deals#activate', :as => 'active_deal'
@@ -93,6 +94,9 @@ Rails.application.routes.draw do
 
   get 'merchant_pages/home' => 'merchant_pages#home', :as => :merchant_home
   get 'merchant_pages/help' => 'merchant_pages#help', :as => :merchant_help
+
+  # Get analytics by deals
+  get 'analytics/venue' => 'analytics#venue', :as => :analytics_venue
 
   resources :merchant_pages
   root :to => 'merchant_pages#home'

@@ -39,13 +39,4 @@ class Api::P1::DealsController < Api::P1::ApplicationController
     end
   end
 
-  def get_deals_for_venue
-    venue = Venue.find(params[:id])
-    deals = venue.deals
-    active_deals = deals.where('expiry_date >= ? AND active = true', Date.today)
-    render_jbuilders(active_deals) do |json, deal|
-      deal.to_json json
-    end
-  end
-
 end

@@ -5,12 +5,24 @@
 
 <div style="padding-bottom: 50px">
   <h2 style="padding-bottom: 50px">Premium Services Analytics</h2>
-  <div id="plan_subscribers" style="height: 400px; width:600px; float: left;"></div>
-  <div id="plan_payments" style="height: 400px; width:600px;"></div>
+  <div id="plan_subscribers" class="col-lg-6"></div>
+  <!--style="height: 400px; width:600px; float: left;"-->
+  <div id="plan_payments" class="col-lg-6"></div>
   <div id="plan_months" style="padding-top: 20px"></div>
 </div>
 
 <footer>
+  <style>
+      .col-lg-6 {
+          position: relative;
+          min-height: 1px;
+          padding-right: 15px;
+          padding-left: 15px;
+          float: left;
+          width: 50%;
+          box-sizing: border-box;
+      }
+  </style>
   <script src="//code.highcharts.com/highcharts.js"></script>
   <script src="//code.highcharts.com/modules/data.js"></script>
   <script src="//code.highcharts.com/modules/exporting.js"></script>
@@ -150,7 +162,7 @@
               },
               yAxis: {
                   title: {
-                      text: 'Number of subscribers'
+                      text: 'Number of subscriptions'
                   },
                   plotLines: [{
                       value: 0,
@@ -159,7 +171,7 @@
                   }]
               },
               tooltip: {
-                  valueSuffix: ' subscribers'
+                  valueSuffix: ' subscriptions'
               },
               legend: {
                   layout: 'vertical',
