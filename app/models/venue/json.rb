@@ -36,9 +36,10 @@ module Venue::Json
     def deals_json(json)
       json.set! :deals do
         json.array! self.deals do |deal|
-          json.id           deal.id
-          json.title        deal.title
-          json.type_of_deal deal.type_of_deal
+          json.id             deal.id
+          json.title          deal.title
+          json.type_of_deal   deal.type_of_deal
+          json.redeemable     deal.redeemable unless deal.redeemable == nil
         end
       end
     end
