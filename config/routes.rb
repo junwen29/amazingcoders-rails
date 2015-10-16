@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   # this will generate '/attachinary/cors' which will be used for iframe file transfers (for unsupported browsers).
   mount Attachinary::Engine => '/attachinary'
 
+  resources :gifts
+
+  resources :merchant_points
+
   devise_for :users
 
 ################# Android
@@ -75,6 +79,7 @@ Rails.application.routes.draw do
   devise_for :merchants, controllers: { sessions: "merchants/sessions", registrations: "merchants/registrations"}
   resources :venues
   resources :merchants
+  resources :merchant_points
 
   resources :deals
   resources :payments do
