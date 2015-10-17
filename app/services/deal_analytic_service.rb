@@ -299,7 +299,8 @@ class DealAnalyticService
       array
     end
 
-    # For admin deals analytics
+    # For admin app traffic analytics
+    # return [milliseconds, view count]
     def get_all_viewcounts(start_date, end_date)
       view_counts = Viewcount.where(created_at: start_date..end_date).count
       formatted_vc = Array.new
@@ -309,6 +310,7 @@ class DealAnalyticService
     end
 
     # Get all view counts for each week
+    # return data array for deal traffic analytics chart
     def get_app_traffic(start_date, end_date)
       total_vc = Array.new
       while start_date.next_week < end_date
@@ -316,6 +318,27 @@ class DealAnalyticService
         start_date = start_date.next_week
       end
       total_vc
+    end
+
+    # For admin foot traffic analytics
+    # return [milliseconds, redemption count]
+    def get_all_redemptions(start_date, end_date)
+      redemption_counts = Redemption.where(created_at: start_date..end_date).count
+      formatted_rc = Array.new
+      formatted_rc.push end_date.to_f * 1000
+      formatted_rc.push redemption_counts
+      formatted_rc
+    end
+
+    # Get all redemption counts for each week
+    # return data array for deal traffic analytics chart
+    def get_foot_traffic(start_date, end_date)
+      total_rc = Array.new
+      while start_date.next_week < end_date
+        total_rc.push get_all_redemptions(start_date, start_date.next_week)
+        start_date = start_date.next_week
+      end
+      total_rc
     end
   end
 

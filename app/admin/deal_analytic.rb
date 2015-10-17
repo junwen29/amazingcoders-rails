@@ -176,7 +176,7 @@ ActiveAdmin.register DealAnalytic do
       end_date = Time.now
       start_date = end_date.beginning_of_year
       @view_counts = DealAnalyticService.get_app_traffic(start_date, end_date)
-      #raise @view_counts.inspect
+      @redemption_counts = DealAnalyticService.get_foot_traffic(start_date, end_date)
     end
   end
 

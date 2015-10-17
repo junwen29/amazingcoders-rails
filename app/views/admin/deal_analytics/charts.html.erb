@@ -1,8 +1,7 @@
 <div style="padding-bottom: 50px">
   <h2 style="padding-bottom: 50px">View Count and Redemption Rate</h2>
   <div id="container" style="height: 400px;"></div>
-  <div id="container2" style="height: 400px;"></div>
-  <div id="container3" style="height: 400px;"></div>
+  <div id="deal_traffic" style="height: 400px;"></div>
 
 </div>
 
@@ -116,139 +115,10 @@
           });
       });
   </script>
-
-  <script>
-      $(document).ready(function () {
-          chart = new Highcharts.Chart({
-              credits: {
-                  enabled: false
-              },
-              chart: {
-                  renderTo: 'container2',
-                  zoomType: 'xy',
-                  type: 'line'
-              },
-              title: {
-                  text: ''
-              },
-              legend: {
-                  itemStyle: {
-                      fontSize: '13px',
-                      fontFamily: 'Arial,sans-serif'
-                  }
-              },
-              xAxis: {
-                  type: 'datetime',
-                  tickInterval: 30 * 24 * 3600 * 1000,
-                  min: Date.UTC(2014, 10, 1),
-                  max: Date.now(),
-                  labels: {
-                      rotation: 45,
-                      step: 1,
-                      style: {
-                          fontSize: '13px',
-                          fontFamily: 'Arial,sans-serif'
-                      }
-                  },
-                  dateTimeLabelFormats: { // don't display the dummy year
-                      day: '%e. %b',
-                      month: '%b \'%y',
-                      year: '%Y'
-                  }
-              },
-              yAxis: {
-                  title: {
-                      text: 'Number of Users'
-                  }
-              },
-              tooltip: {
-                  enabled: true
-              },
-              plotOptions: {
-                  column: {
-                      grouping: 'normal'
-                  },
-                  series: {
-                      pointWidth: 80,
-                      borderWidth: 0,
-                      dataLabels: {
-                          enabled: true,
-                          format: '{point.y} months'
-                      }
-                  }
-              },
-              series: [{
-                  name: 'View Count',
-                  data: [
-                      [Date.UTC(2011, 5, 1), 10000],
-                      [Date.UTC(2011, 8, 1), 9996],
-                      [Date.UTC(2011, 11, 1), 10652],
-                      [Date.UTC(2012, 2, 1), 11387],
-                      [Date.UTC(2012, 5, 1), 11586],
-                      [Date.UTC(2012, 8, 1), 11984],
-                      [Date.UTC(2012, 11, 1), 12179]
-                  ]
-              }, {
-                  name: 'Redemption Count',
-                  data: [
-                      [Date.UTC(2015, 0, 1), 100],
-                      [Date.UTC(2015, 0, 8), 300],
-                      [Date.UTC(2015, 0, 15), 200],
-                      [Date.UTC(2015, 0, 22), 150],
-                      [Date.UTC(2015, 1, 1), 200],
-                      [Date.UTC(2015, 2, 1), 300],
-                      [Date.UTC(2015, 3, 1), 400],
-                      [Date.UTC(2015, 4, 1), 500],
-                      [Date.UTC(2015, 5, 2), 600],
-                      [Date.UTC(2015, 6, 1), 300],
-                      [Date.UTC(2015, 7, 1), 200],
-                      [Date.UTC(2015, 8, 1), 100],
-                      [Date.UTC(2012, 9, 1), 0.728],
-                      [Date.UTC(2012, 0, 24), 0.728],
-                      [Date.UTC(2012, 0, 31), 0.745],
-                      [Date.UTC(2012, 1, 1), 0.745],
-                      [Date.UTC(2012, 1, 28), 0.745],
-                      [Date.UTC(2012, 2, 6), 0.76],
-                      [Date.UTC(2012, 2, 13), 0.76],
-                      [Date.UTC(2012, 2, 20), 0.76],
-                      [Date.UTC(2012, 2, 27), 0.76],
-                      [Date.UTC(2012, 3, 3), 0.76],
-                      [Date.UTC(2012, 3, 10), 0.76],
-                      [Date.UTC(2012, 3, 17), 0.76],
-                      [Date.UTC(2012, 3, 24), 0.76],
-                      [Date.UTC(2012, 4, 1), 0.76],
-                      [Date.UTC(2012, 4, 8), 0.76],
-                      [Date.UTC(2012, 4, 15), 0.76],
-                      [Date.UTC(2012, 4, 22), 0.76],
-                      [Date.UTC(2012, 4, 29), 0.76],
-                      [Date.UTC(2012, 5, 5), 0.76],
-                      [Date.UTC(2012, 5, 12), 0.76],
-                      [Date.UTC(2012, 5, 19), 0.76],
-                      [Date.UTC(2012, 5, 26), 0.76],
-                      [Date.UTC(2012, 6, 3), 0.76],
-                      [Date.UTC(2012, 6, 10), 0.76],
-                      [Date.UTC(2012, 6, 17), 0.76],
-                      [Date.UTC(2012, 6, 24), 0.76],
-                      [Date.UTC(2012, 6, 31), 0.76],
-                      [Date.UTC(2012, 7, 1), 0.76],
-                      [Date.UTC(2012, 7, 7), 0.76],
-                      [Date.UTC(2012, 7, 14), 0.76],
-                      [Date.UTC(2012, 7, 21), 0.76],
-                      [Date.UTC(2012, 7, 28), 0.76],
-                      [Date.UTC(2012, 8, 4), 0.76],
-                      [Date.UTC(2012, 8, 11), 0.76],
-                      [Date.UTC(2012, 8, 18), 0.76],
-                      [Date.UTC(2012, 8, 25), 0.76],
-                      [Date.UTC(2012, 11, 1), 0.76]
-                  ]
-              }]
-          });
-      });
-  </script>
-
+  <!-- Deal Traffic -->
   <script>
       $(function () {
-          $('#container3').highcharts({
+          $('#deal_traffic').highcharts({
               credits: {
                   enabled: false
               },
@@ -256,7 +126,7 @@
                   zoomType: 'x'
               },
               title: {
-                  text: 'Traffic contributions from Deals'
+                  text: 'Traffic from Deals'
               },
               subtitle: {
                   text: 'App Traffic by View Count, Foot Traffic by Redemptions'
@@ -275,18 +145,6 @@
               },
               plotOptions: {
                   area: {
-                      fillColor: {
-                          linearGradient: {
-                              x1: 0,
-                              y1: 0,
-                              x2: 0,
-                              y2: 1
-                          },
-                          stops: [
-                              [0, Highcharts.getOptions().colors[0]],
-                              [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                          ]
-                      },
                       marker: {
                           radius: 2
                       },
@@ -295,8 +153,7 @@
                           hover: {
                               lineWidth: 1
                           }
-                      },
-                      threshold: null
+                      }
                   }
               },
 
@@ -307,7 +164,7 @@
               }, {
                   type: 'column',
                   name: 'Redemption Count',
-                  data: <%= @view_counts %>
+                  data: <%= @redemption_counts %>
               }]
           });
       });
