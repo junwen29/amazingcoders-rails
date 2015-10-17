@@ -450,9 +450,9 @@ d[e].remove(!1);ta(b.axes,this);ta(b[c],this);b.options[c].splice(this.options.i
         e.onclick=null,p(e)}});H.menu=function(b,a,e,c){return["M",b,a+2.5,"L",b+e,a+2.5,"M",b,a+c/2+0.5,"L",b+e,a+c/2+0.5,"M",b,a+c-1.5,"L",b+e,a+c-1.5]};z.prototype.callbacks.push(function(b){var a,e=b.options.exporting,c=e.buttons;x=0;if(e.enabled!==!1){for(a in c)b.addButton(c[a]);s(b,"destroy",b.destroyExport)}})})(Highcharts);
 
 /*
-    Highchart drill down
-    Script src: http://code.highcharts.com/modules/drilldown.js
-*/
+ Highchart drill down
+ Script src: http://code.highcharts.com/modules/drilldown.js
+ */
 
 (function(f){function A(b,a,c){var d;!a.rgba.length||!b.rgba.length?b=a.raw||"none":(b=b.rgba,a=a.rgba,d=a[3]!==1||b[3]!==1,b=(d?"rgba(":"rgb(")+Math.round(a[0]+(b[0]-a[0])*(1-c))+","+Math.round(a[1]+(b[1]-a[1])*(1-c))+","+Math.round(a[2]+(b[2]-a[2])*(1-c))+(d?","+(a[3]+(b[3]-a[3])*(1-c)):"")+")");return b}var t=function(){},q=f.getOptions(),h=f.each,l=f.extend,B=f.format,u=f.pick,r=f.wrap,m=f.Chart,p=f.seriesTypes,v=p.pie,n=p.column,w=f.Tick,x=HighchartsAdapter.fireEvent,y=HighchartsAdapter.inArray,
     z=1;h(["fill","stroke"],function(b){HighchartsAdapter.addAnimSetter(b,function(a){a.elem.attr(b,A(f.Color(a.start),f.Color(a.end),a.pos))})});l(q.lang,{drillUpText:"\u25c1 Back to {series.name}"});q.drilldown={activeAxisLabelStyle:{cursor:"pointer",color:"#0d233a",fontWeight:"bold",textDecoration:"underline"},activeDataLabelStyle:{cursor:"pointer",color:"#0d233a",fontWeight:"bold",textDecoration:"underline"},animation:{duration:500},drillUpButton:{position:{align:"right",x:-10,y:10}}};f.SVGRenderer.prototype.Element.prototype.fadeIn=
@@ -471,3 +471,107 @@ h(a.points,function(a,b){var e=b===(c&&c.pointIndex)?"show":"fadeIn",f=e==="show
     f.merge(a.styles);a.addClass("highcharts-drilldown-axis-label").css(c.chart.options.drilldown.activeAxisLabelStyle).on("click",function(){c.drilldownCategory(b)})}else if(a&&a.basicStyles)a.styles={},a.css(a.basicStyles),a.on("click",null)};r(w.prototype,"addLabel",function(b){b.call(this);this.drillable()});r(f.Point.prototype,"init",function(b,a,c,d){var g=b.call(this,a,c,d),b=(c=a.xAxis)&&c.ticks[d],c=c&&c.getDDPoints(d,a.options._levelNumber);if(g.drilldown&&(f.addEvent(g,"click",function(){a.xAxis&&
     a.chart.options.drilldown.allowPointDrilldown===!1?a.xAxis.drilldownCategory(d):g.doDrilldown()}),c))c.push(g),c.levelNumber=a.options._levelNumber;b&&b.drillable();return g});r(f.Series.prototype,"drawDataLabels",function(b){var a=this.chart.options.drilldown.activeDataLabelStyle;b.call(this);h(this.points,function(b){b.drilldown&&b.dataLabel&&b.dataLabel.attr({"class":"highcharts-drilldown-data-label"}).css(a)})});var s,q=function(b){b.call(this);h(this.points,function(a){a.drilldown&&a.graphic&&
 a.graphic.attr({"class":"highcharts-drilldown-point"}).css({cursor:"pointer"})})};for(s in p)p[s].prototype.supportsDrilldown&&r(p[s].prototype,"drawTracker",q)})(Highcharts);
+
+
+
+/* Sand-Signika theme for Highcharts JS */
+
+// Load the fonts
+Highcharts.createElement('link', {
+    href: '//fonts.googleapis.com/css?family=Signika:400,700',
+    rel: 'stylesheet',
+    type: 'text/css'
+}, null, document.getElementsByTagName('head')[0]);
+
+// Add the background image to the container
+Highcharts.wrap(Highcharts.Chart.prototype, 'getContainer', function (proceed) {
+    proceed.call(this);
+    this.container.style.background = 'url(http://www.highcharts.com/samples/graphics/sand.png)';
+});
+
+
+Highcharts.theme = {
+    colors: ["#f45b5b", "#8085e9", "#8d4654", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
+        "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
+    chart: {
+        backgroundColor: null,
+        style: {
+            fontFamily: "Signika, serif"
+        }
+    },
+    title: {
+        style: {
+            color: 'black',
+            fontSize: '16px',
+            fontWeight: 'bold'
+        }
+    },
+    subtitle: {
+        style: {
+            color: 'black'
+        }
+    },
+    tooltip: {
+        borderWidth: 0
+    },
+    legend: {
+        itemStyle: {
+            fontWeight: 'bold',
+            fontSize: '13px'
+        }
+    },
+    xAxis: {
+        labels: {
+            style: {
+                color: '#6e6e70'
+            }
+        }
+    },
+    yAxis: {
+        labels: {
+            style: {
+                color: '#6e6e70'
+            }
+        }
+    },
+    plotOptions: {
+        series: {
+            shadow: true
+        },
+        candlestick: {
+            lineColor: '#404048'
+        },
+        map: {
+            shadow: false
+        }
+    },
+
+    // Highstock specific
+    navigator: {
+        xAxis: {
+            gridLineColor: '#D0D0D8'
+        }
+    },
+    rangeSelector: {
+        buttonTheme: {
+            fill: 'white',
+            stroke: '#C0C0C8',
+            'stroke-width': 1,
+            states: {
+                select: {
+                    fill: '#D0D0D8'
+                }
+            }
+        }
+    },
+    scrollbar: {
+        trackBorderColor: '#C0C0C8'
+    },
+
+    // General
+    background2: '#E0E0E8'
+
+};
+
+// Apply the theme
+Highcharts.setOptions(Highcharts.theme);
