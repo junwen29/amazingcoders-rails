@@ -1,7 +1,6 @@
 <div style="padding-bottom: 50px">
-  <h2 style="padding-bottom: 50px">View Count and Redemption Rate</h2>
-  <div id="container" style="height: 400px;"></div>
-  <div id="deal_traffic" style="height: 400px;"></div>
+  <h2 style="padding-bottom: 50px">Deal Analytics for Burpple</h2>
+  <div id="deal_traffic" style="padding-bottom: 10px"></div>
 
 </div>
 
@@ -22,99 +21,8 @@
   <script src="//code.highcharts.com/modules/data.js"></script>
   <script src="//code.highcharts.com/modules/exporting.js"></script>
   <script src="//code.highcharts.com/modules/drilldown.js"></script>
-  <%# javascript_include_tag 'highcharts', 'data-turbolinks-track' => true %>
 
-  <!--View count and redemption-->
-  <script>
-      $(function () {
-          // Create the chart
-          $('#container').highcharts({
-              credits: {
-                  enabled: false
-              },
-              chart: {
-                  type: 'column'
-              },
-              title: {
-                  text: 'Stickiness of Premium Services'
-              },
-              subtitle: {
-                  text: 'Months of subscription of each plan and add on'
-              },
-              xAxis: {
-                  type: 'category'
-              },
-              yAxis: {
-                  title: {
-                      text: 'Months of Subscription'
-                  }
 
-              },
-              legend: {
-                  enabled: true
-              },
-              plotOptions: {
-                  column: {
-                      grouping: 'normal'
-                  },
-                  series: {
-                      pointWidth: 80,
-                      borderWidth: 0,
-                      dataLabels: {
-                          enabled: true,
-                          format: '{point.y} months'
-                      }
-                  }
-              },
-
-              tooltip: {
-                  headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                  pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> months<br/>'
-              },
-
-              series: [{
-                  name: "Monthly View Count",
-                  <% months = ["Jan", "Feb", "Mar"] %>
-                  <% views = [1,2,3] %>
-                  <% weekly_jan = [10,20,30,2] %>
-                  <% weekly_feb = [2,3,4,5] %>
-                  <% weekly_views = [] %>
-                  <% weekly_views.push(weekly_jan) %>
-                  <% weekly_views.push(weekly_feb) %>
-                  <% num = 0 %>
-                  data: [
-                      <% while num < 3 %>
-                      {
-                          name: "<%= months[num] %>",
-                          y: <%= views[num] %>,
-                          drilldown: "<%= months[num] %>"
-                      },
-                      <% num = num + 1 %>
-                      <% end %>
-                  ]
-              }, {
-                  name: "Monthly Redemption count",
-                  data: [3,4,5]
-              }],
-              drilldown: {
-                  series: [{
-                      name: "Weekly View Count",
-                      id: "<%= months[num] %>",
-                      <% num11 = 1 %>
-                      data: [
-                          <% while num11 < 3 %>
-                          {
-                              name: "Week <%= num11 %>",
-                              y: <%= weekly_views[num11-1] %>
-                          },
-                          <% num11 = num11 + 1 %>
-                          <% end %>
-                      ]
-                  }]
-              }
-          });
-      });
-  </script>
   <!-- Deal Traffic -->
   <script>
       $(function () {
@@ -129,7 +37,7 @@
                   text: 'Traffic from Deals'
               },
               subtitle: {
-                  text: 'App Traffic by View Count, Foot Traffic by Redemptions'
+                  text: '<span style="color: #7CB5EC">App Traffic measured by view counts of deals</span><br><span style="color: #434348">Foot Traffic measured by redemptions of deals</span>'
 
               },
               xAxis: {
@@ -159,11 +67,11 @@
 
               series: [{
                   type: 'column',
-                  name: 'View Count',
+                  name: 'App Traffic',
                   data: <%= @view_counts %>
               }, {
                   type: 'column',
-                  name: 'Redemption Count',
+                  name: 'Foot Traffic',
                   data: <%= @redemption_counts %>
               }]
           });
