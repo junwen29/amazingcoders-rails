@@ -60,7 +60,7 @@ class PaymentsController < ApplicationController
     end
 
     @payment.update(expiry_date: @payment.start_date.months_since(@payment.months))
-    
+
     if @payment.save
      # flash[:success] = "Success in registering plan"
       redirect_to new_payment_charge_path(@payment.id)
@@ -91,9 +91,7 @@ class PaymentsController < ApplicationController
       render 'new'
     end
   end
-
-
-
+  
   def destroy
     @payment.destroy
     flash[:success] = "Payment deleted!"
