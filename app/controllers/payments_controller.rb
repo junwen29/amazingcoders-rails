@@ -59,6 +59,8 @@ class PaymentsController < ApplicationController
       @payment.plan_payments.build(:plan_id => 1)
     end
 
+    @payment.update(expiry_date: @payment.start_date.months_since(@payment.months))
+    
     if @payment.save
      # flash[:success] = "Success in registering plan"
       redirect_to new_payment_charge_path(@payment.id)
