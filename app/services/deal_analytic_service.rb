@@ -298,6 +298,25 @@ class DealAnalyticService
       array << past_deals_array
       array
     end
+
+    # For admin deals analytics
+    def get_all_viewcounts(start_date, end_date)
+      view_counts = Viewcount.where(created_at: start_date..end_date).count
+      formatted_vc = Array.new
+      formatted_vc.push end_date.to_f * 1000
+      formatted_vc.push view_counts
+      formatted_vc
+    end
+
+    # Get all view counts for each week
+    def get_app_traffic(start_date, end_date)
+      total_vc = Array.new
+      while start_date.next_week < end_date
+        total_vc.push get_all_viewcounts(start_date, start_date.next_week)
+        start_date = start_date.next_week
+      end
+      total_vc
+    end
   end
 
   class << self

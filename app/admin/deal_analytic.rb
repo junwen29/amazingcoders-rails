@@ -169,9 +169,14 @@ ActiveAdmin.register DealAnalytic do
     link_to "View Charts", charts_admin_deal_analytics_path
   end
 
+
   controller do
     def charts
-      render partial: 'admin/analytics_payment'
+      # show views/admin/deal_analytics/charts.html.erb
+      end_date = Time.now
+      start_date = end_date.beginning_of_year
+      @view_counts = DealAnalyticService.get_app_traffic(start_date, end_date)
+      #raise @view_counts.inspect
     end
   end
 
