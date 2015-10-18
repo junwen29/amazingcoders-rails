@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151009155753) do
+ActiveRecord::Schema.define(version: 20151013173305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,6 +145,7 @@ ActiveRecord::Schema.define(version: 20151009155753) do
     t.string   "title"
     t.boolean  "redeemable"
     t.boolean  "multiple_use"
+    t.string   "image"
     t.string   "type_of_deal"
     t.string   "description"
     t.date     "start_date"
@@ -152,7 +153,7 @@ ActiveRecord::Schema.define(version: 20151009155753) do
     t.string   "location"
     t.string   "t_c"
     t.integer  "num_of_redeems"
-    t.boolean  "pushed",             default: false
+    t.boolean  "pushed"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "merchant_id"
@@ -173,6 +174,24 @@ ActiveRecord::Schema.define(version: 20151009155753) do
     t.datetime "updated_at"
   end
 
+  create_table "gifts", force: true do |t|
+    t.string   "name"
+    t.integer  "points"
+    t.string   "description"
+    t.string   "gift_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "merchant_points", force: true do |t|
+    t.string   "reason"
+    t.integer  "points"
+    t.string   "operation"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "merchant_id"
+  end
+
   create_table "merchants", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -186,6 +205,7 @@ ActiveRecord::Schema.define(version: 20151009155753) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.integer  "total_points",           default: 0
   end
 
   add_index "merchants", ["email"], name: "index_merchants_on_email", unique: true, using: :btree
@@ -275,9 +295,9 @@ ActiveRecord::Schema.define(version: 20151009155753) do
     t.string   "name"
     t.string   "street"
     t.string   "zipcode"
-    t.string   "city",               default: "Singapore"
-    t.string   "state",              default: "Singapore"
-    t.string   "country",            default: "Singapore"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
     t.string   "neighbourhood"
     t.text     "bio"
     t.string   "phone"
@@ -313,15 +333,5 @@ ActiveRecord::Schema.define(version: 20151009155753) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "wishlists", force: true do |t|
-    t.integer  "venue_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "wishlists", ["user_id"], name: "index_wishlists_on_user_id", using: :btree
-  add_index "wishlists", ["venue_id"], name: "index_wishlists_on_venue_id", using: :btree
 
 end

@@ -1,0 +1,35 @@
+<!-- Content Body -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      Burps History
+    </h4>
+  </div>
+  <div class="panel-body">
+    <table class="table table-bordered table-hover table-responsive">
+      <tr>
+        <th>Burps Changed</th>
+        <th>Reason</th>
+        <th>Transaction Date</th>
+      </tr>
+
+      <% @points.find_each do |p| %>
+          <tr>
+            <td>
+              <% if p.operation == "Add" %>
+                  <%= "+"%><%=p.points%>
+              <% elsif p.operation == "Minus" %>
+                  <%= "-"%><%=p.points%>
+              <% end %>
+            </td>
+            <td><%= p.reason %></td>
+            <td><%= p.created_at.strftime("%d/%m/%Y %r")%></td>
+          </tr>
+      <% end %>
+    </table>
+    <h4 class="panel-title">
+      Total Burps: <%= @merchant.total_points%>
+    </h4>
+  </div>
+</div>
+
