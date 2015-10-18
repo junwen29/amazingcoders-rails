@@ -30,12 +30,6 @@ ActiveAdmin.register_page "Payment Analytics" do
     def analytics_premium_profits
       @plan1_cost = PaymentService.get_plan_payments(1)
 
-=begin
-      @addon1_cost = PaymentService.get_addon_payments(1)
-      @addon2_cost = PaymentService.get_addon_payments(2)
-      @addon3_cost = PaymentService.get_addon_payments(3)
-=end
-
       addons = PlanService.get_addon_ids(1)
       @addon_data_profits = Array.new
       addons.each do |a|
