@@ -283,6 +283,24 @@ class DealAnalyticService
       array
     end
 
+    # returns most popular deal type
+    def get_most_popular_deal_type
+      all_active_past_deals = Deal.active_and_expired
+      unique_deal_type = all_active_past_deals.uniq.pluck(:type_of_deal)
+      count = 0
+      most_popular_deal_type = ""
+      unique_deal_type.each do |udt|
+        deal_type = all_active_past_deals.where(:type_of_deal => udt).pluck(:id)
+        total_redemption_count = DealAnalytic.where(deal_id: deal_type).sum(:redemption_count)
+        total_deals = deal_type.count
+        total_average_count = (total_redemption_count.to_f/total_deals).round(2)
+        if (total_average_count > count)
+          count = total_average_count
+          most_popular_deal_type = udt
+        end
+      end
+      most_popular_deal = [most_popular_deal_type, count]
+    end
     # For admin app traffic analytics
     # return [milliseconds, view count]
     def get_all_viewcounts(start_date, end_date)
@@ -323,6 +341,22 @@ class DealAnalyticService
         start_date = start_date.next_week
       end
       total_rc
+    end
+
+    def get_hint_message_for_top_queries
+      top_queries = DealAnalyticService.get_top_queries
+      top_queries_display = "In order to aid you in creating a deal, here are some popular keywords users search for: "
+      index = 1
+      top_queries.each do |tq|
+        top_queries_display = top_queries_display + " " + index.to_s + ")" + tq.query
+        index = index + 1
+      end
+      top_queries_display
+    end
+
+    def get_hint_for_popular_deal_type
+      top_deal_type = DealAnalyticService.get_most_popular_deal_type
+      deal_type = "The most popular deal type is " +  top_deal_type[0] + " with an average redemption rate of " + top_deal_type[1].to_s
     end
   end
 
