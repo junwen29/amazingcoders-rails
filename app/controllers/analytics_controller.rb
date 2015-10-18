@@ -14,6 +14,8 @@ class AnalyticsController < ApplicationController
   def venue
     if MerchantService.get_all_venues(merchant_id).blank?
       render 'analytics/no_venue_error'
+    elsif MerchantService.get_all_active_and_past_deals(merchant_id).blank?
+      render 'analytics/no_deal_error'
     end
     # Deal Statistics by Venues
     deal_statistics_by_venue
