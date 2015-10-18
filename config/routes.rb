@@ -62,6 +62,10 @@ Rails.application.routes.draw do
         post '/deal' => 'view_count#create_deal_view_count'
         post '/query' => 'user_query#register_query'
       end
+
+      scope '/redemption' do
+        post '' => 'redemptions#create'
+      end
     end
   end
 
