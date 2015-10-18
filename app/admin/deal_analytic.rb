@@ -7,6 +7,9 @@ ActiveAdmin.register DealAnalytic do
     link_to "Back", "/admin/deal_analytics"
   end
 
+  #scope :all, :default => true
+  scope :popular
+
   # Show only active deals
   filter :deal, label: "Deals", :collection => proc {(Deal.active).map{|d| [d.title, d.id]}}
   filter :view_count, label: "Views"
@@ -25,17 +28,17 @@ ActiveAdmin.register DealAnalytic do
     column "Expiry Date" do |da|
       da.deal.expiry_date
     end
-    column "Views" do |da|
+    column "Views", sortable: "view_count" do |da|
       div :class => "numberCol" do
         da.view_count
       end
     end
-    column "Unique Views" do |da|
+    column "Unique Views", sortable: "unique_view_count" do |da|
       div :class => "numberCol" do
         da.unique_view_count
       end
     end
-    column "Redemptions" do |da|
+    column "Redemptions", sortable: "redemption_count" do |da|
       div :class => "numberCol" do
         da.redemption_count
       end
@@ -107,34 +110,6 @@ ActiveAdmin.register DealAnalytic do
       end
     end
 
-=begin
-    panel "Deal Information" do
-      attributes_table_for f do
-        row "Deal Id" do
-          f.deal_id
-        end
-        row "Deal Title" do
-          f.deal
-        end
-        row "Deal Description" do
-          f.deal.description
-        end
-        row "Start Date" do
-          f.deal.start_date
-        end
-        row "Expiry Date" do
-          f.deal.expiry_date
-        end
-        row "Merchant" do
-          f.deal.merchant
-        end
-        row "Venues" do
-          f.deal.venues.map{|v| v.name }.join(", ").html_safe
-        end
-      end
-    end
-=end
-
     panel "Deal Analytics" do
       attributes_table_for f do
         row :view_count
@@ -167,6 +142,10 @@ ActiveAdmin.register DealAnalytic do
 
   action_item :only => :index do
     link_to "View Charts", charts_admin_deal_analytics_path
+  end
+
+  action_item :only => :charts do
+    link_to "Back", "/admin/deal_analytics"
   end
 
 
