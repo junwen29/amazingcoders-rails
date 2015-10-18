@@ -299,15 +299,15 @@ class DealAnalyticService
       array
     end
 
-    def get_top_active_deals
+    def get_top_active_deals(limit = 10)
       active_deals = DealService.get_active_deals.pluck(:id)
-      top_10_deal_ids = DealAnalytic.where(deal_id: active_deals).order(redemption_count: :desc).limit(10).pluck(:deal_id)
+      top_10_deal_ids = DealAnalytic.where(deal_id: active_deals).order(redemption_count: :desc).limit(limit).pluck(:deal_id)
       top_active_deals = Deal.find(top_10_deal_ids)
       top_active_deals
     end
 
-    def get_top_queries
-      top_user_queries = UserQuery.order(num_count: :desc).limit(10)
+    def get_top_queries(limit = 10)
+      top_user_queries = UserQuery.order(num_count: :desc).limit(limit)
       top_user_queries
     end
 
