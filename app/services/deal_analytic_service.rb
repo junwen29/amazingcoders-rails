@@ -252,15 +252,15 @@ class DealAnalyticService
       overall_deals_array
     end
 
-    def get_top_active_deals
+    def get_top_active_deals(limit = 10)
       active_deals = DealService.get_active_deals.pluck(:id)
-      top_10_deal_ids = DealAnalytic.where(deal_id: active_deals).order(redemption_count: :desc).limit(10).pluck(:deal_id)
+      top_10_deal_ids = DealAnalytic.where(deal_id: active_deals).order(redemption_count: :desc).limit(limit).pluck(:deal_id)
       top_active_deals = Deal.find(top_10_deal_ids)
       top_active_deals
     end
 
-    def get_top_queries
-      top_user_queries = UserQuery.order(num_count: :desc).limit(10)
+    def get_top_queries(limit = 10)
+      top_user_queries = UserQuery.order(num_count: :desc).limit(limit)
       top_user_queries
     end
 
@@ -281,6 +281,48 @@ class DealAnalyticService
         array << deal_type_array
       end
       array
+    end
+
+    # For admin app traffic analytics
+    # return [milliseconds, view count]
+    def get_all_viewcounts(start_date, end_date)
+      view_counts = Viewcount.where(created_at: start_date..end_date).count
+      formatted_vc = Array.new
+      formatted_vc.push end_date.to_f * 1000
+      formatted_vc.push view_counts
+      formatted_vc
+    end
+
+    # Get all view counts for each week
+    # return data array for deal traffic analytics chart
+    def get_app_traffic(start_date, end_date)
+      total_vc = Array.new
+      while start_date.next_week < end_date
+        total_vc.push get_all_viewcounts(start_date, start_date.next_week)
+        start_date = start_date.next_week
+      end
+      total_vc
+    end
+
+    # For admin foot traffic analytics
+    # return [milliseconds, redemption count]
+    def get_all_redemptions(start_date, end_date)
+      redemption_counts = Redemption.where(created_at: start_date..end_date).count
+      formatted_rc = Array.new
+      formatted_rc.push end_date.to_f * 1000
+      formatted_rc.push redemption_counts
+      formatted_rc
+    end
+
+    # Get all redemption counts for each week
+    # return data array for deal traffic analytics chart
+    def get_foot_traffic(start_date, end_date)
+      total_rc = Array.new
+      while start_date.next_week < end_date
+        total_rc.push get_all_redemptions(start_date, start_date.next_week)
+        start_date = start_date.next_week
+      end
+      total_rc
     end
   end
 

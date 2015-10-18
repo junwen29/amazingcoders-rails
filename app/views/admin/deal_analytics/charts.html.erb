@@ -1,0 +1,193 @@
+<div style="padding-bottom: 50px">
+  <h2 style="padding-bottom: 20px">Deal Analytics for Burpple</h2>
+  <div id="deal_traffic" style="padding-bottom: 50px"></div>
+
+  <div class="col-lg-6">
+    <h2 style="padding-bottom: 20px">Popular Deal Types</h2>
+    <div id="overall_popular_deal_type" style="padding-bottom: 50px"></div>
+  </div>
+
+  <div class="col-lg-6">
+    <h2 style="padding-bottom: 20px">Popular Keywords</h2>
+    <div class="content">
+      <ul>
+        <p>Top 10 queries from users in Deals Feed</p>
+        <% i = 1 %>
+        <% @queries.each do |q| %>
+            <li>
+              <span class="name">#<%= i %> <%= q['query'] %></span>
+              <span class="count"><%= q['num_count'] %></span>
+            </li>
+            <% i += 1 %>
+        <% end %>
+      </ul>
+    </div><!--/content-->
+  </div><!--col-lg-6-->
+
+</div>
+
+
+<footer>
+  <style>
+      .content {
+          position:relative;
+          min-width:350px;
+      }
+
+      .content ul{
+          font-size: medium;
+          margin:0;
+          padding:0;
+          list-style: none;
+          border:5px solid #CCC;
+          background: rgba(40,40,40,0.75);
+      }
+      .content ul p{
+          font-size: large;
+          font-weight:bold;
+          color:#FFF;
+          font-family: helvetica;
+          padding:4% 5%;
+          border-bottom: 1px solid #555;
+          margin: 0px 0px !important;
+      }
+
+      .content ul li{
+          position: relative;
+          color:#FFF;
+          font-family: helvetica;
+          padding:2% 5%;
+          border-bottom: 1px solid #555;
+      }
+
+      .content ul li:last-child{
+          border-bottom:none;
+      }
+
+      .name{
+          font-weight:bold;
+      }
+      .count{
+          display:inline-block;
+          float:right;
+          color:#F00;
+          font-weight:bold;
+      }
+      .count:after{
+          content:' searches';
+          color:#CCC;
+          font-weight:normal;
+      }
+      .content ul{
+          border-radius: 20px;
+      }
+  </style>
+  <script src="//code.highcharts.com/highcharts.js"></script>
+  <script src="//code.highcharts.com/modules/data.js"></script>
+  <script src="//code.highcharts.com/modules/exporting.js"></script>
+  <script src="//code.highcharts.com/modules/drilldown.js"></script>
+
+  <!-- Deal Traffic -->
+  <script>
+      $(function () {
+          $('#deal_traffic').highcharts({
+              credits: {
+                  enabled: false
+              },
+              chart: {
+                  zoomType: 'x'
+              },
+              title: {
+                  text: 'Traffic from Deals'
+              },
+              subtitle: {
+                  text: '<span style="color: #7CB5EC">App Traffic measured by view counts of deals</span><br><span style="color: #434348">Foot Traffic measured by redemptions of deals</span>'
+
+              },
+              xAxis: {
+                  type: 'datetime'
+              },
+              yAxis: {
+                  title: {
+                      text: 'Number of Users'
+                  }
+              },
+              legend: {
+                  enabled: true
+              },
+              plotOptions: {
+                  area: {
+                      marker: {
+                          radius: 2
+                      },
+                      lineWidth: 1,
+                      states: {
+                          hover: {
+                              lineWidth: 1
+                          }
+                      }
+                  }
+              },
+
+              series: [{
+                  type: 'column',
+                  name: 'App Traffic',
+                  data: <%= @view_counts %>
+              }, {
+                  type: 'column',
+                  name: 'Foot Traffic',
+                  data: <%= @redemption_counts %>
+              }]
+          });
+      });
+  </script>
+
+  <!-- Popular Deal Type -->
+  <script>
+      $(function () {
+          var chart = new Highcharts.Chart({
+              credits: {
+                  enabled: false
+              },
+              chart: {
+                  type: 'pie',
+                  renderTo: 'overall_popular_deal_type'
+              },
+              title: {
+                  text: 'Overall Popular Deal Types'
+              },
+              subtitle: {
+                  text: 'Redemption Count'
+              },
+              tooltip: {
+                  headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                  pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.percentage:.2f}%</b> of total<br/>'
+              },
+              plotOptions: {
+                  pie: {
+                      allowPointSelect: true,
+                      cursor: 'pointer',
+                      depth: 35,
+                      dataLabels: {
+                          enabled: true,
+                          format: '{point.name} ' + '<span style="color: #0f1cda">{point.y} Redemptions </span>'
+                      },
+                      showInLegend: true
+                  }
+              },
+              series: [{
+                  name: "Deal Type",
+                  colorByPoint: true,
+                  data: [
+                      <% @popular_deal_types.each do |p| %>
+                      {
+                          name: "<%= p[0] %>",
+                          y: <%= p[1]%>
+                      },
+                      <% end %>
+                  ]
+              }]
+          });
+      });
+  </script>
+</footer>
