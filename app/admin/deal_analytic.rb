@@ -153,11 +153,17 @@ ActiveAdmin.register DealAnalytic do
   controller do
     def charts
       # show views/admin/deal_analytics/charts.html.erb
+
+      # Deal traffic
       end_date = Time.now
       start_date = end_date.beginning_of_year
       @view_counts = DealAnalyticService.get_app_traffic(start_date, end_date)
       @redemption_counts = DealAnalyticService.get_foot_traffic(start_date, end_date)
 
+      # Popular deal types
+      @popular_deal_types = DealAnalyticService.get_overall_popular_deal_type
+
+      # Popular keywords
       @queries = DealAnalyticService.get_top_queries(10).as_json
     end
   end
