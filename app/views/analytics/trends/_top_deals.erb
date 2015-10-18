@@ -9,7 +9,6 @@
         <th>Title</th>
         <th>Type of Deal</th>
         <th>Description</th>
-        <th colspan="4"></th>
       </tr>
 
       <% rank = 1 %>
@@ -23,11 +22,6 @@
               <%= td.type_of_deal %>
             </td>
             <td><%= td.description %></td>
-            <td>
-              <button class="btn btn-default disabled" type="button" data-toggle="tooltip" data-placement="top" title="Go to webpage viewers see on this deal">
-                Show
-              </button>
-            </td>
           </tr>
           <% rank = rank + 1 %>
       <% end %>
