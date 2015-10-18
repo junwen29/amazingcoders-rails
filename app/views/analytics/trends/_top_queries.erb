@@ -1,26 +1,28 @@
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h4>Top 10 Queries!</h4>
-  </div>
-  <div class="panel-body">
-    <table class="table table-bordered table-hover table-responsive">
-      <tr>
-        <th>Rank</th>
-        <th>Query</th>
-        <th>Number of Users who Query this Term!</th>
-      </tr>
+<div class="span8">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h4>Top 10 Queries!</h4>
+    </div>
+    <div class="panel-body">
+      <table class="table table-bordered table-hover table-responsive">
+        <tr>
+          <th>Rank</th>
+          <th>Query</th>
+          <th>Number of Users who Query this Term!</th>
+        </tr>
 
-      <% rank = 1 %>
-      <% @top_query.each do |tq| %>
-          <tr>
-            <td><%= rank %></td>
-            <td>
-              <%= tq.query %>
-            </td>
-            <td><%= tq.num_count %></td>
-          </tr>
-          <% rank = rank + 1 %>
-      <% end %>
-    </table>
+        <% rank = 1 %>
+        <% @top_query.each do |tq| %>
+            <tr>
+              <td><%= rank %></td>
+              <td>
+                <%= tq.query %>
+              </td>
+              <td><%= tq.num_count %></td>
+            </tr>
+            <% rank = rank + 1 %>
+        <% end %>
+      </table>
+    </div>
   </div>
 </div>
