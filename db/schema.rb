@@ -145,7 +145,6 @@ ActiveRecord::Schema.define(version: 20151013173305) do
     t.string   "title"
     t.boolean  "redeemable"
     t.boolean  "multiple_use"
-    t.string   "image"
     t.string   "type_of_deal"
     t.string   "description"
     t.date     "start_date"
@@ -153,7 +152,7 @@ ActiveRecord::Schema.define(version: 20151013173305) do
     t.string   "location"
     t.string   "t_c"
     t.integer  "num_of_redeems"
-    t.boolean  "pushed"
+    t.boolean  "pushed",             default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "merchant_id"
@@ -295,9 +294,9 @@ ActiveRecord::Schema.define(version: 20151013173305) do
     t.string   "name"
     t.string   "street"
     t.string   "zipcode"
-    t.string   "city"
-    t.string   "state"
-    t.string   "country"
+    t.string   "city",               default: "Singapore"
+    t.string   "state",              default: "Singapore"
+    t.string   "country",            default: "Singapore"
     t.string   "neighbourhood"
     t.text     "bio"
     t.string   "phone"
@@ -333,5 +332,15 @@ ActiveRecord::Schema.define(version: 20151013173305) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "wishlists", force: true do |t|
+    t.integer  "venue_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "wishlists", ["user_id"], name: "index_wishlists_on_user_id", using: :btree
+  add_index "wishlists", ["venue_id"], name: "index_wishlists_on_venue_id", using: :btree
 
 end
