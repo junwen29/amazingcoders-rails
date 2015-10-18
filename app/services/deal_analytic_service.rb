@@ -313,7 +313,7 @@ class DealAnalyticService
 
     # array[0] gives first deal_type
     # array[0][0] gives deal_type name
-    # array[0][1] gives deal_type_total_redemption
+    # array[0][1] gives deal_type_total_average_redemption
     def get_overall_popular_deal_type
       all_active_past_deals = Deal.active_and_expired
       unique_deal_type = all_active_past_deals.uniq.pluck(:type_of_deal)
@@ -322,7 +322,9 @@ class DealAnalyticService
         deal_type_array = Array.new
         deal_type_array << udt
         deal_type = all_active_past_deals.where(:type_of_deal => udt).pluck(:id)
-        deal_type_array << DealAnalytic.where(deal_id: deal_type).sum(:redemption_count)
+        total_redemption_count = DealAnalytic.where(deal_id: deal_type).sum(:redemption_count)
+        total_deals = deal_type.count
+        deal_type_array << (total_redemption_count.to_f/total_deals.to_f).round(2)
         array << deal_type_array
       end
       array
