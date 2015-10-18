@@ -299,6 +299,35 @@ class DealAnalyticService
       array
     end
 
+    def get_top_active_deals
+      active_deals = DealService.get_active_deals.pluck(:id)
+      top_10_deal_ids = DealAnalytic.where(deal_id: active_deals).order(redemption_count: :desc).limit(10).pluck(:deal_id)
+      top_active_deals = Deal.find(top_10_deal_ids)
+      top_active_deals
+    end
+
+    def get_top_queries
+      top_user_queries = UserQuery.order(num_count: :desc).limit(10)
+      top_user_queries
+    end
+
+    # array[0] gives first deal_type
+    # array[0][0] gives deal_type name
+    # array[0][1] gives deal_type_total_redemption
+    def get_overall_popular_deal_type
+      all_active_past_deals = Deal.active_and_expired
+      unique_deal_type = all_active_past_deals.uniq.pluck(:type_of_deal)
+      array = Array.new
+      unique_deal_type.each do |udt|
+        deal_type_array = Array.new
+        deal_type_array << udt
+        deal_type = all_active_past_deals.where(:type_of_deal => udt).pluck(:id)
+        deal_type_array << DealAnalytic.where(deal_id: deal_type).sum(:redemption_count)
+        array << deal_type_array
+      end
+      array
+    end
+
     # For admin app traffic analytics
     # return [milliseconds, view count]
     def get_all_viewcounts(start_date, end_date)
