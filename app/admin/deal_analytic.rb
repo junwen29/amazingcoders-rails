@@ -2,6 +2,7 @@ ActiveAdmin.register DealAnalytic do
   menu :parent => "Deals", :priority => 2
 
   config.clear_action_items!
+  actions :all, except: [:edit]
 
   action_item :only => :show do
     link_to "Back", "/admin/deal_analytics"
