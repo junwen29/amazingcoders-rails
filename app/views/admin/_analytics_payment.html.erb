@@ -76,7 +76,7 @@
                   series: [{
                       name: "Addons",
                       id: "Addons",
-                      data: <%= raw @addon_data.as_json %>
+                      data: <%= raw @addon_data_subscribers.as_json %>
                   }]
               }
           });
@@ -131,11 +131,12 @@
                   series: [{
                       name: "Addons",
                       id: "Addons",
-                      data: [
-                          ["Push Notification", <%= @addon1_cost %>],
-                          ["Deal Statistics", <%= @addon2_cost %>],
-                          ["Aggregate Trends", <%= @addon3_cost %>]
-                      ]
+                      data: <%= raw @addon_data_profits %>
+                              /*[
+                          ["Push Notification", <%# @addon1_cost %>],
+                          ["Deal Statistics", <%# @addon2_cost %>],
+                          ["Aggregate Trends", <%# @addon3_cost %>]
+                      ]*/
                   }]
               }
           });
@@ -245,7 +246,7 @@
                   series: [{
                       name: "Add Ons",
                       id: "<%= @plan1_name %>",
-                      data: <%= raw @addon_data.as_json %>
+                      data: <%= raw @addon_data_months.as_json %>
                   }]
               }
           });
