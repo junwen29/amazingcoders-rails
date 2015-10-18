@@ -132,15 +132,23 @@
                   }
               },
               xAxis: {
-                  labels: {
-                      enabled: false
-                  }
+                  type: 'category'
               },
               legend: {
                   layout: 'vertical',
                   align: 'right',
                   verticalAlign: 'top',
                   y: 30
+              },
+              plotOptions: {
+                  series: {
+                      dataLabels: {
+                          enabled: true,
+                          align: 'center',
+                          overflow:"justify",
+                          color: '#000000'
+                      }
+                  }
               },
               series: [
                   <% loop = 0 %>
@@ -151,9 +159,12 @@
                       name: "<%= @deals_by_venue[loop][0] %>",
                       data: [
                           {
-                              name: "<%= @deals_by_venue[loop][0] %>",
+                              name: "Venues",
                               y: <%= @deals_by_venue[loop][redeem_placement] %>,
-                              drilldown: "<%= @deals_by_venue[loop][0] %>" + " redeem"
+                              drilldown: "<%= @deals_by_venue[loop][0] %>" + " redeem",
+                              dataLabels: {
+                                  format: '<%= @deals_by_venue[loop][0] %>'
+                              }
                           }
                       ]
                   },
