@@ -46,7 +46,7 @@ class MerchantService
     end
 
     def get_all_active_and_past_deals(merchant_id)
-      Deal.where(:merchant_id => merchant_id, :active => true).order(title: :asc)
+      Deal.where(:merchant_id => merchant_id, :active => true)
     end
 
     def get_past_deals(merchant_id)
