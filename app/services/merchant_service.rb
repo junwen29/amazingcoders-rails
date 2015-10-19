@@ -42,15 +42,15 @@ class MerchantService
     end
 
     def get_all_active_deals(merchant_id)
-      Deal.active.where(:merchant_id => merchant_id)
+      Deal.active.where(:merchant_id => merchant_id).order(title: :asc)
     end
 
     def get_all_active_and_past_deals(merchant_id)
-      Deal.where(:merchant_id => merchant_id, :active => true)
+      Deal.where(:merchant_id => merchant_id, :active => true).order(title: :asc)
     end
 
     def get_past_deals(merchant_id)
-      Deal.expired.where(:merchant_id => merchant_id)
+      Deal.expired.where(:merchant_id => merchant_id).order(title: :asc)
     end
 
     #for MerchantPoints
