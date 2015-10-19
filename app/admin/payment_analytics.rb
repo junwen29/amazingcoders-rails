@@ -43,7 +43,7 @@ ActiveAdmin.register_page "Payment Analytics" do
 
       # Plan: Basic plan -> push to first element of array
       basic_data = {name: "Basic Service", y: PaymentService.count_total_payments - premium_count, drilldown: "null"}.to_json
-      @plan_subscribers_series.unshift basic_data
+      @plan_subscribers_series.push basic_data
     end
 
     private
@@ -51,10 +51,6 @@ ActiveAdmin.register_page "Payment Analytics" do
       all_plan_ids = Plan.pluck(:id)
       @plan_profits_series = Array.new
       @addon_profits_series = Array.new
-
-      # Basic plan json {name, cost, drilldown}
-      basic_plan_json = {name: "Basic Service", y: 0, drilldown: "null"}.to_json
-      @plan_profits_series.push basic_plan_json
 
       all_plan_ids.each do |id|
         # Plan json [name, cost, drilldown]
@@ -77,6 +73,10 @@ ActiveAdmin.register_page "Payment Analytics" do
         addon_json = {name: "Addons", id: plan_name, data: addon_data_profits}.to_json
         @addon_profits_series.push addon_json
       end
+
+      # Basic plan json {name, cost, drilldown}
+      basic_plan_json = {name: "Basic Service", y: 0, drilldown: "null"}.to_json
+      @plan_profits_series.push basic_plan_json
     end
 
     # Generating subscription count for the past 12 months
