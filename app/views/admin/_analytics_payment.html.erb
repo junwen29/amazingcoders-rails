@@ -50,22 +50,24 @@
               series: [{
                   name: "Plans",
                   colorByPoint: true,
-                  data: [{
-                      name: "Basic Service",
-                      y: <%= @plan0 %>,
-                      drilldown: null
-                  }, {
-                      name: "<%= @plan1_name %>",
-                      y: <%= @plan1 %>,
-                      drilldown: "Addons"
-                  }]
+                  data: [
+                      <% num = @plan_subscribers_series.size %>
+                      <% i = 0 %>
+                      <% while i < num %>
+                      <%= raw @plan_subscribers_series[i] %>,
+                      <% i+=1 %>
+                      <% end %>
+                  ]
               }],
               drilldown: {
-                  series: [{
-                      name: "Addons",
-                      id: "Addons",
-                      data: <%= raw @addon_data_subscribers.as_json %>
-                  }]
+                  series: [
+                      <% num = @addon_subscribers_series.size %>
+                      <% i = 0 %>
+                      <% while i < num %>
+                      <%= raw @addon_subscribers_series[i] %>,
+                      <% i += 1 %>
+                      <% end %>
+                  ]
               }
           });
       });
@@ -105,22 +107,24 @@
               series: [{
                   name: "Plans",
                   colorByPoint: true,
-                  data: [{
-                      name: "Basic Service",
-                      y: 0,
-                      drilldown: null
-                  }, {
-                      name: "<%= @plan1_name %>",
-                      y: <%= @plan1_cost %>,
-                      drilldown: "Addons"
-                  }]
+                  data: [
+                      <% num = @plan_profits_series.size %>
+                      <% i = 0 %>
+                      <% while i < num %>
+                      <%= raw @plan_profits_series[i] %>,
+                      <% i+=1 %>
+                      <% end %>
+                  ]
               }],
               drilldown: {
-                  series: [{
-                      name: "Addons",
-                      id: "Addons",
-                      data: <%= raw @addon_data_profits %>
-                  }]
+                  series: [
+                      <% num = @addon_profits_series.size %>
+                      <% i = 0 %>
+                      <% while i < num %>
+                      <%= raw @addon_profits_series[i] %>,
+                      <% i += 1 %>
+                      <% end %>
+                  ]
               }
           });
       });
@@ -163,10 +167,14 @@
                   verticalAlign: 'middle',
                   borderWidth: 0
               },
-              series: [{
-                  name: "<%= @plan1_name %>",
-                  data: <%= @deal_subscription_count %>
-              }]
+              series: [
+                  <% num = @plan_subscriptions_series.size %>
+                  <% i = 0 %>
+                  <% while i < num %>
+                  <%= raw @plan_subscriptions_series[i] %>,
+                  <% i+=1 %>
+                  <% end %>
+              ]
           });
       });
   </script>
@@ -219,18 +227,24 @@
               series: [{
                   name: "Premium Plans",
                   colorByPoint: true,
-                  data: [{
-                      name: "<%= @plan1_name %>",
-                      y: <%= @plan1_months %>,
-                      drilldown: "<%= @plan1_name %>"
-                  }]
+                  data: [
+                      <% num = @plan_months_series.size %>
+                      <% i = 0 %>
+                      <% while i < num %>
+                      <%= raw @plan_months_series[i] %>,
+                      <% i+=1 %>
+                      <% end %>
+                  ]
               }],
               drilldown: {
-                  series: [{
-                      name: "Add Ons",
-                      id: "<%= @plan1_name %>",
-                      data: <%= raw @addon_data_months.as_json %>
-                  }]
+                  series: [
+                      <% num = @addon_months_series.size %>
+                      <% i = 0 %>
+                      <% while i < num %>
+                      <%= raw @addon_months_series[i] %>,
+                      <% i += 1 %>
+                      <% end %>
+                  ]
               }
           });
       });
