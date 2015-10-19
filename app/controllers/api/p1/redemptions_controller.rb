@@ -5,7 +5,7 @@ class Api::P1::RedemptionsController < Api::P1::ApplicationController
     deal_id = params[:deal_id]
     venue_id = params[:venue_id]
 
-    redemption = Redemption.save (user_id, deal_id, venue_id)
+    redemption = Redemption.save(user_id, deal_id, venue_id)
     # redemption.user_id = user_id
     # redemption.deal_id = deal_id
     # redemption.venue_id = venue_id
