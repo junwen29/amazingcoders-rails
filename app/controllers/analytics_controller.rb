@@ -2,11 +2,21 @@ class AnalyticsController < ApplicationController
   before_action :check_has_analytics_access
 
   def index
+    if MerchantService.get_all_venues(merchant_id).blank?
+        render 'analytics/no_venue_error'
+    elsif MerchantService.get_all_active_and_past_deals(merchant_id).blank?
+      render 'analytics/no_deal_error'
+    end
     # Deal Statistics by Deals
     deal_statistics_by_deal
   end
 
   def venue
+    if MerchantService.get_all_venues(merchant_id).blank?
+      render 'analytics/no_venue_error'
+    elsif MerchantService.get_all_active_and_past_deals(merchant_id).blank?
+      render 'analytics/no_deal_error'
+    end
     # Deal Statistics by Venues
     deal_statistics_by_venue
     render "analytics/venue"
