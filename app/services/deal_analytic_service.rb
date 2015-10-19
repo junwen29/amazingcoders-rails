@@ -92,8 +92,8 @@ class DealAnalyticService
     # array [2] gives array of expired deal names
     def get_analytics_for_line_graph(merchant_id, start_date, end_date)
       array = Array.new
-      active_deals = MerchantService.get_all_active_deals(merchant_id)
-      past_deals = MerchantService.get_past_deals(merchant_id)
+      active_deals = MerchantService.get_all_active_deals(merchant_id).order(title: :asc)
+      past_deals = MerchantService.get_past_deals(merchant_id).order(title: :asc)
       active_deals_array = get_view_and_redemption_count_by_day(active_deals, start_date, end_date)
       past_deals_array = get_view_and_redemption_count_by_day(past_deals, start_date, end_date)
       expired_deals = past_deals.pluck(:title)
@@ -160,6 +160,7 @@ class DealAnalyticService
       array = Array.new
       deals = MerchantService.get_all_active_and_past_deals(merchant_id)
       unique_deal_type = deals.uniq.pluck(:type_of_deal)
+      deals = deals.order(title: :asc)
       unique_deal_type.each do |udt|
         type_array = Array.new
         type_array << udt
@@ -193,12 +194,12 @@ class DealAnalyticService
     # array[0][size-1]
     def get_analytics_for_deals_by_venue(merchant_id)
       array = Array.new
-      venues = Venue.where(:merchant_id => merchant_id)
+      venues = Venue.where(:merchant_id => merchant_id).order(name: :asc)
       venues.each do |v|
         venue_array = Array.new
         venue_total_redemption_count = 0
         venue_array << v.name
-        deals = VenueService.get_active_and_past_deals_for_venue(v.id)
+        deals = VenueService.get_active_and_past_deals_for_venue(v.id).order(title: :asc)
         deals.each do |d|
           deal_array = Array.new
           deal_array << d.title
@@ -222,8 +223,8 @@ class DealAnalyticService
     # array [0][size -1] is the total redemption count of the deal
     def get_analytics_for_venues_by_deals(merchant_id)
       array = Array.new
-      active_deals = MerchantService.get_all_active_deals(merchant_id)
-      past_deals = MerchantService.get_past_deals(merchant_id)
+      active_deals = MerchantService.get_all_active_deals(merchant_id).order(title: :asc)
+      past_deals = MerchantService.get_past_deals(merchant_id).order(title: :asc)
       active_deals_array = get_redemption_count_of_each_deal_in_venue(active_deals)
       past_deals_array = get_redemption_count_of_each_deal_in_venue(past_deals)
       array << active_deals_array
@@ -237,7 +238,7 @@ class DealAnalyticService
         deal_array = Array.new
         deal_total_redemption_count = 0
         deal_array << d.title
-        venues = DealService.get_all_venues(d.id)
+        venues = DealService.get_all_venues(d.id).order(name: :asc)
         venues.each do |v|
           venue_array = Array.new
           venue_array << v.name
@@ -270,6 +271,7 @@ class DealAnalyticService
     def get_overall_popular_deal_type
       all_active_past_deals = Deal.active_and_expired
       unique_deal_type = all_active_past_deals.uniq.pluck(:type_of_deal)
+      all_active_past_deals = all_active_past_deals.order(title: :asc)
       array = Array.new
       unique_deal_type.each do |udt|
         deal_type_array = Array.new
@@ -287,6 +289,7 @@ class DealAnalyticService
     def get_most_popular_deal_type
       all_active_past_deals = Deal.active_and_expired
       unique_deal_type = all_active_past_deals.uniq.pluck(:type_of_deal)
+      all_active_past_deals = all_active_past_deals.order(title: :asc)
       count = 0
       most_popular_deal_type = ""
       unique_deal_type.each do |udt|

@@ -37,7 +37,7 @@ class VenueService
     end
 
     def get_active_and_past_deals_for_venue (venue_id)
-      Deal.joins(:deal_venues).where('deal_venues.venue_id' => venue_id, :active => true).order(title: :asc)
+      Deal.joins(:deal_venues).where('deal_venues.venue_id' => venue_id, :active => true)
     end
 
     # Prevent deleating of venues when a deal has only that particular venue
