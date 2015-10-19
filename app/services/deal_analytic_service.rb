@@ -92,8 +92,8 @@ class DealAnalyticService
     # array [2] gives array of expired deal names
     def get_analytics_for_line_graph(merchant_id, start_date, end_date)
       array = Array.new
-      active_deals = MerchantService.get_all_active_deals(merchant_id)
-      past_deals = MerchantService.get_past_deals(merchant_id)
+      active_deals = MerchantService.get_active_deals_that_are_active_between_two_dates(merchant_id, start_date, end_date).order(title: :asc)
+      past_deals = MerchantService.get_past_deals_that_are_active_between_two_dates(merchant_id, start_date, end_date).order(title: :asc)
       active_deals_array = get_view_and_redemption_count_by_day(active_deals, start_date, end_date)
       past_deals_array = get_view_and_redemption_count_by_day(past_deals, start_date, end_date)
       expired_deals = past_deals.pluck(:title)
@@ -107,39 +107,35 @@ class DealAnalyticService
     def get_view_and_redemption_count_by_day(deals, start_date, end_date)
       overall_deals_array = Array.new
       deals.each do |d|
-        num_view = 0
-        temp_start_date = start_date
-        num_redemption = 0
-        first_view = true
-        first_redeem = true
         num_view_array = Array.new
         num_redeem_array = Array.new
         deal_array = Array.new
-        nothing = [0]
+
+        # If start date of deal is after given start date, we will start from deal start date
+        if d.start_date > start_date
+          temp_start_date = d.start_date
+        else
+          temp_start_date = start_date
+        end
+
+        # If end date of deal is before given end date, we will end at deal end date
+        if d.expiry_date < end_date
+          temp_end_date = d.expiry_date
+        else
+          temp_end_date = end_date
+        end
 
         deal_array << d.title
-        deal_array << Time.parse(start_date.to_s).to_f * 1000
-        while temp_start_date <= end_date
+        deal_array << Time.parse((temp_start_date-1).to_s).to_f * 1000
 
-          num_view = num_view + Viewcount.where(deal_id: d.id).where(created_at: temp_start_date..temp_start_date.end_of_day).count
-          if num_view != 0 && first_view
-            first_view = false
-          end
-          if !first_view
-            num_view_array << num_view
-          else
-            num_view_array << nothing
-          end
+        num_view_array << 0
+        num_redeem_array << 0
 
-          num_redemption = num_redemption + Redemption.where(deal_id: d.id).where(created_at: temp_start_date..temp_start_date.end_of_day).count
-          if num_redemption != 0 && first_redeem
-            first_redeem = false
-          end
-          if !first_redeem
-            num_redeem_array << num_redemption
-          else
-            num_redeem_array << nothing
-          end
+        while temp_start_date <= temp_end_date
+          # Range is from deal created at to temp_start_date as  Merchant can activate the deal at any point of time
+          # So might have view counts even before the deal actually starts
+          num_view_array << Viewcount.where(deal_id: d.id).where(created_at: d.created_at..temp_start_date.end_of_day).count
+          num_redeem_array <<  Redemption.where(deal_id: d.id).where(created_at: d.created_at..temp_start_date.end_of_day).count
           temp_start_date = temp_start_date + 1.days
         end
         deal_array << num_view_array
@@ -158,8 +154,9 @@ class DealAnalyticService
     # array[0][last number of array] gives total redemption count for that deal type
     def get_analytics_for_deals_pie_chart(merchant_id)
       array = Array.new
-      deals = MerchantService.get_all_active_and_past_deals(merchant_id)
+      deals = MerchantService.get_active_past_redeemable_deals(merchant_id)
       unique_deal_type = deals.uniq.pluck(:type_of_deal)
+      deals = deals.order(title: :asc)
       unique_deal_type.each do |udt|
         type_array = Array.new
         type_array << udt
@@ -193,12 +190,12 @@ class DealAnalyticService
     # array[0][size-1]
     def get_analytics_for_deals_by_venue(merchant_id)
       array = Array.new
-      venues = Venue.where(:merchant_id => merchant_id)
+      venues = Venue.where(:merchant_id => merchant_id).order(name: :asc)
       venues.each do |v|
         venue_array = Array.new
         venue_total_redemption_count = 0
         venue_array << v.name
-        deals = VenueService.get_active_and_past_deals_for_venue(v.id)
+        deals = VenueService.get_active_and_past_deals_for_venue_that_are_redeemable(v.id).order(title: :asc)
         deals.each do |d|
           deal_array = Array.new
           deal_array << d.title
@@ -222,8 +219,8 @@ class DealAnalyticService
     # array [0][size -1] is the total redemption count of the deal
     def get_analytics_for_venues_by_deals(merchant_id)
       array = Array.new
-      active_deals = MerchantService.get_all_active_deals(merchant_id)
-      past_deals = MerchantService.get_past_deals(merchant_id)
+      active_deals = MerchantService.get_active_redeemable_deals(merchant_id).order(title: :asc)
+      past_deals = MerchantService.get_past_redeemable_deals(merchant_id).order(title: :asc)
       active_deals_array = get_redemption_count_of_each_deal_in_venue(active_deals)
       past_deals_array = get_redemption_count_of_each_deal_in_venue(past_deals)
       array << active_deals_array
@@ -237,7 +234,7 @@ class DealAnalyticService
         deal_array = Array.new
         deal_total_redemption_count = 0
         deal_array << d.title
-        venues = DealService.get_all_venues(d.id)
+        venues = DealService.get_all_venues(d.id).order(name: :asc)
         venues.each do |v|
           venue_array = Array.new
           venue_array << v.name
@@ -253,7 +250,7 @@ class DealAnalyticService
     end
 
     def get_top_active_deals(limit = 10)
-      active_deals = DealService.get_active_deals.pluck(:id)
+      active_deals = DealService.get_active_deals.where(:redeemable => true).pluck(:id)
       top_10_deal_ids = DealAnalytic.where(deal_id: active_deals).order(redemption_count: :desc).limit(limit).pluck(:deal_id)
       top_active_deals = Deal.find(top_10_deal_ids)
       top_active_deals
@@ -268,8 +265,9 @@ class DealAnalyticService
     # array[0][0] gives deal_type name
     # array[0][1] gives deal_type_total_average_redemption
     def get_overall_popular_deal_type
-      all_active_past_deals = Deal.active_and_expired
+      all_active_past_deals = Deal.active_and_expired.where(:redeemable => true)
       unique_deal_type = all_active_past_deals.uniq.pluck(:type_of_deal)
+      all_active_past_deals = all_active_past_deals.order(title: :asc)
       array = Array.new
       unique_deal_type.each do |udt|
         deal_type_array = Array.new
@@ -285,8 +283,9 @@ class DealAnalyticService
 
     # returns most popular deal type
     def get_most_popular_deal_type
-      all_active_past_deals = Deal.active_and_expired
+      all_active_past_deals = Deal.active_and_expired.where(:redeemable => true)
       unique_deal_type = all_active_past_deals.uniq.pluck(:type_of_deal)
+      all_active_past_deals = all_active_past_deals.order(title: :asc)
       count = 0
       most_popular_deal_type = ""
       unique_deal_type.each do |udt|
@@ -301,6 +300,7 @@ class DealAnalyticService
       end
       most_popular_deal = [most_popular_deal_type, count]
     end
+
     # For admin app traffic analytics
     # return [milliseconds, view count]
     def get_all_viewcounts(start_date, end_date)
@@ -356,7 +356,7 @@ class DealAnalyticService
 
     def get_hint_for_popular_deal_type
       top_deal_type = DealAnalyticService.get_most_popular_deal_type
-      deal_type = "The most popular deal type is " +  top_deal_type[0] + " with an average redemption rate of " + top_deal_type[1].to_s
+      deal_type = "The most popular deal type is " + top_deal_type[0] + " with an average redemption rate of " + top_deal_type[1].to_s
     end
   end
 
