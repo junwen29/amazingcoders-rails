@@ -92,8 +92,8 @@ class DealAnalyticService
     # array [2] gives array of expired deal names
     def get_analytics_for_line_graph(merchant_id, start_date, end_date)
       array = Array.new
-      active_deals = MerchantService.get_all_active_deals(merchant_id).order(title: :asc)
-      past_deals = MerchantService.get_past_deals(merchant_id).order(title: :asc)
+      active_deals = MerchantService.get_active_deals_that_are_active_between_two_dates(merchant_id, start_date, end_date).order(title: :asc)
+      past_deals = MerchantService.get_past_deals_that_are_active_between_two_dates(merchant_id, start_date, end_date).order(title: :asc)
       active_deals_array = get_view_and_redemption_count_by_day(active_deals, start_date, end_date)
       past_deals_array = get_view_and_redemption_count_by_day(past_deals, start_date, end_date)
       expired_deals = past_deals.pluck(:title)

@@ -53,6 +53,14 @@ class MerchantService
       Deal.expired.where(:merchant_id => merchant_id)
     end
 
+    def get_active_deals_that_are_active_between_two_dates(merchant_id, start_date, end_date)
+      MerchantService.get_all_active_deals(merchant_id).where("(start_date <= ? AND expiry_date >= ?) OR (start_date <= ? AND expiry_date >= ?)", end_date, end_date, start_date, start_date)
+    end
+
+    def get_past_deals_that_are_active_between_two_dates(merchant_id, start_date, end_date)
+      MerchantService.get_past_deals(merchant_id).where("(start_date <= ? AND expiry_date >= ?) OR (start_date <= ? AND expiry_date >= ?)", end_date, end_date, start_date, start_date)
+    end
+
     #for MerchantPoints
     def get_all_points(merchant_id)
       MerchantPoint.where(:merchant_id => merchant_id)
