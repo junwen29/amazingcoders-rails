@@ -45,12 +45,24 @@ class MerchantService
       Deal.active.where(:merchant_id => merchant_id)
     end
 
+    def get_active_redeemable_deals(merchant_id)
+      Deal.active.where(:merchant_id => merchant_id, :redeemable => true)
+    end
+
     def get_all_active_and_past_deals(merchant_id)
       Deal.where(:merchant_id => merchant_id, :active => true)
     end
 
+    def get_active_past_redeemable_deals(merchant_id)
+      Deal.where(:merchant_id => merchant_id, :active => true, :redeemable => true)
+    end
+
     def get_past_deals(merchant_id)
       Deal.expired.where(:merchant_id => merchant_id)
+    end
+
+    def get_past_redeemable_deals(merchant_id)
+      Deal.expired.where(:merchant_id => merchant_id, :redeemable => true)
     end
 
     def get_active_deals_that_are_active_between_two_dates(merchant_id, start_date, end_date)

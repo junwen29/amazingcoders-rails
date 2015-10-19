@@ -151,7 +151,7 @@ class DealAnalyticService
     # array[0][last number of array] gives total redemption count for that deal type
     def get_analytics_for_deals_pie_chart(merchant_id)
       array = Array.new
-      deals = MerchantService.get_all_active_and_past_deals(merchant_id)
+      deals = MerchantService.get_active_past_redeemable_deals(merchant_id)
       unique_deal_type = deals.uniq.pluck(:type_of_deal)
       deals = deals.order(title: :asc)
       unique_deal_type.each do |udt|
@@ -192,7 +192,7 @@ class DealAnalyticService
         venue_array = Array.new
         venue_total_redemption_count = 0
         venue_array << v.name
-        deals = VenueService.get_active_and_past_deals_for_venue(v.id).order(title: :asc)
+        deals = VenueService.get_active_and_past_deals_for_venue_that_are_redeemable(v.id).order(title: :asc)
         deals.each do |d|
           deal_array = Array.new
           deal_array << d.title
@@ -216,8 +216,8 @@ class DealAnalyticService
     # array [0][size -1] is the total redemption count of the deal
     def get_analytics_for_venues_by_deals(merchant_id)
       array = Array.new
-      active_deals = MerchantService.get_all_active_deals(merchant_id).order(title: :asc)
-      past_deals = MerchantService.get_past_deals(merchant_id).order(title: :asc)
+      active_deals = MerchantService.get_active_redeemable_deals(merchant_id).order(title: :asc)
+      past_deals = MerchantService.get_past_redeemable_deals(merchant_id).order(title: :asc)
       active_deals_array = get_redemption_count_of_each_deal_in_venue(active_deals)
       past_deals_array = get_redemption_count_of_each_deal_in_venue(past_deals)
       array << active_deals_array
@@ -247,7 +247,7 @@ class DealAnalyticService
     end
 
     def get_top_active_deals(limit = 10)
-      active_deals = DealService.get_active_deals.pluck(:id)
+      active_deals = DealService.get_active_deals.where(:redeemable => true).pluck(:id)
       top_10_deal_ids = DealAnalytic.where(deal_id: active_deals).order(redemption_count: :desc).limit(limit).pluck(:deal_id)
       top_active_deals = Deal.find(top_10_deal_ids)
       top_active_deals
@@ -262,7 +262,7 @@ class DealAnalyticService
     # array[0][0] gives deal_type name
     # array[0][1] gives deal_type_total_average_redemption
     def get_overall_popular_deal_type
-      all_active_past_deals = Deal.active_and_expired
+      all_active_past_deals = Deal.active_and_expired.where(:redeemable => true)
       unique_deal_type = all_active_past_deals.uniq.pluck(:type_of_deal)
       all_active_past_deals = all_active_past_deals.order(title: :asc)
       array = Array.new
@@ -280,7 +280,7 @@ class DealAnalyticService
 
     # returns most popular deal type
     def get_most_popular_deal_type
-      all_active_past_deals = Deal.active_and_expired
+      all_active_past_deals = Deal.active_and_expired.where(:redeemable => true)
       unique_deal_type = all_active_past_deals.uniq.pluck(:type_of_deal)
       all_active_past_deals = all_active_past_deals.order(title: :asc)
       count = 0
