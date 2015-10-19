@@ -12,10 +12,10 @@
                   type: 'pie',
                   events: {
                       drilldown: function (e) {
-                          chart.setTitle({text: "Popularity of Deal of Deal Type " + e.point.name});
+                          this.setTitle({text: "Popularity of Deal of Deal Type " + e.point.name});
                       },
                       drillup: function (e) {
-                          chart.setTitle({text: 'Popularity of Deal Types'});
+                          this.setTitle({text: 'Popularity of Deal Types'});
                       }
                   }
               },
