@@ -50,22 +50,24 @@
               series: [{
                   name: "Plans",
                   colorByPoint: true,
-                  data: [{
-                      name: "Basic Service",
-                      y: <%= @plan0 %>,
-                      drilldown: null
-                  }, {
-                      name: "<%= @plan1_name %>",
-                      y: <%= @plan1 %>,
-                      drilldown: "Addons"
-                  }]
+                  data: [
+                      <% num = @plan_series.size %>
+                      <% i = 0 %>
+                      <% while i < num %>
+                      <%= raw @plan_series[i] %>,
+                      <% i+=1 %>
+                      <% end %>
+                  ]
               }],
               drilldown: {
-                  series: [{
-                      name: "Addons",
-                      id: "Addons",
-                      data: <%= raw @addon_data_subscribers.as_json %>
-                  }]
+                  series: [
+                      <% num = @addon_series.size %>
+                      <% i = 0 %>
+                      <% while i < num %>
+                      <%= raw @addon_series[i] %>,
+                      <% i += 1 %>
+                      <% end %>
+                  ]
               }
           });
       });

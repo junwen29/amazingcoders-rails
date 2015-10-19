@@ -13,17 +13,35 @@ ActiveAdmin.register_page "Payment Analytics" do
 
     private
     def analytics_premium_subscribers
-      @plan1 = PaymentService.count_plan_payments(1)
-      @plan0 = PaymentService.count_total_payments - @plan1   # Basic plan
+      all_plan_ids = Plan.pluck(:id)
+      premium_count = 0
+      @plan_series = Array.new
+      @addon_series = Array.new
 
-      addons = PlanService.get_addon_ids(1)
-      @addon_data_subscribers = Array.new
-      addons.each do |a|
-        addon = Array.new    # addon consists of [name, subscribers]
-        addon.push PlanService.get_addon_names(a)
-        addon.push PaymentService.count_addon_payments(a)
-        @addon_data_subscribers.push addon
+      all_plan_ids.each do |id|
+        # Plan: Premiums
+        plan_name = PlanService.get_plan_names(id)
+        plan_count = PaymentService.count_plan_payments(id)
+        premium_count += plan_count
+        plan_data = {name: plan_name, y: plan_count, drilldown: plan_name}.to_json
+        @plan_series.push plan_data
+
+        # Addons for each plan
+        addons = PlanService.get_addon_ids(id)
+        addon_data_subscribers = Array.new
+        addons.each do |a|
+          addon = Array.new    # addon consists of [name, subscribers]
+          addon.push PlanService.get_addon_names(a)
+          addon.push PaymentService.count_addon_payments(a)
+          addon_data_subscribers.push addon
+        end
+        addon_json = {name: "Addons", id: plan_name, data: addon_data_subscribers}.to_json
+        @addon_series.push addon_json
       end
+
+      # Plan: Basic plan
+      basic_data = {name: "Basic Service", y: PaymentService.count_total_payments - premium_count, drilldown: "null"}.to_json
+      @plan_series.unshift basic_data
     end
 
     private
