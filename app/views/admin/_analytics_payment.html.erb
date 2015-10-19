@@ -223,18 +223,24 @@
               series: [{
                   name: "Premium Plans",
                   colorByPoint: true,
-                  data: [{
-                      name: "<%= @plan1_name %>",
-                      y: <%= @plan1_months %>,
-                      drilldown: "<%= @plan1_name %>"
-                  }]
+                  data: [
+                      <% num = @plan_months_series.size %>
+                      <% i = 0 %>
+                      <% while i < num %>
+                      <%= raw @plan_months_series[i] %>,
+                      <% i+=1 %>
+                      <% end %>
+                  ]
               }],
               drilldown: {
-                  series: [{
-                      name: "Add Ons",
-                      id: "<%= @plan1_name %>",
-                      data: <%= raw @addon_data_months.as_json %>
-                  }]
+                  series: [
+                      <% num = @addon_months_series.size %>
+                      <% i = 0 %>
+                      <% while i < num %>
+                      <%= raw @addon_months_series[i] %>,
+                      <% i += 1 %>
+                      <% end %>
+                  ]
               }
           });
       });

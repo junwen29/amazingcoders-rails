@@ -64,7 +64,7 @@ ActiveAdmin.register_page "Payment Analytics" do
         @plan_profits_series.push plan_json
 
         # Addons for each plan [name, id, data]
-        # 1. Get data. [name, cssts]
+        # 1. Get data. [name, costs]
         addons = PlanService.get_addon_ids(id)
         addon_data_profits = Array.new
         addons.each do |a|
@@ -94,17 +94,32 @@ ActiveAdmin.register_page "Payment Analytics" do
     # Get months of subscription for each premium service
     private
     def analytics_subscription_months
-      @plan1_months = PaymentService.get_plan_months(1)
+      all_plan_ids = Plan.pluck(:id)
+      @plan_months_series = Array.new
+      @addon_months_series = Array.new
 
-      # Get drilldown for addons in premium deal plan
-      addons = PlanService.get_addon_ids(1)
-      @addon_data_months = Array.new
-      addons.each do |a|
-        addon = Array.new    # addon consists of [name, month]
-        addon.push PlanService.get_addon_names(a)
-        addon.push PaymentService.get_addon_months(a)
-        @addon_data_months.push addon
+      all_plan_ids.each do |id|
+        # Plan json [name, months, drilldown]
+        plan_name = PlanService.get_plan_names(id)
+        plan_months = PaymentService.get_plan_months(id).to_i
+        plan_json = {name: plan_name, y: plan_months, drilldown: plan_name}.to_json
+        @plan_months_series.push plan_json
+
+        # Addons for each plan [name, id, data]
+        # 1. Get data. [name, months]
+        addons = PlanService.get_addon_ids(id)
+        addon_data_months = Array.new
+        addons.each do |a|
+          addon = Array.new    # addon consists of [name, month]
+          addon.push PlanService.get_addon_names(a)
+          addon.push PaymentService.get_addon_months(a)
+          addon_data_months.push addon
+        end
+        # Pass json
+        addon_json = {name: "Addons", id: plan_name, data: addon_data_months}.to_json
+        @addon_months_series.push addon_json
       end
+
     end
   end
 
