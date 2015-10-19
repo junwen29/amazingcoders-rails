@@ -167,10 +167,14 @@
                   verticalAlign: 'middle',
                   borderWidth: 0
               },
-              series: [{
-                  name: "<%= @plan1_name %>",
-                  data: <%= @deal_subscription_count %>
-              }]
+              series: [
+                  <% num = @plan_subscriptions_series.size %>
+                  <% i = 0 %>
+                  <% while i < num %>
+                  <%= raw @plan_subscriptions_series[i] %>,
+                  <% i+=1 %>
+                  <% end %>
+              ]
           });
       });
   </script>

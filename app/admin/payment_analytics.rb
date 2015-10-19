@@ -82,13 +82,29 @@ ActiveAdmin.register_page "Payment Analytics" do
     # Generating subscription count for the past 12 months
     private
     def analytics_subscription_count
-      @deal_subscription_count = Array.new    # For y axis
+      all_plan_ids = Plan.pluck(:id)
+      @plan_subscriptions_series = Array.new
+
+      all_plan_ids.each do |id|
+        # Plan json [name, subscriptions]
+        plan_name = PlanService.get_plan_names(id)
+        # 1. Get subscriptions
+        plan_subscriptions = Array.new    # For y axis
+        for i in (0..11).to_a.reverse
+          date = Date.today.end_of_month.months_ago(i)
+          plan_subscriptions.push PaymentService.count_active_premiums(date, id)
+        end
+        # 2. Pass json
+        plan_json = {name: plan_name, data: plan_subscriptions}.to_json
+        @plan_subscriptions_series.push plan_json
+      end
+
       @months = Array.new                # For x axis
       for i in (0..11).to_a.reverse
         date = Date.today.beginning_of_month.months_ago(i)
-        @deal_subscription_count.push PaymentService.count_active_premiums(date, 1)
         @months.push date.strftime("%B")
       end
+
     end
 
     # Get months of subscription for each premium service
