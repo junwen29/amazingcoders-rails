@@ -64,7 +64,8 @@ Rails.application.routes.draw do
       end
 
       scope '/redemption' do
-        get '' => 'redemptions#create' #TODO change to POST here and POST on android
+        post '' => 'redemptions#create'
+        get '/index' => 'redemptions#index'
       end
     end
   end
