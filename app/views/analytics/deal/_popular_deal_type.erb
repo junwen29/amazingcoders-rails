@@ -3,14 +3,13 @@
 <footer>
   <!--Pie Chart-->
   <script>
-      $(function () {
-          var chart = new Highcharts.Chart({
+      $(document).ready(function () {
+          $('#deal_type').highcharts({
               credits: {
                   enabled: false
               },
               chart: {
                   type: 'pie',
-                  renderTo: 'deal_type',
                   events: {
                       drilldown: function (e) {
                           chart.setTitle({text: "Popularity of Deal of Deal Type " + e.point.name});

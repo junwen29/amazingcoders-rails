@@ -1,21 +1,11 @@
 <div id="deal_venue_chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 <footer>
-  <style type="text/css">
-      .container {
-          border: 2px solid #ccc;
-          width: 500px;
-          height: 100px;
-          overflow-y: scroll;
-          float: left;
-      }
-  </style>
   <script>
-      $(function () {
-          var chart = new Highcharts.Chart({
+      $(document).ready(function () {
+          $('#deal_venue_chart').highcharts({
               chart: {
-                  type: 'column',
-                  renderTo: 'deal_venue_chart',
+                  type: 'column'
               },
               credits: {
                   enabled: false
