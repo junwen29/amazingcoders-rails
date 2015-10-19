@@ -1,5 +1,4 @@
 <%= render 'layouts/biz/dash' %>
-
 <div class="contentWrapper">
   <div class="content">
 
@@ -9,15 +8,18 @@
     <% end %>
 
     <!-- Content Heading -->
-
+    <div class="pull-left">
+      <p class="b2 content-title">Deal Analytics</p>
+    </div>
 
     <div class="clearfix"></div>
     <div class="content-separator"></div>
 
     <!-- Content Body -->
-
-
-    <%= link_to 'Back', payments_path, class: "btn btn-big btn-default" %>
+    <div class = "well col-lg-6 col-lg-offset-3" style="text-align: center; font-weight: bold">
+      <p>Sorry, you do not have any deals that are currently active or passed. </p>
+      <p>You can list a deal <%= link_to 'here', new_deal_path %> and activate it afterwards in order to enable this feature.</p>
+    </div>
 
   </div><!-- /content -->
 </div><!-- /contentWrapper -->
@@ -27,3 +29,5 @@
 
 <%= content_for :body_footer do %>
 <% end %>
+
+

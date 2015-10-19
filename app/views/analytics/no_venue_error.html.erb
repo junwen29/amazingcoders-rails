@@ -1,5 +1,4 @@
 <%= render 'layouts/biz/dash' %>
-
 <div class="contentWrapper">
   <div class="content">
 
@@ -10,15 +9,17 @@
 
     <!-- Content Heading -->
     <div class="pull-left">
-      <p class="b2 content-title">Burps</p>
+      <p class="b2 content-title">Deal Analytics</p>
     </div>
 
     <div class="clearfix"></div>
     <div class="content-separator"></div>
 
     <!-- Content Body -->
-    <%= render :partial => 'form/point_index_form' %>
-    <%= link_to 'Redeem gifts', gifts_path, class: "btn btn-big btn-default" %>
+    <div class = "well col-lg-6 col-lg-offset-3" style="text-align: center; font-weight: bold">
+      <p>Sorry, you have not listed any venues yet. You can list a venue <%= link_to 'here', new_venue_path %>.</p>
+      <p>Also do ensure you have already sent a deal to users else there won't be data shown.</p>
+    </div>
 
   </div><!-- /content -->
 </div><!-- /contentWrapper -->

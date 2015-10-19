@@ -5,6 +5,12 @@ class DealsController < ApplicationController
 
   def new
     @all_venues = MerchantService.get_all_venues(merchant_id)
+
+    # For top 10 queries
+    @top_queries = DealAnalyticService.get_hint_message_for_top_queries
+    # For top Deal Type
+    @top_deal_type = DealAnalyticService.get_hint_for_popular_deal_type
+
     if @all_venues.blank?
       flash[:error] = "Please ensure you have listed a venue before proceeding"
       redirect_to deals_path
@@ -20,6 +26,10 @@ class DealsController < ApplicationController
     # For drop down form
     @all_venues = MerchantService.get_all_venues(merchant_id)
     @deal_venue = @deal.deal_venues.build
+    # For top 10 queries
+    @top_queries = DealAnalyticService.get_hint_message_for_top_queries
+    # For top Deal Type
+    @top_deal_type = DealAnalyticService.get_hint_for_popular_deal_type
   end
 
   def index
@@ -33,6 +43,11 @@ class DealsController < ApplicationController
     # For drop down form
     @all_venues = MerchantService.get_all_venues(merchant_id)
     #@deal_venue = @deal.deal_venues.build
+
+    # For top 10 queries
+    @top_queries = DealAnalyticService.get_hint_message_for_top_queries
+    # For top Deal Type
+    @top_deal_type = DealAnalyticService.get_hint_for_popular_deal_type
 
     # Add venue_id to deal_venue join table
     venues_arr = params[:venues][:id].drop(1) # pop out initial null

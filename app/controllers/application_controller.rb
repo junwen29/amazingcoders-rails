@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
 
   def merchant_id
     current_merchant.id if merchant_signed_in?
+    @merchant_id = current_merchant.id
   end
 
   def set_merchant_id

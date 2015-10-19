@@ -2,10 +2,14 @@ ActiveAdmin.register DealAnalytic do
   menu :parent => "Deals", :priority => 2
 
   config.clear_action_items!
+  actions :all, except: [:edit]
 
   action_item :only => :show do
     link_to "Back", "/admin/deal_analytics"
   end
+
+  #scope :all, :default => true
+  scope :popular
 
   # Show only active deals
   filter :deal, label: "Deals", :collection => proc {(Deal.active).map{|d| [d.title, d.id]}}
@@ -25,17 +29,17 @@ ActiveAdmin.register DealAnalytic do
     column "Expiry Date" do |da|
       da.deal.expiry_date
     end
-    column "Views" do |da|
+    column "Views", sortable: "view_count" do |da|
       div :class => "numberCol" do
         da.view_count
       end
     end
-    column "Unique Views" do |da|
+    column "Unique Views", sortable: "unique_view_count" do |da|
       div :class => "numberCol" do
         da.unique_view_count
       end
     end
-    column "Redemptions" do |da|
+    column "Redemptions", sortable: "redemption_count" do |da|
       div :class => "numberCol" do
         da.redemption_count
       end
@@ -107,34 +111,6 @@ ActiveAdmin.register DealAnalytic do
       end
     end
 
-=begin
-    panel "Deal Information" do
-      attributes_table_for f do
-        row "Deal Id" do
-          f.deal_id
-        end
-        row "Deal Title" do
-          f.deal
-        end
-        row "Deal Description" do
-          f.deal.description
-        end
-        row "Start Date" do
-          f.deal.start_date
-        end
-        row "Expiry Date" do
-          f.deal.expiry_date
-        end
-        row "Merchant" do
-          f.deal.merchant
-        end
-        row "Venues" do
-          f.deal.venues.map{|v| v.name }.join(", ").html_safe
-        end
-      end
-    end
-=end
-
     panel "Deal Analytics" do
       attributes_table_for f do
         row :view_count
@@ -169,9 +145,26 @@ ActiveAdmin.register DealAnalytic do
     link_to "View Charts", charts_admin_deal_analytics_path
   end
 
+  action_item :only => :charts do
+    link_to "Back", "/admin/deal_analytics"
+  end
+
+
   controller do
     def charts
-      render partial: 'admin/analytics_payment'
+      # show views/admin/deal_analytics/charts.html.erb
+
+      # Deal traffic
+      end_date = Time.now
+      start_date = end_date.beginning_of_year
+      @view_counts = DealAnalyticService.get_app_traffic(start_date, end_date)
+      @redemption_counts = DealAnalyticService.get_foot_traffic(start_date, end_date)
+
+      # Popular deal types
+      @popular_deal_types = DealAnalyticService.get_overall_popular_deal_type
+
+      # Popular keywords
+      @queries = DealAnalyticService.get_top_queries(10).as_json
     end
   end
 

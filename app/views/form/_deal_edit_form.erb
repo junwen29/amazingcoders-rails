@@ -3,17 +3,28 @@
   <%= form_for @deal, :html => {:multipart => true} do |f| %>
       <p class="form-textarea clearfix">
         <%= f.label :title, "Title of deal*" %>
-        <span><%= f.text_field :title %></span>
+        <% if @payment.add_on3 %>
+            <span><%= f.text_field :title, data: {toggle: "tooltip", placement: "right"}, title: @top_queries %></span>
+        <% else %>
+            <span><%= f.text_field :title %></span>
+        <% end %>
       </p>
 
       <p class="form-textarea clearfix">
         <%= f.label :type_of_deal, "Type of Deal*" %>
-        <span><%= f.select :type_of_deal, [['Discount','discount'],['Freebies','freebies']] %></span>
+        <% if @payment.add_on3 %>
+            <%= @top_deal_type %><br>
+        <% end %>
+        <span><%= f.select :type_of_deal, [['Discount', 'Discount'], ['Freebies', 'Freebies']], title: @top_deal_type %></span>
       </p>
 
       <p class="form-textarea clearfix">
         <%= f.label :description, "Description of your deal*" %>
-        <span><%= f.text_area :description, :placeholder => "Tell us more about your deals! Example: 10% off the total bill!" %></span>
+        <% if @payment.add_on3 %>
+            <span><%= f.text_area :description, :placeholder => "Tell us more about your deals! Example: 10% off the total bill!", data: {toggle: "tooltip", placement: "right"}, title: @top_queries %></span>
+        <% else %>
+            <span><%= f.text_area :description, :placeholder => "Tell us more about your deals! Example: 10% off the total bill!" %></span>
+        <% end %>
       </p>
 
       <p class="form-select half clearfix">

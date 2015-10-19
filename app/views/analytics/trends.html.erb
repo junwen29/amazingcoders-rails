@@ -9,7 +9,7 @@
 
     <!-- Content Heading -->
     <div class="pull-left">
-      <p class="b2 content-title">Deal Analytics by Deals</p>
+      <p class="b2 content-title">Aggregate Trends</p>
     </div>
 
     <div class="clearfix"></div>
@@ -17,9 +17,9 @@
 
     <!-- Content Body -->
     <!--TODO: VIEW Render partials only for merchants with access-->
-    <%= render :partial => 'analytics/deal/analytics_line_count' %><br>
-    <%= render :partial => 'analytics/deal/popular_deal_type' %>
-
+    <%= render :partial => 'analytics/trends/top_deals' %><br>
+    <%= render :partial => 'analytics/trends/top_queries' %><br>
+    <%= render :partial => 'analytics/trends/top_deal_types' %><br>
 
   </div><!-- /content -->
 </div><!-- /contentWrapper -->
