@@ -107,39 +107,32 @@ class DealAnalyticService
     def get_view_and_redemption_count_by_day(deals, start_date, end_date)
       overall_deals_array = Array.new
       deals.each do |d|
-        num_view = 0
-        temp_start_date = start_date
-        num_redemption = 0
-        first_view = true
-        first_redeem = true
         num_view_array = Array.new
         num_redeem_array = Array.new
         deal_array = Array.new
-        nothing = [0]
+
+        # If start date of deal is after given start date, we will start from deal start date
+        if d.start_date > start_date
+          temp_start_date = d.start_date
+        else
+          temp_start_date = start_date
+        end
+
+        # If end date of deal is before given end date, we will end at deal end date
+        if d.expiry_date < end_date
+          temp_end_date = d.expiry_date
+        else
+          temp_end_date = end_date
+        end
 
         deal_array << d.title
-        deal_array << Time.parse(start_date.to_s).to_f * 1000
-        while temp_start_date <= end_date
+        deal_array << Time.parse(temp_start_date.to_s).to_f * 1000
 
-          num_view = num_view + Viewcount.where(deal_id: d.id).where(created_at: temp_start_date..temp_start_date.end_of_day).count
-          if num_view != 0 && first_view
-            first_view = false
-          end
-          if !first_view
-            num_view_array << num_view
-          else
-            num_view_array << nothing
-          end
-
-          num_redemption = num_redemption + Redemption.where(deal_id: d.id).where(created_at: temp_start_date..temp_start_date.end_of_day).count
-          if num_redemption != 0 && first_redeem
-            first_redeem = false
-          end
-          if !first_redeem
-            num_redeem_array << num_redemption
-          else
-            num_redeem_array << nothing
-          end
+        while temp_start_date <= temp_end_date
+          # Range is from deal created at to temp_start_date as  Merchant can activate the deal at any point of time
+          # So might have view counts even before the deal actually starts
+          num_view_array << Viewcount.where(deal_id: d.id).where(created_at: d.created_at..temp_start_date.end_of_day).count
+          num_redeem_array <<  Redemption.where(deal_id: d.id).where(created_at: d.created_at..temp_start_date.end_of_day).count
           temp_start_date = temp_start_date + 1.days
         end
         deal_array << num_view_array
@@ -304,6 +297,7 @@ class DealAnalyticService
       end
       most_popular_deal = [most_popular_deal_type, count]
     end
+
     # For admin app traffic analytics
     # return [milliseconds, view count]
     def get_all_viewcounts(start_date, end_date)
@@ -359,7 +353,7 @@ class DealAnalyticService
 
     def get_hint_for_popular_deal_type
       top_deal_type = DealAnalyticService.get_most_popular_deal_type
-      deal_type = "The most popular deal type is " +  top_deal_type[0] + " with an average redemption rate of " + top_deal_type[1].to_s
+      deal_type = "The most popular deal type is " + top_deal_type[0] + " with an average redemption rate of " + top_deal_type[1].to_s
     end
   end
 
