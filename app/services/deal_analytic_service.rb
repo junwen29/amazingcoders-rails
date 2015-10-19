@@ -252,13 +252,26 @@ class DealAnalyticService
     def get_top_active_deals(limit = 10)
       active_deals = DealService.get_active_deals.where(:redeemable => true).pluck(:id)
       top_10_deal_ids = DealAnalytic.where(deal_id: active_deals).order(redemption_count: :desc).limit(limit).pluck(:deal_id)
-      top_active_deals = Deal.find(top_10_deal_ids)
-      top_active_deals
     end
 
     def get_top_queries(limit = 10)
       top_user_queries = UserQuery.order(num_count: :desc).limit(limit)
       top_user_queries
+    end
+
+    def get_own_deals_ranking(merchant_id)
+      active_deals = DealService.get_active_deals.where(:redeemable => true).pluck(:id)
+      top_deals = DealAnalytic.where(deal_id: active_deals).order(redemption_count: :desc)
+      merchant_active_deals = MerchantService.get_active_redeemable_deals(merchant_id).pluck(:id)
+      top_merchant_deals = DealAnalytic.where(deal_id: merchant_active_deals).order(redemption_count: :desc).pluck(:deal_id)
+      ranking = Array.new
+      top_merchant_deals.each do |ad|
+        deal_ranking = Array.new
+        deal_ranking << ad
+        deal_ranking << top_deals.map(&:deal_id).index(ad)
+        ranking << deal_ranking
+      end
+      ranking
     end
 
     # array[0] gives first deal_type
