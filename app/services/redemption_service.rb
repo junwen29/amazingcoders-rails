@@ -1,21 +1,7 @@
 class RedemptionService
 
   module ClassMethods
-    # TODO: Call these methods on Android to update redemption count
-    def getRedemptionCount(deal_id)
-      redemption = Redemption.where(:deal_id => deal_id)
-      if redemption.empty?
-        0
-      else
-        redemption.count
-      end
-    end
-
-    def setRedemptionCount(deal_id, user_id, venue_id)
-      Redemption.create(deal_id: deal_id, user_id: user_id, venue_id: venue_id)
-    end
-
-    def createRedemption(deal_id, user_id, venue_id)
+    def create_redemption(deal_id, user_id, venue_id)
       deal = Deal.find(deal_id)
       redeemable = deal.redeemable
       multiple_redeem = deal.multiple_use
@@ -33,7 +19,7 @@ class RedemptionService
 
     end
 
-    def getRedemptionsByUserId(user_id)
+    def get_redemptions_by_user_id(user_id)
       Redemption.where(user_id: user_id)
     end
 
