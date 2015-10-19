@@ -15,18 +15,19 @@ ActiveAdmin.register_page "Payment Analytics" do
     def analytics_premium_subscribers
       all_plan_ids = Plan.pluck(:id)
       premium_count = 0
-      @plan_series = Array.new
-      @addon_series = Array.new
+      @plan_subscribers_series = Array.new
+      @addon_subscribers_series = Array.new
 
       all_plan_ids.each do |id|
-        # Plan: Premiums
+        # Plan: Premiums [name, count, drilldown]
         plan_name = PlanService.get_plan_names(id)
         plan_count = PaymentService.count_plan_payments(id)
         premium_count += plan_count
         plan_data = {name: plan_name, y: plan_count, drilldown: plan_name}.to_json
-        @plan_series.push plan_data
+        @plan_subscribers_series.push plan_data
 
-        # Addons for each plan
+        # Addons for each plan [name, id, data]
+        # 1. Data
         addons = PlanService.get_addon_ids(id)
         addon_data_subscribers = Array.new
         addons.each do |a|
@@ -35,26 +36,46 @@ ActiveAdmin.register_page "Payment Analytics" do
           addon.push PaymentService.count_addon_payments(a)
           addon_data_subscribers.push addon
         end
+        # 2. Pass json
         addon_json = {name: "Addons", id: plan_name, data: addon_data_subscribers}.to_json
-        @addon_series.push addon_json
+        @addon_subscribers_series.push addon_json
       end
 
-      # Plan: Basic plan
+      # Plan: Basic plan -> push to first element of array
       basic_data = {name: "Basic Service", y: PaymentService.count_total_payments - premium_count, drilldown: "null"}.to_json
-      @plan_series.unshift basic_data
+      @plan_subscribers_series.unshift basic_data
     end
 
     private
     def analytics_premium_profits
-      @plan1_cost = PaymentService.get_plan_payments(1)
+      all_plan_ids = Plan.pluck(:id)
+      @plan_profits_series = Array.new
+      @addon_profits_series = Array.new
 
-      addons = PlanService.get_addon_ids(1)
-      @addon_data_profits = Array.new
-      addons.each do |a|
-        addon = Array.new    # addon consists of [name, costs]
-        addon.push PlanService.get_addon_names(a)
-        addon.push PaymentService.get_addon_payments(a).to_f
-        @addon_data_profits.push addon
+      # Basic plan json {name, cost, drilldown}
+      basic_plan_json = {name: "Basic Service", y: 0, drilldown: "null"}.to_json
+      @plan_profits_series.push basic_plan_json
+
+      all_plan_ids.each do |id|
+        # Plan json [name, cost, drilldown]
+        plan_name = PlanService.get_plan_names(id)
+        plan_cost = PaymentService.get_plan_payments(id).to_f
+        plan_json = {name: plan_name, y: plan_cost, drilldown: plan_name}.to_json
+        @plan_profits_series.push plan_json
+
+        # Addons for each plan [name, id, data]
+        # 1. Get data. [name, cssts]
+        addons = PlanService.get_addon_ids(id)
+        addon_data_profits = Array.new
+        addons.each do |a|
+          addon = Array.new    # addon consists of [name, costs]
+          addon.push PlanService.get_addon_names(a)
+          addon.push PaymentService.get_addon_payments(a).to_f
+          addon_data_profits.push addon
+        end
+        # Pass json
+        addon_json = {name: "Addons", id: plan_name, data: addon_data_profits}.to_json
+        @addon_profits_series.push addon_json
       end
     end
 

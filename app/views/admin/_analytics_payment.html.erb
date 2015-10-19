@@ -51,20 +51,20 @@
                   name: "Plans",
                   colorByPoint: true,
                   data: [
-                      <% num = @plan_series.size %>
+                      <% num = @plan_subscribers_series.size %>
                       <% i = 0 %>
                       <% while i < num %>
-                      <%= raw @plan_series[i] %>,
+                      <%= raw @plan_subscribers_series[i] %>,
                       <% i+=1 %>
                       <% end %>
                   ]
               }],
               drilldown: {
                   series: [
-                      <% num = @addon_series.size %>
+                      <% num = @addon_subscribers_series.size %>
                       <% i = 0 %>
                       <% while i < num %>
-                      <%= raw @addon_series[i] %>,
+                      <%= raw @addon_subscribers_series[i] %>,
                       <% i += 1 %>
                       <% end %>
                   ]
@@ -107,22 +107,24 @@
               series: [{
                   name: "Plans",
                   colorByPoint: true,
-                  data: [{
-                      name: "Basic Service",
-                      y: 0,
-                      drilldown: null
-                  }, {
-                      name: "<%= @plan1_name %>",
-                      y: <%= @plan1_cost %>,
-                      drilldown: "Addons"
-                  }]
+                  data: [
+                      <% num = @plan_profits_series.size %>
+                      <% i = 0 %>
+                      <% while i < num %>
+                      <%= raw @plan_profits_series[i] %>,
+                      <% i+=1 %>
+                      <% end %>
+                  ]
               }],
               drilldown: {
-                  series: [{
-                      name: "Addons",
-                      id: "Addons",
-                      data: <%= raw @addon_data_profits %>
-                  }]
+                  series: [
+                      <% num = @addon_profits_series.size %>
+                      <% i = 0 %>
+                      <% while i < num %>
+                      <%= raw @addon_profits_series[i] %>,
+                      <% i += 1 %>
+                      <% end %>
+                  ]
               }
           });
       });
