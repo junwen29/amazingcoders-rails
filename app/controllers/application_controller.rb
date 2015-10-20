@@ -28,18 +28,21 @@ class ApplicationController < ActionController::Base
 
   private
   def check_deal_analytics
-    payment = MerchantService.get_deal_plan(merchant_id)
+    payment = Payment.where("merchant_id = ? AND start_date <= ? AND expiry_date >= ? AND paid = ?", merchant_id, Date.today, Date.today, true).last
     # @deal_analytics = 0: No access
     # @deal_analytics = 1: Has deal statistics and deal aggregate trends
     # @deal_analytics = 2: Has deal statistics
     # @deal_analytics = 3: Has deal aggregate
-    @deal_analytics = 0
-    if payment.add_on2 && payment.add_on3
-      @deal_analytics = 1
-    elsif payment.add_on2 && !payment.add_on3
-      @deal_analytics = 2
-    elsif !payment.add_on2 && payment.add_on3
-      @deal_analytics = 3
+    if payment.blank?
+      @deal_analytics = 0
+    else
+      if payment.add_on2 && payment.add_on3
+        @deal_analytics = 1
+      elsif payment.add_on2 && !payment.add_on3
+        @deal_analytics = 2
+      elsif !payment.add_on2 && payment.add_on3
+        @deal_analytics = 3
+      end
     end
   end
 
