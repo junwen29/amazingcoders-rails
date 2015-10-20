@@ -96,6 +96,63 @@ while start_date <= end_date
   start_date = start_date + 1
 end
 
+# Seed Data for ViewCounts
+i = 300000
+start_date = DateTime.parse("2015-09-20 00:00:00")
+end_date = DateTime.parse("2015-10-20 00:00:00")
+while start_date <= end_date
+  limit = i + rand(20..40)
+  while i < limit
+    Viewcount.create(id: i, deal_id: 1, user_id: i, created_at: start_date)
+    i = i + 1
+  end
+  start_date = start_date + 1
+end
+
+start_date = DateTime.parse("2015-09-25 00:00:00")
+end_date = DateTime.parse("2015-10-20 00:00:00")
+while start_date <= end_date
+  limit = i + rand(20..40)
+  while i < limit
+    Viewcount.create(id: i, deal_id: 2, user_id: i, created_at: start_date)
+    i = i + 1
+  end
+  start_date = start_date + 1
+end
+
+start_date = DateTime.parse("2015-10-01 00:00:00")
+end_date = DateTime.parse("2015-12-01 00:00:00")
+while start_date <= end_date
+  limit = i + rand(20..40)
+  while i < limit
+    Viewcount.create(id: i, deal_id: 3, user_id: i, created_at: start_date)
+    i = i + 1
+  end
+  start_date = start_date + 1
+end
+
+start_date = DateTime.parse("2015-10-05 00:00:00")
+end_date = DateTime.parse("2015-12-01 00:00:00")
+while start_date <= end_date
+  limit = i + rand(20..40)
+  while i < limit
+    Viewcount.create(id: i, deal_id: 4, user_id: i, created_at: start_date)
+    i = i + 1
+  end
+  start_date = start_date + 1
+end
+
+start_date = DateTime.parse("2015-10-10 00:00:00")
+end_date = DateTime.parse("2015-12-01 00:00:00")
+while start_date <= end_date
+  limit = i + rand(20..40)
+  while i < limit
+    Viewcount.create(id: i, deal_id: 5, user_id: i, created_at: start_date)
+    i = i + 1
+  end
+  start_date = start_date + 1
+end
+
 
 
 
