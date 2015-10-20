@@ -12,10 +12,14 @@ class RedemptionService
       never_redeem_before = redemption.blank?
 
       if never_redeem_before
-        Redemption.create(deal_id: deal_id, user_id: user_id, venue_id: venue_id)
+        redemption = Redemption.create(deal_id: deal_id, user_id: user_id, venue_id: venue_id)
+        Deal.increment_counter(:num_of_redeems, deal_id)
       elsif multiple_redeem
-        Redemption.create(deal_id: deal_id, user_id: user_id, venue_id: venue_id)
+        redemption = Redemption.create(deal_id: deal_id, user_id: user_id, venue_id: venue_id)
+        Deal.increment_counter(:num_of_redeems, deal_id)
       end
+
+      return redemption
 
     end
 
