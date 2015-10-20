@@ -32,3 +32,20 @@ UserQuery.create(id: '1008', query: 'limited time', num_count: '4912', query_typ
 UserQuery.create(id: '1009', query: 'savings', num_count: '3612', query_type: 'DealsFeed', created_at: Date.today.beginning_of_day)
 UserQuery.create(id: '1010', query: 'buffet', num_count: '3812', query_type: 'DealsFeed', created_at: Date.today.beginning_of_day)
 
+# Seed Data for number of wish listers
+i = 1000
+while i < 1132
+  Wish.create(id: i, venue_id: 1, user_id: i)
+  i = i + 1
+end
+
+while i < 1301
+  Wish.create(id: i, venue_id: 2, user_id: i)
+  i = i + 1
+end
+
+while i < 1451
+  Wish.create(id: i, venue_id: 3, user_id: i)
+  i = i + 1
+end
+
