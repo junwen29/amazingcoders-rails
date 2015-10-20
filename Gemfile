@@ -61,6 +61,7 @@ gem 'devise'
 # For QRCode
 gem 'rqrcode_png'
 
+# TODO remove this GEM
 # For attaching images
 gem 'paperclip'
 
