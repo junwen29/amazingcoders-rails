@@ -5,14 +5,19 @@ module Venue::Json
 
     # json is jbuilder
     def to_simple_json(json, options = {})
-      json.name           self.name
       json.id             self.id
+      json.name           self.name
       json.neighbourhood  self.neighbourhood
       json.is_wishlist    self.is_wishlist unless self.is_wishlist == nil
     end
 
     def to_json(json, options = {})
       self.to_simple_json(json, options)
+      json.bio            self.bio
+      json.street         self.street
+      json.zipcode        self.zipcode
+      json.phone          self.phone
+
     end
 
     def show_json_object (json, options ={})

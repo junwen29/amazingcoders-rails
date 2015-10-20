@@ -1,21 +1,11 @@
 <div id="deal_venue_chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 <footer>
-  <style type="text/css">
-      .container {
-          border: 2px solid #ccc;
-          width: 500px;
-          height: 100px;
-          overflow-y: scroll;
-          float: left;
-      }
-  </style>
   <script>
-      $(function () {
-          var chart = new Highcharts.Chart({
+      $(document).ready(function () {
+          $('#deal_venue_chart').highcharts({
               chart: {
-                  type: 'column',
-                  renderTo: 'deal_venue_chart',
+                  type: 'column'
               },
               credits: {
                   enabled: false
@@ -33,10 +23,20 @@
                       text: 'Number of Redeems'
                   }
               },
-              xAxis: {
-                  labels: {
-                      enabled: false
+              plotOptions: {
+                  series: {
+                      dataLabels: {
+                          enabled: true,
+                          align: 'center',
+                          color: '#000000',
+                          overflow: 'justify',
+                          crop: true
+                      },
+                      pointWidth: 150
                   }
+              },
+              xAxis: {
+                  type: 'category'
               },
               legend: {
                   layout: 'vertical',
@@ -53,9 +53,12 @@
                       name: '<span style="color: #00910c">Active: </span>' + '<%= @deals_for_venue[0][loop][0] %>',
                       data: [
                           {
-                              name: "<%= @deals_for_venue[0][loop][0] %>",
+                              name: "Deals",
                               y: <%= @deals_for_venue[0][loop][redeem_placement] %>,
-                              drilldown: "<%= @deals_for_venue[0][loop][0] %>" + " active"
+                              drilldown: "<%= @deals_for_venue[0][loop][0] %>" + " active",
+                              dataLabels: {
+                                  format: "<%= @deals_for_venue[0][loop][0] %>"
+                              }
                           }
                       ]
                   },
@@ -71,9 +74,12 @@
                       name: '<span style="color: #df1007">Expired: </span>' + '<%= @deals_for_venue[1][loop][0] %>',
                       data: [
                           {
-                              name: "<%= @deals_for_venue[1][loop][0] %>",
+                              name: "Deals",
                               y: <%= @deals_for_venue[1][loop][redeem_placement] %>,
-                              drilldown: "<%= @deals_for_venue[1][loop][0] %>" + " past"
+                              drilldown: "<%= @deals_for_venue[1][loop][0] %>" + " past",
+                              dataLabels: {
+                                  format: "<%= @deals_for_venue[1][loop][0] %>"
+                              }
                           }
                       ],
                       visible: false
@@ -86,7 +92,7 @@
                       <% loop = 0 %>
                       <% while loop < num_of_active_deals %>
                       {
-                          name: "<%= @deals_for_venue[0][loop][0] %>",
+                          name: "Venues",
                           id: "<%= @deals_for_venue[0][loop][0] %>" + " active",
                           data: [
                               <% inner_loop = 1 %>
@@ -105,7 +111,7 @@
                       <% loop = 0 %>
                       <% while loop < num_of_expired_deals %>
                       {
-                          name: "<%= @deals_for_venue[1][loop][0] %>",
+                          name: "Venues",
                           id: "<%= @deals_for_venue[1][loop][0] %>" + " past",
                           data: [
                               <% inner_loop = 1 %>

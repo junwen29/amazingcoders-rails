@@ -96,20 +96,28 @@
                       <%= venue.name %><br/>
                   <% end %>
                 </td>
-                <td>
-                  <% if DealService.num_active_deals(deal.merchant_id) >= 5 %>
-                      <button class="btn btn-default disabled" type="button" data-toggle="tooltip" data-placement="top" title="As you currently have more than 5 active deals you are not able to activate deal">
-                        Activate
-                      </button>
-                  <% else %>
-                      <%= link_to active_deal_path(deal),
-                                  data: {confirm: 'You will not be able to edit or delete the deal once activated. Do you wish to proceed?'} do %>
-                          <button class="btn btn-success" type="button" data-toggle="tooltip" data-placement="top" title="Once deal is activated, users will be able to view and search for the deal">
+                <% if deal.start_date.future? || deal.start_date.today? %>
+                    <td>
+                      <% if DealService.num_active_deals(deal.merchant_id) >= 5 %>
+                          <button class="btn btn-default disabled" type="button" data-toggle="tooltip" data-placement="top" title="As you currently have more than 5 active deals you are not able to activate deal">
                             Activate
                           </button>
+                      <% else %>
+                          <%= link_to active_deal_path(deal),
+                                      data: {confirm: 'You will not be able to edit or delete the deal once activated. Do you wish to proceed?'} do %>
+                              <button class="btn btn-success" type="button" data-toggle="tooltip" data-placement="top" title="Once deal is activated, users will be able to view and search for the deal">
+                                Activate
+                              </button>
+                          <% end %>
                       <% end %>
-                  <% end %>
-                </td>
+                    </td>
+                <% else %>
+                    <td>
+                      <button class="btn btn-default disabled" type="button" data-toggle="tooltip" data-placement="top" title="The start date of your deal has past. Please either edit or delete your deal.">
+                        Activate
+                      </button>
+                    </td>
+                <% end %>
                 <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
                 <td><%= link_to 'Edit', edit_deal_path(deal), class: "btn btn-xs btn-default" %></td>
                 <td>

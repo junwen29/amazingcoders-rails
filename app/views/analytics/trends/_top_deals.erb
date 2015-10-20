@@ -1,0 +1,32 @@
+<h3 style="padding-bottom: 20px">Popular Deals</h3>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h4>Top 10 Active Deals!</h4>
+  </div>
+  <div class="panel-body">
+    <strong>By Redemption Count</strong>
+    <table class="table table-bordered table-hover table-responsive">
+      <tr>
+        <th>Rank</th>
+        <th>Title</th>
+        <th>Type of Deal</th>
+        <th>Description</th>
+      </tr>
+
+      <% rank = 1 %>
+      <% @top_deals.each do |td| %>
+          <tr>
+            <td><%= rank %></td>
+            <td>
+              <%= td.title %>
+            </td>
+            <td>
+              <%= td.type_of_deal %>
+            </td>
+            <td><%= td.description %></td>
+          </tr>
+          <% rank = rank + 1 %>
+      <% end %>
+    </table>
+  </div>
+</div>

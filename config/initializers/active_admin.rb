@@ -93,7 +93,7 @@ ActiveAdmin.setup do |config|
   # Active Admin displays a logout link on each screen. These
   # settings configure the location and method used for the link.
   #
-  # This setting changes the path where the link points to. If it's
+  # This setting changes the path where the link MerchantPoints to. If it's
   # a string, the strings is used as the path. If it's a Symbol, we
   # will call the method to return the path.
   #

@@ -2,14 +2,29 @@ class AnalyticsController < ApplicationController
   before_action :check_has_analytics_access
 
   def index
+    if MerchantService.get_all_venues(merchant_id).blank?
+        render 'analytics/no_venue_error'
+    elsif MerchantService.get_all_active_and_past_deals(merchant_id).blank?
+      render 'analytics/no_deal_error'
+    end
     # Deal Statistics by Deals
     deal_statistics_by_deal
   end
 
   def venue
+    if MerchantService.get_all_venues(merchant_id).blank?
+      render 'analytics/no_venue_error'
+    elsif MerchantService.get_all_active_and_past_deals(merchant_id).blank?
+      render 'analytics/no_deal_error'
+    end
     # Deal Statistics by Venues
     deal_statistics_by_venue
     render "analytics/venue"
+  end
+
+  def trends
+    aggregate_trends
+    render"analytics/trends"
   end
 
   # Check if user has the subscribed to any deal analytics addons
@@ -65,6 +80,16 @@ class AnalyticsController < ApplicationController
     end
   end
 
+  def aggregate_trends
+    if check_has_aggregate_trends
+      get_top_active_deals
+      get_top_queries
+      get_overall_popular_deal_type
+    else
+      render "analytics/error"
+    end
+  end
+
   private
   def deal_analytics_by_day
     @deals_daily_count = DealAnalyticService.get_analytics_for_line_graph(merchant_id, Date.today.beginning_of_quarter, Date.today)
@@ -83,5 +108,20 @@ class AnalyticsController < ApplicationController
   private
   def deal_analytics_by_deals_for_venues
     @deals_for_venue = DealAnalyticService.get_analytics_for_venues_by_deals(merchant_id)
+  end
+
+  private
+  def get_top_active_deals
+    @top_deals = DealAnalyticService.get_top_active_deals
+  end
+
+  private
+  def get_top_queries
+    @top_query = DealAnalyticService.get_top_queries
+  end
+
+  private
+  def get_overall_popular_deal_type
+    @popular_deal_type = DealAnalyticService.get_overall_popular_deal_type
   end
 end
