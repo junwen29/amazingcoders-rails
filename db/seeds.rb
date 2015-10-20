@@ -2,14 +2,11 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
 
-
-
 Plan.create(id: '1', name: 'Premium Deals Services', cost: '30', description: 'Allows unlimited creation of deals. Publishing of up to 5 active deals')
 
 AddOn.create(id: '1', name: 'Push Notification', cost: '5', description: 'Allows 1 Push Notification per deal to Burpple users who have wishlisted your venue!', addon_type: 'notification', created_at: Time.current, updated_at: Time.current, plan_id: '1')
 AddOn.create(id: '2', name: 'Deals Statistics', cost: '5', description: 'See demographics of users to target your deals better!', addon_type: 'statistics', created_at: Time.current, updated_at: Time.current, plan_id: '1')
 AddOn.create(id: '3', name: 'Aggregate Trends', cost: '5', description: 'See popular keywords and trends across different deals!', addon_type: 'trends', created_at: Time.current, updated_at: Time.current, plan_id: '1')
-
 
 
 # For payment analytics
@@ -48,4 +45,57 @@ while i < 1451
   Wish.create(id: i, venue_id: 3, user_id: i)
   i = i + 1
 end
+
+# Seed Data for Redemptions
+i = 1000
+start_date = DateTime.parse("2015-09-25 00:00:00")
+end_date = DateTime.parse("2015-10-20 00:00:00")
+while start_date <= end_date
+  limit = i + rand(0..30)
+  venue_id = rand(1..3)
+  while i < limit
+    Redemption.create(id: i, deal_id: 2, user_id: i, venue_id: venue_id, created_at: start_date)
+    i = i + 1
+  end
+  start_date = start_date + 1
+end
+
+start_date = DateTime.parse("2015-10-10 00:00:00")
+end_date = DateTime.parse("2015-12-01 00:00:00")
+while start_date <= end_date
+  limit = i + rand(0..30)
+  venue_id = rand(1..3)
+  while i < limit
+    Redemption.create(id: i, deal_id: 3, user_id: i, venue_id: venue_id, created_at: start_date)
+    i = i + 1
+  end
+  start_date = start_date + 1
+end
+
+start_date = DateTime.parse("2015-10-15 00:00:00")
+end_date = DateTime.parse("2015-12-01 00:00:00")
+while start_date <= end_date
+  limit = i + rand(0..30)
+  venue_id = rand(1..3)
+  while i < limit
+    Redemption.create(id: i, deal_id: 4, user_id: i, venue_id: venue_id, created_at: start_date)
+    i = i + 1
+  end
+  start_date = start_date + 1
+end
+
+start_date = DateTime.parse("2015-10-19 00:00:00")
+end_date = DateTime.parse("2015-12-01 00:00:00")
+while start_date <= end_date
+  limit = i + rand(0..30)
+  venue_id = rand(1..3)
+  while i < limit
+    Redemption.create(id: i, deal_id: 5, user_id: i, venue_id: venue_id, created_at: start_date)
+    i = i + 1
+  end
+  start_date = start_date + 1
+end
+
+
+
 
