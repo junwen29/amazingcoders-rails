@@ -46,5 +46,12 @@ module Burpple
         super(:not_found, "Not Found", 404, message)
       end
     end
+
+    class RedeemError < BurppleError
+      def initialize(message = 'Already Redeemed')
+        super(:existing_error, 'Existing Error', 406, message)
+      end
+    end
+
   end
 end

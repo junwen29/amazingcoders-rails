@@ -1,5 +1,5 @@
 ActiveAdmin.register DealAnalytic do
-  menu :parent => "Deals", :priority => 2
+  menu :parent => "Deals", :priority => 3
 
   config.clear_action_items!
   actions :all, except: [:edit]
