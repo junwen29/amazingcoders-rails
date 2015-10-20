@@ -49,6 +49,15 @@ class MerchantService
       Deal.where(:merchant_id => merchant_id, :active => true)
     end
 
+    def get_past_deals(merchant_id)
+      Deal.expired.where(:merchant_id => merchant_id)
+    end
+
+    #for MerchantPoints
+    def get_all_points(merchant_id)
+      MerchantPoint.where(:merchant_id => merchant_id)
+    end
+
     def update_venue(merchant_id, params)
       venue_id = params[:id]
       venue = get_venue(merchant_id, venue_id)

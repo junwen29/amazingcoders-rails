@@ -5,16 +5,18 @@
 
 <div style="padding-bottom: 50px">
   <h2 style="padding-bottom: 50px">Premium Services Analytics</h2>
-  <div id="plan_subscribers" style="height: 400px; width:600px; float: left;"></div>
-  <div id="plan_payments" style="height: 400px; width:600px;"></div>
+  <div id="plan_subscribers" class="col-lg-6"></div>
+  <div id="plan_payments" class="col-lg-6"></div>
+  <div id="plan_months" style="padding-top: 20px"></div>
 </div>
 
 <footer>
-  <script src="http://code.highcharts.com/highcharts.js"></script>
-  <script src="http://code.highcharts.com/modules/data.js"></script>
-  <script src="http://code.highcharts.com/modules/exporting.js"></script>
-  <script src="http://code.highcharts.com/modules/drilldown.js"></script>
-  <!--Javascript for Plan Analytics -->
+  <script src="//code.highcharts.com/highcharts.js"></script>
+  <script src="//code.highcharts.com/modules/data.js"></script>
+  <script src="//code.highcharts.com/modules/exporting.js"></script>
+  <script src="//code.highcharts.com/modules/drilldown.js"></script>
+
+  <!--Javascript for premium subscriptions -->
   <script>
       $(function () {
           $('#plan_subscribers').highcharts({
@@ -25,7 +27,7 @@
                   type: 'pie'
               },
               title: {
-                  text: 'Popularity of All Premium Services'
+                  text: 'Popularity of All Plans and Add Ons'
               },
               subtitle: {
                   text: 'Number of Subscribers'
@@ -41,36 +43,38 @@
                       depth: 35,
                       dataLabels: {
                           enabled: true,
-                          format: '{point.name} {point.y}'
+                          format: '{point.name}<br>{point.y} subscribers'
                       }
                   }
               },
               series: [{
                   name: "Plans",
                   colorByPoint: true,
-                  data: [{
-                      name: "Basic Plan",
-                      y: <%= plan0 %>,
-                      drilldown: null
-                  }, {
-                      name: "Deal Listing Service",
-                      y: <%= plan1 %>,
-                      drilldown: "Addons"
-                  }]
+                  data: [
+                      <% num = @plan_subscribers_series.size %>
+                      <% i = 0 %>
+                      <% while i < num %>
+                      <%= raw @plan_subscribers_series[i] %>,
+                      <% i+=1 %>
+                      <% end %>
+                  ]
               }],
               drilldown: {
-                  series: [{
-                      name: "Addons",
-                      id: "Addons",
-                      data: [
-                          ["Push Notification", <%= addon1 %>],
-                          ["Deal Statistics", <%= addon2 %>],
-                          ["Aggregate Trends", <%= addon3 %>]
-                      ]
-                  }]
+                  series: [
+                      <% num = @addon_subscribers_series.size %>
+                      <% i = 0 %>
+                      <% while i < num %>
+                      <%= raw @addon_subscribers_series[i] %>,
+                      <% i += 1 %>
+                      <% end %>
+                  ]
               }
           });
       });
+  </script>
+
+  <!--Javascript for premium profits-->
+  <script>
       $(function () {
           $('#plan_payments').highcharts({
               credits: {
@@ -80,7 +84,7 @@
                   type: 'pie'
               },
               title: {
-                  text: 'Profits from All Premium Services'
+                  text: 'Profits from All Plans and Add Ons'
               },
               subtitle: {
                   text: 'Contribution of each service to total revenue'
@@ -96,33 +100,31 @@
                       depth: 35,
                       dataLabels: {
                           enabled: true,
-                          format: '{point.name} ${point.y}'
+                          format: '{point.name} <br> \${point.y:.2f}'
                       }
                   }
               },
               series: [{
                   name: "Plans",
                   colorByPoint: true,
-                  data: [{
-                      name: "Basic Service",
-                      y: 0,
-                      drilldown: null
-                  }, {
-                      name: "Deal Listing Service",
-                      y: <%= plan1_cost %>,
-                      drilldown: "Addons"
-                  }]
+                  data: [
+                      <% num = @plan_profits_series.size %>
+                      <% i = 0 %>
+                      <% while i < num %>
+                      <%= raw @plan_profits_series[i] %>,
+                      <% i+=1 %>
+                      <% end %>
+                  ]
               }],
               drilldown: {
-                  series: [{
-                      name: "Addons",
-                      id: "Addons",
-                      data: [
-                          ["Push Notification", <%= addon1_cost %>],
-                          ["Deal Statistics", <%= addon2_cost %>],
-                          ["Aggregate Trends", <%= addon3_cost %>]
-                      ]
-                  }]
+                  series: [
+                      <% num = @addon_profits_series.size %>
+                      <% i = 0 %>
+                      <% while i < num %>
+                      <%= raw @addon_profits_series[i] %>,
+                      <% i += 1 %>
+                      <% end %>
+                  ]
               }
           });
       });
@@ -144,11 +146,11 @@
                   x: -20
               },
               xAxis: {
-                  categories: <%= raw months.as_json %>
+                  categories: <%= raw @months.as_json %>
               },
               yAxis: {
                   title: {
-                      text: 'Number of subscribers'
+                      text: 'Number of subscriptions'
                   },
                   plotLines: [{
                       value: 0,
@@ -157,7 +159,7 @@
                   }]
               },
               tooltip: {
-                  valueSuffix: ' subscribers'
+                  valueSuffix: ' subscriptions'
               },
               legend: {
                   layout: 'vertical',
@@ -165,10 +167,85 @@
                   verticalAlign: 'middle',
                   borderWidth: 0
               },
+              series: [
+                  <% num = @plan_subscriptions_series.size %>
+                  <% i = 0 %>
+                  <% while i < num %>
+                  <%= raw @plan_subscriptions_series[i] %>,
+                  <% i+=1 %>
+                  <% end %>
+              ]
+          });
+      });
+  </script>
+
+  <!--Javscript for Stickiness Analytics-->
+  <script>
+      $(function () {
+          // Create the chart
+          $('#plan_months').highcharts({
+              credits: {
+                  enabled: false
+              },
+              chart: {
+                  type: 'column'
+              },
+              title: {
+                  text: 'Stickiness of Premium Services'
+              },
+              subtitle: {
+                  text: 'Months of subscription of each plan and add on'
+              },
+              xAxis: {
+                  type: 'category'
+              },
+              yAxis: {
+                  title: {
+                      text: 'Months of Subscription'
+                  }
+
+              },
+              legend: {
+                  enabled: true
+              },
+              plotOptions: {
+                  series: {
+                      pointWidth: 80,
+                      borderWidth: 0,
+                      dataLabels: {
+                          enabled: true,
+                          format: '{point.y} months'
+                      }
+                  }
+              },
+
+              tooltip: {
+                  headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                  pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> months<br/>'
+              },
+
               series: [{
-                  name: 'Deal Listing Service',
-                  data: <%= deal_subscription_count %>
-              }]
+                  name: "Premium Plans",
+                  colorByPoint: true,
+                  data: [
+                      <% num = @plan_months_series.size %>
+                      <% i = 0 %>
+                      <% while i < num %>
+                      <%= raw @plan_months_series[i] %>,
+                      <% i+=1 %>
+                      <% end %>
+                  ]
+              }],
+              drilldown: {
+                  series: [
+                      <% num = @addon_months_series.size %>
+                      <% i = 0 %>
+                      <% while i < num %>
+                      <%= raw @addon_months_series[i] %>,
+                      <% i += 1 %>
+                      <% end %>
+                  ]
+              }
           });
       });
   </script>

@@ -3,22 +3,33 @@
   <%= form_for @deal, :html => {:multipart => true} do |f| %>
       <p class="form-textarea clearfix">
         <%= f.label :title, "Title of deal*" %>
-        <span><%= f.text_field :title %></span>
+        <% if @payment.add_on3 %>
+            <span><%= f.text_field :title, data: {toggle: "tooltip", placement: "right"}, title: @top_queries %></span>
+        <% else %>
+            <span><%= f.text_field :title %></span>
+        <% end %>
       </p>
 
       <p class="form-textarea clearfix">
         <%= f.label :type_of_deal, "Type of Deal*" %>
-        <span><%= f.select :type_of_deal, [['Discount','Discount'],['Freebies','Freebies']] %></span>
+        <% if @payment.add_on3 %>
+            <%= @top_deal_type %><br>
+        <% end %>
+        <span><%= f.select :type_of_deal, [['Discount', 'Discount'], ['Freebies', 'Freebies']], title: @top_deal_type %></span>
       </p>
 
       <p class="form-textarea clearfix">
         <%= f.label :description, "Description of your deal*" %>
-        <span><%= f.text_area :description, :placeholder => "Tell us more about your deals! Example: 10% off the total bill!" %></span>
+        <% if @payment.add_on3 %>
+            <span><%= f.text_area :description, :placeholder => "Tell us more about your deals! Example: 10% off the total bill!", data: {toggle: "tooltip", placement: "right"}, title: @top_queries %></span>
+        <% else %>
+            <span><%= f.text_area :description, :placeholder => "Tell us more about your deals! Example: 10% off the total bill!" %></span>
+        <% end %>
       </p>
 
       <p class="form-select half clearfix">
         <%= f.label :start_date, "Start Date*" %>
-        <span><%= f.text_field :start_date%></span>
+        <span><%= f.text_field :start_date %></span>
       </p>
 
       <p class="form-select half clearfix">
@@ -37,8 +48,8 @@
       </p>
 
       <%= fields_for :deal_venue do |dv| %>
-          <div class = "field form-textarea clearfix">
-            <%= dv.label "Select Venues*" %><br />
+          <div class="field form-textarea clearfix">
+            <%= dv.label "Select Venues*" %><br/>
             <%= collection_select(:venues, :id, @all_venues, :id, :name, {}, {:multiple => true}) %>
           </div>
       <% end %>
@@ -55,24 +66,24 @@
       <%= f.hidden_field(:image_cache) %>
       <em>For best effect, upload an image of 150x150</em>
 
-      <div id= "redeemable">
+      <div id="redeemable">
         <p class="form-textarea clearfix">
           <%= f.label :redeemable, "Would you like users to redeem through QR code? (Helps gather analytics)*" %>
         </p>
 
         <p class="form-select half" style="margin-top: 0px;">
           <%= f.label :redeemable, "Yes", :value => true %>
-          <%= f.radio_button :redeemable, true%>
+          <%= f.radio_button :redeemable, true %>
         </p>
 
         <p class="form-select" style="margin-top: 0px;">
           <%= f.label :redeemable, "No", :value => false %>
-          <%= f.radio_button :redeemable, false%>
+          <%= f.radio_button :redeemable, false %>
         </p>
       </div>
 
 
-      <div id= "redeemable">
+      <div id="redeemable">
         <div id="redeemable_true">
           <p class="form-textarea clearfix">
             <%= f.label :multiple_use, "How many times can this deal be redeemed through QRCode per user?*" %><br>
@@ -85,7 +96,7 @@
 
           <p class="form-select" style="margin-top: 0px;">
             <%= f.label :multiple_use, "Once", :value => false %>
-            <%= f.radio_button :multiple_use, false%>
+            <%= f.radio_button :multiple_use, false %>
           </p>
         </div>
       </div>

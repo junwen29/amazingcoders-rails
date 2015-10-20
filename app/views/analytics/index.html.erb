@@ -9,7 +9,7 @@
 
     <!-- Content Heading -->
     <div class="pull-left">
-      <p class="b2 content-title">Deal Analytics</p>
+      <p class="b2 content-title">Deal Analytics by Deals</p>
     </div>
 
     <div class="clearfix"></div>
@@ -17,8 +17,8 @@
 
     <!-- Content Body -->
     <!--TODO: VIEW Render partials only for merchants with access-->
-    <%= render :partial => 'analytics_count' %>
-    <%= render :partial => 'deal_type' %>
+    <%= render :partial => 'analytics/deal/analytics_line_count' %><br>
+    <%= render :partial => 'analytics/deal/popular_deal_type' %>
 
 
   </div><!-- /content -->

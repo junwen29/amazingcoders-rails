@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   # this will generate '/attachinary/cors' which will be used for iframe file transfers (for unsupported browsers).
   mount Attachinary::Engine => '/attachinary'
 
+  resources :gifts
+
+  resources :merchant_points
+
   devise_for :users
 
 ################# Android
@@ -80,12 +84,18 @@ Rails.application.routes.draw do
   devise_for :merchants, controllers: { sessions: "merchants/sessions", registrations: "merchants/registrations"}
   resources :venues
   resources :merchants
+  resources :merchant_points
 
   resources :deals
   resources :payments do
     resources :charges
   end
-  resources :analytics
+  resources :analytics do
+    collection do
+      get :venue
+      get :trends
+    end
+  end
 
 # To change a deal into active deal then going back to index page
   get 'deals/:id/activate' => 'deals#activate', :as => 'active_deal'
@@ -95,6 +105,12 @@ Rails.application.routes.draw do
 
   get 'merchant_pages/home' => 'merchant_pages#home', :as => :merchant_home
   get 'merchant_pages/help' => 'merchant_pages#help', :as => :merchant_help
+
+  # Get analytics by venues
+  get 'analytics/venue' => 'analytics#venue', :as => :analytics_venue
+
+# Get analytics by trends
+  get 'analytics/trends' => 'analytics#trends', :as => :analytics_trends
 
   resources :merchant_pages
   root :to => 'merchant_pages#home'

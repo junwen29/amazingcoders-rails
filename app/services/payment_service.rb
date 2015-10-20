@@ -14,7 +14,7 @@ class PaymentService
     end
 
     def count_plan_payments(plan_id = 1)
-      Payment.joins(:plan_payments).where('plan_payments.plan_id' => plan_id).count
+      Payment.joins(:plan_payments).where('plan_payments.plan_id' => plan_id).select(:merchant_id).distinct.count
     end
 
     def count_addon_payments(addon_id)
@@ -28,31 +28,27 @@ class PaymentService
     end
 
     def get_total_payments()
-      all_payments = Payment.pluck(:total_cost)
-      total_premiums = 0
-      all_payments.each do |p|
-        total_premiums += p
-      end
-      total_premiums
+      all_payments = Payment.sum(:total_cost)
     end
 
     def get_plan_payments(plan_id = 1)
-      plan_payments = Payment.joins(:plan_payments).where('plan_payments.plan_id' => plan_id).pluck(:total_cost)
-      total_premiums = 0
-      plan_payments.each do |p|
-        total_premiums += p
-      end
-      total_premiums
+      plan_payments = Payment.joins(:plan_payments).where('plan_payments.plan_id' => plan_id).sum(:total_cost)
     end
 
     def get_addon_payments(addon_id)
-      addon_payments = AddOn.joins(:add_on_payments).where('add_on_payments.add_on_id' => addon_id).pluck(:cost)
-      total_premiums = 0
-      addon_payments.each do |p|
-        total_premiums += p
-      end
-      total_premiums
+      addon_cost = AddOn.find(addon_id).cost
+      addon_count = get_addon_months(addon_id)
+      addon_payment = addon_cost * addon_count
     end
+
+    def get_plan_months(plan_id = 1)
+      plan_months = Payment.joins(:plan_payments).where('plan_payments.plan_id' => plan_id).sum(:months)
+    end
+
+    def get_addon_months(addon_id)
+      addon_months = Payment.joins(:add_on_payments).where('add_on_payments.add_on_id' => addon_id).sum(:months)
+    end
+
   end
 
   class << self
