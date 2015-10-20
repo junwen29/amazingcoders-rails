@@ -1,7 +1,7 @@
 class RedemptionService
 
   module ClassMethods
-    def create_redemption(deal_id, user_id, venue_id)
+    def validate(deal_id, user_id, venue_id)
       deal = Deal.find(deal_id)
       redeemable = deal.redeemable
       multiple_redeem = deal.multiple_use
