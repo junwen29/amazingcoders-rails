@@ -127,10 +127,7 @@ class DealAnalyticService
 
         deal_array << d.title
         deal_array << Time.parse((temp_start_date-1).to_s).to_f * 1000
-
-        num_view_array << 0
-        num_redeem_array << 0
-
+        
         while temp_start_date <= temp_end_date
           # Range is from deal created at to temp_start_date as  Merchant can activate the deal at any point of time
           # So might have view counts even before the deal actually starts
