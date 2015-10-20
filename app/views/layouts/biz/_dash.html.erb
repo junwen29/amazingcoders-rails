@@ -30,7 +30,7 @@
         </div>
     <% else %>
         <!--<div class="header-content-item" style="padding: 30px">
-          <span class="text-uppercase"><%= current_merchant.email %></span>
+          <span class="text-uppercase"><%# current_merchant.email %></span>
         </div>-->
     <% end  %>
 
@@ -61,14 +61,32 @@
     <!--<li><%# link_to "Edit Listing", nil %></li>-->
     <!--<li><%# link_to "Premium Listing", nil %></li>-->
     <li><%= link_to "Deal Listing", deals_path %></li>
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Deal Analytics <span class="caret"></span></a>
-      <ul class="dropdown-menu">
-        <li><%= link_to "By Deals", analytics_path %></li>
-        <li><%= link_to "By Venues", analytics_venue_path %></li>
-        <li><a href="#">Aggregate Trends</a></li>
-      </ul>
-    </li>
+    <%# payment = MerchantService.get_deal_plan(@merchant_id) %>
+    <% if @deal_analytics == 1 %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Deal Analytics <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "By Deals", analytics_path %></li>
+            <li><%= link_to "By Venues", analytics_venue_path %></li>
+            <li><%= link_to "Aggregate Trends", analytics_trends_path %></li>
+          </ul>
+        </li>
+    <% elsif @deal_analytics == 2 %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Deal Analytics <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "By Deals", analytics_path %></li>
+            <li><%= link_to "By Venues", analytics_venue_path %></li>
+          </ul>
+        </li>
+    <% elsif @deal_analytics == 3 %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Deal Analytics <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "Aggregate Trends", analytics_trends_path %></li>
+          </ul>
+        </li>
+    <% end %>
     <li><%= link_to "Burps", merchant_points_path %></li>
   </ul>
 </div>
