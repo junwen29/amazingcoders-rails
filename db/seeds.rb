@@ -45,7 +45,7 @@ merchant.password_confirmation = '12345678'
 merchant.total_points = 0
 merchant.save
 
-# Seed payments
+# Seed payments and associated tables
 start_date = '01-05-2015'.to_date
 end_date = '01-05-2016'.to_date
 Payment.create(id: '1000', start_date: start_date, expiry_date: end_date, total_cost: 540, add_on1: true, add_on2: true,
@@ -67,6 +67,55 @@ Payment.create(id: '1002', start_date: start_date, expiry_date: end_date, total_
                add_on3: false, plan1: true, paid: true, merchant_id: '1002', months: 4)
 PlanPayment.create(id: '1002', plan_id: 1, payment_id: 1002)
 AddOnPayment.create(id: '1003', add_on_id: 1, payment_id: 1002)
+
+# Seed venues
+# For amazingcoders8mc@gmail.com
+Venue.create(id: '1000', name: 'Chicken Up @ Tampines', street: '2 Tampines Central 5', zipcode: '529509', city: 'Singapore',
+             state: 'Singapore', country: 'Singapore', neighbourhood: 'Tampines',
+             bio: 'ChickenUp is well known and best loved for serving Authentic Korean Fried Chicken.
+By adapting the Korean methods of removing the fat from the skin and double-frying, Chicken Up Created its own distinct
+variation of fried chicken, featuring juicy, sumptuous and tender chicken meat under its thin and crunchy skin without
+being too greasy. Best known for its signature SpicyUp and YangNyum style fried chicken. ChickenUp also serves several
+variations of the dish with the accompaniment of different sauces such as soya and curry sauces.', phone: '65880308',
+             address_2: '#01-44 to 47', merchant_id: 1000)
+Venue.create(id: '1001', name: 'Chicken Up @ Tanjong Pagar', street: '48 Tanjong Pagar Road', zipcode: '688469', city: 'Singapore',
+             state: 'Singapore', country: 'Singapore', neighbourhood: 'Tanjong Pagar',
+             bio: 'ChickenUp is well known and best loved for serving Authentic Korean Fried Chicken.
+By adapting the Korean methods of removing the fat from the skin and double-frying, Chicken Up Created its own distinct
+variation of fried chicken, featuring juicy, sumptuous and tender chicken meat under its thin and crunchy skin without
+being too greasy. Best known for its signature SpicyUp and YangNyum style fried chicken. ChickenUp also serves several
+variations of the dish with the accompaniment of different sauces such as soya and curry sauces.', phone: '63271203',
+             address_2: '#01-01', merchant_id: 1000)
+Venue.create(id: '1002', name: 'Chicken Up @ Jurong East', street: 'Jurong East MRT, 10 Jurong East St12', zipcode: '609690', city: 'Singapore',
+             state: 'Singapore', country: 'Singapore', neighbourhood: 'Jurong East',
+             bio: 'ChickenUp is well known and best loved for serving Authentic Korean Fried Chicken.
+By adapting the Korean methods of removing the fat from the skin and double-frying, Chicken Up Created its own distinct
+variation of fried chicken, featuring juicy, sumptuous and tender chicken meat under its thin and crunchy skin without
+being too greasy. Best known for its signature SpicyUp and YangNyum style fried chicken. ChickenUp also serves several
+variations of the dish with the accompaniment of different sauces such as soya and curry sauces.', phone: '65630337',
+             address_2: '#01-01', merchant_id: 1000)
+# For woonyong92@gmail.com
+Venue.create(id: '1003', name: 'Reedz Cafe', street: '15 Kent Ridge Drive', zipcode: '119245', city: 'Singapore',
+             state: 'Singapore', country: 'Singapore', neighbourhood: 'Kent Ridge',
+             bio: 'A chic cafe tucked-away in a quaint corner of the NUS Kent Ridge Campus', phone: '67745898',
+             merchant_id: 1001)
+# For jkcheong92@gmail.com
+Venue.create(id: '1004', name: 'Eighteen Chefs @ Bukit Panjang', street: '1 Jelebu Road', zipcode: '677743', city: 'Singapore',
+             state: 'Singapore', country: 'Singapore', neighbourhood: 'Bukit Panjang',
+             bio: 'Here at Eighteen Chefs, we strive to provide our customers with good quality food at an affordable price',
+             phone: '67670557',  address_2: '#02-19', merchant_id: 1002)
+Venue.create(id: '1005', name: 'Eighteen Chefs @ Ang Mo Kio', street: '53 Ang Mo Kio Avenue 3', zipcode: '677743', city: 'Singapore',
+             state: 'Singapore', country: 'Singapore', neighbourhood: 'Ang Mo Kio',
+             bio: 'Here at Eighteen Chefs, we strive to provide our customers with good quality food at an affordable price',
+             phone: '64817625',  address_2: '#04-02', merchant_id: 1002)
+Venue.create(id: '1006', name: 'Eighteen Chefs @ Bugis', street: '200 Victoria Street', zipcode: '188021', city: 'Singapore',
+             state: 'Singapore', country: 'Singapore', neighbourhood: 'Bugis',
+             bio: 'Here at Eighteen Chefs, we strive to provide our customers with good quality food at an affordable price',
+             phone: '67349741',  address_2: '#04-06', merchant_id: 1002)
+Venue.create(id: '1007', name: 'Eighteen Chefs @ Simei', street: '3 Simei Street 6', zipcode: '528833', city: 'Singapore',
+             state: 'Singapore', country: 'Singapore', neighbourhood: 'Simei',
+             bio: 'Here at Eighteen Chefs, we strive to provide our customers with good quality food at an affordable price',
+             phone: '67892852',  address_2: '#01-12', merchant_id: 1002)
 
 # Seed User Query Table
 UserQuery.create(id: '1000', query: 'lunch', num_count: '1921', query_type: 'DealsFeed', created_at: Date.today.beginning_of_day)
@@ -204,7 +253,3 @@ while start_date <= end_date
   end
   start_date = start_date + 1
 end
-
-
-
-
