@@ -61,9 +61,9 @@ Payment.create(id: '1001', start_date: start_date, expiry_date: end_date, total_
                add_on3: false, plan1: true, paid: true, merchant_id: '1001', months: 3)
 PlanPayment.create(id: '1001', plan_id: 1, payment_id: 1001)
 
-start_date = '01-08-2015'.to_date
+start_date = '01-01-2015'.to_date
 end_date = '01-12-2015'.to_date
-Payment.create(id: '1002', start_date: start_date, expiry_date: end_date, total_cost: 140, add_on1: true, add_on2: false,
+Payment.create(id: '1002', start_date: start_date, expiry_date: end_date, total_cost: 385, add_on1: true, add_on2: false,
                add_on3: false, plan1: true, paid: true, merchant_id: '1002', months: 4)
 PlanPayment.create(id: '1002', plan_id: 1, payment_id: 1002)
 AddOnPayment.create(id: '1003', add_on_id: 1, payment_id: 1002)
@@ -116,6 +116,170 @@ Venue.create(id: '1007', name: 'Eighteen Chefs @ Simei', street: '3 Simei Street
              state: 'Singapore', country: 'Singapore', neighbourhood: 'Simei',
              bio: 'Here at Eighteen Chefs, we strive to provide our customers with good quality food at an affordable price',
              phone: '67892852',  address_2: '#01-12', merchant_id: 1002)
+
+# Seed Deals and it's related tables
+start_time_1 = Time.at(36000).utc.strftime("%H:%M:%S")
+end_time_1 = Time.at(79200).utc.strftime("%H:%M:%S")
+start_time_2 = Time.at(39600).utc.strftime("%H:%M:%S")
+end_time_2 = Time.at(75600).utc.strftime("%H:%M:%S")
+# Seed deals for amazingcoders8mc@gmail.com
+
+start_date = '25-09-2015'.to_date
+end_date = '20-10-2015'.to_date
+Deal.new(id: '1000', title: 'Yangpa Bomb Introductory Promo', redeemable: false, type_of_deal: 'Discount',
+         description: 'Get our new flavor of chicken at 20% off!', start_date: start_date, expiry_date: end_date,
+         t_c: 'While stock last!', pushed: false, merchant_id: 1000, active: true, num_of_redeems: 0).save(validate: false)
+DealDay.new(id: '1000', deal_id: 1000, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
+DealDay.new(id: '1001', deal_id: 1000, mon: false, tue: false, wed: false, thur: false, fri: false, sat: true, sun: true).save(validate: false)
+DealTime.create(id: '1000', deal_day_id: 1000, started_at:start_time_1, ended_at: end_time_1)
+DealTime.create(id: '1001', deal_day_id: 1001, started_at:start_time_2, ended_at: end_time_2)
+DealVenue.create(id: '1000', deal_id: 1000, venue_id: 1000)
+DealVenue.create(id: '1001', deal_id: 1000, venue_id: 1001)
+DealVenue.create(id: '1002', deal_id: 1000, venue_id: 1002)
+
+start_date = '01-10-2015'.to_date
+end_date = '20-10-2015'.to_date
+Deal.new(id: '1001', title: '1 For 1 Chicken Up Wings and Korean Bingsu', redeemable: true, multiple_use: false, type_of_deal: 'Freebies',
+         description: 'For every wing or bingsu purchased you get another on the house! Enjoy!!!', start_date: start_date, expiry_date: end_date,
+         t_c: 'While stock last!', pushed: false, merchant_id: 1000, active: true, num_of_redeems: 0).save(validate: false)
+DealDay.new(id: '1002', deal_id: 1001, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
+DealDay.new(id: '1003', deal_id: 1001, mon: false, tue: false, wed: false, thur: false, fri: false, sat: true, sun: true).save(validate: false)
+DealTime.create(id: '1002', deal_day_id: 1002, started_at:start_time_1, ended_at: end_time_1)
+DealTime.create(id: '1003', deal_day_id: 1003, started_at:start_time_2, ended_at: end_time_2)
+DealVenue.create(id: '1003', deal_id: 1001, venue_id: 1000)
+DealVenue.create(id: '1004', deal_id: 1001, venue_id: 1001)
+DealVenue.create(id: '1005', deal_id: 1001, venue_id: 1002)
+
+start_date = '10-10-2015'.to_date
+end_date = '01-12-2015'.to_date
+Deal.new(id: '1002', title: '1 Free Soju Cocktails for every Main Meal Purchased', redeemable: true, multiple_use: true, type_of_deal: 'Freebies',
+         description: 'Normal Price $25++. Now only $17', start_date: start_date, expiry_date: end_date,
+         t_c: 'Deal must be redeemed via Burpple! Only valid for 18 and above', pushed: false, merchant_id: 1000, active: true, num_of_redeems: 0).save(validate: false)
+DealDay.new(id: '1004', deal_id: 1002, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
+DealDay.new(id: '1005', deal_id: 1002, mon: false, tue: false, wed: false, thur: false, fri: false, sat: true, sun: true).save(validate: false)
+DealTime.create(id: '1004', deal_day_id: 1004, started_at:start_time_1, ended_at: end_time_1)
+DealTime.create(id: '1005', deal_day_id: 1005, started_at:start_time_2, ended_at: end_time_2)
+DealVenue.create(id: '1006', deal_id: 1002, venue_id: 1000)
+DealVenue.create(id: '1007', deal_id: 1002, venue_id: 1001)
+DealVenue.create(id: '1008', deal_id: 1002, venue_id: 1002)
+
+start_date = '15-10-2015'.to_date
+end_date = '01-12-2015'.to_date
+Deal.new(id: '1003', title: '4pcs Fried Chicken @ $8.00', redeemable: true, multiple_use: false, type_of_deal: 'Discount',
+         description: 'Normal Price $12++. Now only $8.00', start_date: start_date, expiry_date: end_date,
+         t_c: 'Deal must be redeemed via Burpple!', pushed: false, merchant_id: 1000, active: true, num_of_redeems: 0).save(validate: false)
+DealDay.new(id: '1006', deal_id: 1003, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
+DealDay.new(id: '1007', deal_id: 1003, mon: false, tue: false, wed: false, thur: false, fri: false, sat: true, sun: true).save(validate: false)
+DealTime.create(id: '1006', deal_day_id: 1006, started_at:start_time_1, ended_at: end_time_1)
+DealTime.create(id: '1007', deal_day_id: 1007, started_at:start_time_2, ended_at: end_time_2)
+DealVenue.create(id: '1009', deal_id: 1003, venue_id: 1000)
+DealVenue.create(id: '1010', deal_id: 1003, venue_id: 1001)
+DealVenue.create(id: '1011', deal_id: 1003, venue_id: 1002)
+
+start_date = '19-10-2015'.to_date
+end_date = '01-12-2015'.to_date
+Deal.new(id: '1004', title: '50% OFF Ganjang, Yanguyum Wings and Soju Cocktails!', redeemable: true, multiple_use: true, type_of_deal: 'Discount',
+         description: '50% OFF!!!', start_date: start_date, expiry_date: end_date,
+         t_c: 'Deal must be redeemed via Burpple! Soju Cocktails is valid only or 18 and above', pushed: false,
+         merchant_id: 1000, active: true, num_of_redeems: 0).save(validate: false)
+DealDay.new(id: '1008', deal_id: 1004, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
+DealDay.new(id: '1009', deal_id: 1004, mon: false, tue: false, wed: false, thur: false, fri: false, sat: true, sun: true).save(validate: false)
+DealTime.create(id: '1008', deal_day_id: 1008, started_at:start_time_1, ended_at: end_time_1)
+DealTime.create(id: '1009', deal_day_id: 1009, started_at:start_time_2, ended_at: end_time_2)
+DealVenue.create(id: '1012', deal_id: 1004, venue_id: 1000)
+DealVenue.create(id: '1013', deal_id: 1004, venue_id: 1001)
+DealVenue.create(id: '1014', deal_id: 1004, venue_id: 1002)
+
+start_date = '05-10-2015'.to_date
+end_date = '11-10-2015'.to_date
+Deal.new(id: '1005', title: 'Citibank Card Holders enjoy 10% Off', redeemable: true, multiple_use: true, type_of_deal: 'Discount',
+         description: '10% Off when you use CitiBank card to pay', start_date: start_date, expiry_date: end_date,
+         t_c: 'Citibank Card holders. Deal must be redeemed through burpple. Deal is valid for dine-in only', pushed: false,
+         merchant_id: 1000, active: false, num_of_redeems: 0).save(validate: false)
+DealDay.new(id: '1010', deal_id: 1005, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
+DealDay.new(id: '1011', deal_id: 1005, mon: false, tue: false, wed: false, thur: false, fri: false, sat: true, sun: true).save(validate: false)
+DealTime.create(id: '1010', deal_day_id: 1010, started_at:start_time_1, ended_at: end_time_1)
+DealTime.create(id: '1011', deal_day_id: 1011, started_at:start_time_2, ended_at: end_time_2)
+DealVenue.create(id: '1015', deal_id: 1005, venue_id: 1000)
+DealVenue.create(id: '1016', deal_id: 1005, venue_id: 1001)
+DealVenue.create(id: '1017', deal_id: 1005, venue_id: 1002)
+
+start_date = '01-11-2015'.to_date
+end_date = '01-12-2015'.to_date
+Deal.new(id: '1006', title: 'ONLY $9.90 Off Authentic Korean Half Chicken For 2, Four Flavours To Choose From',
+         redeemable: true, multiple_use: true, type_of_deal: 'Discount',
+         description: '59% off Korean Half Chicken. Serves 2 pax. Choose from 4 flavours: Spicy Up, Mild Up, Curry Up, Yanghyum',
+         start_date: start_date, expiry_date: end_date, t_c: 'Valid for dine-in only', pushed: false, merchant_id: 1000,
+         active: false, num_of_redeems: 0).save(validate: false)
+DealDay.new(id: '1012', deal_id: 1006, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
+DealDay.new(id: '1013', deal_id: 1006, mon: false, tue: false, wed: false, thur: false, fri: false, sat: true, sun: true).save(validate: false)
+DealTime.create(id: '1012', deal_day_id: 1012, started_at:start_time_1, ended_at: end_time_1)
+DealTime.create(id: '1013', deal_day_id: 1013, started_at:start_time_2, ended_at: end_time_2)
+DealVenue.create(id: '1018', deal_id: 1006, venue_id: 1000)
+DealVenue.create(id: '1019', deal_id: 1006, venue_id: 1001)
+DealVenue.create(id: '1020', deal_id: 1006, venue_id: 1002)
+
+# Seed Deal Data for woonyong92@gmail.com
+start_date = '01-09-2015'.to_date
+end_date = '24-11-2015'.to_date
+Deal.new(id: '1007', title: '10% Off Total Bill', redeemable: false, multiple_use: false, type_of_deal: 'Discount',
+         description: '10% Off Total Bill for NUS Staff and Students', start_date: start_date, expiry_date: end_date,
+         t_c: 'Only for Dine in. Only valid for NUS Student or Staff', pushed: true, merchant_id: 1001, active: true,
+         num_of_redeems: 0).save(validate: false)
+DealDay.new(id: '1014', deal_id: 1007, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
+DealTime.create(id: '1014', deal_day_id: 1014, started_at:start_time_1, ended_at: end_time_1)
+DealVenue.create(id: '1021', deal_id: 1007, venue_id: 1003)
+
+start_date = '01-10-2015'.to_date
+end_date = '24-11-2015'.to_date
+Deal.new(id: '1008', title: 'Citibank Card Holders enjoy 10% Off', redeemable: true, multiple_use: true, type_of_deal: 'Discount',
+         description: '10% Off when you use CitiBank card to pay', start_date: start_date, expiry_date: end_date,
+         t_c: 'Only for Dine in. Only valid for NUS Student or Staff', pushed: true, merchant_id: 1001, active: true,
+         num_of_redeems: 0).save(validate: false)
+DealDay.new(id: '1015', deal_id: 1008, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
+DealTime.create(id: '1015', deal_day_id: 1015, started_at:start_time_1, ended_at: end_time_1)
+DealVenue.create(id: '1022', deal_id: 1008, venue_id: 1003)
+
+# Seed Deal Data for jkcheong92@gmail.com
+start_date = '01-01-2015'.to_date
+end_date = '24-04-2015'.to_date
+Deal.new(id: '1009', title: '18 Chefs SG50 Set Meal 1 For 1', redeemable: true, multiple_use: true, type_of_deal: 'Freebies',
+         description: 'Open Heart Surgery Fried Rice (for 4), Black Beauty, Peach in a Jar, Homemade Ice Lemon Tea x4 buy 1 get 1 free!',
+         start_date: start_date, expiry_date: end_date, t_c: 'Not valid for Eighteen Chefs employees & their families. Dine in only',
+         pushed: true, merchant_id: 1002, active: true, num_of_redeems: 0).save(validate: false)
+DealDay.new(id: '1016', deal_id: 1009, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
+DealTime.create(id: '1016', deal_day_id: 1016, started_at:start_time_1, ended_at: end_time_1)
+DealVenue.create(id: '1023', deal_id: 1009, venue_id: 1004)
+DealVenue.create(id: '1024', deal_id: 1009, venue_id: 1005)
+DealVenue.create(id: '1025', deal_id: 1009, venue_id: 1006)
+DealVenue.create(id: '1026', deal_id: 1009, venue_id: 1007)
+
+start_date = '01-03-2015'.to_date
+end_date = '24-08-2015'.to_date
+Deal.new(id: '1010', title: 'Student/NSmen Meal Avaliable Any Time And Day', redeemable: true, multiple_use: true, type_of_deal: 'Discount',
+         description: 'Pasta/Cheese Baked Rice. Choose from Step 3A, B, C or D. Ice Lemon Tea. Ice Cream. Student from $6.40! NSmen From $7.40',
+         start_date: start_date, expiry_date: end_date, t_c: 'Valid only when in uniform or 11B/Student ID presented',
+         pushed: true, merchant_id: 1002, active: true, num_of_redeems: 0).save(validate: false)
+DealDay.new(id: '1017', deal_id: 1010, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
+DealTime.create(id: '1017', deal_day_id: 1017, started_at:start_time_1, ended_at: end_time_1)
+DealVenue.create(id: '1027', deal_id: 1010, venue_id: 1004)
+DealVenue.create(id: '1028', deal_id: 1010, venue_id: 1005)
+DealVenue.create(id: '1029', deal_id: 1010, venue_id: 1006)
+DealVenue.create(id: '1030', deal_id: 1010, venue_id: 1007)
+
+start_date = '01-03-2015'.to_date
+end_date = '01-12-2015'.to_date
+Deal.new(id: '1011', title: 'We Love Students, NSmen & Senior Citizens', redeemable: true, multiple_use: true, type_of_deal: 'Discount',
+         description: '$2 Discount for Students, NSmen and Seniors (Aged 55 and above) for our All Time Favourites!',
+         start_date: start_date, expiry_date: end_date,
+         t_c: 'Valid Verification must be presented upon request. Not applicable to student/NSmen meals and other promotional items',
+         pushed: true, merchant_id: 1002, active: true, num_of_redeems: 0).save(validate: false)
+DealDay.new(id: '1018', deal_id: 1011, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
+DealTime.create(id: '1018', deal_day_id: 1018, started_at:start_time_1, ended_at: end_time_1)
+DealVenue.create(id: '1031', deal_id: 1011, venue_id: 1004)
+DealVenue.create(id: '1032', deal_id: 1011, venue_id: 1005)
+DealVenue.create(id: '1033', deal_id: 1011, venue_id: 1006)
+DealVenue.create(id: '1034', deal_id: 1011, venue_id: 1007)
 
 # Seed User Query Table
 UserQuery.create(id: '1000', query: 'lunch', num_count: '1921', query_type: 'DealsFeed', created_at: Date.today.beginning_of_day)
