@@ -38,12 +38,35 @@ merchant.password_confirmation = '12345678'
 merchant.total_points = 0
 merchant.save
 
-merchant = Merchant.new(id: '1002')
+merchant = Merchant.new(id: '1003')
 merchant.email = 'junwen29@gmail.com'
 merchant.password = '12345678'
 merchant.password_confirmation = '12345678'
 merchant.total_points = 0
 merchant.save
+
+# Seed payments
+start_date = '01-05-2015'.to_date
+end_date = '01-05-2016'.to_date
+Payment.create(id: '1000', start_date: start_date, expiry_date: end_date, total_cost: 540, add_on1: true, add_on2: true,
+               add_on3: true, plan1: true, paid: true, merchant_id: '1000', months: 12)
+PlanPayment.create(id: '1000', plan_id: 1, payment_id: 1000)
+AddOnPayment.create(id: '1000', add_on_id: 1, payment_id: 1000)
+AddOnPayment.create(id: '1001', add_on_id: 2, payment_id: 1000)
+AddOnPayment.create(id: '1002', add_on_id: 3, payment_id: 1000)
+
+start_date = '01-09-2015'.to_date
+end_date = '01-12-2015'.to_date
+Payment.create(id: '1001', start_date: start_date, expiry_date: end_date, total_cost: 90, add_on1: false, add_on2: false,
+               add_on3: false, plan1: true, paid: true, merchant_id: '1001', months: 3)
+PlanPayment.create(id: '1001', plan_id: 1, payment_id: 1001)
+
+start_date = '01-08-2015'.to_date
+end_date = '01-12-2015'.to_date
+Payment.create(id: '1002', start_date: start_date, expiry_date: end_date, total_cost: 140, add_on1: true, add_on2: false,
+               add_on3: false, plan1: true, paid: true, merchant_id: '1002', months: 4)
+PlanPayment.create(id: '1002', plan_id: 1, payment_id: 1002)
+AddOnPayment.create(id: '1003', add_on_id: 1, payment_id: 1002)
 
 # Seed User Query Table
 UserQuery.create(id: '1000', query: 'lunch', num_count: '1921', query_type: 'DealsFeed', created_at: Date.today.beginning_of_day)
