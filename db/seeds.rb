@@ -16,6 +16,35 @@ Payment.new(id: '100', start_date: '2015-10-01', expiry_date: '2015-12-01', tota
 PlanPayment.create(id: '100', plan_id: '100', payment_id: '100', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
 AddOnPayment.create(id: '100', add_on_id: '100', payment_id: '100', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
 
+# Seed Merchant
+merchant = Merchant.new(id: '1000')
+merchant.email = 'amazingcoders8mc@gmail.com'
+merchant.password = 'burppleadmin'
+merchant.password_confirmation = 'burppleadmin'
+merchant.total_points = 0
+merchant.save
+
+merchant = Merchant.new(id: '1001')
+merchant.email = 'woonyong92@gmail.com'
+merchant.password = '12345678'
+merchant.password_confirmation = '12345678'
+merchant.total_points = 0
+merchant.save
+
+merchant = Merchant.new(id: '1002')
+merchant.email = 'jkcheong92@gmail.com'
+merchant.password = '12345678'
+merchant.password_confirmation = '12345678'
+merchant.total_points = 0
+merchant.save
+
+merchant = Merchant.new(id: '1002')
+merchant.email = 'junwen29@gmail.com'
+merchant.password = '12345678'
+merchant.password_confirmation = '12345678'
+merchant.total_points = 0
+merchant.save
+
 # Seed User Query Table
 UserQuery.create(id: '1000', query: 'lunch', num_count: '1921', query_type: 'DealsFeed', created_at: Date.today.beginning_of_day)
 UserQuery.create(id: '1001', query: 'dinner', num_count: '2895', query_type: 'DealsFeed', created_at: Date.today.beginning_of_day)
