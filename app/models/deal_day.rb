@@ -12,4 +12,35 @@ class DealDay < ActiveRecord::Base
         !(mon || tue ||wed || thur || fri || sat || sun)
   end
 
+  #check if day matches any of the deal's day, pass in a day string
+  def check_day(day)
+    day_string = day.to_s.downcase
+    valid = false
+    case day_string
+      when 'mon'
+        valid = self.mon
+
+      when 'tue'
+        valid = self.tue
+
+      when 'wed'
+        valid = self.wed
+
+      when 'thu'
+        valid = self.thur
+
+      when 'fri'
+        valid = self.fri
+
+      when 'sat'
+        valid = self.sat
+
+      when 'sun'
+        valid = self.sun
+    end
+
+    return valid
+
+  end
+
 end
