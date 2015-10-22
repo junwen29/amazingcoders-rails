@@ -81,3 +81,6 @@ gem "gcm"
 # Cloudinary Image Hosting gem
 gem 'cloudinary'
 gem 'attachinary'
+
+# testing purpose
+gem 'rspec-rails'
