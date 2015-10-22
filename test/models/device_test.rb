@@ -2,6 +2,14 @@ require 'test_helper'
 
 class DeviceTest < ActiveSupport::TestCase
 
+  #========================== test positive ========================
+
+  test "save device" do
+    device = Device.new(:user_id => "999",:token =>"DeviceTest", :device_type => "android_gcm")
+    assert device.save
+  end
+
+  #=========================== test negative ========================
   test "should not save device without device type" do
     device = Device.new
     assert_no device.save
