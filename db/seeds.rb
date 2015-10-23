@@ -10,11 +10,9 @@ AddOn.create(id: '3', name: 'Aggregate Trends', cost: '5', description: 'See pop
 
 
 # For payment analytics
-Plan.create(id: '100', name: 'Reservations', cost: '45', description: 'Test payment analytics', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
-AddOn.create(id: '100', payment_id: '100', plan_id: '100', name: 'Reservation Notifications', cost: '10', description: 'Test payment analytics', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
-Payment.new(id: '100', start_date: '2015-10-01', expiry_date: '2015-12-01', total_cost: '110.00', add_on1: false, add_on2: false, add_on3: false, plan1: false, paid: true, created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00', merchant_id: '2', months: '2').save(validate: false)
-PlanPayment.create(id: '100', plan_id: '100', payment_id: '100', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
-AddOnPayment.create(id: '100', add_on_id: '100', payment_id: '100', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
+Plan.create(id: '1000', name: 'Reservations', cost: '45', description: 'Test payment analytics', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
+AddOn.create(id: '1000', plan_id: '1000', name: 'Reservation Notifications', cost: '10', description: 'Reservation Notification', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
+AddOn.create(id: '1001', plan_id: '1000', name: 'Reservation Statistics', cost: '10', description: 'Reservation Statistics', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
 
 # Seed Merchant
 merchant = Merchant.new(id: '1000')
@@ -45,6 +43,17 @@ merchant.password_confirmation = '12345678'
 merchant.total_points = 0
 merchant.save
 
+merchant_id = 1004
+while merchant_id < 1100
+  merchant = Merchant.new(id: merchant_id)
+  merchant.email = merchant_id.to_s + '@gmail.com'
+  merchant.password = '12345678'
+  merchant.password_confirmation = '12345678'
+  merchant.total_points = 0
+  merchant.save
+  merchant_id = merchant_id + 1
+end
+
 # Seed payments and associated tables
 start_date = '01-05-2015'.to_date
 end_date = '01-05-2016'.to_date
@@ -67,6 +76,42 @@ Payment.new(id: '1002', start_date: start_date, expiry_date: end_date, total_cos
                add_on3: false, plan1: true, paid: true, merchant_id: '1002', months: 4).save(validate: false)
 PlanPayment.create(id: '1002', plan_id: 1, payment_id: 1002)
 AddOnPayment.create(id: '1003', add_on_id: 1, payment_id: 1002)
+
+start_date = '01-12-2014'.to_date
+end_date = start_date + 1.months
+payment_id = 1003
+merchant_id = 1004
+plan_payment_id = 1003
+add_on_payment_id = 1004
+while payment_id < 1050
+  Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '110.00', add_on1: false, add_on2: false, add_on3: false, plan1: false, paid: true, created_at: start_date, updated_at: '2015-10-01 00:00:00', merchant_id: merchant_id, months: 1).save(validate: false)
+  PlanPayment.create(id: plan_payment_id, plan_id: '1000', payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
+  AddOnPayment.create(id: add_on_payment_id, add_on_id: '1000', payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
+  add_on_payment_id = add_on_payment_id + 1
+  AddOnPayment.create(id: add_on_payment_id, add_on_id: '1001', payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
+  if payment_id%10 == 0
+    start_date = end_date
+    end_date = end_date + 1.months
+  end
+  payment_id = payment_id + 1
+  merchant_id = merchant_id + 1
+  plan_payment_id = plan_payment_id + 1
+  add_on_payment_id = add_on_payment_id + 1
+end
+
+while payment_id <= 1100
+  Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '110.00', add_on1: false, add_on2: false, add_on3: false, plan1: false, paid: true, created_at: start_date, updated_at: '2015-10-01 00:00:00', merchant_id: merchant_id, months: 1).save(validate: false)
+  PlanPayment.create(id: plan_payment_id, plan_id: '1000', payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
+  AddOnPayment.create(id: add_on_payment_id, add_on_id: '1000', payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
+  if payment_id%10 == 0
+    start_date = end_date
+    end_date = end_date + 1.months
+  end
+  payment_id = payment_id + 1
+  merchant_id = merchant_id + 1
+  plan_payment_id = plan_payment_id + 1
+  add_on_payment_id = add_on_payment_id + 1
+end
 
 # Seed venues
 # For amazingcoders8mc@gmail.com
