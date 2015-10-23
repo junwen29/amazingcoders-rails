@@ -4,7 +4,7 @@ class MerchantTest < ActiveSupport::TestCase
 
   #========================== test positive ========================
   test "register merchant" do
-    assert User.create! :name => 'John Doe', :email => 'john@gmail.com',
+    assert Merchant.create! :email => 'john@gmail.com',
                         :password => 'topsecret', :password_confirmation => 'topsecret'
   end
 
@@ -13,13 +13,15 @@ class MerchantTest < ActiveSupport::TestCase
   test "should not save merchant if email is not unique" do
     merchant_one = Merchant.new
     merchant_one.email = 'test@example.com'
-    merchant_one.encrypted_password = '#$taawktljasktlw4aaglj'
+    merchant_one.password = 'topsecret'
+    merchant_one.password_confirmation = 'topsecret'
     assert merchant_one.save!
 
     merchant_two = Merchant.new
-    merchant_one.email = 'test@example.com'
-    merchant_two.encrypted_password = '#$taawktljasktlw4aaglj'
-    assert_no merchant_two.save!
+    merchant_two.email = 'test@example.com'
+    merchant_two.password = 'topsecret'
+    merchant_two.password_confirmation = 'topsecret'
+    assert_not merchant_two.save!
   end
 
 end
