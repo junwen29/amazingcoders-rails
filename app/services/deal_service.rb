@@ -88,7 +88,7 @@ class DealService
     end
 
     def get_all_venues (deal_id)
-      Venue.joins(:deal_venues).where('deal_venues.deal_id' => deal_id)
+      Venue.joins(:deal_venues).where('deal_venues.deal_id' => deal_id).order(name: :asc)
     end
 
     def count_all_active_deals()
