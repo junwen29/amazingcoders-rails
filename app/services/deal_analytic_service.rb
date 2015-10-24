@@ -49,7 +49,8 @@ class DealAnalyticService
       if deal_analytics.empty?
         DealAnalytic.create(deal_id: deal_id, view_count: 1)
       else
-        deal_view_count = deal_analytics.pluck(:view_count).to_param.to_i
+        # deal_analytics table set first then viewcount
+        deal_view_count = Viewcount.where(:deal_id => deal_id).count
         deal_id = deal_analytics.pluck(:id).to_param.to_i
         deal_view_count += increment
         deal_analytics.update(deal_id, {view_count: deal_view_count})
@@ -73,9 +74,9 @@ class DealAnalyticService
       if deal_analytics.empty?
         DealAnalytic.create(deal_id: deal_id, redemption_count: 1)
       else
-        deal_redemption_count = deal_analytics.pluck(:redemption_count).to_param.to_i
+        # Redemption table is set first then deal_analytics table
+        deal_redemption_count = Redemption.where(:deal_id => deal_id).count
         deal_id = deal_analytics.pluck(:id).to_param.to_i
-        deal_redemption_count += increment
         deal_analytics.update(deal_id, {redemption_count: deal_redemption_count})
       end
     end
