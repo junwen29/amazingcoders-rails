@@ -67,10 +67,8 @@ while merchant_id < 1010
   AddOnPayment.create(id: add_on_payment_id, add_on_id: 1000, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
   add_on_payment_id = add_on_payment_id + 1
   AddOnPayment.create(id: add_on_payment_id, add_on_id: 1001, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
-  if merchant_id%rand(2..3) == 0
-    start_date = end_date
-    end_date = end_date + 1.months
-  end
+  start_date = end_date
+  end_date = end_date + 1.months
   payment_id = payment_id + 1
   merchant_id = merchant_id + 1
   plan_payment_id = plan_payment_id + 1
@@ -177,19 +175,25 @@ Venue.create(id: '1003', name: 'Reedz Cafe', street: '15 Kent Ridge Drive', zipc
 Venue.create(id: '1004', name: 'Eighteen Chefs @ Bukit Panjang', street: '1 Jelebu Road', zipcode: '677743', city: 'Singapore',
              state: 'Singapore', country: 'Singapore', neighbourhood: 'Bukit Panjang',
              bio: 'Here at Eighteen Chefs, we strive to provide our customers with good quality food at an affordable price',
-             phone: '67670557',  address_2: '#02-19', merchant_id: 1002)
+             phone: '67670557', address_2: '#02-19', merchant_id: 1002)
 Venue.create(id: '1005', name: 'Eighteen Chefs @ Ang Mo Kio', street: '53 Ang Mo Kio Avenue 3', zipcode: '677743', city: 'Singapore',
              state: 'Singapore', country: 'Singapore', neighbourhood: 'Ang Mo Kio',
              bio: 'Here at Eighteen Chefs, we strive to provide our customers with good quality food at an affordable price',
-             phone: '64817625',  address_2: '#04-02', merchant_id: 1002)
+             phone: '64817625', address_2: '#04-02', merchant_id: 1002)
 Venue.create(id: '1006', name: 'Eighteen Chefs @ Bugis', street: '200 Victoria Street', zipcode: '188021', city: 'Singapore',
              state: 'Singapore', country: 'Singapore', neighbourhood: 'Bugis',
              bio: 'Here at Eighteen Chefs, we strive to provide our customers with good quality food at an affordable price',
-             phone: '67349741',  address_2: '#04-06', merchant_id: 1002)
+             phone: '67349741', address_2: '#04-06', merchant_id: 1002)
 Venue.create(id: '1007', name: 'Eighteen Chefs @ Simei', street: '3 Simei Street 6', zipcode: '528833', city: 'Singapore',
              state: 'Singapore', country: 'Singapore', neighbourhood: 'Simei',
              bio: 'Here at Eighteen Chefs, we strive to provide our customers with good quality food at an affordable price',
-             phone: '67892852',  address_2: '#01-12', merchant_id: 1002)
+             phone: '67892852', address_2: '#01-12', merchant_id: 1002)
+
+# For testing merchant
+Venue.create(id: '1008', name: 'Food for Life', street: '181 Orchard Rd', zipcode: '238896', city: 'Singapore',
+             state: 'Singapore', country: 'Singapore', neighbourhood: 'Orchard',
+             bio: 'A savoury twist to Singapore food scene focused on affordable but quality experience',
+             phone: '65095895', address_2: '#08-08', merchant_id: 1004)
 
 # Seed Deals and it's related tables
 start_time_1 = Time.at(36000).utc.strftime("%H:%M:%S")
@@ -205,8 +209,8 @@ Deal.new(id: '1000', title: 'Yangpa Bomb Introductory Promo', redeemable: false,
          t_c: 'While stock last!', pushed: false, merchant_id: 1000, active: true, num_of_redeems: 0).save(validate: false)
 DealDay.new(id: '1000', deal_id: 1000, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
 DealDay.new(id: '1001', deal_id: 1000, mon: false, tue: false, wed: false, thur: false, fri: false, sat: true, sun: true).save(validate: false)
-DealTime.create(id: '1000', deal_day_id: 1000, started_at:start_time_1, ended_at: end_time_1)
-DealTime.create(id: '1001', deal_day_id: 1001, started_at:start_time_2, ended_at: end_time_2)
+DealTime.create(id: '1000', deal_day_id: 1000, started_at: start_time_1, ended_at: end_time_1)
+DealTime.create(id: '1001', deal_day_id: 1001, started_at: start_time_2, ended_at: end_time_2)
 DealVenue.create(id: '1000', deal_id: 1000, venue_id: 1000)
 DealVenue.create(id: '1001', deal_id: 1000, venue_id: 1001)
 DealVenue.create(id: '1002', deal_id: 1000, venue_id: 1002)
@@ -218,8 +222,8 @@ Deal.new(id: '1001', title: '1 For 1 Chicken Up Wings and Korean Bingsu', redeem
          t_c: 'While stock last!', pushed: false, merchant_id: 1000, active: true, num_of_redeems: 0).save(validate: false)
 DealDay.new(id: '1002', deal_id: 1001, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
 DealDay.new(id: '1003', deal_id: 1001, mon: false, tue: false, wed: false, thur: false, fri: false, sat: true, sun: true).save(validate: false)
-DealTime.create(id: '1002', deal_day_id: 1002, started_at:start_time_1, ended_at: end_time_1)
-DealTime.create(id: '1003', deal_day_id: 1003, started_at:start_time_2, ended_at: end_time_2)
+DealTime.create(id: '1002', deal_day_id: 1002, started_at: start_time_1, ended_at: end_time_1)
+DealTime.create(id: '1003', deal_day_id: 1003, started_at: start_time_2, ended_at: end_time_2)
 DealVenue.create(id: '1003', deal_id: 1001, venue_id: 1000)
 DealVenue.create(id: '1004', deal_id: 1001, venue_id: 1001)
 DealVenue.create(id: '1005', deal_id: 1001, venue_id: 1002)
@@ -231,8 +235,8 @@ Deal.new(id: '1002', title: '1 Free Soju Cocktails for every Main Meal Purchased
          t_c: 'Deal must be redeemed via Burpple! Only valid for 18 and above', pushed: false, merchant_id: 1000, active: true, num_of_redeems: 0).save(validate: false)
 DealDay.new(id: '1004', deal_id: 1002, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
 DealDay.new(id: '1005', deal_id: 1002, mon: false, tue: false, wed: false, thur: false, fri: false, sat: true, sun: true).save(validate: false)
-DealTime.create(id: '1004', deal_day_id: 1004, started_at:start_time_1, ended_at: end_time_1)
-DealTime.create(id: '1005', deal_day_id: 1005, started_at:start_time_2, ended_at: end_time_2)
+DealTime.create(id: '1004', deal_day_id: 1004, started_at: start_time_1, ended_at: end_time_1)
+DealTime.create(id: '1005', deal_day_id: 1005, started_at: start_time_2, ended_at: end_time_2)
 DealVenue.create(id: '1006', deal_id: 1002, venue_id: 1000)
 DealVenue.create(id: '1007', deal_id: 1002, venue_id: 1001)
 DealVenue.create(id: '1008', deal_id: 1002, venue_id: 1002)
@@ -244,8 +248,8 @@ Deal.new(id: '1003', title: '4pcs Fried Chicken @ $8.00', redeemable: true, mult
          t_c: 'Deal must be redeemed via Burpple!', pushed: false, merchant_id: 1000, active: true, num_of_redeems: 0).save(validate: false)
 DealDay.new(id: '1006', deal_id: 1003, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
 DealDay.new(id: '1007', deal_id: 1003, mon: false, tue: false, wed: false, thur: false, fri: false, sat: true, sun: true).save(validate: false)
-DealTime.create(id: '1006', deal_day_id: 1006, started_at:start_time_1, ended_at: end_time_1)
-DealTime.create(id: '1007', deal_day_id: 1007, started_at:start_time_2, ended_at: end_time_2)
+DealTime.create(id: '1006', deal_day_id: 1006, started_at: start_time_1, ended_at: end_time_1)
+DealTime.create(id: '1007', deal_day_id: 1007, started_at: start_time_2, ended_at: end_time_2)
 DealVenue.create(id: '1009', deal_id: 1003, venue_id: 1000)
 DealVenue.create(id: '1010', deal_id: 1003, venue_id: 1001)
 DealVenue.create(id: '1011', deal_id: 1003, venue_id: 1002)
@@ -258,8 +262,8 @@ Deal.new(id: '1004', title: '50% OFF Ganjang, Yanguyum Wings and Soju Cocktails!
          merchant_id: 1000, active: true, num_of_redeems: 0).save(validate: false)
 DealDay.new(id: '1008', deal_id: 1004, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
 DealDay.new(id: '1009', deal_id: 1004, mon: false, tue: false, wed: false, thur: false, fri: false, sat: true, sun: true).save(validate: false)
-DealTime.create(id: '1008', deal_day_id: 1008, started_at:start_time_1, ended_at: end_time_1)
-DealTime.create(id: '1009', deal_day_id: 1009, started_at:start_time_2, ended_at: end_time_2)
+DealTime.create(id: '1008', deal_day_id: 1008, started_at: start_time_1, ended_at: end_time_1)
+DealTime.create(id: '1009', deal_day_id: 1009, started_at: start_time_2, ended_at: end_time_2)
 DealVenue.create(id: '1012', deal_id: 1004, venue_id: 1000)
 DealVenue.create(id: '1013', deal_id: 1004, venue_id: 1001)
 DealVenue.create(id: '1014', deal_id: 1004, venue_id: 1002)
@@ -272,8 +276,8 @@ Deal.new(id: '1005', title: 'Citibank Card Holders enjoy 10% Off', redeemable: t
          merchant_id: 1000, active: false, num_of_redeems: 0).save(validate: false)
 DealDay.new(id: '1010', deal_id: 1005, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
 DealDay.new(id: '1011', deal_id: 1005, mon: false, tue: false, wed: false, thur: false, fri: false, sat: true, sun: true).save(validate: false)
-DealTime.create(id: '1010', deal_day_id: 1010, started_at:start_time_1, ended_at: end_time_1)
-DealTime.create(id: '1011', deal_day_id: 1011, started_at:start_time_2, ended_at: end_time_2)
+DealTime.create(id: '1010', deal_day_id: 1010, started_at: start_time_1, ended_at: end_time_1)
+DealTime.create(id: '1011', deal_day_id: 1011, started_at: start_time_2, ended_at: end_time_2)
 DealVenue.create(id: '1015', deal_id: 1005, venue_id: 1000)
 DealVenue.create(id: '1016', deal_id: 1005, venue_id: 1001)
 DealVenue.create(id: '1017', deal_id: 1005, venue_id: 1002)
@@ -287,8 +291,8 @@ Deal.new(id: '1006', title: 'ONLY $9.90 Off Authentic Korean Half Chicken For 2,
          active: false, num_of_redeems: 0).save(validate: false)
 DealDay.new(id: '1012', deal_id: 1006, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
 DealDay.new(id: '1013', deal_id: 1006, mon: false, tue: false, wed: false, thur: false, fri: false, sat: true, sun: true).save(validate: false)
-DealTime.create(id: '1012', deal_day_id: 1012, started_at:start_time_1, ended_at: end_time_1)
-DealTime.create(id: '1013', deal_day_id: 1013, started_at:start_time_2, ended_at: end_time_2)
+DealTime.create(id: '1012', deal_day_id: 1012, started_at: start_time_1, ended_at: end_time_1)
+DealTime.create(id: '1013', deal_day_id: 1013, started_at: start_time_2, ended_at: end_time_2)
 DealVenue.create(id: '1018', deal_id: 1006, venue_id: 1000)
 DealVenue.create(id: '1019', deal_id: 1006, venue_id: 1001)
 DealVenue.create(id: '1020', deal_id: 1006, venue_id: 1002)
@@ -301,7 +305,7 @@ Deal.new(id: '1007', title: '10% Off Total Bill', redeemable: false, multiple_us
          t_c: 'Only for Dine in. Only valid for NUS Student or Staff', pushed: true, merchant_id: 1001, active: true,
          num_of_redeems: 0).save(validate: false)
 DealDay.new(id: '1014', deal_id: 1007, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
-DealTime.create(id: '1014', deal_day_id: 1014, started_at:start_time_1, ended_at: end_time_1)
+DealTime.create(id: '1014', deal_day_id: 1014, started_at: start_time_1, ended_at: end_time_1)
 DealVenue.create(id: '1021', deal_id: 1007, venue_id: 1003)
 
 start_date = '01-10-2015'.to_date
@@ -311,7 +315,7 @@ Deal.new(id: '1008', title: 'Citibank Card Holders enjoy 10% Off', redeemable: t
          t_c: 'Only for Dine in. Only valid for NUS Student or Staff', pushed: true, merchant_id: 1001, active: true,
          num_of_redeems: 0).save(validate: false)
 DealDay.new(id: '1015', deal_id: 1008, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
-DealTime.create(id: '1015', deal_day_id: 1015, started_at:start_time_1, ended_at: end_time_1)
+DealTime.create(id: '1015', deal_day_id: 1015, started_at: start_time_1, ended_at: end_time_1)
 DealVenue.create(id: '1022', deal_id: 1008, venue_id: 1003)
 
 # Seed Deal Data for jkcheong92@gmail.com
@@ -322,7 +326,7 @@ Deal.new(id: '1009', title: '18 Chefs SG50 Set Meal 1 For 1', redeemable: true, 
          start_date: start_date, expiry_date: end_date, t_c: 'Not valid for Eighteen Chefs employees & their families. Dine in only',
          pushed: true, merchant_id: 1002, active: true, num_of_redeems: 0).save(validate: false)
 DealDay.new(id: '1016', deal_id: 1009, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
-DealTime.create(id: '1016', deal_day_id: 1016, started_at:start_time_1, ended_at: end_time_1)
+DealTime.create(id: '1016', deal_day_id: 1016, started_at: start_time_1, ended_at: end_time_1)
 DealVenue.create(id: '1023', deal_id: 1009, venue_id: 1004)
 DealVenue.create(id: '1024', deal_id: 1009, venue_id: 1005)
 DealVenue.create(id: '1025', deal_id: 1009, venue_id: 1006)
@@ -335,7 +339,7 @@ Deal.new(id: '1010', title: 'Student/NSmen Meal Avaliable Any Time And Day', red
          start_date: start_date, expiry_date: end_date, t_c: 'Valid only when in uniform or 11B/Student ID presented',
          pushed: true, merchant_id: 1002, active: true, num_of_redeems: 0).save(validate: false)
 DealDay.new(id: '1017', deal_id: 1010, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
-DealTime.create(id: '1017', deal_day_id: 1017, started_at:start_time_1, ended_at: end_time_1)
+DealTime.create(id: '1017', deal_day_id: 1017, started_at: start_time_1, ended_at: end_time_1)
 DealVenue.create(id: '1027', deal_id: 1010, venue_id: 1004)
 DealVenue.create(id: '1028', deal_id: 1010, venue_id: 1005)
 DealVenue.create(id: '1029', deal_id: 1010, venue_id: 1006)
@@ -349,11 +353,54 @@ Deal.new(id: '1011', title: 'We Love Students, NSmen & Senior Citizens', redeema
          t_c: 'Valid Verification must be presented upon request. Not applicable to student/NSmen meals and other promotional items',
          pushed: true, merchant_id: 1002, active: true, num_of_redeems: 0).save(validate: false)
 DealDay.new(id: '1018', deal_id: 1011, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
-DealTime.create(id: '1018', deal_day_id: 1018, started_at:start_time_1, ended_at: end_time_1)
+DealTime.create(id: '1018', deal_day_id: 1018, started_at: start_time_1, ended_at: end_time_1)
 DealVenue.create(id: '1031', deal_id: 1011, venue_id: 1004)
 DealVenue.create(id: '1032', deal_id: 1011, venue_id: 1005)
 DealVenue.create(id: '1033', deal_id: 1011, venue_id: 1006)
 DealVenue.create(id: '1034', deal_id: 1011, venue_id: 1007)
+
+Deal.new(id: '1012', title: 'Free pizza with every set meal purchased', redeemable: true, multiple_use: true, type_of_deal: 'Freebies',
+         description: 'Get a Free  Gourment Pizza for every set meal purchased', start_date: start_date, expiry_date: end_date,
+         t_c: 'Valid through Burpple only. One redeem per table', pushed: true, merchant_id: 1004, active: true, num_of_redeems: 0).save(validate: false)
+DealDay.new(id: '1020', deal_id: 1012, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
+DealTime.create(id: '1020', deal_day_id: 1020, started_at: start_time_1, ended_at: end_time_1)
+DealVenue.create(id: '1036', deal_id: 1012, venue_id: 1008)
+
+Deal.new(id: '1013', title: 'Enjoy a Matsuri Treat Every WeekDay', redeemable: true, multiple_use: true, type_of_deal: 'Discount',
+         description: 'Get Up to 50% off all Items', start_date: start_date, expiry_date: end_date,
+         t_c: 'Valid through Burpple only.', pushed: true, merchant_id: 1004, active: true, num_of_redeems: 0).save(validate: false)
+DealDay.new(id: '1021', deal_id: 1013, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
+DealTime.create(id: '1021', deal_day_id: 1021, started_at: start_time_1, ended_at: end_time_1)
+DealVenue.create(id: '1037', deal_id: 1013, venue_id: 1008)
+
+Deal.new(id: '1014', title: 'All you can eat high tea', redeemable: true, multiple_use: true, type_of_deal: 'Discount',
+         description: 'Get Up to 50% off all Items', start_date: start_date, expiry_date: end_date,
+         t_c: 'Valid through Burpple only.', pushed: true, merchant_id: 1004, active: true, num_of_redeems: 0).save(validate: false)
+DealDay.new(id: '1022', deal_id: 1014, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
+DealTime.create(id: '1022', deal_day_id: 1022, started_at: start_time_1, ended_at: end_time_1)
+DealVenue.create(id: '1038', deal_id: 1014, venue_id: 1008)
+
+Deal.new(id: '1015', title: 'Buy one set meal get another set meal for Free', redeemable: true, multiple_use: true, type_of_deal: 'Freebies',
+         description: 'Get a set meal free with every other set meal purchased', start_date: start_date, expiry_date: end_date,
+         t_c: 'Valid through Burpple only.', pushed: true, merchant_id: 1004, active: true, num_of_redeems: 0).save(validate: false)
+DealDay.new(id: '1023', deal_id: 1015, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
+DealTime.create(id: '1023', deal_day_id: 1023, started_at: start_time_1, ended_at: end_time_1)
+DealVenue.create(id: '1039', deal_id: 1015, venue_id: 1008)
+
+Deal.new(id: '1016', title: '$2.70 For choice of Frosty Mint or Crunch Toffee Nut Frappe', redeemable: true, multiple_use: true, type_of_deal: 'Discount',
+         description: 'Limited time only', start_date: start_date, expiry_date: end_date,
+         t_c: 'Valid through Burpple only.', pushed: true, merchant_id: 1004, active: true, num_of_redeems: 0).save(validate: false)
+DealDay.new(id: '1024', deal_id: 1016, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
+DealTime.create(id: '1024', deal_day_id: 1024, started_at: start_time_1, ended_at: end_time_1)
+DealVenue.create(id: '1040', deal_id: 1016, venue_id: 1008)
+
+Deal.new(id: '1017', title: '$14 for FishHead Curry wotth $26', redeemable: true, multiple_use: true, type_of_deal: 'Discount',
+         description: 'Limited time only', start_date: start_date, expiry_date: end_date,
+         t_c: 'Valid through Burpple only.', pushed: true, merchant_id: 1004, active: true, num_of_redeems: 0).save(validate: false)
+DealDay.new(id: '1025', deal_id: 1017, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
+DealTime.create(id: '1025', deal_day_id: 1025, started_at: start_time_1, ended_at: end_time_1)
+DealVenue.create(id: '1041', deal_id: 1017, venue_id: 1008)
+
 
 # Seed User Query Table
 UserQuery.create(id: '1000', query: 'lunch', num_count: '1921', query_type: 'DealsFeed', created_at: Date.today.beginning_of_day)
@@ -406,7 +453,7 @@ redemption = 1000
 start_date = DateTime.parse("2015-10-01 00:00:00")
 end_date = DateTime.parse("2015-10-20 00:00:00")
 while start_date <= end_date
-  limit = redemption + rand(0..30)
+  limit = redemption + rand(rand(10..30)..rand(60..100))
   venue_id = rand(1000..1002)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1001, user_id: redemption, venue_id: venue_id, created_at: start_date)
@@ -420,7 +467,7 @@ starting_view_count = view_count
 start_date = DateTime.parse("2015-09-27 00:00:00")
 end_date = DateTime.parse("2015-10-20 00:00:00")
 while start_date <= end_date
-  limit = view_count + rand(20..40)
+  limit = view_count + rand(rand(50..90)..rand(100..150))
   while view_count < limit
     Viewcount.create(id: view_count, deal_id: 1001, user_id: view_count, created_at: start_date)
     view_count = view_count + 1
@@ -436,7 +483,7 @@ starting_redemption = redemption
 start_date = DateTime.parse("2015-10-10 00:00:00")
 end_date = DateTime.parse("2015-12-01 00:00:00")
 while start_date <= end_date
-  limit = redemption + rand(0..30)
+  limit = redemption + rand(0..rand(5..50))
   venue_id = rand(1000..1002)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1002, user_id: redemption, venue_id: venue_id, created_at: start_date)
@@ -447,10 +494,10 @@ end
 num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
-start_date = DateTime.parse("2015-09-25 00:00:00")
+start_date = DateTime.parse("2015-10-07 00:00:00")
 end_date = DateTime.parse("2015-12-01 00:00:00")
 while start_date <= end_date
-  limit = view_count + rand(20..40)
+  limit = view_count + rand(rand(50..55)..rand(60..120))
   while view_count < limit
     Viewcount.create(id: view_count, deal_id: 1002, user_id: view_count, created_at: start_date)
     view_count = view_count + 1
@@ -466,7 +513,7 @@ starting_redemption = redemption
 start_date = DateTime.parse("2015-10-15 00:00:00")
 end_date = DateTime.parse("2015-12-01 00:00:00")
 while start_date <= end_date
-  limit = redemption + rand(0..30)
+  limit = redemption + rand(0..rand(10..50))
   venue_id = rand(1000..1002)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1003, user_id: redemption, venue_id: venue_id, created_at: start_date)
@@ -477,10 +524,10 @@ end
 num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
-start_date = DateTime.parse("2015-10-01 00:00:00")
+start_date = DateTime.parse("2015-10-12 00:00:00")
 end_date = DateTime.parse("2015-12-01 00:00:00")
 while start_date <= end_date
-  limit = view_count + rand(20..40)
+  limit = view_count + rand(rand(20..30)..rand(60..100))
   while view_count < limit
     Viewcount.create(id: view_count, deal_id: 1003, user_id: view_count, created_at: start_date)
     view_count = view_count + 1
@@ -496,7 +543,7 @@ starting_redemption = redemption
 start_date = DateTime.parse("2015-10-19 00:00:00")
 end_date = DateTime.parse("2015-12-01 00:00:00")
 while start_date <= end_date
-  limit = redemption + rand(0..30)
+  limit = redemption + rand(0..rand(0..30))
   venue_id = rand(1000..1002)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1004, user_id: redemption, venue_id: venue_id, created_at: start_date)
@@ -507,10 +554,10 @@ end
 num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
-start_date = DateTime.parse("2015-10-01 00:00:00")
+start_date = DateTime.parse("2015-10-15 00:00:00")
 end_date = DateTime.parse("2015-12-01 00:00:00")
 while start_date <= end_date
-  limit = view_count + rand(20..40)
+  limit = view_count + rand(rand(10..30)..rand(40..50))
   while view_count < limit
     Viewcount.create(id: view_count, deal_id: 1004, user_id: view_count, created_at: start_date)
     view_count = view_count + 1
@@ -521,15 +568,15 @@ num_view_count = view_count - starting_view_count
 unique_view_count = num_view_count- rand(50..90)
 DealAnalytic.create(id: 1004, deal_id: 1004, view_count: num_view_count, unique_view_count: unique_view_count, redemption_count: num_redemption)
 
-# Seed DealAnalytics for View count for deal 1005
+# Seed DealAnalytics for View count for deal 1011
 starting_redemption = redemption
-start_date = DateTime.parse("2015-10-05 00:00:00")
-end_date = DateTime.parse("2015-10-11 00:00:00")
+start_date = DateTime.parse("2015-03-01 00:00:00")
+end_date = DateTime.parse("2015-12-01 00:00:00")
 while start_date <= end_date
   limit = redemption + rand(0..30)
   venue_id = rand(1000..1002)
   while redemption < limit
-    Redemption.create(id: redemption, deal_id: 1005, user_id: redemption, venue_id: venue_id, created_at: start_date)
+    Redemption.create(id: redemption, deal_id: 1011, user_id: redemption, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
   end
   start_date = start_date + 1
@@ -537,29 +584,30 @@ end
 num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
-start_date = DateTime.parse("2015-10-01 00:00:00")
-end_date = DateTime.parse("2015-10-11 00:00:00")
+start_date = DateTime.parse("2015-02-25 00:00:00")
+end_date = DateTime.parse("2015-12-01 00:00:00")
 while start_date <= end_date
   limit = view_count + rand(20..40)
   while view_count < limit
-    Viewcount.create(id: view_count, deal_id: 1005, user_id: view_count, created_at: start_date)
+    Viewcount.create(id: view_count, deal_id: 1011, user_id: view_count, created_at: start_date)
     view_count = view_count + 1
   end
   start_date = start_date + 1
 end
 num_view_count = view_count - starting_view_count
 unique_view_count = num_view_count- rand(50..90)
-DealAnalytic.create(id: 1005, deal_id: 1005, view_count: num_view_count, unique_view_count: unique_view_count, redemption_count: num_redemption)
+DealAnalytic.create(id: 1005, deal_id: 1011, view_count: num_view_count, unique_view_count: unique_view_count, redemption_count: num_redemption)
 
-# Seed DealAnalytics for View count for deal 1006
+
+venue_id = 1008
+# Seed DealAnalytics for View count for deal 1012
 starting_redemption = redemption
-start_date = DateTime.parse("2015-11-01 00:00:00")
+start_date = DateTime.parse("2015-03-01 00:00:00")
 end_date = DateTime.parse("2015-12-01 00:00:00")
 while start_date <= end_date
-  limit = redemption + rand(0..30)
-  venue_id = rand(1000..1002)
+  limit = redemption + rand(0..50)
   while redemption < limit
-    Redemption.create(id: redemption, deal_id: 1006, user_id: redemption, venue_id: venue_id, created_at: start_date)
+    Redemption.create(id: redemption, deal_id: 1012, user_id: redemption, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
   end
   start_date = start_date + 1
@@ -567,16 +615,161 @@ end
 num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
-start_date = DateTime.parse("2015-10-25 00:00:00")
+start_date = DateTime.parse("2015-02-25 00:00:00")
 end_date = DateTime.parse("2015-12-01 00:00:00")
 while start_date <= end_date
   limit = view_count + rand(20..40)
   while view_count < limit
-    Viewcount.create(id: view_count, deal_id: 1006, user_id: view_count, created_at: start_date)
+    Viewcount.create(id: view_count, deal_id: 1012, user_id: view_count, created_at: start_date)
     view_count = view_count + 1
   end
   start_date = start_date + 1
 end
 num_view_count = view_count - starting_view_count
 unique_view_count = num_view_count- rand(50..90)
-DealAnalytic.create(id: 1006, deal_id: 1006, view_count: num_view_count, unique_view_count: unique_view_count, redemption_count: num_redemption)
+DealAnalytic.create(id: 1006, deal_id: 1012, view_count: num_view_count, unique_view_count: unique_view_count, redemption_count: num_redemption)
+
+# Seed DealAnalytics for View count for deal 1013
+starting_redemption = redemption
+start_date = DateTime.parse("2015-03-01 00:00:00")
+end_date = DateTime.parse("2015-12-01 00:00:00")
+while start_date <= end_date
+  limit = redemption + rand(0..44)
+  while redemption < limit
+    Redemption.create(id: redemption, deal_id: 1013, user_id: redemption, venue_id: venue_id, created_at: start_date)
+    redemption = redemption + 1
+  end
+  start_date = start_date + 1
+end
+num_redemption = redemption - starting_redemption
+
+starting_view_count = view_count
+start_date = DateTime.parse("2015-02-25 00:00:00")
+end_date = DateTime.parse("2015-12-01 00:00:00")
+while start_date <= end_date
+  limit = view_count + rand(20..40)
+  while view_count < limit
+    Viewcount.create(id: view_count, deal_id: 1013, user_id: view_count, created_at: start_date)
+    view_count = view_count + 1
+  end
+  start_date = start_date + 1
+end
+num_view_count = view_count - starting_view_count
+unique_view_count = num_view_count- rand(50..90)
+DealAnalytic.create(id: 1007, deal_id: 1013, view_count: num_view_count, unique_view_count: unique_view_count, redemption_count: num_redemption)
+
+# Seed DealAnalytics for View count for deal 1014
+starting_redemption = redemption
+start_date = DateTime.parse("2015-03-01 00:00:00")
+end_date = DateTime.parse("2015-12-01 00:00:00")
+while start_date <= end_date
+  limit = redemption + rand(0..6)
+  while redemption < limit
+    Redemption.create(id: redemption, deal_id: 1014, user_id: redemption, venue_id: venue_id, created_at: start_date)
+    redemption = redemption + 1
+  end
+  start_date = start_date + 1
+end
+num_redemption = redemption - starting_redemption
+
+starting_view_count = view_count
+start_date = DateTime.parse("2015-02-25 00:00:00")
+end_date = DateTime.parse("2015-12-01 00:00:00")
+while start_date <= end_date
+  limit = view_count + rand(0..5)
+  while view_count < limit
+    Viewcount.create(id: view_count, deal_id: 1014, user_id: view_count, created_at: start_date)
+    view_count = view_count + 1
+  end
+  start_date = start_date + 1
+end
+num_view_count = view_count - starting_view_count
+unique_view_count = num_view_count- rand(50..90)
+DealAnalytic.create(id: 1008, deal_id: 1014, view_count: num_view_count, unique_view_count: unique_view_count, redemption_count: num_redemption)
+
+# Seed DealAnalytics for View count for deal 1015
+starting_redemption = redemption
+start_date = DateTime.parse("2015-03-01 00:00:00")
+end_date = DateTime.parse("2015-12-01 00:00:00")
+while start_date <= end_date
+  limit = redemption + rand(0..7)
+  while redemption < limit
+    Redemption.create(id: redemption, deal_id: 1015, user_id: redemption, venue_id: venue_id, created_at: start_date)
+    redemption = redemption + 1
+  end
+  start_date = start_date + 1
+end
+num_redemption = redemption - starting_redemption
+
+starting_view_count = view_count
+start_date = DateTime.parse("2015-02-25 00:00:00")
+end_date = DateTime.parse("2015-12-01 00:00:00")
+while start_date <= end_date
+  limit = view_count + rand(20..40)
+  while view_count < limit
+    Viewcount.create(id: view_count, deal_id: 1015, user_id: view_count, created_at: start_date)
+    view_count = view_count + 1
+  end
+  start_date = start_date + 1
+end
+num_view_count = view_count - starting_view_count
+unique_view_count = num_view_count- rand(50..90)
+DealAnalytic.create(id: 1009, deal_id: 1015, view_count: num_view_count, unique_view_count: unique_view_count, redemption_count: num_redemption)
+
+# Seed DealAnalytics for View count for deal 1016
+starting_redemption = redemption
+start_date = DateTime.parse("2015-03-01 00:00:00")
+end_date = DateTime.parse("2015-12-01 00:00:00")
+while start_date <= end_date
+  limit = redemption + rand(0..90)
+  while redemption < limit
+    Redemption.create(id: redemption, deal_id: 1016, user_id: redemption, venue_id: venue_id, created_at: start_date)
+    redemption = redemption + 1
+  end
+  start_date = start_date + 1
+end
+num_redemption = redemption - starting_redemption
+
+starting_view_count = view_count
+start_date = DateTime.parse("2015-02-25 00:00:00")
+end_date = DateTime.parse("2015-12-01 00:00:00")
+while start_date <= end_date
+  limit = view_count + rand(0..20)
+  while view_count < limit
+    Viewcount.create(id: view_count, deal_id: 1016, user_id: view_count, created_at: start_date)
+    view_count = view_count + 1
+  end
+  start_date = start_date + 1
+end
+num_view_count = view_count - starting_view_count
+unique_view_count = num_view_count- rand(50..90)
+DealAnalytic.create(id: 1010, deal_id: 1016, view_count: num_view_count, unique_view_count: unique_view_count, redemption_count: num_redemption)
+
+# Seed DealAnalytics for View count for deal 1017
+starting_redemption = redemption
+start_date = DateTime.parse("2015-03-01 00:00:00")
+end_date = DateTime.parse("2015-12-01 00:00:00")
+while start_date <= end_date
+  limit = redemption + rand(0..7)
+  while redemption < limit
+    Redemption.create(id: redemption, deal_id: 1017, user_id: redemption, venue_id: venue_id, created_at: start_date)
+    redemption = redemption + 1
+  end
+  start_date = start_date + 1
+end
+num_redemption = redemption - starting_redemption
+
+starting_view_count = view_count
+start_date = DateTime.parse("2015-02-25 00:00:00")
+end_date = DateTime.parse("2015-12-01 00:00:00")
+while start_date <= end_date
+  limit = view_count + rand(0..10)
+  while view_count < limit
+    Viewcount.create(id: view_count, deal_id: 1017, user_id: view_count, created_at: start_date)
+    view_count = view_count + 1
+  end
+  start_date = start_date + 1
+end
+num_view_count = view_count - starting_view_count
+unique_view_count = num_view_count- rand(50..90)
+DealAnalytic.create(id: 1011, deal_id: 1017, view_count: num_view_count, unique_view_count: unique_view_count, redemption_count: num_redemption)
