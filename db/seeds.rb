@@ -55,41 +55,19 @@ while merchant_id < 1100
 end
 
 # Seed payments and associated tables
-start_date = '01-05-2015'.to_date
-end_date = '01-05-2016'.to_date
-Payment.new(id: '1000', start_date: start_date, expiry_date: end_date, total_cost: 540, add_on1: true, add_on2: true,
-               add_on3: true, plan1: true, paid: true, merchant_id: '1000', months: 12).save(validate: false)
-PlanPayment.create(id: '1000', plan_id: 1, payment_id: 1000)
-AddOnPayment.create(id: '1000', add_on_id: 1, payment_id: 1000)
-AddOnPayment.create(id: '1001', add_on_id: 2, payment_id: 1000)
-AddOnPayment.create(id: '1002', add_on_id: 3, payment_id: 1000)
-
-start_date = '01-09-2015'.to_date
-end_date = '01-12-2015'.to_date
-Payment.new(id: '1001', start_date: start_date, expiry_date: end_date, total_cost: 90, add_on1: false, add_on2: false,
-               add_on3: false, plan1: true, paid: true, merchant_id: '1001', months: 3).save(validate: false)
-PlanPayment.create(id: '1001', plan_id: 1, payment_id: 1001)
-
-start_date = '01-01-2015'.to_date
-end_date = '01-12-2015'.to_date
-Payment.new(id: '1002', start_date: start_date, expiry_date: end_date, total_cost: 385, add_on1: true, add_on2: false,
-               add_on3: false, plan1: true, paid: true, merchant_id: '1002', months: 4).save(validate: false)
-PlanPayment.create(id: '1002', plan_id: 1, payment_id: 1002)
-AddOnPayment.create(id: '1003', add_on_id: 1, payment_id: 1002)
-
 start_date = '01-12-2014'.to_date
 end_date = start_date + 1.months
 payment_id = 1003
 merchant_id = 1004
 plan_payment_id = 1003
 add_on_payment_id = 1004
-while payment_id < 1050
-  Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '110.00', add_on1: false, add_on2: false, add_on3: false, plan1: false, paid: true, created_at: start_date, updated_at: '2015-10-01 00:00:00', merchant_id: merchant_id, months: 1).save(validate: false)
-  PlanPayment.create(id: plan_payment_id, plan_id: '1000', payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
-  AddOnPayment.create(id: add_on_payment_id, add_on_id: '1000', payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
+while merchant_id < 1010
+  Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '50.00', add_on1: false, add_on2: false, add_on3: false, plan1: false, paid: true, created_at: start_date, updated_at: '2015-10-01 00:00:00', merchant_id: merchant_id, months: 1).save(validate: false)
+  PlanPayment.create(id: plan_payment_id, plan_id: 1000, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
+  AddOnPayment.create(id: add_on_payment_id, add_on_id: 1000, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
   add_on_payment_id = add_on_payment_id + 1
-  AddOnPayment.create(id: add_on_payment_id, add_on_id: '1001', payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
-  if payment_id%10 == 0
+  AddOnPayment.create(id: add_on_payment_id, add_on_id: 1001, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
+  if merchant_id%rand(2..3) == 0
     start_date = end_date
     end_date = end_date + 1.months
   end
@@ -99,11 +77,15 @@ while payment_id < 1050
   add_on_payment_id = add_on_payment_id + 1
 end
 
-while payment_id <= 1100
-  Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '110.00', add_on1: false, add_on2: false, add_on3: false, plan1: false, paid: true, created_at: start_date, updated_at: '2015-10-01 00:00:00', merchant_id: merchant_id, months: 1).save(validate: false)
-  PlanPayment.create(id: plan_payment_id, plan_id: '1000', payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
-  AddOnPayment.create(id: add_on_payment_id, add_on_id: '1000', payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
-  if payment_id%10 == 0
+start_date = '01-12-2014'.to_date
+end_date = start_date + 1.months
+while merchant_id < 1050
+  Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '40.00', add_on1: true, add_on2: true, add_on3: false, plan1: true, paid: true, created_at: start_date, updated_at: '2015-10-01 00:00:00', merchant_id: merchant_id, months: 1).save(validate: false)
+  PlanPayment.create(id: plan_payment_id, plan_id: 1, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
+  AddOnPayment.create(id: add_on_payment_id, add_on_id: 1, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
+  add_on_payment_id = add_on_payment_id + 1
+  AddOnPayment.create(id: add_on_payment_id, add_on_id: 2, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
+  if merchant_id%rand(5..10) == 0
     start_date = end_date
     end_date = end_date + 1.months
   end
@@ -112,6 +94,53 @@ while payment_id <= 1100
   plan_payment_id = plan_payment_id + 1
   add_on_payment_id = add_on_payment_id + 1
 end
+
+while merchant_id <= 1100
+  Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '45.00', add_on1: true, add_on2: true, add_on3: true, plan1: true, paid: true, created_at: start_date, updated_at: '2015-10-01 00:00:00', merchant_id: merchant_id, months: 1).save(validate: false)
+  PlanPayment.create(id: plan_payment_id, plan_id: 1, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
+  AddOnPayment.create(id: add_on_payment_id, add_on_id: 1, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
+  add_on_payment_id = add_on_payment_id + 1
+  AddOnPayment.create(id: add_on_payment_id, add_on_id: 2, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
+  add_on_payment_id = add_on_payment_id + 1
+  AddOnPayment.create(id: add_on_payment_id, add_on_id: 3, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
+  if merchant_id%rand(5..10) == 0
+    start_date = end_date
+    end_date = end_date + 1.months
+  end
+  payment_id = payment_id + 1
+  merchant_id = merchant_id + 1
+  plan_payment_id = plan_payment_id + 1
+  add_on_payment_id = add_on_payment_id + 1
+end
+
+start_date = '01-05-2015'.to_date
+end_date = '01-05-2016'.to_date
+Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: 540, add_on1: true, add_on2: true,
+            add_on3: true, plan1: true, paid: true, merchant_id: '1000', months: 12).save(validate: false)
+PlanPayment.create(id: plan_payment_id, plan_id: 1, payment_id: 1000)
+AddOnPayment.create(id: add_on_payment_id, add_on_id: 1, payment_id: 1000)
+add_on_payment_id = add_on_payment_id + 1
+AddOnPayment.create(id: '1001', add_on_id: 2, payment_id: 1000)
+add_on_payment_id = add_on_payment_id + 1
+AddOnPayment.create(id: '1002', add_on_id: 3, payment_id: 1000)
+payment_id = payment_id + 1
+plan_payment_id = plan_payment_id + 1
+add_on_payment_id = add_on_payment_id + 1
+
+start_date = '01-09-2015'.to_date
+end_date = '01-12-2015'.to_date
+Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: 90, add_on1: false, add_on2: false,
+            add_on3: false, plan1: true, paid: true, merchant_id: '1001', months: 3).save(validate: false)
+PlanPayment.create(id: plan_payment_id, plan_id: 1, payment_id: 1001)
+payment_id = payment_id + 1
+plan_payment_id = plan_payment_id + 1
+
+start_date = '01-01-2015'.to_date
+end_date = '01-12-2015'.to_date
+Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: 385, add_on1: true, add_on2: false,
+            add_on3: false, plan1: true, paid: true, merchant_id: '1002', months: 4).save(validate: false)
+PlanPayment.create(id: plan_payment_id, plan_id: 1, payment_id: 1002)
+AddOnPayment.create(id: add_on_payment_id, add_on_id: 1, payment_id: 1002)
 
 # Seed venues
 # For amazingcoders8mc@gmail.com
