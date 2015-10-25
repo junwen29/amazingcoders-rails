@@ -7,10 +7,6 @@ class VenuesController < ApplicationController
     @venues = Venue.where(:merchant_id => merchant_id)
   end
 
-  def show
-    @venue = Venue.find(params[:id])
-  end
-
   # GET /venues/new
   def new
     @venue = Venue.new
