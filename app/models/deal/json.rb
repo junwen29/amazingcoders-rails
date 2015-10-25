@@ -29,8 +29,9 @@ module Deal::Json
       json.set! :venues do
         json.array! self.venues do |venue|
           json.id             venue.id
-          json.name             venue.name
+          json.name           venue.name
           json.neighbourhood  venue.neighbourhood
+          json.photo          venue.photo.path unless venue.photo == nil
         end
       end
     end
