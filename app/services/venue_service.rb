@@ -40,6 +40,10 @@ class VenueService
       Deal.joins(:deal_venues).where('deal_venues.venue_id' => venue_id, :active => true)
     end
 
+    def get_active_and_past_deals_for_venue_that_are_redeemable (venue_id)
+      Deal.joins(:deal_venues).where('deal_venues.venue_id' => venue_id, :active => true, :redeemable => true)
+    end
+
     # Prevent deleating of venues when a deal has only that particular venue
     def allow_delete(venue_id)
       deal_venue = DealVenue.where(:venue_id => venue_id)
