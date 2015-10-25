@@ -5,13 +5,20 @@
   <div class="panel-body">
     <table class="table table-bordered table-hover table-responsive">
       <tr>
+        <% if @payment.add_on3 %>
+            <th>Deal Ranking</th>
+        <% end %>
         <th>Title</th>
         <th>Image</th>
         <th>Description</th>
         <th>Start Date</th>
         <th>Expiry Date</th>
         <th>Venue</th>
-        <% if (@payment.add_on1) %>
+        <% if @payment.add_on2 %>
+            <th>Num Unique Views</th>
+            <th>Num Redeems</th>
+        <% end %>
+        <% if @payment.add_on1 %>
             <th colspan="2"></th>
         <% else %>
             <th colspan="2"></th>
@@ -21,6 +28,14 @@
       <% @deals.each do |deal| %>
           <% if (deal.expiry_date.future?|| deal.expiry_date.today?) && deal.active %>
               <tr>
+                <% if @payment.add_on3 %>
+                    <% @ranking.each do |r| %>
+                        <% if r[0] == deal.id %>
+                            <td id='num'><%= r[1] + 1 %></div></td>
+                            <% break %>
+                        <% end %>
+                    <% end %>
+                <% end %>
                 <td><%= deal.title %></td>
                 <td>
                   <% if deal.image.present? %>
@@ -37,6 +52,10 @@
                       <%= venue.name %><br/>
                   <% end %>
                 </td>
+                <% if @payment.add_on2 %>
+                    <td id='num'><%= DealAnalyticService.get_unique_view_count(deal.id) %></td>
+                    <td id='num'><%= DealAnalyticService.get_redemption_count(deal.id) %></td>
+                <% end %>
                 <% if @payment.add_on1 %>
                     <% if deal.pushed %>
                         <td>
