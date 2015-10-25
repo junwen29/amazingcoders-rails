@@ -9,6 +9,7 @@ module Venue::Json
       json.name           self.name
       json.neighbourhood  self.neighbourhood
       json.is_wishlist    self.is_wishlist unless self.is_wishlist == nil
+      json.photo          self.photo.path unless self.photo == nil
     end
 
     def to_json(json, options = {})
