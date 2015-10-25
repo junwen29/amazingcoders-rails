@@ -1,34 +1,32 @@
-<div style=" min-width:350px; max-width:60%; margin:100px auto" class="container">
+<div style="min-width:350px; max-width:60%; margin:100px auto" class="container">
   <div class="panel panel-danger">
     <div class="panel-heading">
       <div class="panel-body">
         <div style = "float:right">
-          <div style="display:inline-block"><img class="profile-img" src="http://www.burpple.com/img/logo.png" height="100" width ="100"></div>
+          <div style="display:inline-block" class="hidden-xs"><%= image_tag("biz/signin_logo.png", alt: "burpple", height: "100", width: "100") %></div>
         </div>
         <div style="display:inline-block"><h3>Sign Up</h3></div>
       </div>
     </div>
-    <div class="row" style="margin:5px">
-      <div class="col-lg-6">
-        <br/><br/>
+    <div class="panel-body">
         <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
             <%= devise_error_messages! %>
 
-            <div class="field">
-              <%= f.label :email %><br />
+            <div class="form-group">
+              <%= f.label :email %>
               <%= f.email_field :email%>
             </div>
 
-            <div class="field">
+            <div class="form-group">
               <%= f.label :password %>
               <% if @validatable %>
                   <em>(<%= @minimum_password_length %> characters minimum)</em>
-              <% end %><br />
+              <% end %>
               <%= f.password_field :password, autocomplete: "off" %>
             </div>
 
-            <div class="field">
-              <%= f.label :password_confirmation %><br />
+            <div class="form-group">
+              <%= f.label :password_confirmation %>
               <%= f.password_field :password_confirmation, autocomplete: "off" %>
             </div>
 
@@ -36,9 +34,7 @@
               <%= f.submit "Sign up", class: "btn btn-lg btn-info" %>
             </div>
         <% end %>
-        Already a member?<%= link_to "Log In!", new_session_path(resource_name) %><br />
-        <br>
-      </div>
+        Already a member? <%= link_to "Log In!", new_session_path(resource_name) %>
     </div>
   </div>
 </div>
