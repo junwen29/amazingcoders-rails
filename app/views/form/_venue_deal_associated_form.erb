@@ -1,19 +1,36 @@
 <div class="panel panel-default">
+  <div class="panel-heading">
+    <h4>Active Deals (Deals that are now displayed to users)</h4>
+  </div>
   <div class="panel-body">
     <table class="table table-bordered table-hover table-responsive">
       <tr>
+        <% if @payment.add_on3 %>
+            <th>Deal Ranking</th>
+        <% end %>
         <th>Title</th>
         <th>Image</th>
         <th>Description</th>
         <th>Start Date</th>
         <th>Expiry Date</th>
         <th>Venue</th>
-        <th colspan="1"></th>
+        <% if @payment.add_on2 %>
+            <th>Num Unique Views</th>
+            <th>Num Redeems</th>
+        <% end %>
       </tr>
 
       <% @deals.each do |deal| %>
           <% if (deal.expiry_date.future?|| deal.expiry_date.today?) && deal.active %>
               <tr>
+                <% if @payment.add_on3 %>
+                    <% @ranking.each do |r| %>
+                        <% if r[0] == deal.id %>
+                            <td id='num'><%= r[1] + 1 %></div></td>
+                            <% break %>
+                        <% end %>
+                    <% end %>
+                <% end %>
                 <td><%= deal.title %></td>
                 <td>
                   <% if deal.image.present? %>
@@ -30,10 +47,14 @@
                       <%= venue.name %><br/>
                   <% end %>
                 </td>
+                <% if @payment.add_on2 %>
+                    <td id='num'><%= DealAnalyticService.get_unique_view_count(deal.id) %></td>
+                    <td id='num'><%= DealAnalyticService.get_redemption_count(deal.id) %></td>
+                <% end %>
                 <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
-              </tr>
+                </tr>
           <% end %>
       <% end %>
-    </table>
-  </div>
+      </table>
+      </div>
 </div>
