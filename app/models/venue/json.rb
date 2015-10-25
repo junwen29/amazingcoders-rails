@@ -35,6 +35,7 @@ module Venue::Json
       json.phone          self.phone
       json.contact_number self.contact_number
       json.is_wishlist    self.is_wishlist unless self.is_wishlist == nil
+      json.photo          self.photo.path unless self.photo == nil
 
       deals_json json
     end
