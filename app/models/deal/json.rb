@@ -16,7 +16,7 @@ module Deal::Json
       json.start_date     self.start_date
       json.expiry_date    self.expiry_date
       json.is_bookmarked  self.is_bookmarked unless self.is_bookmarked == nil
-      json.image          self.image unless self.image == nil
+      json.image          self.image.path unless self.image == nil
     end
 
     def to_json(json, options = {})
