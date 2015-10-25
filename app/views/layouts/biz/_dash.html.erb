@@ -46,7 +46,7 @@
 </div>
 
 <div class="nav">
-  <ul>
+  <ul class="nav-menu">
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Personal Settings <span class="caret"></span></a>
       <ul class="dropdown-menu">
@@ -102,6 +102,15 @@
             $('.venueDropdown-dropdown').toggle();
             $(this).toggleClass('venueDropdown-select--selected');
         });
+
+        $( window ).on('resize', function() {
+            if ( window.matchMedia('(max-width: 645px)').matches) {
+                $('li.dropdown ul').removeClass('dropdown-menu');
+            } else {
+                $('li.dropdown ul').addClass('dropdown-menu');
+            }
+        }).resize();
     </script>
+
 <% end %>
 
