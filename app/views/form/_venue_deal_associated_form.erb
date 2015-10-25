@@ -24,11 +24,15 @@
           <% if (deal.expiry_date.future?|| deal.expiry_date.today?) && deal.active %>
               <tr>
                 <% if @payment.add_on3 %>
-                    <% @ranking.each do |r| %>
-                        <% if r[0] == deal.id %>
-                            <td id='num'><%= r[1] + 1 %></div></td>
-                            <% break %>
+                    <% if deal.redeemable %>
+                        <% @ranking.each do |r| %>
+                            <% if r[0] == deal.id %>
+                                <td id='num'><%= r[1] + 1 %></div></td>
+                                <% break %>
+                            <% end %>
                         <% end %>
+                    <% else %>
+                        <td><p id='untracable' data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence data cannot be gathered">Untraceable</p></td>
                     <% end %>
                 <% end %>
                 <td><%= deal.title %></td>
@@ -49,7 +53,11 @@
                 </td>
                 <% if @payment.add_on2 %>
                     <td id='num'><%= DealAnalyticService.get_unique_view_count(deal.id) %></td>
-                    <td id='num'><%= DealAnalyticService.get_redemption_count(deal.id) %></td>
+                    <% if deal.redeemable %>
+                        <td id='num'><%= DealAnalyticService.get_redemption_count(deal.id) %></td>
+                    <% else %>
+                        <td><p id='untracable' data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence data cannot be gathered">Untraceable</p></td>
+                    <% end %>
                 <% end %>
                 <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
                 </tr>
