@@ -1,12 +1,12 @@
 <h3 style="padding-bottom: 20px">Popular Deals</h3>
 <div class="panel panel-primary">
-  <div class="panel-heading">
+  <div class="panel-heading panel-heading-custom">
     <h4>Top 10 Active Deals!</h4>
   </div>
   <div class="panel-body">
     <strong>By Redemption Count</strong>
 
-    <p id ="hint">*Own deals will be highlighted</p>
+    <p id="hint">*Own deals will be highlighted</p>
     <table class="table table-bordered table-hover table-responsive">
       <tr>
         <th>Rank</th>
@@ -51,5 +51,15 @@
 
     p#hint {
         font-style: italic
+    }
+
+    .panel-primary > .panel-heading-custom {
+        background: #ea1f6c;
+        color: #fff;
+        border-color: #ea1f6c;
+    }
+
+    .panel-primary {
+        border-color: #ea1f6c;
     }
 </style>
