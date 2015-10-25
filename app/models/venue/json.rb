@@ -47,6 +47,8 @@ module Venue::Json
           json.title          deal.title
           json.type_of_deal   deal.type_of_deal
           json.redeemable     deal.redeemable unless deal.redeemable == nil
+          json.image          deal.image.path unless deal.image == nil
+
         end
       end
     end
