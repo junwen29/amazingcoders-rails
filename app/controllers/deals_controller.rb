@@ -33,7 +33,7 @@ class DealsController < ApplicationController
   end
 
   def index
-    @deals = MerchantService.get_all_deals(merchant_id)
+    @deals = MerchantService.get_all_deals(merchant_id).order(title: :asc)
     @ranking = DealAnalyticService.get_own_deals_ranking(merchant_id)
   end
 
