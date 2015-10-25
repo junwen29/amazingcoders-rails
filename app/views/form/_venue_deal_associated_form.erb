@@ -1,0 +1,39 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <table class="table table-bordered table-hover table-responsive">
+      <tr>
+        <th>Title</th>
+        <th>Image</th>
+        <th>Description</th>
+        <th>Start Date</th>
+        <th>Expiry Date</th>
+        <th>Venue</th>
+        <th colspan="1"></th>
+      </tr>
+
+      <% @deals.each do |deal| %>
+          <% if (deal.expiry_date.future?|| deal.expiry_date.today?) && deal.active %>
+              <tr>
+                <td><%= deal.title %></td>
+                <td>
+                  <% if deal.image.present? %>
+                      <%= cl_image_tag(deal.image.path, {size: '100x100', crop: :fit}) %>
+                  <% else %>
+                      <%= image_tag 'biz/burpple_logo.png', :size => '100x100' %>
+                  <% end %>
+                </td>
+                <td><%= deal.description %></td>
+                <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
+                <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
+                <td>
+                  <% deal.venues.each do |venue| %>
+                      <%= venue.name %><br/>
+                  <% end %>
+                </td>
+                <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
+              </tr>
+          <% end %>
+      <% end %>
+    </table>
+  </div>
+</div>

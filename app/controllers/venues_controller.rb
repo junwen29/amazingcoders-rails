@@ -60,7 +60,8 @@ class VenuesController < ApplicationController
   end
 
   def show
-
+    @deals = VenueService.get_active_deals_for_venue(@venue.id)
+    @payment = MerchantService.get_deal_plan(merchant_id)
   end
 
   # DELETE /venues/1
