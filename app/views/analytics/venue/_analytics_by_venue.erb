@@ -40,7 +40,8 @@
                           overflow:"justify",
                           color: '#000000'
                       },
-                      pointWidth: 150
+                      pointWidth: 150,
+                      groupPadding: 0.1
                   }
               },
               series: [
@@ -65,6 +66,28 @@
                   <% end %>
               ],
               drilldown: {
+                  drillUpButton: {
+                      position: {
+                          y: -45,
+                          x: 0
+                      },
+                      theme: {
+                          fill: 'white',
+                          'stroke-width': 1,
+                          stroke: 'silver',
+                          r: 0,
+                          states: {
+                              hover: {
+                                  fill: '#bada55'
+                              },
+                              select: {
+                                  stroke: '#039',
+                                  fill: '#bada55'
+                              }
+                          }
+                      }
+
+                  },
                   series: [
                       <% loop = 0 %>
                       <% while loop < num_of_venues %>
