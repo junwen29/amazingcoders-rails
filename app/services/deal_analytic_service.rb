@@ -126,10 +126,7 @@ class DealAnalyticService
         end
 
         deal_array << d.title
-        deal_array << Time.parse((temp_start_date-1).to_s).to_f * 1000
-
-        num_view_array << 0
-        num_redeem_array << 0
+        deal_array << Time.parse((temp_start_date).to_s).to_f * 1000
 
         while temp_start_date <= temp_end_date
           # Range is from deal created at to temp_start_date as  Merchant can activate the deal at any point of time
@@ -252,13 +249,26 @@ class DealAnalyticService
     def get_top_active_deals(limit = 10)
       active_deals = DealService.get_active_deals.where(:redeemable => true).pluck(:id)
       top_10_deal_ids = DealAnalytic.where(deal_id: active_deals).order(redemption_count: :desc).limit(limit).pluck(:deal_id)
-      top_active_deals = Deal.find(top_10_deal_ids)
-      top_active_deals
     end
 
     def get_top_queries(limit = 10)
       top_user_queries = UserQuery.order(num_count: :desc).limit(limit)
       top_user_queries
+    end
+
+    def get_own_deals_ranking(merchant_id)
+      active_deals = DealService.get_active_deals.where(:redeemable => true).pluck(:id)
+      top_deals = DealAnalytic.where(deal_id: active_deals).order(redemption_count: :desc)
+      merchant_active_deals = MerchantService.get_active_redeemable_deals(merchant_id).pluck(:id)
+      top_merchant_deals = DealAnalytic.where(deal_id: merchant_active_deals).order(redemption_count: :desc).pluck(:deal_id)
+      ranking = Array.new
+      top_merchant_deals.each do |ad|
+        deal_ranking = Array.new
+        deal_ranking << ad
+        deal_ranking << top_deals.map(&:deal_id).index(ad)
+        ranking << deal_ranking
+      end
+      ranking
     end
 
     # array[0] gives first deal_type
@@ -358,6 +368,26 @@ class DealAnalyticService
       top_deal_type = DealAnalyticService.get_most_popular_deal_type
       deal_type = "The most popular deal type is " + top_deal_type[0] + " with an average redemption rate of " + top_deal_type[1].to_s
     end
+
+    # deal_analytics = 0: No access
+    # deal_analytics = 1: Has deal statistics and deal aggregate trends
+    # deal_analytics = 2: Has deal statistics only
+    # deal_analytics = 3: Has deal aggregate only
+    def check_deal_analytics(merchant_id)
+      deal_analytics = 0
+      payment = Payment.where("merchant_id = ? AND start_date <= ? AND expiry_date >= ? AND paid = ?", merchant_id, Date.today, Date.today, true).last
+      if payment.present?
+        if payment.add_on2 && payment.add_on3
+          deal_analytics = 1
+        elsif payment.add_on2 && !payment.add_on3
+          deal_analytics = 2
+        elsif !payment.add_on2 && payment.add_on3
+          deal_analytics = 3
+        end
+      end
+      deal_analytics
+    end
+
   end
 
   class << self

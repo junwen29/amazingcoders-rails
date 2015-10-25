@@ -98,8 +98,8 @@ class DealService
 
     # TODO: Call this method for deal analytics - popular deal type aggregate trends
     def get_all_ids_by_type(deal_type)
-        deals = Deal.where(:type_of_deal => deal_type)
-        deals.pluck(:id)
+      deals = Deal.where(:type_of_deal => deal_type)
+      deals.pluck(:id)
     end
 
     # TODO: Call this method for deal analytics - popular deal type deal statistics

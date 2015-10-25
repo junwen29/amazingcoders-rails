@@ -85,6 +85,7 @@ class AnalyticsController < ApplicationController
       get_top_active_deals
       get_top_queries
       get_overall_popular_deal_type
+      get_own_active_deals_ranking
     else
       render "analytics/error"
     end
@@ -113,6 +114,11 @@ class AnalyticsController < ApplicationController
   private
   def get_top_active_deals
     @top_deals = DealAnalyticService.get_top_active_deals
+  end
+
+  private
+  def get_own_active_deals_ranking
+    @own_deals = DealAnalyticService.get_own_deals_ranking(merchant_id)
   end
 
   private

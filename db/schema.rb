@@ -31,6 +31,11 @@ ActiveRecord::Schema.define(version: 20151013173305) do
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
+  create_table "activities", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "add_on_payments", force: true do |t|
     t.integer  "add_on_id"
     t.integer  "payment_id"
@@ -152,7 +157,7 @@ ActiveRecord::Schema.define(version: 20151013173305) do
     t.string   "location"
     t.string   "t_c"
     t.integer  "num_of_redeems"
-    t.boolean  "pushed",             default: false
+    t.boolean  "pushed"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "merchant_id"
@@ -294,9 +299,9 @@ ActiveRecord::Schema.define(version: 20151013173305) do
     t.string   "name"
     t.string   "street"
     t.string   "zipcode"
-    t.string   "city",               default: "Singapore"
-    t.string   "state",              default: "Singapore"
-    t.string   "country",            default: "Singapore"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
     t.string   "neighbourhood"
     t.text     "bio"
     t.string   "phone"
@@ -332,15 +337,5 @@ ActiveRecord::Schema.define(version: 20151013173305) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "wishlists", force: true do |t|
-    t.integer  "venue_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "wishlists", ["user_id"], name: "index_wishlists_on_user_id", using: :btree
-  add_index "wishlists", ["venue_id"], name: "index_wishlists_on_venue_id", using: :btree
 
 end

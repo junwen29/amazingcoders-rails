@@ -15,16 +15,17 @@ module User::Json
       # json.phone    phone
 
     end
-  end
 
-  def to_json(json, options = {})
-    json.id id
-    json.first_name first_name
-    json.last_name last_name
-    json.username   username
+    def to_json(json, options = {})
+      json.id id
+      json.first_name first_name
+      json.last_name last_name
+      json.username   username
 
-    json.updated_at updated_at
-    json.created_at created_at
+      json.updated_at updated_at
+      json.created_at created_at
+    end
+
   end
 
 end
