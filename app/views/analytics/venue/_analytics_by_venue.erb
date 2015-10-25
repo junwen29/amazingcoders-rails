@@ -57,7 +57,7 @@
                               y: <%= @deals_by_venue[loop][redeem_placement] %>,
                               drilldown: "<%= @deals_by_venue[loop][0] %>" + " redeem",
                               dataLabels: {
-                                  format: '<%= @deals_by_venue[loop][0] %>'
+                                  format: '<%= @deals_by_venue[loop][0] %>\n' + " " + '<span style="color: #F10DAA"><%= @deals_by_venue[loop][redeem_placement] %> Redemptions </span>'
                               }
                           }
                       ]
