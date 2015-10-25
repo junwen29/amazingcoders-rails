@@ -1,35 +1,37 @@
-<table class="table table-bordered table-hover table-responsive">
-  <tr>
-    <th width="10%">Photo</th>
-    <th width="15%">Name of Restaurant</th>
-    <th width="20%">Street</th>
-    <th width="40%">Description</th>
-    <th width="5%">Wishlisted Users</th>
-    <th width="10%" colspan="3"></th>
-  </tr>
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <tr>
+      <th width="10%">Photo</th>
+      <th width="15%">Name of Restaurant</th>
+      <th width="20%">Street</th>
+      <th width="40%">Description</th>
+      <th width="5%">Wishlisted Users</th>
+      <th width="10%" colspan="3"></th>
+    </tr>
 
-  <% @venues.each do |venue| %>
-      <tr>
-        <td>
-          <% if venue.photo.present? %>
-              <%= cl_image_tag(venue.photo.path, { size: '100x100', crop: :fit }) %>
-          <% else %>
-              <%= image_tag 'biz/burpple_logo.png', :size => '100x100' %>
-          <% end %>
-        </td>
+    <% @venues.each do |venue| %>
+        <tr>
+          <td>
+            <% if venue.photo.present? %>
+                <%= cl_image_tag(venue.photo.path, { size: '100x100', crop: :fit }) %>
+            <% else %>
+                <%= image_tag 'biz/burpple_logo.png', :size => '100x100' %>
+            <% end %>
+          </td>
 
-        <td><%= venue.name %></td>
-        <td><%= venue.street %></td>
-        <td><%= venue.bio %></td>
-        <td><%= WishService.num_wishlist_venue(venue.id) %></td>
-        <td><%= link_to 'Show', venue_path(venue), class: "btn btn-xs btn-default" %></td>
-        <td><%= link_to 'Edit', edit_venue_path(venue), class: "btn btn-xs btn-default" %></td>
-        <td>
-          <%= link_to 'Delete', venue_path(venue),
-                      method: :delete,
-                      data: { confirm: 'Are you sure?'},
-                      class: "btn btn-xs btn-danger"%>
-        </td>
-      </tr>
-  <% end %>
-</table>
+          <td><%= venue.name %></td>
+          <td><%= venue.street %></td>
+          <td><%= venue.bio %></td>
+          <td><%= WishService.num_wishlist_venue(venue.id) %></td>
+          <td><%= link_to 'Show', venue_path(venue), class: "btn btn-xs btn-default" %></td>
+          <td><%= link_to 'Edit', edit_venue_path(venue), class: "btn btn-xs btn-default" %></td>
+          <td>
+            <%= link_to 'Delete', venue_path(venue),
+                        method: :delete,
+                        data: { confirm: 'Are you sure?'},
+                        class: "btn btn-xs btn-danger"%>
+          </td>
+        </tr>
+    <% end %>
+  </table>
+</div>
