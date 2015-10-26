@@ -85,6 +85,8 @@ class PaymentsController < ApplicationController
 
   def gift_extend
     @payment = Payment.new
+    #upcoming payment includes current payment as well
+    #@upcoming_payment = Payment.where("merchant_id = ? AND paid = ? AND start_date <= ? AND expiry_date >= ?", merchant_id, true, Date.today, Date.today).last
   end
 
   def extend

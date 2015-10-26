@@ -17,27 +17,18 @@
         </div>
     <% end %>
 
-    <!-- Content Heading -->
+<!--
+    &lt;!&ndash; Content Heading &ndash;&gt;
     <div class="pull-left">
       <p class="b2 content-title">Extend Plan</p>
     </div>
 
     <div class="clearfix"></div>
     <div class="content-separator"></div>
+-->
 
 
-    <%= form_for @payment, url: payments_extend_path do |f| %>
-        <!-- choose start date -->
-        <p class= "form-select clearfix">
-        <%= f.label :start_date, "Start Date:" %>
-        <span>
-        <%= f.text_field :start_date %>
-        </span>
-        </p>
-
-        <p class= "clearfix" >
-          <%= f.submit "Confirm extension start date" , :class => 'btn btn-big btn-success' %>
-    <% end %>
+    <%= render :partial => 'form/payment_gift_extend_form' %>
 
   </div><!-- /content -->
 </div><!-- /contentWrapper -->
