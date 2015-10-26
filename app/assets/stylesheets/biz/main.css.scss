@@ -453,21 +453,23 @@
 
     .nav{
       height: 50px;
-      padding-left: 10px;
-      padding-right: 10px;
       padding-top: 7px;
       overflow-y: scroll;
+      margin-left: -20px !important;
     }
 
     .nav > ul > li{
-      margin-right: 6px;
       display:block;
       text-align: center;
-      padding-bottom: 20px;
+      padding-top: 20px;
     }
 
     .nav > ul > li > ul > li {
       padding-top: 15px;
+    }
+
+    .header {
+      margin-left: -20px;
     }
   }
 
