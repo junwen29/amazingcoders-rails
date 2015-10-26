@@ -3,45 +3,15 @@ class DealAnalyticService
   module ClassMethods
     # TODO: Call these methods on Android to update view count and redemption count
     def get_view_count(deal_id)
-      deal_analytics = DealAnalytic.where(:deal_id => deal_id)
-      if deal_analytics.empty?
-        0
-      else
-        total_view_count = 0
-        view = deal_analytics.pluck(:view_count)
-        view.each do |v|
-          total_view_count += v
-        end
-        total_view_count
-      end
+      DealAnalytic.where(:deal_id => deal_id).pluck(:view_count).sum
     end
 
     def get_unique_view_count(deal_id)
-      deal_analytics = DealAnalytic.where(:deal_id => deal_id)
-      if deal_analytics.empty?
-        0
-      else
-        total_unique_view_count = 0
-        unique_view = deal_analytics.pluck(:unique_view_count)
-        unique_view.each do |v|
-          total_unique_view_count += v
-        end
-        total_unique_view_count
-      end
+      DealAnalytic.where(:deal_id => deal_id).pluck(:unique_view_count).sum
     end
 
     def get_redemption_count(deal_id)
-      deal_analytics = DealAnalytic.where(:deal_id => deal_id)
-      if deal_analytics.empty?
-        0
-      else
-        total_redemption_count = 0
-        redemption = deal_analytics.pluck(:redemption_count)
-        redemption.each do |r|
-          total_redemption_count += r
-        end
-        total_redemption_count
-      end
+      DealAnalytic.where(:deal_id => deal_id).pluck(:redemption_count).sum
     end
 
     def add_view_count(deal_id, increment = 1)

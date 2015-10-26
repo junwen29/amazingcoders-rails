@@ -7,10 +7,6 @@ class VenuesController < ApplicationController
     @venues = Venue.where(:merchant_id => merchant_id)
   end
 
-  def show
-    @venue = Venue.find(params[:id])
-  end
-
   # GET /venues/new
   def new
     @venue = Venue.new
@@ -60,7 +56,9 @@ class VenuesController < ApplicationController
   end
 
   def show
-
+    @deals = VenueService.get_active_deals_for_venue(@venue.id).order(title: :asc)
+    @payment = MerchantService.get_deal_plan(merchant_id)
+    @ranking = DealAnalyticService.get_own_deals_ranking(merchant_id)
   end
 
   # DELETE /venues/1
