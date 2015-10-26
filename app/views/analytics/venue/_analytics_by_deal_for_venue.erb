@@ -32,7 +32,8 @@
                           overflow: 'justify',
                           crop: true
                       },
-                      pointWidth: 150
+                      pointWidth: 150,
+                      groupPadding: 0.06
                   }
               },
               xAxis: {
@@ -57,7 +58,7 @@
                               y: <%= @deals_for_venue[0][loop][redeem_placement] %>,
                               drilldown: "<%= @deals_for_venue[0][loop][0] %>" + " active",
                               dataLabels: {
-                                  format: "<%= @deals_for_venue[0][loop][0] %>"
+                                  format: "<%= @deals_for_venue[0][loop][0] %>\n" + " " + '<span style="color: #F10DAA"><%= @deals_for_venue[0][loop][redeem_placement] %> Redemptions</span>'
                               }
                           }
                       ]
@@ -78,7 +79,7 @@
                               y: <%= @deals_for_venue[1][loop][redeem_placement] %>,
                               drilldown: "<%= @deals_for_venue[1][loop][0] %>" + " past",
                               dataLabels: {
-                                  format: "<%= @deals_for_venue[1][loop][0] %>"
+                                  format: "<%= @deals_for_venue[1][loop][0] %>\n" + " " + '<span style="color: #F10DAA"><%= @deals_for_venue[1][loop][redeem_placement] %> Redemptions </span>'
                               }
                           }
                       ],
@@ -88,6 +89,28 @@
                   <% end %>
               ],
               drilldown: {
+                  drillUpButton: {
+                      position: {
+                          y: -45,
+                          x: 0
+                      },
+                      theme: {
+                          fill: 'white',
+                          'stroke-width': 1,
+                          stroke: 'silver',
+                          r: 0,
+                          states: {
+                              hover: {
+                                  fill: '#bada55'
+                              },
+                              select: {
+                                  stroke: '#039',
+                                  fill: '#bada55'
+                              }
+                          }
+                      }
+
+                  },
                   series: [
                       <% loop = 0 %>
                       <% while loop < num_of_active_deals %>
