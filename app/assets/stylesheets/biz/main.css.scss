@@ -172,6 +172,18 @@
     border-right: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
   }
+
+  .header-home-logo{
+    float: left;
+    width: 250px;
+    height: 50px;
+    margin: 15px 0px;
+  }
+
+  .header-home-actions{
+    float: right;
+    padding-top: 24px;
+  }
   
   /* header-content-item venueDropdown
     =================================================================== */
@@ -476,6 +488,24 @@
       float: none;
       padding-left: 70px !important;
       width: 100%;
+      text-align: center;
+    }
+
+    .header-home-logo{
+      float: none;
+      width: 250px;
+      height: 50px;
+    }
+
+    .header-home-actions {
+      float: none;
+      padding-top: 0px;
+    }
+
+    .header-home-actions > a {
+      text-align: center;
+      display: block;
+      margin-bottom: 20px;
     }
   }
 
