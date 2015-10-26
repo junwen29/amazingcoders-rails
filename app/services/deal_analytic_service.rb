@@ -3,45 +3,15 @@ class DealAnalyticService
   module ClassMethods
     # TODO: Call these methods on Android to update view count and redemption count
     def get_view_count(deal_id)
-      deal_analytics = DealAnalytic.where(:deal_id => deal_id)
-      if deal_analytics.empty?
-        0
-      else
-        total_view_count = 0
-        view = deal_analytics.pluck(:view_count)
-        view.each do |v|
-          total_view_count += v
-        end
-        total_view_count
-      end
+      DealAnalytic.where(:deal_id => deal_id).pluck(:view_count).sum
     end
 
     def get_unique_view_count(deal_id)
-      deal_analytics = DealAnalytic.where(:deal_id => deal_id)
-      if deal_analytics.empty?
-        0
-      else
-        total_unique_view_count = 0
-        unique_view = deal_analytics.pluck(:unique_view_count)
-        unique_view.each do |v|
-          total_unique_view_count += v
-        end
-        total_unique_view_count
-      end
+      DealAnalytic.where(:deal_id => deal_id).pluck(:unique_view_count).sum
     end
 
     def get_redemption_count(deal_id)
-      deal_analytics = DealAnalytic.where(:deal_id => deal_id)
-      if deal_analytics.empty?
-        0
-      else
-        total_redemption_count = 0
-        redemption = deal_analytics.pluck(:redemption_count)
-        redemption.each do |r|
-          total_redemption_count += r
-        end
-        total_redemption_count
-      end
+      DealAnalytic.where(:deal_id => deal_id).pluck(:redemption_count).sum
     end
 
     def add_view_count(deal_id, increment = 1)
@@ -86,9 +56,10 @@ class DealAnalyticService
     # array[1] is past deals
     # array[0][0] is first active deal
     # array[0][0][0] gives deal title
-    # array[0][0][1] gives start_date in utc format
+    # array[0][0][1] gives start_date of redemption count in utc format
     # array [0][0][2] gives array of view count
     # array [0][0][3] gives array of redemption count
+    # array [0][0][4] gives start_date of view count in utc format
     # array [2] gives array of expired deal names
     def get_analytics_for_line_graph(merchant_id, start_date, end_date)
       array = Array.new
@@ -110,12 +81,14 @@ class DealAnalyticService
         num_view_array = Array.new
         num_redeem_array = Array.new
         deal_array = Array.new
+        view_start_date = Viewcount.where(:deal_id => d.id).first.created_at.beginning_of_day
+        temp = view_start_date
 
         # If start date of deal is after given start date, we will start from deal start date
         if d.start_date > start_date
-          temp_start_date = d.start_date
+          redemption_start_date = d.start_date
         else
-          temp_start_date = start_date
+          redemption_start_date = start_date
         end
 
         # If end date of deal is before given end date, we will end at deal end date
@@ -126,17 +99,20 @@ class DealAnalyticService
         end
 
         deal_array << d.title
-        deal_array << Time.parse((temp_start_date).to_s).to_f * 1000
+        deal_array << Time.parse((redemption_start_date).to_s).to_f * 1000
 
-        while temp_start_date <= temp_end_date
-          # Range is from deal created at to temp_start_date as  Merchant can activate the deal at any point of time
-          # So might have view counts even before the deal actually starts
-          num_view_array << Viewcount.where(deal_id: d.id).where(created_at: d.created_at..temp_start_date.end_of_day).count
-          num_redeem_array <<  Redemption.where(deal_id: d.id).where(created_at: d.created_at..temp_start_date.end_of_day).count
-          temp_start_date = temp_start_date + 1.days
+        while view_start_date <= temp_end_date
+          num_view_array << Viewcount.where(deal_id: d.id).where(created_at: d.created_at..view_start_date.end_of_day).count
+          view_start_date = view_start_date + 1.days
+        end
+
+        while redemption_start_date <= temp_end_date
+          num_redeem_array <<  Redemption.where(deal_id: d.id).where(created_at: d.created_at..redemption_start_date.end_of_day).count
+          redemption_start_date = redemption_start_date + 1.days
         end
         deal_array << num_view_array
         deal_array << num_redeem_array
+        deal_array << Time.parse((temp).to_s).to_f * 1000
         overall_deals_array << deal_array
       end
       overall_deals_array

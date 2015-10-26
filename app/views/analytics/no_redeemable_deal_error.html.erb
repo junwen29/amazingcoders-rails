@@ -17,8 +17,8 @@
 
     <!-- Content Body -->
     <div class = "well col-lg-6 col-lg-offset-3" style="text-align: center; font-weight: bold">
-      <p>Sorry, you have not listed any venues yet. You can list a venue <%= link_to 'here', new_venue_path %>.</p>
-      <p>Also do ensure you have at least one active or expired deal else there won't be data shown.</p>
+      <p>Sorry, you do not have any redeemable deals. This prevents us from displaying Popularity of Venues and Popularity of Deals in Venues chart.
+      You can list a redeemable deal <%= link_to 'here', new_deal_path %>. Do remember to enable the redeemable option to allow data to be gathered.</p>
     </div>
 
   </div><!-- /content -->
@@ -29,5 +29,3 @@
 
 <%= content_for :body_footer do %>
 <% end %>
-
-

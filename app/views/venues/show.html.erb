@@ -18,7 +18,27 @@
       <%= link_to 'See all outlets', venues_path, class: "btn btn-lg btn-info" %>
     </div>
 
-  </div><!--content-->
+    <div class="form-style-10">
+      <h1>Current Deals Offered at <%= @venue.name %></h1>
+      <% if @payment.blank? || !@payment.paid? %>
+          <div class = "well col-lg-6 col-lg-offset-3" style="text-align: center; font-weight: bold">
+            <p>Opps! You do not have not subscribed to our Deal Listing Service.</p>
+            <p><%= link_to 'Subscribe now', new_payment_path %></p>
+          </div>
+      <% elsif @deals.blank? %>
+          <div class = "well col-lg-6 col-lg-offset-3" style="text-align: center; font-weight: bold">
+            <p>Opps! You do not have any active deals for this location. You can create a deal <%= link_to 'here', new_deal_path %>.</p>
+          </div>
+      <% else %>
+          <%= render :partial => 'form/venue_deal_associated_form' %>
+          <div style="text-align:center">
+            <%= link_to 'Add New Deal', new_deal_path, class: "btn btn-lg btn-success" %>
+          </div>
+      <% end %>
+    </div>
+
+  </div>
+  <!--content-->
 </div><!--contentWrapper -->
 
 <%= content_for :lean_overlay do %>
@@ -29,4 +49,5 @@
 
 <%= content_for :form_footer do %>
     <%= render :partial => 'layouts/form_style' %>
+    <%= render :partial => 'layouts/deal_index' %>
 <% end %>

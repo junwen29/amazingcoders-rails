@@ -5,9 +5,9 @@ class QrcodePdf < Prawn::Document
     super()
     @deal = deal
     @deal.venues.each_with_index do |venue, index|
-      title
+      title(venue)
       dates
-      venue_name(venue)
+      multiple_use
       qr_code(venue)
       instructions(venue)
       if index != @deal.venues.size - 1
@@ -16,25 +16,32 @@ class QrcodePdf < Prawn::Document
     end
   end
 
-  def title
-    text "Title of deal: #{@deal.title}", size: 20, style: :bold, align: :center
+  def title(venue)
+    text "#{@deal.title} at #{venue.name}", size: 20, style: :bold, align: :center
   end
   
   def dates
-    move_down 20
-    text "Deal Period:#{@deal.start_date.strftime("%d/%m/%Y")} to #{@deal.expiry_date.strftime("%d/%m/%Y")}", size: 16, style: :bold, align: :center, top_margin: 20
+    move_down 10
+    text "From #{@deal.start_date.strftime("%d/%m/%Y")} to #{@deal.expiry_date.strftime("%d/%m/%Y")}", size: 16, style: :bold, align: :center, top_margin: 18
 
     for deal_day in @deal.deal_days
-      text "#{DealService.format_days (deal_day)}", size: 16, style: :bold, align: :center
-    end
-    for deal_time in deal_day.deal_times
-      text "#{deal_time.started_at.strftime("%H:%M")} to #{deal_time.ended_at.strftime("%H:%M")}", size: 16, style: :bold, align: :center
+      str = ""
+      str = str + DealService.format_days(deal_day) + ':'
+      for deal_time in deal_day.deal_times
+        str = str + " " + deal_time.started_at.strftime("%H:%M") + ' to ' + deal_time.ended_at.strftime("%H:%M")
+      end
+      text "#{str}", size: 16, style: :bold, align: :center
     end
   end
 
-  def venue_name(venue)
-    move_down 20
-    text "QR Code for: #{venue.name}", align: :center, size: 16, style: :bold
+
+  def multiple_use
+    move_down 10
+    if @deal.multiple_use
+      text "Unlimited Redeems!", size: 16, style: :bold, align: :center
+    else
+      text "Limited to one Redeem per Customer", size: 16, style: :bold, align: :center
+    end
   end
 
   def qr_code(venue)

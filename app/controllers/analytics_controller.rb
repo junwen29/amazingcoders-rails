@@ -3,7 +3,7 @@ class AnalyticsController < ApplicationController
 
   def index
     if MerchantService.get_all_venues(merchant_id).blank?
-        render 'analytics/no_venue_error'
+      render 'analytics/no_venue_error'
     elsif MerchantService.get_all_active_and_past_deals(merchant_id).blank?
       render 'analytics/no_deal_error'
     end
@@ -16,15 +16,18 @@ class AnalyticsController < ApplicationController
       render 'analytics/no_venue_error'
     elsif MerchantService.get_all_active_and_past_deals(merchant_id).blank?
       render 'analytics/no_deal_error'
+    elsif MerchantService.get_active_past_redeemable_deals(merchant_id).blank?
+      render 'analytics/no_redeemable_deal_error'
+    else
+      # Deal Statistics by Venues
+      deal_statistics_by_venue
+      render "analytics/venue"
     end
-    # Deal Statistics by Venues
-    deal_statistics_by_venue
-    render "analytics/venue"
   end
 
   def trends
     aggregate_trends
-    render"analytics/trends"
+    render "analytics/trends"
   end
 
   # Check if user has the subscribed to any deal analytics addons
