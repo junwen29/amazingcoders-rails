@@ -97,8 +97,7 @@ class PaymentsController < ApplicationController
       @payment.plan_payments.build(:plan_id => 1)
     end
 
-    if @payment.save
-      PaymentService.extend_plan(@payment)
+    if PaymentService.extend_plan(@payment)
       MerchantPointService.create_extend_point(merchant_id)
       flash[:success] = "Gift Redeemed!"
       redirect_to gifts_path
