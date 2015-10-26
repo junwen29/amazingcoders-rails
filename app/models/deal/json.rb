@@ -16,6 +16,7 @@ module Deal::Json
       json.start_date     self.start_date
       json.expiry_date    self.expiry_date
       json.is_bookmarked  self.is_bookmarked unless self.is_bookmarked == nil
+      json.image          self.image.path unless self.image == nil
     end
 
     def to_json(json, options = {})
@@ -28,8 +29,9 @@ module Deal::Json
       json.set! :venues do
         json.array! self.venues do |venue|
           json.id             venue.id
-          json.name             venue.name
+          json.name           venue.name
           json.neighbourhood  venue.neighbourhood
+          json.photo          venue.photo.path unless venue.photo == nil
         end
       end
     end

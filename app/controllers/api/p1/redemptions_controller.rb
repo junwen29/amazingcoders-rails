@@ -25,7 +25,7 @@ class Api::P1::RedemptionsController < Api::P1::ApplicationController
   def index
     user_id = params[:user_id]
     redemptions = RedemptionService.get_redemptions_by_user_id user_id
-    if redemptions.empty?
+    if redemptions.nil?
       render_error_json(NotFoundError.new)
     else
       render_jbuilders(redemptions) do |json,redemption|

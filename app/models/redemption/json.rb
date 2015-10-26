@@ -27,8 +27,10 @@ module Redemption::Json
         self.user.to_json json
       end
 
+      deal = Deal.find(self.deal_id)
+
       json.deal do
-        self.deal.to_simple_json json
+        deal.to_simple_json json
       end
 
       venue = Venue.find(self.venue_id)
