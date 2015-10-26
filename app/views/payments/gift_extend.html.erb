@@ -1,0 +1,45 @@
+<%= render 'layouts/biz/dash' %>
+<!--delete??-->
+<div class="contentWrapper">
+  <div class="content">
+
+    <!--Flash messages-->
+    <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+    <% end %>
+
+    <!-- Content Heading -->
+    <div class="pull-left">
+      <p class="b2 content-title">Extend Plan</p>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="content-separator"></div>
+
+
+    <%= form_tag('gifts_path', :method=>'post') do %>
+        <p>
+          Subject:<br />
+          <%= text_field_tag :start_date %>
+        </p>
+
+        <script>
+            $(function() {
+                $( "#start_date" ).datepicker();})
+        </script>
+
+        <p>
+          <%= submit_tag 'Submit' %>
+        </p>
+    <% end %>
+
+  </div><!-- /content -->
+</div><!-- /contentWrapper -->
+
+<%= content_for :lean_overlay do %>
+<% end %>
+
+<%= content_for :body_footer do %>
+<% end %>
+
+

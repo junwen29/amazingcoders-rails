@@ -10,16 +10,24 @@ class GiftsController < InheritedResources::Base
     points = Merchant.find(merchant_id).total_points
     gift = Gift.find(params[:id])
     if points >= gift.points
-      flash[:success] = "Gift Redeemed!"
-      reason = "Redeemed " + gift.name
-      MerchantPointService.new_point(reason, gift.points, "Minus", merchant_id)
 
-      redirect_to gifts_path
+      if gift.name = "Extend"
+        @payment = Payment.new
+        render 'payments/gift_extend'
+      else
+        flash[:success] = "Gift Redeemed!"
+        reason = "Redeemed " + gift.name
+        MerchantPointService.new_point(reason, gift.points, "Minus", merchant_id)
+        redirect_to gifts_path
+      end
+
     else
       flash[:error] = "Insufficient Points!"
       redirect_to gifts_path
     end
   end
+
+
 
   private
   def gift_params

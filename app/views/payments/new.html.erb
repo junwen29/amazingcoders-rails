@@ -25,9 +25,14 @@
     <div class="clearfix"></div>
     <div class="content-separator"></div>
 
+
+    <% if @extend %>
+        <%= render :partial => 'form/payment_extend_form' %>
+        <% else %>
     <!-- Content Body -->
     <%= render :partial => 'form/payment_new_form' %>
 
+        <% end %>
 
 
 
