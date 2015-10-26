@@ -35,7 +35,19 @@
               <td><%= p.name %></td>
               <td><%= p.points %></td>
               <td><%= p.description %></td>
-              <td><%= link_to 'Redeem', gift_path(p), class: "btn btn-xs btn-default" %></td>
+              <td>
+                <% if GiftService.check_redeemable(@merchant_id, p) %>
+                    <%= link_to gift_path(p) do%>
+                        <button class="btn btn-success">
+                          Redeem
+                        </button>
+                    <% end %>
+                <% else %>
+                    <button class="btn btn-default disabled" type="button" data-toggle="tooltip" data-placement="top" title="Sorry, you have insufficient points to redeem this gift.">
+                      Redeem
+                    </button>
+                <% end %>
+              </td>
             </tr>
         <% end %>
       </table>
