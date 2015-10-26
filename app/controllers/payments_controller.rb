@@ -10,9 +10,7 @@ class PaymentsController < ApplicationController
     @addon1 = AddOn.find(1)
     @addon2 = AddOn.find(2)
     @addon3 = AddOn.find(3)
-    if request.env['HTTP_REFERER'] == "http://127.0.0.1:3000/gifts"
-      @extend = true
-    end
+
   end
 
   # Disable
@@ -41,64 +39,73 @@ class PaymentsController < ApplicationController
     @payment = Merchant.find(merchant_id).payments.new(payment_params)
     @plan1 = Plan.find(1)
 
-    if @payment.plan1.nil?
-      PaymentService.extend_plan(@payment)
 
-      @plan_payment = @payment.plan_payments.new
-      if (params[:payment][:plan1] == "true")
-        @payment.plan_payments.build(:plan_id => 1)
-      end
+    @total_cost = calculate_price(@payment)
+    @payment.update(total_cost: @total_cost*@payment.months)
 
-      if @payment.save
-        MerchantPointService.create_extend_point(merchant_id)
-        flash[:success] = "Gift Redeemed!"
-        redirect_to merchant_points_path
-      else
-        flash[:error] = "Selected period clashes with existing plan! Please choose another date"
-        render 'new'
-      end
 
+    # Update join table in addon_payment
+    @add_on_payment = @payment.add_on_payments.build
+    if (params[:payment][:add_on1] == "true")
+      @payment.add_on_payments.build(:add_on_id => 1)
+    end
+    if (params[:payment][:add_on2] == "true")
+      @payment.add_on_payments.build(:add_on_id => 2)
+    end
+    if (params[:payment][:add_on3] == "true")
+      @payment.add_on_payments.build(:add_on_id => 3)
+    end
+
+    # Update join table in plan_payment
+    @plan_payment = @payment.plan_payments.new
+    if (params[:payment][:plan1] == "true")
+      @payment.plan_payments.build(:plan_id => 1)
+    end
+
+    if @payment.save
+      # flash[:success] = "Success in registering plan"
+      redirect_to new_payment_charge_path(@payment.id)
+      #if token is created successfully, go to show page and check if charge is created.
     else
-      @total_cost = calculate_price(@payment)
-      @payment.update(total_cost: @total_cost*@payment.months)
+      flash[:error] = "Failed to upgrade plan"
+      @plan = Plan.all
+      @plan1 = Plan.find(1)
+      @addon1 = AddOn.find(1)
+      @addon2 = AddOn.find(2)
+      @addon3 = AddOn.find(3)
+      render 'new'
 
-
-      # Update join table in addon_payment
-      @add_on_payment = @payment.add_on_payments.build
-      if (params[:payment][:add_on1] == "true")
-        @payment.add_on_payments.build(:add_on_id => 1)
-      end
-      if (params[:payment][:add_on2] == "true")
-        @payment.add_on_payments.build(:add_on_id => 2)
-      end
-      if (params[:payment][:add_on3] == "true")
-        @payment.add_on_payments.build(:add_on_id => 3)
-      end
-
-      # Update join table in plan_payment
-      @plan_payment = @payment.plan_payments.new
-      if (params[:payment][:plan1] == "true")
-        @payment.plan_payments.build(:plan_id => 1)
-      end
-
-      if @payment.save
-        # flash[:success] = "Success in registering plan"
-        redirect_to new_payment_charge_path(@payment.id)
-        #if token is created successfully, go to show page and check if charge is created.
-      else
-        flash[:error] = "Failed to upgrade plan"
-        @plan = Plan.all
-        @plan1 = Plan.find(1)
-        @addon1 = AddOn.find(1)
-        @addon2 = AddOn.find(2)
-        @addon3 = AddOn.find(3)
-        render 'new'
-      end
     end
   end
 
   def show
     @payment = Payment.find(params[:id])
+
+  end
+
+  def gift_extend
+    @payment = Payment.new
+  end
+
+  def extend
+    @payment = Merchant.find(merchant_id).payments.new(payment_params)
+    @plan1 = Plan.find(1)
+
+
+    @plan_payment = @payment.plan_payments.new
+    if (params[:payment][:plan1] == "true")
+      @payment.plan_payments.build(:plan_id => 1)
+    end
+
+    if @payment.save
+      PaymentService.extend_plan(@payment)
+      MerchantPointService.create_extend_point(merchant_id)
+      flash[:success] = "Gift Redeemed!"
+      redirect_to gifts_path
+    else
+      flash[:error] = "Selected period clashes with existing plan! Please choose another date"
+      render 'gift_extend'
+    end
 
   end
 

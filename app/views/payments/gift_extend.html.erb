@@ -17,20 +17,17 @@
     <div class="content-separator"></div>
 
 
-    <%= form_tag('gifts_path', :method=>'post') do %>
-        <p>
-          Subject:<br />
-          <%= text_field_tag :start_date %>
+    <%= form_for @payment, url: payments_extend_path do |f| %>
+        <!-- choose start date -->
+        <p class= "form-select clearfix">
+        <%= f.label :start_date, "Start Date:" %>
+        <span>
+        <%= f.text_field :start_date %>
+        </span>
         </p>
 
-        <script>
-            $(function() {
-                $( "#start_date" ).datepicker();})
-        </script>
-
-        <p>
-          <%= submit_tag 'Submit' %>
-        </p>
+        <p class= "clearfix" >
+          <%= f.submit "Confirm extension start date" , :class => 'btn btn-big btn-success' %>
     <% end %>
 
   </div><!-- /content -->
