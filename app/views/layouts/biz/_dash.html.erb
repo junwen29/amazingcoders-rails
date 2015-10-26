@@ -39,7 +39,7 @@
     </div>
 
     <div class="header-content-item logoutBtn">
-      <%= link_to "Help", nil , {:class => "help"} %>
+      <%= link_to "Contact Us", feedbacks_path, {:class => "help"} %>
       <%= link_to "Sign Out", destroy_merchant_session_path, { :class=> "btn", :method => :delete } %>
     </div>
   </div>
@@ -61,7 +61,6 @@
     <li><%= link_to "Edit Listing", nil %></li>
     <li><%= link_to "Premium Listing", nil %></li>
     <li><%= link_to "Deal Listing", deals_path %></li>
-    <li><%= link_to "Contact Us", feedbacks_path %></li>
   </ul>
 </div>
 
