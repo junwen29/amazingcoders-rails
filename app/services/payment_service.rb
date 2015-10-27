@@ -50,8 +50,7 @@ class PaymentService
     end
 
     def extend_plan(payment)
-      payment.update(plan1: true, add_on1: false, add_on2: false, add_on3: false, total_cost: 0,
-                     expiry_date: payment.start_date.months_since(1), months: 1, paid: true)
+      payment.update(plan1: true, add_on1: false, add_on2: false, add_on3: false, total_cost: 0, months: 1, paid: true)
     end
   end
 

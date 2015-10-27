@@ -100,11 +100,11 @@ class PaymentsController < ApplicationController
     end
 
     if PaymentService.extend_plan(@payment)
+      @payment.update(expiry_date: payment.start_date.months_since(1))
       MerchantPointService.create_extend_point(merchant_id)
       flash[:success] = "Gift Redeemed!"
       redirect_to merchant_points_path
     else
-      flash[:error] = "Selected period clashes with existing plan! Please choose another date"
       render 'gift_extend'
     end
 
