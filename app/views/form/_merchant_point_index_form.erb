@@ -16,9 +16,9 @@
       <% @points.find_each do |p| %>
           <tr>
             <td>
-              <% if p.operation == "Add" %>
+              <% if p.operation == "Credit" %>
                   <%= "+"%><%=p.points%>
-              <% elsif p.operation == "Minus" %>
+              <% elsif p.operation == "Debit" %>
                   <%= "-"%><%=p.points%>
               <% end %>
             </td>

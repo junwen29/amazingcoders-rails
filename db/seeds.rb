@@ -20,6 +20,14 @@ PlanPayment.create(id: '100', plan_id: '100', payment_id: '100', created_at: '20
 AddOnPayment.create(id: '100', add_on_id: '100', payment_id: '100', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
 
 # For Gifts
-Gift.create(id: '1', name: '1 free month', points: '600', description: 'Free 1 month subscription to Premium Deals Services. Simply click redeem and select the start date of your plan!', gift_type: 'Merchant', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
-Gift.create(id: '2', name: 'Burpple Shirt', points: '100', description: 'Get a Burpple Shirt Merchandise!', gift_type: 'Merchant', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
+Gift.create(id: '1000', name: '1 free month', points: '600', description: 'Free 1 month subscription to Premium Deals Services. Simply click redeem and select the start date of your plan!', gift_type: 'Merchant', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
+Gift.create(id: '1001', name: 'Burpple Shirt', points: '100', description: 'Get a Burpple Shirt Merchandise!', gift_type: 'Merchant', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
 
+
+=begin
+admin = AdminUser.new(id: '1')
+admin.email = 'admin@example.com'
+admin.password = 'password'
+admin.password_confirmation = 'password'
+admin.save
+=end
