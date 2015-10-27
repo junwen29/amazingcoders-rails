@@ -4,20 +4,11 @@ ActiveAdmin.register_page "Dashboard" do
 
   content title: proc{ I18n.t("active_admin.dashboard") } do
 
-=begin
-    div class: "blank_slate_container", id: "dashboard_default_message" do
-      span class: "blank_slate" do
-        span I18n.t("active_admin.dashboard_welcome.welcome")
-        small I18n.t("active_admin.dashboard_welcome.call_to_action")
-      end
-    end
-=end
-
     columns do
       date = Date.today.beginning_of_month
       @deal_subscription_count = PaymentService.count_active_premiums(date, 1)
-      @total_premiums = PaymentService.get_total_payments()
-      @active_deals = DealService.count_all_active_deals()
+      @total_premiums = PaymentService.get_total_payments
+      @active_deals = DealService.count_all_active_deals
       # TODO: Add dashboard figure for redeemed deals
 
       column do
@@ -31,7 +22,7 @@ ActiveAdmin.register_page "Dashboard" do
     end
 
     panel "Recent Deals" do
-      table_for Deal.order("created_at desc").limit(5) do
+      table_for Deal.active.order("created_at desc").limit(10) do
         column "Title", :title do |deal|
           link_to deal.title, admin_deal_path(deal)
         end
@@ -48,24 +39,24 @@ ActiveAdmin.register_page "Dashboard" do
       strong {link_to "View all Deals", admin_deals_path}
     end
 
-    # Here is an example of a simple dashboard with columns and panels.
-    #
-    # columns do
-    #   column do
-    #     panel "Recent Posts" do
-    #       ul do
-    #         Post.recent(5).map do |post|
-    #           li link_to(post.title, admin_post_path(post))
-    #         end
-    #       end
-    #     end
-    #   end
 
-    #   column do
-    #     panel "Info" do
-    #       para "Welcome to ActiveAdmin."
-    #     end
-    #   end
-    # end
+    panel "Recent Redemptions" do
+      table_for Redemption.order("created_at desc").limit(10) do
+        column "Deal" do |r|
+          auto_link r.deal
+        end
+        column "User" do |r|
+          auto_link r.user
+        end
+        column "Venue" do |r|
+          Venue.find(r.venue_id).name
+        end
+        column "Redeemed on" do |r|
+          r.created_at.localtime.strftime("%B %d, %Y %H:%M")
+        end
+      end
+      strong {link_to "View all Redemptions", admin_redemptions_path}
+    end
+
   end # content
 end

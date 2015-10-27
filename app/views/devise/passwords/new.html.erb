@@ -3,27 +3,25 @@
     <div class="panel-heading">
       <div class="panel-body">
         <div style = "float:right">
-          <div style="display:inline-block"><img class="profile-img" src="http://www.burpple.com/img/logo.png" height="100" width ="100"></div>
+          <div style="display:inline-block" class="hidden-xs"><%= image_tag("biz/signin_logo.png", alt: "burpple", height: "100", width: "100") %></div>
         </div>
         <div style="display:inline-block"><h3>Forgot your password?</h3></div>
       </div>
     </div>
-    <div class="row" style="margin:5px">
-      <div class="col-lg-6">
+    <div class="panel-body">
 
-        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-            <%= devise_error_messages! %>
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+          <%= devise_error_messages! %>
 
-            <div class="field form-textarea clearfix">
-              <%= f.label :email %><br />
-              <%= f.email_field :email, autofocus: true %>
-            </div>
+          <div class="form-group">
+            <%= f.label :email %>
+            <%= f.email_field :email, autofocus: true, class:"input-block-level", placeholder:"Enter email to recover password" %>
+          </div>
 
-            <div class="actions">
-              <%= f.submit "Send me reset password instructions" %>
-            </div>
-        <% end %>
-      </div>
+          <div class="actions" style="padding-top:20px">
+            <%= f.submit "Send me reset password instructions", class: "btn btn-info" %>
+          </div>
+      <% end %>
     </div>
   </div>
 </div>

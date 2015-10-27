@@ -60,6 +60,28 @@
               }],
 
               drilldown: {
+                  drillUpButton: {
+                      position: {
+                          y: -45,
+                          x: -600
+                      },
+                      theme: {
+                          fill: 'white',
+                          'stroke-width': 1,
+                          stroke: 'silver',
+                          r: 0,
+                          states: {
+                              hover: {
+                                  fill: '#bada55'
+                              },
+                              select: {
+                                  stroke: '#039',
+                                  fill: '#bada55'
+                              }
+                          }
+                      }
+
+                  },
                   series: [
                       <% loop = 0 %>
                       <% while loop < num_of_deal_types %>

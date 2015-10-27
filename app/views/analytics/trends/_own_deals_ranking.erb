@@ -1,0 +1,55 @@
+<div class="panel panel-primary">
+  <div class="panel-heading panel-heading-custom">
+    <h4>Your Active Deals Ranking!</h4>
+  </div>
+  <div class="panel-body">
+    <strong>By Redemption Count</strong>
+
+    <p id="hint">*Own deals will be highlighted</p>
+    <table class="table table-bordered table-hover table-responsive">
+      <tr>
+        <th>Rank</th>
+        <th>Title</th>
+        <th>Type of Deal</th>
+        <th>Description</th>
+      </tr>
+
+      <% @own_deals.each do |od| %>
+          <% deal = Deal.find(od[0]) %>
+          <% if od[1] < 10 %>
+              <tr id="own">
+          <% else %>
+              <tr>
+          <% end %>
+          <td><%= od[1] + 1 %></td>
+          <td>
+            <%= deal.title %>
+          </td>
+          <td>
+            <%= deal.type_of_deal %>
+          </td>
+          <td><%= deal.description %></td>
+          </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<style>
+    tr#own {
+        background-color: #f1f1c1;
+    }
+
+    p#hint {
+        font-style: italic
+    }
+    .panel-primary > .panel-heading-custom {
+        background: #ea1f6c;
+        color: #fff;
+        border-color: #ea1f6c;
+    }
+
+    .panel-primary {
+        border-color: #ea1f6c;
+    }
+</style>

@@ -1,10 +1,10 @@
 <header>
   <div class="container">
   <div class="header-content">
-    <div class="header-logo">
-      <%= link_to image_tag("biz/burpple_logo.png", :alt => "burpple"), deals_path %>
+    <div class="header-home-logo">
+      <%= link_to image_tag("biz/burpple_business_logo.png", :alt => "burpple"), deals_path %>
     </div>
-    <div style="float: right; padding-top: 24px;">
+    <div class="header-home-actions">
       <% if merchant_signed_in? %>
           <!-- <strong><%= current_merchant.email %></strong> -->
           <%= link_to 'Edit profile', edit_merchant_registration_path, class: "btn btn-lg btn-info" %>
@@ -107,7 +107,7 @@
     <div class="container">
       <div class="fullWidth">
         <div class="cta-wrapper">
-          <span>Join over 1000 other businesses now!</span>
+          <p>Join over 1000 other businesses now!</p>
           <%= link_to "Claim your business for free", new_merchant_registration_path, :class => 'btn btn-lg btn-success' %>
         </div>
       </div>

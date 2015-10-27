@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151020032543) do
+ActiveRecord::Schema.define(version: 20151027154533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -193,6 +193,18 @@ ActiveRecord::Schema.define(version: 20151020032543) do
     t.datetime "updated_at"
   end
 
+  create_table "merchant_feedbacks", force: true do |t|
+    t.string   "title"
+    t.string   "category"
+    t.text     "content"
+    t.boolean  "resolved",    default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "merchant_id"
+  end
+
+  add_index "merchant_feedbacks", ["merchant_id"], name: "index_merchant_feedbacks_on_merchant_id", using: :btree
+
   create_table "merchant_points", force: true do |t|
     t.string   "reason"
     t.integer  "points"
@@ -269,6 +281,18 @@ ActiveRecord::Schema.define(version: 20151020032543) do
 
   add_index "redemptions", ["deal_id"], name: "index_redemptions_on_deal_id", using: :btree
   add_index "redemptions", ["user_id"], name: "index_redemptions_on_user_id", using: :btree
+
+  create_table "user_feedbacks", force: true do |t|
+    t.string   "title"
+    t.string   "category"
+    t.text     "content"
+    t.boolean  "resolved",   default: false
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_feedbacks", ["user_id"], name: "index_user_feedbacks_on_user_id", using: :btree
 
   create_table "user_queries", force: true do |t|
     t.string   "query"
