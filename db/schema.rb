@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151013173305) do
+ActiveRecord::Schema.define(version: 20151027092418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,11 +30,6 @@ ActiveRecord::Schema.define(version: 20151013173305) do
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
-
-  create_table "activities", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "add_on_payments", force: true do |t|
     t.integer  "add_on_id"
@@ -156,7 +151,6 @@ ActiveRecord::Schema.define(version: 20151013173305) do
     t.date     "expiry_date"
     t.string   "location"
     t.string   "t_c"
-    t.integer  "num_of_redeems"
     t.boolean  "pushed"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -166,6 +160,7 @@ ActiveRecord::Schema.define(version: 20151013173305) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.boolean  "active",             default: false
+    t.integer  "num_of_redeems",     default: 0
   end
 
   add_index "deals", ["merchant_id"], name: "index_deals_on_merchant_id", using: :btree
@@ -178,6 +173,17 @@ ActiveRecord::Schema.define(version: 20151013173305) do
     t.datetime "updated_at"
   end
 
+  create_table "feedbacks", force: true do |t|
+    t.string   "title"
+    t.string   "category"
+    t.string   "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "merchant_id"
+  end
+
+  add_index "feedbacks", ["merchant_id"], name: "index_feedbacks_on_merchant_id", using: :btree
+
   create_table "gifts", force: true do |t|
     t.string   "name"
     t.integer  "points"
@@ -186,6 +192,18 @@ ActiveRecord::Schema.define(version: 20151013173305) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "merchant_feedbacks", force: true do |t|
+    t.string   "title"
+    t.string   "category"
+    t.text     "content"
+    t.boolean  "resolved",    default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "merchant_id"
+  end
+
+  add_index "merchant_feedbacks", ["merchant_id"], name: "index_merchant_feedbacks_on_merchant_id", using: :btree
 
   create_table "merchant_points", force: true do |t|
     t.string   "reason"

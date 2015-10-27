@@ -1,0 +1,23 @@
+<div class="content-form">
+  <%= form_for @merchant_feedback, :html => {:multipart => true} do |f| %>
+      <p class="form-text clearfix">
+        <%= f.label "Title of Feedback*" %>
+        <span><%= f.text_field :title %></span>
+      </p>
+
+      <p class="form-text clearfix">
+        <%= f.label :category, "Category" %>
+        <span><%= f.select :category, [['Suggestion','Suggestion'],['Complaint','Complaint'],['Issue','Issue']] %></span>
+      </p>
+
+      <p class="form-textarea clearfix">
+        <%= f.label "Details*" %>
+        <span><%= f.text_area :content, :rows => '6', :cols => '32', :placeholder => 'Enter your Feedback Here..' %></span>
+      </p>
+
+      <div class="actions">
+        <%= f.submit "Submit Feedback", :class => 'btn btn-big btn-success' %>
+        <%= link_to 'Back', merchant_feedbacks_path, class: "btn btn-big btn-default" %>
+      </div>
+  <% end %>
+</div>

@@ -39,7 +39,7 @@
     </div>
 
     <div class="header-content-item logoutBtn">
-      <%= link_to "Help", nil , {:class => "help"} %>
+      <%= link_to "Feedback", merchant_feedbacks_path, {:class => "help"} %>
       <%= link_to "Sign Out", destroy_merchant_session_path, { :class=> "btn", :method => :delete } %>
     </div>
   </div>
@@ -50,16 +50,13 @@
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Personal Settings <span class="caret"></span></a>
       <ul class="dropdown-menu">
-        <li><a href="#">Profile</a></li>
-        <li><a href="#">Email</a></li>
-        <li><a href="#">Account Settings</a></li>
+        <li><%= link_to "Profile", nil %></li>
         <li><%= link_to "Billing", payments_path %></li>
+        <li><%= link_to "Burps", merchant_points_path %></li>
       </ul>
     </li>
     <li><%= link_to "Activity", nil %></li>
     <li><%= link_to "View Venues", venues_path%></li>
-    <!--<li><%# link_to "Edit Listing", nil %></li>-->
-    <!--<li><%# link_to "Premium Listing", nil %></li>-->
     <li><%= link_to "Deal Listing", deals_path %></li>
     <% if DealAnalyticService.check_deal_analytics(session[:merchant_id]) == 1 %>
         <li class="dropdown">
@@ -86,7 +83,6 @@
           </ul>
         </li>
     <% end %>
-    <li><%= link_to "Burps", merchant_points_path %></li>
   </ul>
 </div>
 
