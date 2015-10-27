@@ -6,7 +6,8 @@
     </h4>
   </div>
   <div class="panel-body">
-    <table class="table table-bordered table-hover table-responsive">
+    <div class="table-responsive">
+    <table class="table table-bordered table-hover">
       <tr>
         <th>Burps Changed</th>
         <th>Reason</th>
@@ -27,6 +28,7 @@
           </tr>
       <% end %>
     </table>
+    </div>
     <h4 class="panel-title">
       Total Burps: <%= @merchant.total_points%>
     </h4>
