@@ -14,6 +14,13 @@ Plan.create(id: '1000', name: 'Reservations', cost: '45', description: 'Test pay
 AddOn.create(id: '1000', plan_id: '1000', name: 'Reservation Notifications', cost: '10', description: 'Reservation Notification', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
 AddOn.create(id: '1001', plan_id: '1000', name: 'Reservation Statistics', cost: '10', description: 'Reservation Statistics', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
 
+# Seed admin
+admin = AdminUser.new(id: '1000')
+admin.email = 'admin@burpple.com'
+admin.password = 'password'
+admin.password_confirmation = 'password'
+admin.save
+
 # Seed Merchant
 merchant = Merchant.new(id: '1000')
 merchant.email = 'amazingcoders8mc@gmail.com'
