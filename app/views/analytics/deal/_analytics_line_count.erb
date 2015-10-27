@@ -77,7 +77,7 @@
                   {
                       id: "<%= @deals_daily_count[0][num][0] %>" + ' (View Count)',
                       name: '<span style="color: #00910c">Active: </span>' + "<%= @deals_daily_count[0][num][0] %>" + '<span style="color: #9d1bcf"> (View Count)</span>',
-                      pointStart: <%= @deals_daily_count[0][num][1] %>,
+                      pointStart: <%= @deals_daily_count[0][num][4] %>,
                       pointInterval: 24 * 3600 * 1000,
                       data: <%= @deals_daily_count[0][num][2] %>,
                       visible: true
@@ -98,7 +98,7 @@
                   {
                       id: "<%= @deals_daily_count[1][loops][0] %>" + ' (View Count)',
                       name: '<span style="color: #df1007">Expired: </span>' + "<%= @deals_daily_count[1][loops][0] %>" + '<span style="color: #9d1bcf"> (View Count)</span>',
-                      pointStart: <%= @deals_daily_count[1][loops][1] %>,
+                      pointStart: <%= @deals_daily_count[1][loops][4] %>,
                       pointInterval: 24 * 3600 * 1000,
                       data: <%= @deals_daily_count[1][loops][2] %>,
                       visible: false
