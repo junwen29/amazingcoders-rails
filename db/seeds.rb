@@ -781,7 +781,7 @@ num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
 start_date = DateTime.parse("2015-02-25 00:00:00")
-end_date = DateTime.parse("2015-10-29 00:00:00")
+end_date = DateTime.parse("2015-10-29 00:00:01")
 while start_date <= end_date
   limit = view_count + rand(2..6)
   while view_count < limit
