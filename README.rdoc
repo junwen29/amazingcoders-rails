@@ -23,6 +23,11 @@ Things to take note to get the application up and running:
 
 * Database initialization
 
+* Image Hosting
+    - Get 'Cloudinary.yml' and place it under 'config' folder
+    - bundle install gem 'cloudinary' and gem 'attachinary'
+    - rake db:migrate
+
 * How to run the test suite
 
 * Services (job queues, cache servers, search engines, etc.)

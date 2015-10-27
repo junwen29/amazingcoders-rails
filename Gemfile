@@ -61,9 +61,9 @@ gem 'devise'
 # For QRCode
 gem 'rqrcode_png'
 
+# TODO remove this GEM
 # For attaching images
 gem 'paperclip'
-gem 'carrierwave'
 
 # Active Admin
 gem 'activeadmin', '~> 1.0.0.pre1'
@@ -77,3 +77,7 @@ gem 'prawn-qrcode'
 
 # Google Cloud Messaging gem
 gem "gcm"
+
+# Cloudinary Image Hosting gem
+gem 'cloudinary'
+gem 'attachinary'

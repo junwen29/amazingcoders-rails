@@ -29,9 +29,9 @@
           </div>
         </div>
     <% else %>
-        <!--<div class="header-content-item" style="padding: 30px">
+        <div class="header-content-item merchantDropdown" style="padding: 30px">
           <span class="text-uppercase"><%= current_merchant.email %></span>
-        </div>-->
+        </div>
     <% end  %>
 
     <div class="header-content-item newBtn">
@@ -39,14 +39,14 @@
     </div>
 
     <div class="header-content-item logoutBtn">
-      <%= link_to "Feedback", feedbacks_path, {:class => "help"} %>
+      <%= link_to "Feedback", merchant_feedbacks_path, {:class => "help"} %>
       <%= link_to "Sign Out", destroy_merchant_session_path, { :class=> "btn", :method => :delete } %>
     </div>
   </div>
 </div>
 
 <div class="nav">
-  <ul>
+  <ul class="nav-menu">
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Personal Settings <span class="caret"></span></a>
       <ul class="dropdown-menu">
@@ -57,10 +57,36 @@
       </ul>
     </li>
     <li><%= link_to "Activity", nil %></li>
-    <li><%= link_to "View Listing", venues_path%></li>
-    <li><%= link_to "Edit Listing", nil %></li>
-    <li><%= link_to "Premium Listing", nil %></li>
+    <li><%= link_to "View Venues", venues_path%></li>
+    <!--<li><%# link_to "Edit Listing", nil %></li>-->
+    <!--<li><%# link_to "Premium Listing", nil %></li>-->
     <li><%= link_to "Deal Listing", deals_path %></li>
+    <% if DealAnalyticService.check_deal_analytics(session[:merchant_id]) == 1 %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Deal Analytics <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "By Deals", analytics_path %></li>
+            <li><%= link_to "By Venues", analytics_venue_path %></li>
+            <li><%= link_to "Aggregate Trends", analytics_trends_path %></li>
+          </ul>
+        </li>
+    <% elsif DealAnalyticService.check_deal_analytics(session[:merchant_id]) == 2 %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Deal Analytics <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "By Deals", analytics_path %></li>
+            <li><%= link_to "By Venues", analytics_venue_path %></li>
+          </ul>
+        </li>
+    <% elsif DealAnalyticService.check_deal_analytics(session[:merchant_id]) == 3 %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Deal Analytics <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "Aggregate Trends", analytics_trends_path %></li>
+          </ul>
+        </li>
+    <% end %>
+    <li><%= link_to "Burps", merchant_points_path %></li>
   </ul>
 </div>
 
@@ -76,6 +102,15 @@
             $('.venueDropdown-dropdown').toggle();
             $(this).toggleClass('venueDropdown-select--selected');
         });
+
+        $( window ).on('resize', function() {
+            if ( window.matchMedia('(max-width: 645px)').matches) {
+                $('li.dropdown ul').removeClass('dropdown-menu');
+            } else {
+                $('li.dropdown ul').addClass('dropdown-menu');
+            }
+        }).resize();
     </script>
+
 <% end %>
 

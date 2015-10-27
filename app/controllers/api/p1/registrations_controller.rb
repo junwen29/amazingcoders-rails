@@ -4,6 +4,7 @@ class Api::P1::RegistrationsController < Devise::RegistrationsController
 
   # skip_before_filter :verify_authenticity_token,
   #                    :if => Proc.new { |c| c.request.format == 'application/json' }
+  rescue_from BurppleError,    :with => :render_error_json
 
   respond_to :json
 
@@ -96,17 +97,17 @@ class Api::P1::RegistrationsController < Devise::RegistrationsController
       end
 
       # email for registrations has already existed, using the old user account to sign in
-    elsif email_errors = resource.errors.messages[:email] and
-        email_errors.include? "has already been taken" and
-        resource = User.find_by_email(resource.email) and
-        resource and
-        resource.active_for_authentication? and
-        resource.valid_password?(params[:password])
-
-      sign_in resource_name, resource, :bypass => true
-      render_jbuilder do |json|
-        resource.to_auth_json(json)
-      end
+    # elsif email_errors = resource.errors.messages[:email] and
+    #     email_errors.include? "has already been taken" and
+    #     resource = User.find_by_email(resource.email) and
+    #     resource and
+    #     resource.active_for_authentication? and
+    #     resource.valid_password?(params[:password])
+    #
+    #   sign_in resource_name, resource, :bypass => true
+    #   render_jbuilder do |json|
+    #     resource.to_auth_json(json)
+    #   end
 
     else
       clean_up_passwords(resource)

@@ -1,0 +1,19 @@
+<p>
+  <strong>Title: </strong><br>
+  <%= @merchant_feedback.title %>
+</p>
+
+<p>
+  <strong>Category: </strong><br>
+  <%= @merchant_feedback.category %>
+</p>
+
+<p>
+  <strong>Description: </strong><br>
+  <%= @merchant_feedback.content %>
+</p>
+
+<p>
+  <strong>Date and Time Submitted: </strong><br>
+  <%= @merchant_feedback.created_at.to_formatted_s(:long) %>
+</p>

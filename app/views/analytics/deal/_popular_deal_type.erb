@@ -1,0 +1,107 @@
+<div id="deal_type" class="col-lg-12" style="padding-bottom: 20px;"></div>
+
+<footer>
+  <!--Pie Chart-->
+  <script>
+      $(document).ready(function () {
+          $('#deal_type').highcharts({
+              credits: {
+                  enabled: false
+              },
+              chart: {
+                  type: 'pie',
+                  events: {
+                      drilldown: function (e) {
+                          this.setTitle({text: "Popularity of Deal of Deal Type " + e.point.name});
+                      },
+                      drillup: function (e) {
+                          this.setTitle({text: 'Popularity of Deal Types'});
+                      }
+                  }
+              },
+              title: {
+                  text: 'Popularity of Deal Types'
+              },
+              subtitle: {
+                  text: 'Redemption Count'
+              },
+              tooltip: {
+                  headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                  pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.percentage:.2f}%</b> of total<br/>',
+              },
+              plotOptions: {
+                  pie: {
+                      allowPointSelect: true,
+                      cursor: 'pointer',
+                      depth: 35,
+                      dataLabels: {
+                          enabled: true,
+                          format: '{point.name} ' + '<span style="color: #0f1cda">{point.y} Redemptions </span>'
+                      },
+                      showInLegend: true
+                  }
+              },
+              series: [{
+                  name: "Deal Type",
+                  colorByPoint: true,
+                  data: [
+                      <% num_of_deal_types = @deals_popularity_by_type_and_redemption.size %>
+                      <% loop = 0 %>
+                      <% while loop < num_of_deal_types %>
+                      <% last_variable = @deals_popularity_by_type_and_redemption[loop].size - 1 %>
+                      {
+                          name: "<%= @deals_popularity_by_type_and_redemption[loop][0] %>",
+                          y: <%= @deals_popularity_by_type_and_redemption[loop][last_variable]%>,
+                          drilldown: "<%= @deals_popularity_by_type_and_redemption[loop][0] %>"
+                      },
+                      <% loop = loop + 1 %>
+                      <% end %>
+                  ]
+              }],
+
+              drilldown: {
+                  drillUpButton: {
+                      position: {
+                          y: -45,
+                          x: -600
+                      },
+                      theme: {
+                          fill: 'white',
+                          'stroke-width': 1,
+                          stroke: 'silver',
+                          r: 0,
+                          states: {
+                              hover: {
+                                  fill: '#bada55'
+                              },
+                              select: {
+                                  stroke: '#039',
+                                  fill: '#bada55'
+                              }
+                          }
+                      }
+
+                  },
+                  series: [
+                      <% loop = 0 %>
+                      <% while loop < num_of_deal_types %>
+                      <% num_of_deal_in_deal_type = @deals_popularity_by_type_and_redemption[loop].size - 1 %>
+                      <% inner_loop = 1 %>
+                      {
+                          name: "<%= @deals_popularity_by_type_and_redemption[loop][0] %>",
+                          id: "<%= @deals_popularity_by_type_and_redemption[loop][0] %>",
+                          data: [
+                              <% while inner_loop < num_of_deal_in_deal_type %>
+                              ["<%= @deals_popularity_by_type_and_redemption[loop][inner_loop][0] %>", <%=@deals_popularity_by_type_and_redemption[loop][inner_loop][1] %>],
+                              <% inner_loop = inner_loop + 1 %>
+                              <% end %>
+                          ]
+                      },
+                      <% loop = loop + 1 %>
+                      <% end %>
+                  ]
+              }
+          });
+      });
+  </script>
+</footer>

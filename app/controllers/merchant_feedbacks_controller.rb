@@ -2,7 +2,7 @@ class MerchantFeedbacksController < ApplicationController
   before_filter :authenticate_merchant!, except: [:home, :help]
 
   def new
-    merchant_feedback = MerchantFeedback.new
+      @merchant_feedback = MerchantFeedback.new
     # Get data required for form
   end
 
@@ -23,14 +23,14 @@ class MerchantFeedbacksController < ApplicationController
   end
 
    def index
-     merchant_feedbacks = MerchantFeedback.where(:merchant_id => merchant_id)
+     @merchant_feedbacks = MerchantFeedback.where(:merchant_id => merchant_id)
    end
   def feedback_params
     params.require(:merchant_feedback).permit(:title, :category, :content)
   end
 
   def show
-    merchant_feedback = MerchantFeedback.find(params[:id])
+    @merchant_feedback = MerchantFeedback.find(params[:id])
   end
 
   # def edit

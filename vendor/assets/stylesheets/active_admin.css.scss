@@ -18,6 +18,30 @@ div.descriptionCol {
   width: 200px;
 }
 
+div.numberCol {
+  max-width: 20px !important;
+}
+
+div.col-lg-6 {
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+  float: left;
+  width: 50%;
+  box-sizing: border-box;
+}
+
+div.col-lg-3 {
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+  float: left;
+  width: 25%;
+  box-sizing: border-box;
+}
+
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //

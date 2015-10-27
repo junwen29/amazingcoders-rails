@@ -1,20 +1,41 @@
 <div class="form-style-10">
   <h1>Edit Your Deal<span> Make changes to your deals before making them active!</span></h1>
   <%= form_for @deal, :html => {:multipart => true} do |f| %>
-      <p class="form-textarea clearfix">
-        <%= f.label :title, "Title of deal*" %>
-        <span><%= f.text_field :title %></span>
-      </p>
+      <div class="form-textarea clearfix">
+        <div class="col-lg-6" style="padding-left:0px; text-transform: uppercase">
+          <%= f.label :title, "Title of deal*" %>
+          <span><%= f.text_field :title %></span>
+        </div>
+        <div class="col-lg-6" id="deal_title_hint" style="display:none;">
+          <% if @payment.add_on3 %>
+              <p style="text-align: justify; color:#F6358A; font-style: italic; font-size: x-small"><%= @top_queries %></p>
+          <% end %>
+        </div>
+      </div>
 
-      <p class="form-textarea clearfix">
-        <%= f.label :type_of_deal, "Type of Deal*" %>
-        <span><%= f.select :type_of_deal, [['Discount','discount'],['Freebies','freebies']] %></span>
-      </p>
+      <div class="form-textarea clearfix">
+        <div class="col-lg-6" style="padding-left:0px; text-transform: uppercase">
+          <%= f.label :type_of_deal, "Type of Deal*" %>
+          <span><%= f.select :type_of_deal, [['Discount', 'Discount'], ['Freebies', 'Freebies']], title: @top_deal_type %></span>
+        </div>
+        <div class="col-lg-6" id="deal_type_of_deal_hint" style="display:none;">
+          <% if @payment.add_on3 %>
+              <p style="text-align: justify; color:#F6358A; font-style: italic; font-size: x-small"><%= @top_deal_type %></p>
+          <% end %>
+        </div>
+      </div>
 
-      <p class="form-textarea clearfix">
-        <%= f.label :description, "Description of your deal*" %>
-        <span><%= f.text_area :description, :placeholder => "Tell us more about your deals! Example: 10% off the total bill!" %></span>
-      </p>
+      <div class="form-textarea clearfix">
+        <div class="col-lg-6" style="padding-left:0px; text-transform: uppercase">
+          <%= f.label :description, "Description of your deal*" %>
+          <span><%= f.text_area :description, :placeholder => "Tell us more about your deals! Example: 10% off the total bill!", :style => 'width: 100%' %></span>
+        </div>
+        <div class="col-lg-6" id="deal_description_hint" style="display:none;">
+          <% if @payment.add_on3 %>
+              <p style="text-align: justify; color:#F6358A; font-style: italic; font-size: x-small"><%= @top_queries %></p>
+          <% end %>
+        </div>
+      </div>
 
       <p class="form-select half clearfix">
         <%= f.label :start_date, "Start Date*" %>
@@ -40,13 +61,13 @@
       <%= fields_for :deal_venue do |dv| %>
           <div class = "field form-textarea clearfix">
             <%= dv.label "Select Venues*" %><br />
-            <%= collection_select(:venues, :id, @all_venues, :id, :name, {}, {:multiple => true}) %>
+            <%= collection_select(:venues, :id, @all_venues, :id, :name, {:prompt => true, :selected => @deal.venues.map(&:id)}, {:multiple => true}) %>
           </div>
       <% end %>
 
       <p class="form-textarea clearfix">
         <%= f.label :t_c, 'Terms and Conditions*' %>
-        <span><%= f.text_area :t_c, :placeholder => "Note your terms and conditions here" %></span>
+        <span><%= f.text_area :t_c, :placeholder => "Note your terms and conditions here", :style => 'width: 100%' %></span>
       </p>
 
       <p class="form-text clearfix">
@@ -96,3 +117,25 @@
       </div>
   <% end %>
 </div><!-- content-form -->
+
+<!--JQuery for showing hints-->
+<script>
+    $('#deal_title').focus(function(){
+        $('#deal_title_hint').show();
+    });
+    $('#deal_title').blur(function(){
+        $('#deal_title_hint').hide();
+    });
+    $('#deal_type_of_deal').focus(function(){
+        $('#deal_type_of_deal_hint').show();
+    });
+    $('#deal_type_of_deal').blur(function(){
+        $('#deal_type_of_deal_hint').hide();
+    });
+    $('#deal_description').focus(function(){
+        $('#deal_description_hint').show();
+    });
+    $('#deal_description').blur(function(){
+        $('#deal_description_hint').hide();
+    });
+</script>

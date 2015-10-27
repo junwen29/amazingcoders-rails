@@ -1,0 +1,33 @@
+<%= render 'layouts/biz/dash' %>
+<div class="contentWrapper">
+  <div class="content">
+
+    <!--Flash messages-->
+    <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+    <% end %>
+
+    <!-- Content Heading -->
+    <div class="pull-left">
+      <p class="b2 content-title">Deal Analytics</p>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="content-separator"></div>
+
+    <!-- Content Body -->
+    <div class = "well col-lg-6 col-lg-offset-3" style="text-align: center; font-weight: bold">
+      <p>Sorry, you do not have any active or expired deals. </p>
+      <p>You can list a deal <%= link_to 'here', new_deal_path %> and activate it afterwards in order to enable this feature.</p>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /contentWrapper -->
+
+<%= content_for :lean_overlay do %>
+<% end %>
+
+<%= content_for :body_footer do %>
+<% end %>
+
+

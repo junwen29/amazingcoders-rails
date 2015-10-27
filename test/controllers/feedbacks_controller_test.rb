@@ -8,7 +8,7 @@ class FeedbacksControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:feedbacks)
+    assert_not_nil assigns(:merchant_feedbacks)
   end
 
   test "should get new" do

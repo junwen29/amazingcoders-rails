@@ -1,0 +1,58 @@
+<div class="col-lg-6">
+  <h3 style="padding-bottom: 20px">Popular Deal Types</h3>
+  <div id="overall_popular_deal_type" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</div>
+
+<footer>
+  <!--Pie Chart-->
+  <script>
+      $(document).ready(function () {
+          $('#overall_popular_deal_type').highcharts({
+              credits: {
+                  enabled: false
+              },
+              chart: {
+                  type: 'pie',
+                  renderTo: 'overall_popular_deal_type'
+              },
+              title: {
+                  text: 'Popular Deal Types across Burpple'
+              },
+              subtitle: {
+                  text: 'Average Redemption Count by Deals'
+              },
+              tooltip: {
+                  headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                  pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.percentage:.2f}%</b> of total<br/>',
+              },
+              plotOptions: {
+                  pie: {
+                      allowPointSelect: true,
+                      cursor: 'pointer',
+                      depth: 35,
+                      dataLabels: {
+                          enabled: true,
+                          format: '{point.name} ' + '<span style="color: #0f1cda">{point.y} Redemptions </span>'
+                      },
+                      showInLegend: true
+                  }
+              },
+              series: [{
+                  name: "Deal Type",
+                  colorByPoint: true,
+                  data: [
+                      <% num_of_deal_types = @popular_deal_type.size %>
+                      <% loop = 0 %>
+                      <% while loop < num_of_deal_types %>
+                      {
+                          name: "<%= @popular_deal_type[loop][0] %>",
+                          y: <%= @popular_deal_type[loop][1]%>,
+                      },
+                      <% loop = loop + 1 %>
+                      <% end %>
+                  ]
+              }],
+          });
+      });
+  </script>
+</footer>

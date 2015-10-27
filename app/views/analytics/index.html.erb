@@ -1,0 +1,38 @@
+<%= render 'layouts/biz/dash' %>
+<div class="contentWrapper">
+  <div class="content">
+
+    <!--Flash messages-->
+    <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+    <% end %>
+
+    <!-- Content Heading -->
+    <div class="pull-left">
+      <p class="b2 content-title">Deal Analytics by Deals</p>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="content-separator"></div>
+
+    <!-- Content Body -->
+    <!--TODO: VIEW Render partials only for merchants with access-->
+    <%= render :partial => 'analytics/deal/analytics_line_count' %><br>
+    <% if MerchantService.get_active_past_redeemable_deals(session[:merchant_id]).blank? %>
+        <%= render :partial => 'analytics/deal/no_redeemable_deal_error' %>
+    <% else %>
+        <%= render :partial => 'analytics/deal/popular_deal_type' %>
+    <% end %>
+
+
+  </div>
+  <!-- /content -->
+</div><!-- /contentWrapper -->
+
+<%= content_for :lean_overlay do %>
+<% end %>
+
+<%= content_for :body_footer do %>
+<% end %>
+
+

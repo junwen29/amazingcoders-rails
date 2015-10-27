@@ -2,7 +2,7 @@ class DealService
 
   module ClassMethods
 
-    def num_active_deals (merchant_id, deal)
+    def num_active_deals (merchant_id)
       all_deals = Deal.where(:merchant_id => merchant_id)
       valid_deals = all_deals.where('expiry_date >= ?', Date.today)
       active_deals = valid_deals.where('expiry_date >= ? AND active = true', Date.today)
@@ -88,7 +88,24 @@ class DealService
     end
 
     def get_all_venues (deal_id)
-      Venue.joins(:deal_venues).where('deal_venues.deal_id' => deal_id)
+      Venue.joins(:deal_venues).where('deal_venues.deal_id' => deal_id).order(name: :asc)
+    end
+
+    def count_all_active_deals()
+      active_deals = Deal.where('expiry_date >= ? AND active = true', Date.today)
+      active_deals.count
+    end
+
+    # TODO: Call this method for deal analytics - popular deal type aggregate trends
+    def get_all_ids_by_type(deal_type)
+      deals = Deal.where(:type_of_deal => deal_type)
+      deals.pluck(:id)
+    end
+
+    # TODO: Call this method for deal analytics - popular deal type deal statistics
+    def get_all_ids_by_type_and_merchant(deal_type, merchant_id)
+      deals = Deal.where('type_of_deal = ? AND merchant_id = ?', deal_type, merchant_id)
+      deals.pluck(:id)
     end
 
   end
