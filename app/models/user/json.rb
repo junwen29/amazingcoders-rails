@@ -5,6 +5,7 @@ module User::Json
     def to_auth_json(json, options = {})
       to_account_json(json, options = {})
       json.auth_token       authentication_token
+      json.total_points     total_points
     end
 
     # for account api
