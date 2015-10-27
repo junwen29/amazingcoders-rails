@@ -13,8 +13,10 @@ class GiftsController < InheritedResources::Base
 
       if gift.name == "1 free month"
         @payment = Payment.new
+        @upcoming_payments = Payment.where("merchant_id = ? AND paid = ? AND expiry_date >= ?", session[:merchant_id], true, Date.today)
+
         render 'payments/gift_extend'
-        #redirect_to gift_extend_payments_path(@payment)
+        #redirect_to gift_extend_path
       else
         flash[:success] = "Gift Redeemed!"
         reason = "Redeemed " + gift.name

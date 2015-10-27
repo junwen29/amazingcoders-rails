@@ -1,9 +1,39 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      Upcoming Plans
+    </h4>
+  </div>
+  <div class="panel-body">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <tr>
+          <th>Start Date</th>
+          <th>Expiry Date</th>
+          <th>Premium Service</th>
+        </tr>
 
+        <% @upcoming_payments.each do |payment| %>
+            <tr>
+              <td><%= payment.start_date.strftime("%d/%m/%Y") %> </td>
+              <td><%= payment.expiry_date.strftime("%d/%m/%Y") %> </td>
+
+              <td>
+                <% if (payment.plan1) %>
+                    Deals Listing Service
+                <% end %>
+              </td>
+            </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
 
 <%= form_for @payment, url: payments_extend_path do |f| %>
     <!-- choose start date -->
     <p class= "form-select clearfix">
-      <%= f.label :start_date, "Start Date:" %>
+      <%= f.label :start_date, "Please Select Start Date:" %>
       <span>
         <%= f.text_field :start_date %>
         </span>

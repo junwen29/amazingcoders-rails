@@ -86,7 +86,6 @@ class PaymentsController < ApplicationController
   def gift_extend
     @payment = Payment.new
     #upcoming payment includes current payment as well
-    #@upcoming_payment = Payment.where("merchant_id = ? AND paid = ? AND start_date <= ? AND expiry_date >= ?", merchant_id, true, Date.today, Date.today).last
   end
 
   def extend
@@ -100,11 +99,12 @@ class PaymentsController < ApplicationController
     end
 
     if PaymentService.extend_plan(@payment)
-      @payment.update(expiry_date: payment.start_date.months_since(1))
+      @payment.update(expiry_date: @payment.start_date.months_since(1))
       MerchantPointService.create_extend_point(merchant_id)
       flash[:success] = "Gift Redeemed!"
       redirect_to merchant_points_path
     else
+      @upcoming_payments = Payment.where("merchant_id = ? AND paid = ? AND expiry_date >= ?", session[:merchant_id], true, Date.today)
       render 'gift_extend'
     end
 
