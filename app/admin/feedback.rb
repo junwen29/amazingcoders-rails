@@ -1,4 +1,7 @@
 ActiveAdmin.register Feedback do
+  config.clear_action_items!
+
+  menu :parent => "Merchant", :priority => 3
 
 
   # See permitted parameters documentation:
