@@ -87,8 +87,7 @@ Rails.application.routes.draw do
   resources :merchants
   resources :merchant_points
   resources :merchant_feedbacks
-  resources :gifts
-  
+
   resources :deals
   resources :payments do
     resources :charges
