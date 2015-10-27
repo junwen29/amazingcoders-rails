@@ -8,7 +8,8 @@ class Merchant < ActiveRecord::Base
   has_many :deals, dependent: :destroy
   has_many :payments, dependent: :destroy
   has_many :merchant_points, dependent: :destroy
-  
+  has_many :merchant_feedbacks
+
   def display_name
     self.email # or whatever column you want
   end

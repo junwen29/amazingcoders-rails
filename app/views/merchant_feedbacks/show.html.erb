@@ -1,0 +1,25 @@
+<%= render 'layouts/biz/dash' %>
+
+<div class="contentWrapper">
+  <div class="content">
+
+    <!--Flash messages-->
+    <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+    <% end %>
+
+    <div class="form-style-10" style="max-width:60%">
+      <h1> View Submitted Feedback</h1>
+      <%= render :partial => 'form/merchant_feedback_show_form' %>
+    </div>
+
+    <div style="text-align:center">
+      <%= link_to 'Back to merchant feedbacks page', merchant_feedbacks_path, class: "btn btn-lg btn-info" %>
+    </div>
+
+  </div><!--content-->
+</div><!--contentWrapper -->
+
+<%= content_for :form_footer do %>
+    <%= render :partial => 'layouts/form_style' %>
+<% end %>
