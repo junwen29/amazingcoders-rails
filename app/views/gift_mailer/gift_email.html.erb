@@ -1,9 +1,9 @@
 <p>Dear <%= @user %>!</p>
 
-<p>You have successfully redeemed <b><%= @gift_name %></b> from Burpple!
+<p>You have successfully redeemed <b><%= @gift.name %></b> from Burpple!
 
 <br>
-  You have spent <b><%= @gift_points %> Burps</b> and have <b><%= @points_left %> Burps</b> left!
+  You have spent <b><%= @gift.points %> Burps</b> and have <b><%= @points_left %> Burps</b> left!
 </p>
 
 <p>To redeem more gifts on Burpple, follow this link: https://amazingcodersrails.herokuapp.com<%= @url %>
