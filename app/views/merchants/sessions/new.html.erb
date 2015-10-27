@@ -23,12 +23,12 @@
           <br>
           <div style="margin-bottom: 25px" class="input-group">
             <%= f.label :email %>
-            <%= f.email_field :email, autofocus: true %>
+            <%= f.email_field :email, autofocus: true, style: "height: auto" %>
           </div>
 
           <div style="margin-bottom: 25px" class="input-group">
             <%= f.label :password %>
-            <%= f.password_field :password, autocomplete: "off" %>
+            <%= f.password_field :password, autocomplete: "off", style: "height: auto" %>
           </div>
 
           <% if devise_mapping.rememberable? -%>
