@@ -3,7 +3,6 @@ class GiftsController < InheritedResources::Base
   def index
     @gifts = Gift.all
     @merchant = Merchant.find(merchant_id)
-    @merchant_id = merchant_id
   end
 
   def show

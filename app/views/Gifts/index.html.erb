@@ -21,38 +21,7 @@
       Total Burps: <%= @merchant.total_points%>
     </h4>
 
-    <div class="panel-body">
-      <table class="table table-bordered table-hover table-responsive">
-        <tr>
-          <th>Gift Name</th>
-          <th>Points Required</th>
-          <th>Description</th>
-          <th></th>
-        </tr>
-
-        <% @gifts.where(gift_type: "Merchant").find_each do |p| %>
-            <tr>
-              <td><%= p.name %></td>
-              <td><%= p.points %></td>
-              <td><%= p.description %></td>
-              <td>
-                <% if GiftService.check_redeemable(@merchant_id, p) %>
-                    <%= link_to gift_path(p) do%>
-                        <button class="btn btn-success">
-                          Redeem
-                        </button>
-                    <% end %>
-                <% else %>
-                    <button class="btn btn-default disabled" type="button" data-toggle="tooltip" data-placement="top" title="Sorry, you have insufficient points to redeem this gift.">
-                      Redeem
-                    </button>
-                <% end %>
-              </td>
-            </tr>
-        <% end %>
-      </table>
-      <%= link_to 'Back', merchant_points_path, class: "btn btn-big btn-default" %>
-    </div>
+    <%= render :partial => 'form/gift_index_form' %>
 
   </div><!-- /content -->
 </div><!-- /contentWrapper -->
