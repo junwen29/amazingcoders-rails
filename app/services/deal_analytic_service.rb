@@ -329,12 +329,12 @@ class DealAnalyticService
       total_rc
     end
 
-    def get_hint_message_for_top_queries
-      top_queries = DealAnalyticService.get_top_queries
-      top_queries_display = "In order to aid you in creating a deal, here are some popular keywords users search for: "
+    def get_hint_message_for_top_queries(limit = 10)
+      top_queries = DealAnalyticService.get_top_queries(limit)
+      top_queries_display = "To assist you in creating a deal, here are some popular keywords users search for: "
       index = 1
       top_queries.each do |tq|
-        top_queries_display = top_queries_display + " " + index.to_s + ")" + tq.query
+        top_queries_display = top_queries_display + " (" + index.to_s + ") " + tq.query
         index = index + 1
       end
       top_queries_display
