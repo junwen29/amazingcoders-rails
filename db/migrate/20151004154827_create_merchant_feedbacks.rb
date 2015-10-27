@@ -1,6 +1,6 @@
 class CreateFeedbacks < ActiveRecord::Migration
   def change
-    create_table :feedbacks do |t|
+    create_table :merchantfeedbacks do |t|
       t.string :title
       t.string :category
       t.string :content
