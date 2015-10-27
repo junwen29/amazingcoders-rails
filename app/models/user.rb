@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   has_many :deals, through: :bookmarks
   has_many :redemptions
   has_many :viewcounts
-  has_many :user_points, dependent: :destroy
+  has_many :user_feedbacks
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
