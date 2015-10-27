@@ -1,5 +1,5 @@
 class AddMerchantRefToFeedbacks < ActiveRecord::Migration
   def change
-    add_reference :feedbacks, :merchant, index: true
+    add_reference :merchant_feedbacks, :merchant, index: true
   end
 end

@@ -1,9 +1,10 @@
-class CreateFeedbacks < ActiveRecord::Migration
+class CreateMerchantFeedbacks < ActiveRecord::Migration
   def change
-    create_table :merchantfeedbacks do |t|
+    create_table :merchant_feedbacks do |t|
       t.string :title
       t.string :category
-      t.string :content
+      t.text :content
+      t.boolean :resolved, :default  => false
 
       t.timestamps
     end
