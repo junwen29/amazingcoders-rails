@@ -6,8 +6,8 @@ class DealsController < ApplicationController
   def new
     @all_venues = MerchantService.get_all_venues(merchant_id)
 
-    # For top 10 queries
-    @top_queries = DealAnalyticService.get_hint_message_for_top_queries
+    # For top 3 queries
+    @top_queries = DealAnalyticService.get_hint_message_for_top_queries(3)
     # For top Deal Type
     @top_deal_type = DealAnalyticService.get_hint_for_popular_deal_type
 
@@ -27,7 +27,7 @@ class DealsController < ApplicationController
     @all_venues = MerchantService.get_all_venues(merchant_id)
     @deal_venue = @deal.deal_venues.build
     # For top 10 queries
-    @top_queries = DealAnalyticService.get_hint_message_for_top_queries
+    @top_queries = DealAnalyticService.get_hint_message_for_top_queries(3)
     # For top Deal Type
     @top_deal_type = DealAnalyticService.get_hint_for_popular_deal_type
   end
