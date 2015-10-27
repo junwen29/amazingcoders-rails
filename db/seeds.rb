@@ -625,7 +625,7 @@ starting_redemption = redemption
 start_date = DateTime.parse("2015-03-01 00:00:00")
 end_date = DateTime.parse("2015-12-01 00:00:00")
 while start_date <= end_date
-  limit = redemption + rand(0..50)
+  limit = redemption + rand(0..30)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1012, user_id: redemption, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
@@ -654,7 +654,7 @@ starting_redemption = redemption
 start_date = DateTime.parse("2015-03-01 00:00:00")
 end_date = DateTime.parse("2015-12-01 00:00:00")
 while start_date <= end_date
-  limit = redemption + rand(0..44)
+  limit = redemption + rand(0..30)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1013, user_id: redemption, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
@@ -683,7 +683,7 @@ starting_redemption = redemption
 start_date = DateTime.parse("2015-03-01 00:00:00")
 end_date = DateTime.parse("2015-12-01 00:00:00")
 while start_date <= end_date
-  limit = redemption + rand(0..6)
+  limit = redemption + rand(0..3)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1014, user_id: redemption, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
@@ -741,7 +741,7 @@ starting_redemption = redemption
 start_date = DateTime.parse("2015-03-01 00:00:00")
 end_date = DateTime.parse("2015-12-01 00:00:00")
 while start_date <= end_date
-  limit = redemption + rand(0..90)
+  limit = redemption + rand(0..20)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1016, user_id: redemption, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
@@ -754,7 +754,7 @@ starting_view_count = view_count
 start_date = DateTime.parse("2015-02-25 00:00:00")
 end_date = DateTime.parse("2015-12-01 00:00:00")
 while start_date <= end_date
-  limit = view_count + rand(0..20)
+  limit = view_count + rand(0..30)
   while view_count < limit
     Viewcount.create(id: view_count, deal_id: 1016, user_id: view_count, created_at: start_date)
     view_count = view_count + 1
@@ -770,7 +770,7 @@ starting_redemption = redemption
 start_date = DateTime.parse("2015-03-01 00:00:00")
 end_date = DateTime.parse("2015-12-01 00:00:00")
 while start_date <= end_date
-  limit = redemption + rand(0..7)
+  limit = redemption + rand(0..5)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1017, user_id: redemption, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
@@ -783,7 +783,7 @@ starting_view_count = view_count
 start_date = DateTime.parse("2015-02-25 00:00:00")
 end_date = DateTime.parse("2015-12-01 00:00:00")
 while start_date <= end_date
-  limit = view_count + rand(0..10)
+  limit = view_count + rand(2..6)
   while view_count < limit
     Viewcount.create(id: view_count, deal_id: 1017, user_id: view_count, created_at: start_date)
     view_count = view_count + 1
@@ -793,3 +793,18 @@ end
 num_view_count = view_count - starting_view_count
 unique_view_count = num_view_count- rand(50..90)
 DealAnalytic.create(id: 1011, deal_id: 1017, view_count: num_view_count, unique_view_count: unique_view_count, redemption_count: num_redemption)
+
+# Get ending user_id
+ending_user_id = redemption
+starting_user_id = ending_user_id - 31
+while starting_user_id <= ending_user_id
+  user = User.new(id: starting_user_id)
+  user.first_name = 'user'+starting_user_id.to_s
+  user.last_name = 'user'+starting_user_id.to_s
+  user.username = 'user'+starting_user_id.to_s
+  user.email = 'user'+starting_user_id.to_s+'@gmail.com'
+  user.password ='12345678'
+  user.password_confirmation = '12345678'
+  user.save
+  starting_user_id = starting_user_id + 1
+end
