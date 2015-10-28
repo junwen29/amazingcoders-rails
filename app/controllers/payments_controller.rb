@@ -104,7 +104,8 @@ class PaymentsController < ApplicationController
       flash[:success] = "Gift Redeemed!"
       gift = Gift.find_by name: "1 free month"
       #send acknowledgement email for successful redemption of 1 free month
-      GiftMailer.free_1_month_email("Valued Merchant", @payment, Merchant.find(merchant_id), gift, MerchantService.get_email(merchant_id)).deliver
+      #GiftMailer.free_1_month_email("Valued Merchant", @payment, Merchant.find(merchant_id), gift, MerchantService.get_email(merchant_id)).deliver
+
       redirect_to merchant_points_path
     else
       @upcoming_payments = Payment.where("merchant_id = ? AND paid = ? AND expiry_date >= ?", session[:merchant_id], true, Date.today)
