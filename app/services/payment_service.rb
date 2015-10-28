@@ -49,6 +49,9 @@ class PaymentService
       addon_months = Payment.joins(:add_on_payments).where('add_on_payments.add_on_id' => addon_id).sum(:months)
     end
 
+    def extend_plan(payment)
+      payment.update(plan1: true, add_on1: false, add_on2: false, add_on3: false, total_cost: 0, months: 1, paid: true)
+    end
   end
 
   class << self
