@@ -7,7 +7,7 @@
       <table class="table table-bordered table-hover">
         <tr>
           <% if @payment.add_on3 %>
-              <th>Deal Ranking</th>
+              <th><strong data-toggle="tooltip" data-placement="top" title="Ranking is based on all active deals in Burpple">Ranking</strong></th>
           <% end %>
           <th>Title</th>
           <th>Image</th>
@@ -16,8 +16,8 @@
           <th>Expiry Date</th>
           <th>Venue</th>
           <% if @payment.add_on2 %>
-              <th>Num Unique Views</th>
-              <th>Num Redeems</th>
+              <th>Unique Views</th>
+              <th>Redeems</th>
           <% end %>
           <% if @payment.add_on1 %>
               <th colspan="2"></th>
@@ -29,15 +29,15 @@
         <% @deals.each do |deal| %>
             <% if (deal.expiry_date.future?|| deal.expiry_date.today?) && deal.active %>
                 <tr>
-                  <% if deal.redeemable %>
+                  <% if deal.redeemable && @payment.add_on3 %>
                       <% @ranking.each do |r| %>
                           <% if r[0] == deal.id %>
                               <td id='num'><%= r[1] + 1 %></div></td>
                               <% break %>
                           <% end %>
                       <% end %>
-                  <% else %>
-                      <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence data cannot be gathered">Untraceable</p></td>
+                  <% elsif @payment.add_on3 %>
+                      <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence data cannot be gathered">N/A</p></td>
                   <% end %>
                   <td><%= deal.title %></td>
                   <td>
@@ -60,7 +60,7 @@
                       <% if deal.redeemable %>
                           <td id='num'><%= DealAnalyticService.get_redemption_count(deal.id) %></td>
                       <% else %>
-                          <td><p id='untracable' data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence data cannot be gathered">Untraceable</p></td>
+                          <td><p id='untracable' data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence data cannot be gathered">N/A</p></td>
                       <% end %>
                   <% end %>
                   <% if @payment.add_on1 %>

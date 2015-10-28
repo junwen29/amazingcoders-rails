@@ -173,17 +173,6 @@ ActiveRecord::Schema.define(version: 20151027154533) do
     t.datetime "updated_at"
   end
 
-  create_table "feedbacks", force: true do |t|
-    t.string   "title"
-    t.string   "category"
-    t.string   "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "merchant_id"
-  end
-
-  add_index "feedbacks", ["merchant_id"], name: "index_feedbacks_on_merchant_id", using: :btree
-
   create_table "gifts", force: true do |t|
     t.string   "name"
     t.integer  "points"
@@ -329,9 +318,9 @@ ActiveRecord::Schema.define(version: 20151027154533) do
     t.string   "name"
     t.string   "street"
     t.string   "zipcode"
-    t.string   "city"
-    t.string   "state"
-    t.string   "country"
+    t.string   "city",               default: "Singapore"
+    t.string   "state",              default: "Singapore"
+    t.string   "country",            default: "Singapore"
     t.string   "neighbourhood"
     t.text     "bio"
     t.string   "phone"
