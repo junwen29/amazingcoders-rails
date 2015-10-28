@@ -7,9 +7,6 @@ jQuery ->
   $('#payment_start_date').datepicker({
     dateFormat: "yy-mm-dd"
   });
-  $('#payment_expiry_date').datepicker({
-    dateFormat: "yy-mm-dd"
-  });
 
   $ ->
   $("#plan1_true").hide();

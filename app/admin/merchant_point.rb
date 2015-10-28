@@ -8,10 +8,10 @@ ActiveAdmin.register MerchantPoint do
 
   # remove_filter :payments, :updated_at
   filter :merchant, as: :select, collection: proc { Merchant.all }
-  filter :operation, as: :select, collection: ["Add", "Minus"]
+  filter :operation, as: :select, collection: ["Credit", "Debit"]
   filter :points, as: :numeric
   filter :reason, as: :string
-  filter :created_at, as: :date_range, label: "Credited at"
+  filter :created_at, as: :date_range, label: "Changed at"
 
 
   action_item :only => :show do
@@ -37,7 +37,7 @@ ActiveAdmin.register MerchantPoint do
     column :operation
     column :points
     column :reason
-    column "Credited at", :created_at
+    column "Changed at", :created_at
 
     # actions
   end
@@ -63,7 +63,7 @@ ActiveAdmin.register MerchantPoint do
       f.input :merchant
       f.input :reason
       f.input :points, as: :string, :hint => "Please input an integer value"
-      f.input :operation, as: :select, collection: ["Add", "Minus"]
+      f.input :operation, as: :select, collection: ["Credit", "Debit"]
     end
     f.actions
   end
