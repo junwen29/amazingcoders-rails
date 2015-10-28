@@ -1,7 +1,7 @@
 class PaymentsController < ApplicationController
   before_filter :authenticate_merchant!, except: [:home, :help]
- # before_action :set_payment, only: [:show]
- # before_action :show, only: [:calculate_price]
+  # before_action :set_payment, only: [:show]
+  # before_action :show, only: [:calculate_price]
 
   def new
     @payment = Payment.new
@@ -10,6 +10,7 @@ class PaymentsController < ApplicationController
     @addon1 = AddOn.find(1)
     @addon2 = AddOn.find(2)
     @addon3 = AddOn.find(3)
+
   end
 
   # Disable
@@ -38,8 +39,10 @@ class PaymentsController < ApplicationController
     @payment = Merchant.find(merchant_id).payments.new(payment_params)
     @plan1 = Plan.find(1)
 
+
     @total_cost = calculate_price(@payment)
-      @payment.update(total_cost: @total_cost*@payment.months)
+    @payment.update(total_cost: @total_cost*@payment.months)
+
 
     # Update join table in addon_payment
     @add_on_payment = @payment.add_on_payments.build
@@ -60,7 +63,7 @@ class PaymentsController < ApplicationController
     end
 
     if @payment.save
-     # flash[:success] = "Success in registering plan"
+      # flash[:success] = "Success in registering plan"
       redirect_to new_payment_charge_path(@payment.id)
       #if token is created successfully, go to show page and check if charge is created.
     else
@@ -71,12 +74,42 @@ class PaymentsController < ApplicationController
       @addon2 = AddOn.find(2)
       @addon3 = AddOn.find(3)
       render 'new'
-    end
 
+    end
   end
 
   def show
     @payment = Payment.find(params[:id])
+
+  end
+
+  def gift_extend
+    @payment = Payment.new
+    #upcoming payment includes current payment as well
+  end
+
+  def extend
+    @payment = Merchant.find(merchant_id).payments.new(payment_params)
+    @plan1 = Plan.find(1)
+
+
+    @plan_payment = @payment.plan_payments.new
+    if (params[:payment][:plan1] == "true")
+      @payment.plan_payments.build(:plan_id => 1)
+    end
+
+    if PaymentService.extend_plan(@payment)
+      @payment.update(expiry_date: @payment.start_date.months_since(1))
+      MerchantPointService.create_extend_point(merchant_id)
+      flash[:success] = "Gift Redeemed!"
+      gift = Gift.find_by name: "1 free month"
+      #send acknowledgement email for successful redemption of 1 free month
+      GiftMailer.free_1_month_email("Valued Merchant", @payment, Merchant.find(merchant_id), gift, MerchantService.get_email(merchant_id)).deliver
+      redirect_to merchant_points_path
+    else
+      @upcoming_payments = Payment.where("merchant_id = ? AND paid = ? AND expiry_date >= ?", session[:merchant_id], true, Date.today)
+      render 'gift_extend'
+    end
 
   end
 

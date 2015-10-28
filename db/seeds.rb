@@ -14,6 +14,10 @@ Plan.create(id: '1000', name: 'Reservations', cost: '45', description: 'Test pay
 AddOn.create(id: '1000', plan_id: '1000', name: 'Reservation Notifications', cost: '10', description: 'Reservation Notification', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
 AddOn.create(id: '1001', plan_id: '1000', name: 'Reservation Statistics', cost: '10', description: 'Reservation Statistics', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
 
+# For Gifts
+Gift.create(id: '1000', name: '1 free month', points: '600', description: 'Free 1 month subscription to Premium Deals Services. Simply click redeem and select the start date of your plan!', gift_type: 'Merchant', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
+Gift.create(id: '1001', name: 'Burpple Shirt', points: '100', description: 'Get a Burpple Shirt Merchandise!', gift_type: 'Merchant', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
+
 # Seed admin
 admin = AdminUser.new(id: '1000')
 admin.email = 'admin@burpple.com'
