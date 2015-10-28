@@ -12,10 +12,10 @@ class GiftMailer < ActionMailer::Base
   def free_1_month_email(user, payment, merchant, gift, email)
     @user = user
     @payment = payment
-    @url = payments_path
+    @url = gifts_path
     @points_left = merchant.total_points
     @gift = gift
-    mail(to: email, subject: "Your Burpple subscription has been updated!")
+    mail(to: email, subject: "You have redeemed a gift at Burpple!")
   end
 
 end
