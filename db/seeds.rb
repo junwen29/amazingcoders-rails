@@ -55,7 +55,7 @@ merchant.total_points = 0
 merchant.save
 
 merchant_id = 1004
-while merchant_id < 1100
+while merchant_id <= 1100
   merchant = Merchant.new(id: merchant_id)
   merchant.email = merchant_id.to_s + '@gmail.com'
   merchant.password = '12345678'
@@ -102,8 +102,9 @@ payment_id = payment_id + 1
 plan_payment_id = plan_payment_id + 1
 add_on_payment_id = add_on_payment_id + 1
 
+# merchant_id 1003 has no payment
 
-merchant_id = 1003
+merchant_id = 1004
 start_date = '01-12-2014'.to_date
 end_date = start_date + 2.months
 while merchant_id < 1010
