@@ -283,6 +283,17 @@ ActiveRecord::Schema.define(version: 20151027154533) do
 
   add_index "user_feedbacks", ["user_id"], name: "index_user_feedbacks_on_user_id", using: :btree
 
+  create_table "user_points", force: true do |t|
+    t.string   "reason"
+    t.integer  "points"
+    t.string   "operation"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_points", ["user_id"], name: "index_user_points_on_user_id", using: :btree
+
   create_table "user_queries", force: true do |t|
     t.string   "query"
     t.integer  "num_count"
@@ -308,6 +319,7 @@ ActiveRecord::Schema.define(version: 20151027154533) do
     t.string   "authentication_token"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.integer  "total_points"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree

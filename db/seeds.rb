@@ -67,24 +67,25 @@ end
 
 # Seed payments and associated tables
 start_date = '01-12-2014'.to_date
-end_date = start_date + 1.months
+end_date = start_date + 2.months
 payment_id = 1003
 merchant_id = 1004
 plan_payment_id = 1003
 add_on_payment_id = 1004
 while merchant_id < 1010
-  Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '50.00', add_on1: false, add_on2: false, add_on3: false, plan1: false, paid: true, created_at: start_date, updated_at: '2015-10-01 00:00:00', merchant_id: merchant_id, months: 1).save(validate: false)
+  Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '50.00', add_on1: false, add_on2: false, add_on3: false, plan1: false, paid: true, created_at: start_date, updated_at: '2015-10-01 00:00:00', merchant_id: merchant_id, months: 2).save(validate: false)
   PlanPayment.create(id: plan_payment_id, plan_id: 1000, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
   AddOnPayment.create(id: add_on_payment_id, add_on_id: 1000, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
   add_on_payment_id = add_on_payment_id + 1
   AddOnPayment.create(id: add_on_payment_id, add_on_id: 1001, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
-  start_date = end_date
+  start_date = start_date + 1.months
   end_date = end_date + 1.months
   payment_id = payment_id + 1
   merchant_id = merchant_id + 1
   plan_payment_id = plan_payment_id + 1
   add_on_payment_id = add_on_payment_id + 1
 end
+
 
 start_date = '01-12-2014'.to_date
 end_date = start_date + 1.months

@@ -70,7 +70,7 @@
       .count{
           display:inline-block;
           float:right;
-          color:#F00;
+          color:#06FF00;
           font-weight:bold;
       }
       .count:after{
@@ -101,8 +101,8 @@
                   text: 'Traffic from Deals'
               },
               subtitle: {
-                  text: '<span style="color: #7CB5EC">App Traffic measured by view counts of deals</span><br><span style="color: #434348">Foot Traffic measured by redemptions of deals</span>'
-
+                  text: '<span style="color: #7CB5EC">App Traffic measured by view counts of deals</span>' +
+                  '<br><span style="color: #434348">Foot Traffic measured by redemptions of deals</span>'
               },
               xAxis: {
                   type: 'datetime'
@@ -154,10 +154,10 @@
                   renderTo: 'overall_popular_deal_type'
               },
               title: {
-                  text: 'Overall Popular Deal Types'
+                  text: 'Popular Deal Types across Burpple'
               },
               subtitle: {
-                  text: 'Redemption Count'
+                  text: 'Average Redemption Count by Deals'
               },
               tooltip: {
                   headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
@@ -170,7 +170,7 @@
                       depth: 35,
                       dataLabels: {
                           enabled: true,
-                          format: '{point.name} ' + '<span style="color: #0f1cda">{point.y} Redemptions </span>'
+                          format: '{point.name} ' + '<br/><span style="color: #0f1cda">{point.y} Redemptions </span>'
                       },
                       showInLegend: true
                   }
