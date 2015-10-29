@@ -103,7 +103,7 @@ plan_payment_id = plan_payment_id + 1
 add_on_payment_id = add_on_payment_id + 1
 
 
-merchant_id = 1004
+merchant_id = 1003
 start_date = '01-12-2014'.to_date
 end_date = start_date + 2.months
 while merchant_id < 1010
