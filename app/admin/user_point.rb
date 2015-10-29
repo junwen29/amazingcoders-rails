@@ -16,28 +16,6 @@ ActiveAdmin.register UserPoint do
     link_to "Back", "/admin/users"
   end
 
-=begin
-  controller do
-    def create
-      userpoint = params[:user_point]
-      user = User.find(userpoint[:user_id])
-      user_current_points = user.total_points
-      operation = userpoint[:operations]
-      new_points = userpoint[:points]
-      if user.present? && operation.present? && new_points.present?
-        if operation == "Credit"
-          user_current_points += new_points
-        elsif operation == "debit"
-          user_current_points -= new_points
-        end
-        user.update(total_points: user_current_points)
-      else
-        flash[:error] = "Failed to create user point!"
-      end
-    end
-  end
-=end
-
   index do
     selectable_column
     column :id
