@@ -15,7 +15,18 @@
       <% @own_deals.each do |od| %>
           <% deal = Deal.find(od[0]) %>
           <tr>
-            <td><%= od[1] + 1 %></td>
+            <% if od[2] >= 0 || od[2] == 'new' %>
+                <td>
+                  <p id="rank"><%= od[1] %></p>
+                  <span class="glyphicon glyphicon-triangle-top" style="color:green; float:right;"><%= od[2] %></span>
+                </td>
+
+            <% elsif od[2] < 0 %>
+                <td>
+                  <p id="rank"><%= od[1] %></p>
+                  <span class="glyphicon glyphicon-triangle-bottom" style="color:red; float:right;"><%= od[2].abs %></span>
+                </td>
+            <% end %>
             <td>
               <%= deal.title %>
             </td>
@@ -39,5 +50,11 @@
 
     .panel-primary {
         border-color: #ea1f6c;
+    }
+
+    p#rank {
+        font-weight: bold;
+        font-size: 120%;
+        display: inline;
     }
 </style>
