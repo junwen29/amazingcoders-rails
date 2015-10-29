@@ -5,7 +5,7 @@ ActiveAdmin.register_page "Dashboard" do
   content title: proc{ I18n.t("active_admin.dashboard") } do
 
     columns do
-      date = Date.today.beginning_of_month
+      date = Date.today.end_of_month
       @deal_subscription_count = PaymentService.count_active_premiums(date, 1)
       @total_premiums = PaymentService.get_total_payments
       @active_deals = DealService.count_all_active_deals
