@@ -23,6 +23,9 @@
               credits: {
                   enabled: false
               },
+              exporting: {
+                  filename: 'Premium Service Subscribers ' + new Date().toLocaleString()
+              },
               chart: {
                   type: 'pie'
               },
@@ -101,6 +104,9 @@
           $('#plan_payments').highcharts({
               credits: {
                   enabled: false
+              },
+              exporting: {
+                  filename: 'Premium Service Revenue ' + new Date().toLocaleString()
               },
               chart: {
                   type: 'pie'
@@ -181,6 +187,9 @@
               credits: {
                   enabled: false
               },
+              exporting: {
+                  filename: 'Monthly Subscription Count ' + new Date().toLocaleString()
+              },
               title: {
                   text: 'Monthly Subscription Count',
                   x: -20 //center
@@ -230,6 +239,9 @@
           $('#plan_months').highcharts({
               credits: {
                   enabled: false
+              },
+              exporting: {
+                  filename: 'Premium Service Stickiness ' + new Date().toLocaleString()
               },
               chart: {
                   type: 'column'
