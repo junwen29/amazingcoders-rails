@@ -42,7 +42,6 @@ ActiveAdmin.register UserFeedback do
     f.actions
   end
 
-  # To comment off
   permit_params :category, :resolved
 
 end
