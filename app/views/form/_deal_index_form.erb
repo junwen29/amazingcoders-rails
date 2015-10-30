@@ -29,15 +29,17 @@
         <% @deals.each do |deal| %>
             <% if (deal.expiry_date.future?|| deal.expiry_date.today?) && deal.active %>
                 <tr>
-                  <% if deal.redeemable && @payment.add_on3 %>
+                  <% if deal.redeemable && @payment.add_on3 && (deal.start_date <= Date.today) %>
                       <% @ranking.each do |r| %>
                           <% if r[0] == deal.id %>
                               <td id='num'><%= r[1] + 1 %></div></td>
                               <% break %>
                           <% end %>
                       <% end %>
+                  <% elsif deal.redeemable && @payment.add_on3 && (deal.start_date > Date.today) %>
+                      <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gatherd">N/A</p></td>
                   <% elsif @payment.add_on3 %>
-                      <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence data cannot be gathered">N/A</p></td>
+                      <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                   <% end %>
                   <td><%= deal.title %></td>
                   <td>
