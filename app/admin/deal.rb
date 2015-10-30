@@ -49,7 +49,11 @@ ActiveAdmin.register Deal do
   # INDEX
   index do
     selectable_column
-    column "Title", :title
+    column "Title" do |deal|
+      div :class => "descriptionCol" do
+        deal.title
+      end
+    end
     column "Type", :type_of_deal
     column "Description" do |deal|
       div :class => "descriptionCol" do

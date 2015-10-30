@@ -32,7 +32,11 @@ ActiveAdmin.register MerchantFeedback do
     end
     column :title
     column :category
-    column :content
+    column "Content" do |feedback|
+      div :class => "descriptionCol" do
+        feedback.content
+      end
+    end
     column :created_at
     column "Status", :resolved do |feedback|
       feedback.resolved ? status_tag( "Resolved", :ok ) : status_tag( "Unresolved" )

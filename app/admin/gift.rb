@@ -24,7 +24,11 @@ ActiveAdmin.register Gift do
     id_column
     column :name
     column :points
-    column :description
+    column "Description" do |gift|
+      div :class => "descriptionCol" do
+        gift.description
+      end
+    end
     column :gift_type
     actions
   end

@@ -31,7 +31,11 @@ ActiveAdmin.register MerchantPoint do
     end
     column :operation
     column :points
-    column :reason
+    column "Reason" do |point|
+      div :class => "descriptionCol" do
+        point.reason
+      end
+    end
     column "Changed at", :created_at
     # actions
   end

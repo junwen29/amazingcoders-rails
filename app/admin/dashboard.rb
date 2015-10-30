@@ -28,13 +28,17 @@ ActiveAdmin.register_page "Dashboard" do
     panel "Recent Deals" do
       table_for Deal.active.order("created_at desc").limit(10) do
         column "Title", :title do |deal|
-          link_to deal.title, admin_deal_path(deal)
+          div :class => "descriptionCol" do
+            link_to deal.title, admin_deal_path(deal)
+          end
         end
         column "Merchant", :merchant_id do |deal|
           auto_link deal.merchant
         end
         column "Venues" do |deal|
-          deal.venues.map{|v| v.name }.join(", ").html_safe
+          div :class => "descriptionCol" do
+            deal.venues.map{|v| v.name }.join(", ").html_safe
+          end
         end
         column "Active Date", :start_date
         column "Expiry Date", :expiry_date
