@@ -63,6 +63,8 @@ class AnalyticsController < ApplicationController
   # Helper methods
   def deal_statistics_by_deal
     if check_has_deal_statistics
+      # Show total view count and redemption count in highchart by days
+      deal_analytics_by_total
       # Show view count and redemption count in highchart by days
       deal_analytics_by_day
       # Show popular deal type
@@ -95,8 +97,13 @@ class AnalyticsController < ApplicationController
   end
 
   private
+  def deal_analytics_by_total
+    @deals_daily_total = DealAnalyticService.get_analytics_for_line_graph(merchant_id, Date.today.beginning_of_quarter, Date.today)
+  end
+
+  private
   def deal_analytics_by_day
-    @deals_daily_count = DealAnalyticService.get_analytics_for_line_graph(merchant_id, Date.today.beginning_of_quarter, Date.today)
+    @deals_daily_count = DealAnalyticService.get_analytics_for_line_graph(merchant_id, Date.today.beginning_of_quarter, Date.today, false)
   end
 
   private

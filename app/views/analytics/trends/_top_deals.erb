@@ -1,7 +1,7 @@
-<h3 style="padding-bottom: 20px">Popular Deals</h3>
+<h3 style="padding-bottom: 20px" xmlns:color="http://www.w3.org/1999/xhtml">Popular Deals</h3>
 <div class="panel panel-primary">
   <div class="panel-heading panel-heading-custom">
-    <h4>Top 10 Active Deals!</h4>
+    <h4>Top 10 Active Deals this Week!</h4>
   </div>
   <div class="panel-body">
     <strong>By Redemption Count</strong>
@@ -17,19 +17,23 @@
 
       <% own_deals = Array.new %>
       <% @own_deals.each do |od| %>
-          <% own_deals << od[1] + 1 %>
+          <% own_deals << od[1] %>
       <% end %>
       <% rank = 1 %>
       <% ranking = 0 %>
       <% @top_deals.each do |td| %>
-          <% deal = Deal.find(td) %>
+          <% deal = Deal.find(td[0]) %>
           <% if rank == own_deals[ranking] %>
               <tr id="own">
                 <% ranking = ranking + 1 %>
           <% else %>
               <tr>
           <% end %>
-          <td><%= rank %></td>
+          <td>
+            <p id="rank">
+              <%= rank %>
+            </p>
+          </td>
           <td>
             <%= deal.title %>
           </td>
@@ -61,5 +65,11 @@
 
     .panel-primary {
         border-color: #ea1f6c;
+    }
+
+    p#rank {
+        font-weight: bold;
+        font-size: 120%;
+        display: inline;
     }
 </style>

@@ -1,6 +1,6 @@
 <div class="panel panel-primary">
   <div class="panel-heading panel-heading-custom">
-    <h4>Your Active Deals Ranking!</h4>
+    <h4>Your Active Deals Ranking this Week!</h4>
   </div>
   <div class="panel-body">
     <strong>By Redemption Count</strong>
@@ -15,7 +15,27 @@
       <% @own_deals.each do |od| %>
           <% deal = Deal.find(od[0]) %>
           <tr>
-            <td><%= od[1] + 1 %></td>
+            <% if od[2] > 0 %>
+                <td>
+                  <p id="rank"><%= od[1] %></p>
+                  <span class="glyphicon glyphicon-triangle-top" style="color:green; float:right;"><%= od[2] %></span>
+                </td>
+            <% elsif od[2] == 0 %>
+                <td>
+                  <p id="rank"><%= od[1] %></p>
+                  <span class="glyphicon glyphicon-minus" style="color:#2d41ff; float:right;">  </span>
+                </td>
+            <% elsif od[2] < 0 %>
+                <td>
+                  <p id="rank"><%= od[1] %></p>
+                  <span class="glyphicon glyphicon-triangle-bottom" style="color:red; float:right;"><%= od[2].abs %></span>
+                </td>
+            <% else %>
+                <td>
+                  <p id="rank"><%= od[1] %></p>
+                  <span class="label label-warning" style=" float:right;"><%= od[2] %></span>
+                </td>
+            <% end %>
             <td>
               <%= deal.title %>
             </td>
@@ -39,5 +59,11 @@
 
     .panel-primary {
         border-color: #ea1f6c;
+    }
+
+    p#rank {
+        font-weight: bold;
+        font-size: 120%;
+        display: inline;
     }
 </style>

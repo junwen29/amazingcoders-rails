@@ -15,7 +15,7 @@
                   type: 'pie',
                   events: {
                       drilldown: function (e) {
-                          this.setTitle({text: "Popularity of Deal of Deal Type " + e.point.name});
+                          this.setTitle({text: "Popularity of Deal Type: " + e.point.name});
                       },
                       drillup: function (e) {
                           this.setTitle({text: 'Popularity of Deal Types'});
@@ -26,7 +26,7 @@
                   text: 'Popularity of Deal Types'
               },
               subtitle: {
-                  text: 'Redemption Count'
+                  text: 'Total Redemption Count'
               },
               tooltip: {
                   headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
