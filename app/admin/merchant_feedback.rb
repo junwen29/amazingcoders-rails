@@ -14,6 +14,13 @@ ActiveAdmin.register MerchantFeedback do
   filter :resolved, as: :boolean
   filter :created_at, as: :date_range
 
+  batch_action "Resolve" do |ids|
+    MerchantFeedback.find(ids).each do |feedback|
+      feedback.update(resolved: true)
+    end
+    redirect_to collection_path, alert: "The feedbacks have been marked as resolved."
+  end
+
   index do
     selectable_column
     column :id
