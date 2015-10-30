@@ -61,7 +61,7 @@
                               y: <%= @deals_for_venue[0][loop][redeem_placement] %>,
                               drilldown: "<%= @deals_for_venue[0][loop][0] %>" + " active",
                               dataLabels: {
-                                  format: "<%= @deals_for_venue[0][loop][0] %>\n" + " " + '<span style="color: #F10DAA"><%= @deals_for_venue[0][loop][redeem_placement] %> Redemptions</span>'
+                                  format: "<%= @deals_for_venue[0][loop][0] %><br/>" + " " + '<span style="color: #F10DAA"><%= @deals_for_venue[0][loop][redeem_placement] %> Redemptions</span>'
                               }
                           }
                       ]
@@ -82,7 +82,7 @@
                               y: <%= @deals_for_venue[1][loop][redeem_placement] %>,
                               drilldown: "<%= @deals_for_venue[1][loop][0] %>" + " past",
                               dataLabels: {
-                                  format: "<%= @deals_for_venue[1][loop][0] %>\n" + " " + '<span style="color: #F10DAA"><%= @deals_for_venue[1][loop][redeem_placement] %> Redemptions </span>'
+                                  format: "<%= @deals_for_venue[1][loop][0] %><br/>" + " " + '<span style="color: #F10DAA"><%= @deals_for_venue[1][loop][redeem_placement] %> Redemptions </span>'
                               }
                           }
                       ],
