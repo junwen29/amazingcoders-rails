@@ -27,6 +27,7 @@ ActiveAdmin.register Deal do
     end
   end
 
+  scope :all
   scope :active
   scope :waiting
   scope :expired
