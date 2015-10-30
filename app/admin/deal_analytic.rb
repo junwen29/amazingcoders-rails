@@ -8,9 +8,6 @@ ActiveAdmin.register DealAnalytic do
     link_to "Back", "/admin/deal_analytics"
   end
 
-  #scope :all, :default => true
-  scope :popular
-
   # Show only active deals
   filter :deal, label: "Deals", :collection => proc {(Deal.active).map{|d| [d.title, d.id]}}
   filter :view_count, label: "Views"

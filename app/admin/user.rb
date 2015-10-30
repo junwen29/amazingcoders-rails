@@ -12,6 +12,7 @@ ActiveAdmin.register User do
   filter :last_name
   filter :username
   filter :email
+  filter :total_points
   filter :venues, label: 'Wishlists',:collection => proc {(Venue.all).map{|v| [v.name, v.id]}}
   filter :deals, label: 'Bookmarks',:collection => proc {(Deal.active).map{|d| [d.title, d.id]}}
 
@@ -21,6 +22,7 @@ ActiveAdmin.register User do
     column :last_name
     column :username
     column :email
+    column :total_points
     column :current_sign_in_at
     column :sign_in_count
     column :created_at
@@ -37,6 +39,7 @@ ActiveAdmin.register User do
         row :last_name
         row :username
         row :email
+        row :total_points
         row :reset_password_token
         row :reset_password_sent_at
         row :remember_created_at
