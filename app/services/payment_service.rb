@@ -27,8 +27,13 @@ class PaymentService
       plan_premiums.count
     end
 
-    def get_total_payments()
-      all_payments = Payment.sum(:total_cost)
+    def get_total_payments(date = -1)
+      if date == -1
+        all_payments = Payment.sum(:total_cost)
+      else
+        all_payments = Payment.where('start_date <= ? AND expiry_date >= ? AND paid = ?', date, date, true).sum(:total_cost)
+      end
+      all_payments
     end
 
     def get_plan_payments(plan_id = 1)

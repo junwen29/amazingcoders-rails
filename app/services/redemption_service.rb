@@ -37,6 +37,11 @@ class RedemptionService
       Redemption.where(user_id: user_id)
     end
 
+    def count_all_redemptions(start_date, end_date)
+      redemptions = Redemption.where('created_at >= ? AND created_at <= ?', start_date, end_date)
+      redemptions.count
+    end
+
   end
 
   class << self

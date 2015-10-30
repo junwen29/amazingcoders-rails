@@ -42,7 +42,11 @@ ActiveAdmin.register_page "Payment Analytics" do
       end
 
       # Plan: Basic plan -> push to first element of array
-      basic_data = {name: "Basic Service", y: PaymentService.count_total_payments - premium_count, drilldown: "null"}.to_json
+      basic_subscribers = PaymentService.count_total_payments - premium_count
+      if basic_subscribers < 0
+        basic_subscribers = 0
+      end
+      basic_data = {name: "Basic Service", y: basic_subscribers, drilldown: "null"}.to_json
       @plan_subscribers_series.push basic_data
     end
 
@@ -117,8 +121,10 @@ ActiveAdmin.register_page "Payment Analytics" do
       all_plan_ids.each do |id|
         # Plan json [name, months, drilldown]
         plan_name = PlanService.get_plan_names(id)
-        plan_months = PaymentService.get_plan_months(id).to_i
-        plan_json = {name: plan_name, y: plan_months, drilldown: plan_name}.to_json
+        plan_months = PaymentService.get_plan_months(id).to_f
+        plan_count = PaymentService.count_plan_payments(id)
+        plan_average_months = plan_months / plan_count
+        plan_json = {name: plan_name, y: plan_average_months.round(2), drilldown: plan_name}.to_json
         @plan_months_series.push plan_json
 
         # Addons for each plan [name, id, data]
@@ -128,7 +134,8 @@ ActiveAdmin.register_page "Payment Analytics" do
         addons.each do |a|
           addon = Array.new    # addon consists of [name, month]
           addon.push PlanService.get_addon_names(a)
-          addon.push PaymentService.get_addon_months(a)
+          addon_average_months = PaymentService.get_addon_months(a).to_f / PaymentService.count_addon_payments(a)
+          addon.push addon_average_months.round(2)
           addon_data_months.push addon
         end
         # Pass json
