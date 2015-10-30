@@ -42,6 +42,14 @@ class RedemptionService
       redemptions.count
     end
 
+    def count_uniq_redemptions(deal_id, user_id = nil)
+      if user_id == nil
+        Redemption.where(deal_id: deal_id).select(:user_id).distinct.count
+      else
+        Redemption.where(deal_id: deal_id).where(user_id: user_id).select(:user_id).distinct.count
+      end
+    end
+
   end
 
   class << self

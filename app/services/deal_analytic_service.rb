@@ -439,6 +439,15 @@ class DealAnalyticService
       conversion.round(2)
     end
 
+    # returns conversion rate of num unique views to redeems in percentage
+    def get_views_to_redeem(deal_id)
+      view_counts = ViewcountService.get_uniq_view_count(deal_id).to_f
+      user_ids = ViewcountService.get_uniq_user_id(deal_id)
+      redeem_count = RedemptionService.count_uniq_redemptions(deal_id, user_ids).to_f
+      conversion = (redeem_count/view_counts)*100
+      conversion.round(2)
+    end
+
   end
 
   class << self

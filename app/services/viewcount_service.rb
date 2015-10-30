@@ -11,6 +11,14 @@ class ViewcountService
       end
     end
 
+    def get_uniq_view_count(deal_id)
+      Viewcount.where(:deal_id => deal_id).select(:user_id).distinct.count
+    end
+
+    def get_uniq_user_id(deal_id)
+      Viewcount.where(:deal_id => deal_id).select(:user_id).distinct.pluck(:user_id)
+    end
+
     def setViewCount(deal_id, user_id)
       Viewcount.create(deal_id: deal_id, user_id: user_id)
     end
