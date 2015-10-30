@@ -25,6 +25,8 @@ module User::Json
 
       json.updated_at updated_at
       json.created_at created_at
+      json.num_wishes UserService.get_num_wishes(id)
+      json.num_bookmarks UserService.get_num_bookmarks(id)
     end
 
   end
