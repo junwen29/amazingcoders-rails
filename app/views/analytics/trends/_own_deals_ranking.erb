@@ -15,16 +15,25 @@
       <% @own_deals.each do |od| %>
           <% deal = Deal.find(od[0]) %>
           <tr>
-            <% if od[2] >= 0 || od[2] == 'new' %>
+            <% if od[2] > 0 %>
                 <td>
                   <p id="rank"><%= od[1] %></p>
                   <span class="glyphicon glyphicon-triangle-top" style="color:green; float:right;"><%= od[2] %></span>
                 </td>
-
+            <% elsif od[2] == 0 %>
+                <td>
+                  <p id="rank"><%= od[1] %></p>
+                  <span class="glyphicon glyphicon-minus" style="color:#2d41ff; float:right;">  </span>
+                </td>
             <% elsif od[2] < 0 %>
                 <td>
                   <p id="rank"><%= od[1] %></p>
                   <span class="glyphicon glyphicon-triangle-bottom" style="color:red; float:right;"><%= od[2].abs %></span>
+                </td>
+            <% else %>
+                <td>
+                  <p id="rank"><%= od[1] %></p>
+                  <span class="label label-warning" style=" float:right;"><%= od[2] %></span>
                 </td>
             <% end %>
             <td>
