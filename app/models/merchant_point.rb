@@ -3,6 +3,8 @@ class MerchantPoint < ActiveRecord::Base
   belongs_to :merchant
   after_create :edit_total
 
+  scope :credit, -> {where("operation = ?", 'Credit')}
+  scope :debit, -> {where("operation = ?", 'Debit')}
 
   private
   def edit_total

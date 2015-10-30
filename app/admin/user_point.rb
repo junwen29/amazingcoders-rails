@@ -6,6 +6,10 @@ ActiveAdmin.register UserPoint do
   permit_params :operation, :points, :reason, :user_id
   actions :all, except: [:show, :edit, :destroy]
 
+  scope :all
+  scope :credit
+  scope :debit
+
   filter :user, as: :select, collection: proc { User.all }
   filter :operation, as: :select, collection: ["Credit", "Debit"]
   filter :points, as: :numeric
