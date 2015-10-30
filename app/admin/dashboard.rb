@@ -11,6 +11,7 @@ ActiveAdmin.register_page "Dashboard" do
       @total_premiums = PaymentService.get_premiums_pro_rated(Date.today)
       @active_deals = DealService.count_all_active_deals
       @redemption_count = RedemptionService.count_all_redemptions(Date.today.beginning_of_month, date)
+      @month_year = Date.today.strftime("%B %Y")
 
       column do
         render partial: 'admin/analytics_dashboard',
@@ -18,7 +19,8 @@ ActiveAdmin.register_page "Dashboard" do
                    :deal_subscription_count => @deal_subscription_count,
                    :premiums => @total_premiums,
                    :active_deals => @active_deals,
-                   :redemption_count => @redemption_count
+                   :redemption_count => @redemption_count,
+                   :month_year => @month_year
                }
       end
     end
