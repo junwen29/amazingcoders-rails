@@ -32,7 +32,7 @@
                   <% if deal.redeemable && @payment.add_on3 && (deal.start_date <= Date.today) %>
                       <% @ranking.each do |r| %>
                           <% if r[0] == deal.id %>
-                              <td id='num'><%= r[1] + 1 %></div></td>
+                              <td id='num'><%= r[1] %></div></td>
                               <% break %>
                           <% end %>
                       <% end %>
