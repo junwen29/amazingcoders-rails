@@ -61,12 +61,12 @@ class DealAnalyticService
     # array [0][0][3] gives array of redemption count
     # array [0][0][4] gives start_date of view count in utc format
     # array [2] gives array of expired deal names
-    def get_analytics_for_line_graph(merchant_id, start_date, end_date)
+    def get_analytics_for_line_graph(merchant_id, start_date, end_date, total = true)
       array = Array.new
       active_deals = MerchantService.get_active_deals_that_are_active_between_two_dates(merchant_id, start_date, end_date).order(title: :asc)
       past_deals = MerchantService.get_past_deals_that_are_active_between_two_dates(merchant_id, start_date, end_date).order(title: :asc)
-      active_deals_array = get_view_and_redemption_count_by_day(active_deals, start_date, end_date)
-      past_deals_array = get_view_and_redemption_count_by_day(past_deals, start_date, end_date)
+      active_deals_array = get_view_and_redemption_count_by_day(active_deals, start_date, end_date, total)
+      past_deals_array = get_view_and_redemption_count_by_day(past_deals, start_date, end_date, total)
       expired_deals = past_deals.pluck(:title)
       array << active_deals_array
       array << past_deals_array
@@ -75,7 +75,7 @@ class DealAnalyticService
     end
 
     # Returns an array of all deals view and redemption count from start to end date by day
-    def get_view_and_redemption_count_by_day(deals, start_date, end_date)
+    def get_view_and_redemption_count_by_day(deals, start_date, end_date, total)
       overall_deals_array = Array.new
       deals.each do |d|
         num_view_array = Array.new
@@ -101,14 +101,26 @@ class DealAnalyticService
         deal_array << d.title
         deal_array << Time.parse((redemption_start_date).to_s).to_f * 1000
 
-        while view_start_date <= temp_end_date
+        if total
+          while view_start_date <= temp_end_date
           num_view_array << Viewcount.where(deal_id: d.id).where(created_at: d.created_at..view_start_date.end_of_day).count
           view_start_date = view_start_date + 1.days
-        end
+          end
 
-        while redemption_start_date <= temp_end_date
-          num_redeem_array << Redemption.where(deal_id: d.id).where(created_at: d.created_at..redemption_start_date.end_of_day).count
-          redemption_start_date = redemption_start_date + 1.days
+          while redemption_start_date <= temp_end_date
+            num_redeem_array << Redemption.where(deal_id: d.id).where(created_at: d.created_at..redemption_start_date.end_of_day).count
+            redemption_start_date = redemption_start_date + 1.days
+          end
+        else
+          while view_start_date <= temp_end_date
+            num_view_array << Viewcount.where(deal_id: d.id).where(created_at: view_start_date.beginning_of_day..view_start_date.end_of_day).count
+            view_start_date = view_start_date + 1.days
+          end
+
+          while redemption_start_date <= temp_end_date
+            num_redeem_array << Redemption.where(deal_id: d.id).where(created_at: redemption_start_date.beginning_of_day..redemption_start_date.end_of_day).count
+            redemption_start_date = redemption_start_date + 1.days
+          end
         end
         deal_array << num_view_array
         deal_array << num_redeem_array
@@ -243,7 +255,7 @@ class DealAnalyticService
       end
       deal_ranking.sort_by(&:last).reverse
     end
-    
+
     def get_top_active_deals(limit = 10)
       start_date = Date.today.beginning_of_week
       end_date = Date.today.end_of_day
