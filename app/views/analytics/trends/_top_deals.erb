@@ -29,18 +29,11 @@
           <% else %>
               <tr>
           <% end %>
-          <% if td[2] >= 0 || td[2] == 'new' %>
-              <td>
-                <p id="rank"><%= rank %></p>
-                <span class="glyphicon glyphicon-triangle-top" style="color:green; float:right;"><%= td[2] %></span>
-              </td>
-
-          <% elsif td[2] < 0 %>
-              <td>
-                <p id="rank"><%= rank %></p>
-                <span class="glyphicon glyphicon-triangle-bottom" style="color:red; float:right;"><%= td[2].abs %></span>
-              </td>
-          <% end %>
+          <td>
+            <p id="rank">
+              <%= rank %>
+            </p>
+          </td>
           <td>
             <%= deal.title %>
           </td>

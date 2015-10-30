@@ -259,30 +259,7 @@ class DealAnalyticService
     def get_top_active_deals(limit = 10)
       start_date = Date.today.beginning_of_week
       end_date = Date.today.end_of_day
-
-      top_deal_ids = get_active_deals_ranking(start_date, end_date).take(limit)
-
-      last_week_start = start_date - 7.days
-      last_week_end = Date.today.end_of_week - 7.days
-
-      last_week_top_deals = get_active_deals_ranking(last_week_start, last_week_end)
-
-      current_ranking = 0
-      top_deal_ids.each do |tdi|
-        past_ranking = 0
-        last_week_top_deals.each do |lwtd|
-          if lwtd[0] == tdi[0]
-            top_deal_ids[current_ranking] << past_ranking - current_ranking
-            break
-          end
-          past_ranking = past_ranking + 1
-        end
-        if top_deal_ids[current_ranking][2].blank?
-          top_deal_ids[current_ranking] << 'new'
-        end
-        current_ranking = current_ranking + 1
-      end
-      top_deal_ids
+      get_active_deals_ranking(start_date, end_date).take(limit)
     end
 
     def get_top_queries(limit = 10)
