@@ -434,7 +434,7 @@ class DealAnalyticService
       activate_date = Deal.find(deal_id).activate_date
       num_wishlist = WishService.num_wishlist_deal(deal_id, activate_date).to_f
       user_id = WishService.get_user_id(deal_id, activate_date)
-      num_views = Viewcount.where(user_id: user_id).uniq.where(:entry => 'merchant_push_notification').count.to_f
+      num_views = Viewcount.where(user_id: user_id, deal_id: deal_id).uniq.where(:entry => 'merchant_push_notification').count.to_f
       conversion = (num_views/num_wishlist)*100
       conversion.round(2)
     end
