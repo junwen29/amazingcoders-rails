@@ -59,8 +59,10 @@
                   </td>
                   <% if @payment.add_on2 %>
                       <td id='num'><%= DealAnalyticService.get_unique_view_count(deal.id) %></td>
-                      <% if deal.redeemable %>
+                      <% if deal.redeemable && (deal.start_date <= Date.today) %>
                           <td id='num'><%= DealAnalyticService.get_redemption_count(deal.id) %></td>
+                      <% elsif deal.redeemable && (deal.start_date > Date.today)%>
+                          <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gatherd">N/A</p></td>
                       <% else %>
                           <td><p id='untracable' data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence data cannot be gathered">N/A</p></td>
                       <% end %>
