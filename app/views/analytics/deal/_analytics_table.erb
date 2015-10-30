@@ -22,7 +22,7 @@
                 <% if (deal.expiry_date.future?|| deal.expiry_date.today?) && deal.active %>
                     <tr>
                       <td><%= deal.title %></td>
-                      <td></td>
+                      <td style="text-align: center;"><%= DealAnalyticService.get_wishlist_to_views(deal.id) %>%</td>
                       <td></td>
                       <td></td>
                       <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
@@ -54,7 +54,7 @@
                 <% if deal.expiry_date.past? && deal.active %>
                     <tr>
                       <td><%= deal.title %></td>
-                      <td></td>
+                      <td style="text-align: center;"><%= DealAnalyticService.get_wishlist_to_views(deal.id) %>%</td>
                       <td></td>
                       <td></td>
                       <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
