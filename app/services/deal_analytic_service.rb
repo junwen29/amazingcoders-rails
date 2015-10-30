@@ -81,7 +81,12 @@ class DealAnalyticService
         num_view_array = Array.new
         num_redeem_array = Array.new
         deal_array = Array.new
-        view_start_date = Viewcount.where(:deal_id => d.id).first.created_at.beginning_of_day
+        view_start_date = Viewcount.where(:deal_id => d.id).first
+        if view_start_date.blank?
+          view_start_date = Date.today
+        else
+          view_start_date = view_start_date.created_at.beginning_of_day
+        end
         temp = view_start_date
 
         # If start date of deal is after given start date, we will start from deal start date
