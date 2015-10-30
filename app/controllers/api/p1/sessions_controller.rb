@@ -51,4 +51,11 @@ class Api::P1::SessionsController < Devise::SessionsController
                       :info => "Login Failed",
                       :data => {} }
   end
+
+  def get_owner
+    user = User.find_by_authentication_token params[:auth_token]
+    render_jbuilder do |json|
+      user.to_show_owner(json)
+    end
+  end
 end
