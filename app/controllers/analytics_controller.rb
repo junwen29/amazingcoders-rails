@@ -69,6 +69,8 @@ class AnalyticsController < ApplicationController
       deal_analytics_by_day
       # Show popular deal type
       deal_analytics_by_type_and_redemption
+      # Show analytics table
+      deal_analytics_table
     else
       render "analytics/error"
     end
@@ -114,6 +116,11 @@ class AnalyticsController < ApplicationController
   private
   def deal_analytics_by_venue
     @deals_by_venue = DealAnalyticService.get_analytics_for_deals_by_venue(merchant_id)
+  end
+
+  private
+  def deal_analytics_table
+    @deals = MerchantService.get_all_deals(merchant_id).order(title: :asc)
   end
 
   private
