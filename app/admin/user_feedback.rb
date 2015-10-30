@@ -2,7 +2,10 @@ ActiveAdmin.register UserFeedback do
   menu :parent => "User", :priority => 3
 
   config.clear_action_items!
-  actions :all, except: [:show, :destroy]
+  actions :all, except: [:destroy]
+  action_item :only => :show do
+    link_to "Back", "/admin/user_feedbacks"
+  end
 
   scope :all
   scope :resolved
@@ -35,6 +38,26 @@ ActiveAdmin.register UserFeedback do
       feedback.resolved ? status_tag( "Resolved", :ok ) : status_tag( "Unresolved" )
     end
     actions
+  end
+
+  # SHOW
+  show do |f|
+    panel "User Feedback Details" do
+      attributes_table_for f do
+        row "Ticket ID" do
+          f.id
+        end
+        row :title
+        row :category
+        row :content
+        row "Status" do
+          f.resolved ? status_tag( "Resolved", :ok ) : status_tag( "Unresolved" )
+        end
+        row :created_at
+        row :updated_at
+      end
+    end
+    active_admin_comments
   end
 
   # EDIT
