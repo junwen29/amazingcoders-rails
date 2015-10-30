@@ -17,6 +17,7 @@ Rails.application.routes.draw do
           post '/sign_in' => 'sessions#create'
           delete '/sign_out' => 'sessions#destroy'
           post '/sign_up' => 'registrations#create'
+          post '/profile/auth_token=:auth_token' => 'sessions#get_owner'
         end
       end
 

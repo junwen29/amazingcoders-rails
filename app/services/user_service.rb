@@ -9,6 +9,11 @@ class UserService
     Bookmark.where(:user_id => user_id).count
   end
 
+  def get_owner(username)
+    user = User.where(:authentication_token => username)
+    user
+  end
+
   end
 
   class << self
