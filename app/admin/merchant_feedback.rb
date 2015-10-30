@@ -4,6 +4,10 @@ ActiveAdmin.register MerchantFeedback do
   config.clear_action_items!
   actions :all, except: [:show, :destroy]
 
+  scope :all
+  scope :resolved
+  scope :unresolved
+
   filter :merchant, as: :select, collection: proc { Merchant.all }
   filter :category, as: :select, collection: ["Suggestion", "Complaint", "Issue"]
   filter :title, as: :string

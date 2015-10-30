@@ -4,12 +4,15 @@ ActiveAdmin.register UserFeedback do
   config.clear_action_items!
   actions :all, except: [:show, :destroy]
 
+  scope :all
+  scope :resolved
+  scope :unresolved
+
   filter :user, as: :select, collection: proc { User.all }
   filter :category, as: :select, collection: ["Suggestion", "Complaint", "Issue"]
   filter :title, as: :string
   filter :resolved, as: :boolean
   filter :created_at, as: :date_range
-
 
   index do
     selectable_column
