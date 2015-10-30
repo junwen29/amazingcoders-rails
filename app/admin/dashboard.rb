@@ -8,7 +8,7 @@ ActiveAdmin.register_page "Dashboard" do
       # Show analytic figures for this month
       date = Date.today.end_of_month
       @deal_subscription_count = PaymentService.count_active_premiums(date, 1)
-      @total_premiums = PaymentService.get_total_payments(date)
+      @total_premiums = PaymentService.get_premiums_pro_rated(Date.today)
       @active_deals = DealService.count_all_active_deals
       @redemption_count = RedemptionService.count_all_redemptions(Date.today.beginning_of_month, date)
 

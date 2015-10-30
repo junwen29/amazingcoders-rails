@@ -36,6 +36,31 @@ class PaymentService
       all_payments
     end
 
+    def get_premiums_pro_rated(date)
+      payments = Payment.all.pluck(:start_date, :expiry_date, :total_cost)
+      all_premiums = 0
+      payments.each do |p|
+        start_date = p[0]
+        end_date = p[1]
+        if start_date >= date.beginning_of_month && end_date <= date.end_of_month
+          all_premiums += p[2]
+        elsif start_date < date.beginning_of_month && end_date > date.end_of_month
+          duration_all = (end_date - start_date).to_i + 1
+          duration_within = Time.days_in_month(Date.today.strftime("%m").to_i)
+          all_premiums += duration_within / duration_all.to_f * p[2]
+        elsif start_date < date.beginning_of_month && end_date >= date.beginning_of_month && end_date <= date.end_of_month
+          duration_all = (end_date - start_date).to_i + 1
+          duration_within = (end_date - date.beginning_of_month).to_i + 1
+          all_premiums += duration_within / duration_all.to_f * p[2]
+        elsif end_date > date.end_of_month && start_date >= date.beginning_of_month && start_date <= date.end_of_month
+          duration_all = (end_date - start_date).to_i + 1
+          duration_within = (date.end_of_month - start_date).to_i + 1
+          all_premiums += duration_within / duration_all.to_f * p[2]
+        end
+      end
+      all_premiums
+    end
+
     def get_plan_payments(plan_id = 1)
       plan_payments = Payment.joins(:plan_payments).where('plan_payments.plan_id' => plan_id).sum(:total_cost)
     end
