@@ -44,6 +44,7 @@ ActiveAdmin.register_page "Dashboard" do
     end
 
 
+=begin
     panel "Recent Redemptions" do
       table_for Redemption.order("created_at desc").limit(10) do
         column "Deal" do |r|
@@ -60,6 +61,46 @@ ActiveAdmin.register_page "Dashboard" do
         end
       end
       strong {link_to "View all Redemptions", admin_redemptions_path}
+    end
+=end
+
+    panel "Recent Payments" do
+      table_for Payment.order("created_at desc").limit(10) do
+        column "Merchant", :merchant_id do |payment|
+          auto_link payment.merchant
+        end
+        column "Plan" do |payment|
+          # auto_link payment.plan
+          if (payment.plan1)
+            plan = Plan.find(1)
+            auto_link plan
+          end
+        end
+        column "Add Ons" do |payment|
+          # payment.add_ons.map{|a| a.name }.join(", ").html_safe
+          output = []
+          if (payment.add_on1)
+            add_on1 = AddOn.find(1)
+            output << add_on1.name
+          end
+          if (payment.add_on2)
+            add_on2 = AddOn.find(2)
+            output << add_on2.name
+          end
+          if (payment.add_on3)
+            add_on3 = AddOn.find(3)
+            output << add_on3.name
+          end
+          output.join(', ').html_safe
+        end
+        column "Premium Paid", :total_cost do |payment|
+          number_to_currency payment.total_cost
+        end
+        column "Start Date", :start_date
+        column "Expiry Date", :expiry_date
+        column "Paid on", :created_at
+      end
+      strong {link_to "View all Payments", admin_payments_path}
     end
 
   end # content

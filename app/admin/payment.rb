@@ -29,6 +29,7 @@ ActiveAdmin.register Payment do
 
   end
 
+  scope :all
   scope :active
   scope :expired
 
