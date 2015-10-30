@@ -6,6 +6,7 @@ class Gift < ActiveRecord::Base
     MerchantPointService.new_point(reason, gift.points, "Minus", merchant_id)
   end
 
-
+  scope :merchant, -> {where("gift_type = ?", 'Merchant')}
+  scope :user, -> {where("gift_type = ?", 'User')}
 
 end
