@@ -80,7 +80,11 @@ class PaymentsController < ApplicationController
 
   def show
     @payment = Payment.find(params[:id])
-
+    unless session[:merchant_id] == @payment.merchant_id
+      flash[:error] = "You don't have access to this page!"
+      redirect_to payments_path
+      return
+    end
   end
 
   def gift_extend
