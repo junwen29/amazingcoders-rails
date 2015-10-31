@@ -1,7 +1,6 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
-=begin
 
 Plan.create(id: '1', name: 'Premium Deals Services', cost: '30', description: 'Allows unlimited creation of deals. Publishing of up to 5 active deals')
 
@@ -827,7 +826,6 @@ while starting_user_id <= ending_user_id
   user.save
   starting_user_id = starting_user_id + 1
 end
-=end
 
 # Merchant Feedback
 date = DateTime.parse("2015-11-02 00:00:00")
