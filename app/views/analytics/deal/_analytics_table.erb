@@ -37,7 +37,13 @@
                           <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                           <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                       <% end %>
-                      <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
+                      <td>
+                        <%= link_to analytic_path(deal) do %>
+                            <button class="btn btn-success" type="button">
+                              Show Charts
+                            </button>
+                        <% end %>
+                      </td>
                     </tr>
                 <% end %>
             <% end %>
@@ -81,7 +87,13 @@
                           <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                           <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                       <% end %>
-                      <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
+                      <td>
+                        <%= link_to analytic_path(deal.id) do %>
+                            <button class="btn btn-success" type="button">
+                              Show Charts
+                            </button>
+                        <% end %>
+                      </td>
                     </tr>
                 <% end %>
             <% end %>

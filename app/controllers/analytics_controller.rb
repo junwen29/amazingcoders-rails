@@ -30,6 +30,10 @@ class AnalyticsController < ApplicationController
     render "analytics/trends"
   end
 
+  def show
+    @deal = Deal.find(params[:id])
+  end
+
   # Check if user has the subscribed to any deal analytics addons
   private
   def check_has_analytics_access
