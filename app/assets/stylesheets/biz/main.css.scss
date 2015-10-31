@@ -1981,6 +1981,20 @@
     text-align: left;
   }
 
+  .longCol {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
+  }
+
+  .longCol:hover {
+    text-overflow: inherit;
+    overflow: visible;
+    white-space: pre-wrap;
+  }
+
+
   /*  #modal--verify
     =================================================================== */
     

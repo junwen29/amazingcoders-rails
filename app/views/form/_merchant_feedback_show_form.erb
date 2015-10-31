@@ -17,3 +17,12 @@
   <strong>Date and Time Submitted: </strong><br>
   <%= @merchant_feedback.created_at.to_formatted_s(:long) %>
 </p>
+
+<p>
+  <strong>Status: </strong><br>
+  <% if @merchant_feedback.resolved %>
+      <span class="label label-success">Resolved</span>
+  <% else %>
+      <span class="label label-default">Processing</span>
+  <% end %>
+</p>

@@ -1,5 +1,5 @@
 class MerchantFeedbacksController < ApplicationController
-  before_filter :authenticate_merchant!, except: [:home, :help]
+  before_filter :authenticate_merchant!, except: [:home]
 
   def new
       @merchant_feedback = MerchantFeedback.new
