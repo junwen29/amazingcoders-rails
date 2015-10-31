@@ -121,7 +121,7 @@
                   <td><%= deal.description %></td>
                   <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
                   <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
-                  <td>
+                  <td style="min-width: 200px;">
                     <% deal.venues.each do |venue| %>
                         <%= venue.name %><br/>
                     <% end %>
@@ -194,7 +194,7 @@
                   <td><%= deal.description %></td>
                   <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
                   <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
-                  <td>
+                  <td style="min-width: 200px;">
                     <% deal.venues.each do |venue| %>
                         <%= venue.name %><br/>
                     <% end %>
