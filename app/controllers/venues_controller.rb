@@ -16,7 +16,11 @@ class VenuesController < ApplicationController
   # GET /venues/1/edit
   def edit
     @venue = Venue.find(params[:id])
-
+    unless session[:merchant_id] == @venue.merchant_id
+      flash[:error] = "You don't have access to this page!"
+      redirect_to venues_path
+      return
+    end
     # Get data required for dashboard
     @venues = Venue.all
 
@@ -56,6 +60,12 @@ class VenuesController < ApplicationController
   end
 
   def show
+    @venue = Venue.find(params[:id])
+    unless session[:merchant_id] == @venue.merchant_id
+      flash[:error] = "You don't have access to this page!"
+      redirect_to venues_path
+      return
+    end
     @deals = VenueService.get_active_deals_for_venue(@venue.id).order(title: :asc)
     @payment = MerchantService.get_deal_plan(merchant_id)
     @ranking = DealAnalyticService.get_own_deals_ranking(merchant_id)
