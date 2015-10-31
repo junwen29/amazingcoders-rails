@@ -1,6 +1,7 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
+=begin
 
 Plan.create(id: '1', name: 'Premium Deals Services', cost: '30', description: 'Allows unlimited creation of deals. Publishing of up to 5 active deals')
 
@@ -826,3 +827,27 @@ while starting_user_id <= ending_user_id
   user.save
   starting_user_id = starting_user_id + 1
 end
+=end
+
+# Merchant Feedback
+date = DateTime.parse("2015-11-02 00:00:00")
+merchant = 1000
+MerchantFeedback.create(id: 1000, title: "Live chat CS support", category: "Suggestion", content: "Good to have some online live chat support", resolved: false, created_at: date, updated_at: date, merchant_id: merchant)
+MerchantFeedback.create(id: 1001, title: "Poor service", category: "Complaint", content: "Rude customer service", resolved: false, created_at: date, updated_at: date, merchant_id: merchant)
+
+# User id 1000
+starting_user_id = 1000
+user = User.new(id: starting_user_id)
+user.first_name = 'user'+starting_user_id.to_s
+user.last_name = 'user'+starting_user_id.to_s
+user.username = 'user'+starting_user_id.to_s
+user.email = 'user'+starting_user_id.to_s+'@gmail.com'
+user.password ='12345678'
+user.password_confirmation = '12345678'
+user.save
+
+# User Feedback
+date = DateTime.parse("2015-11-02 00:00:00")
+UserFeedback.create(id: 1000, title: "Suggestion to add kids menu", category: "Suggestion", content: "Add some healthy food for small kids", resolved: false, created_at: date, updated_at: date, user_id: 1000)
+UserFeedback.create(id: 1001, title: "Poor service", category: "Complaint", content: "Rude customer service", resolved: false, created_at: date, updated_at: date, user_id: 1000)
+
