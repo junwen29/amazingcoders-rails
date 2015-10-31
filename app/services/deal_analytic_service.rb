@@ -478,7 +478,7 @@ class DealAnalyticService
       end_time = activate_date.end_of_hour
       current = DateTime.now.beginning_of_hour + 1.hours
 
-      if (deal_expiry_date - activate_date)/1.days < 7.0
+      if (deal_expiry_date - activate_date)/1.days <= 7.0
         final = deal_expiry_date
       elsif (current.to_f - activate_date.to_f)/1.days > 7.0
         final = activate_date + 7.days
