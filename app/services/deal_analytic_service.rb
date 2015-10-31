@@ -459,7 +459,11 @@ class DealAnalyticService
     # returns average time between users who redeem more than once
     def average_time_btw_multiple_redeem(deal_id)
       multiple_redeems_user_ids = RedemptionService.get_user_ids(deal_id, true)
-      RedemptionService.get_average_days_between_redeems(deal_id, multiple_redeems_user_ids)
+      if multiple_redeems_user_ids.blank?
+        'No Redeems Yet'
+      else
+        (RedemptionService.get_average_days_between_redeems(deal_id, multiple_redeems_user_ids).to_s + ' days')
+      end
     end
 
   end

@@ -24,9 +24,19 @@
                     <tr>
                       <td><%= deal.title %></td>
                       <td style="text-align: center;"><%= DealAnalyticService.get_wishlist_to_views(deal.id) %>%</td>
-                      <td style="text-align: center;"><%= DealAnalyticService.get_views_to_redeem(deal.id) %>%</td>
-                      <td style="text-align: center;"> <%= DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>%</td>
-                      <td style="text-align: center;"> <%= DealAnalyticService.average_time_btw_multiple_redeem(deal.id) %> days</td>
+                      <% if deal.redeemable && (deal.start_date <= Date.today) %>
+                          <td style="text-align: center;"><%= DealAnalyticService.get_views_to_redeem(deal.id) %>%</td>
+                          <td style="text-align: center;"> <%= DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>%</td>
+                          <td style="text-align: center;"> <%= DealAnalyticService.average_time_btw_multiple_redeem(deal.id) %></td>
+                      <% elsif deal.redeemable && (deal.start_date > Date.today)%>
+                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gatherd">N/A</p></td>
+                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gatherd">N/A</p></td>
+                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gatherd">N/A</p></td>
+                      <% else %>
+                          <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
+                          <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
+                          <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
+                      <% end %>
                       <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
                     </tr>
                 <% end %>
@@ -58,9 +68,19 @@
                     <tr>
                       <td><%= deal.title %></td>
                       <td style="text-align: center;"><%= DealAnalyticService.get_wishlist_to_views(deal.id) %>%</td>
-                      <td style="text-align: center;"><%= DealAnalyticService.get_views_to_redeem(deal.id) %>%</td>
-                      <td style="text-align: center;"> <%= DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>%</td>
-                      <td style="text-align: center;"> <%= DealAnalyticService.average_time_btw_multiple_redeem(deal.id) %> days</td>
+                      <% if deal.redeemable && (deal.start_date <= Date.today) %>
+                          <td style="text-align: center;"><%= DealAnalyticService.get_views_to_redeem(deal.id) %>%</td>
+                          <td style="text-align: center;"> <%= DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>%</td>
+                          <td style="text-align: center;"> <%= DealAnalyticService.average_time_btw_multiple_redeem(deal.id) %></td>
+                      <% elsif deal.redeemable && (deal.start_date > Date.today)%>
+                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gatherd">N/A</p></td>
+                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gatherd">N/A</p></td>
+                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gatherd">N/A</p></td>
+                      <% else %>
+                          <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
+                          <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
+                          <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
+                      <% end %>
                       <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
                     </tr>
                 <% end %>
@@ -71,3 +91,15 @@
     </div>
   </div>
 </div>
+<script id="bsJs" type="text/javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+<style>
+    p#untracable {
+        text-align: center;
+        color: #ea1218;
+        font-weight: bold;
+    }
+</style>
