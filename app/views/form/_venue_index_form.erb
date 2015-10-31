@@ -19,8 +19,8 @@
             <% end %>
           </td>
 
-          <td><%= venue.name %></td>
-          <td><%= venue.street %></td>
+          <td style="min-width: 100px;"><%= venue.name %></td>
+          <td style="min-width: 100px;"><%= venue.street %></td>
           <td><%= venue.bio %></td>
           <td style="font: 20px Arial,sans-serif; text-align: center; color: #EA1F6C;"><%= WishService.num_wishlist_venue(venue.id) %></td>
           <td><%= link_to 'Show', venue_path(venue), class: "btn btn-xs btn-default" %></td>
