@@ -31,6 +31,10 @@ class MerchantFeedbacksController < ApplicationController
 
   def show
     @merchant_feedback = MerchantFeedback.find(params[:id])
+    unless session[:merchant_id] == @merchant_feedback.merchant_id
+      flash[:error] = "You don't have access to this page!"
+      redirect_to merchant_feedbacks_path(session[:customer_id])
+    end
   end
 
   # def edit
