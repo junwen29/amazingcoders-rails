@@ -6,14 +6,6 @@ class MerchantPointsController < InheritedResources::Base
     @merchant = Merchant.find(merchant_id)
   end
 
-  def new
-
-  end
-
-  def create
-
-  end
-
   private
   def merchant_point_params
     params.require(:point).permit(:points, :operation, :reason)

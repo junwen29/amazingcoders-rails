@@ -23,6 +23,12 @@ class DealsController < ApplicationController
   end
 
   def edit
+    deal = Deal.find(params[:id])
+    unless session[:merchant_id] == deal.merchant_id && deal.active == false
+      flash[:error] = "You don't have access to this page!"
+      redirect_to deals_path
+      return
+    end
     # For drop down form
     @all_venues = MerchantService.get_all_venues(merchant_id)
     @deal_venue = @deal.deal_venues.build
@@ -103,6 +109,12 @@ class DealsController < ApplicationController
   end
 
   def show
+    @deal = Deal.find(params[:id])
+    unless session[:merchant_id] == @deal.merchant_id
+      flash[:error] = "You don't have access to this page!"
+      redirect_to deals_path
+      return
+    end
     @qr = RQRCode::QRCode.new(@deal.id.to_s + "_" + @deal.created_at.to_s).to_img.resize(200, 200).to_data_url
     respond_to do |format|
       format.html
