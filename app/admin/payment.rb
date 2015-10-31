@@ -29,6 +29,7 @@ ActiveAdmin.register Payment do
 
   end
 
+  scope :all
   scope :active
   scope :expired
 
@@ -63,7 +64,7 @@ ActiveAdmin.register Payment do
     end
     column "Plan" do |payment|
       # auto_link payment.plan
-      if (payment.plan1)
+      if payment.plan1
         plan = Plan.find(1)
         auto_link plan
       end
@@ -71,15 +72,15 @@ ActiveAdmin.register Payment do
     column "Add Ons" do |payment|
       # payment.add_ons.map{|a| a.name }.join(", ").html_safe
       output = []
-      if (payment.add_on1)
+      if payment.add_on1
         add_on1 = AddOn.find(1)
         output << add_on1.name
       end
-      if (payment.add_on2)
+      if payment.add_on2
         add_on2 = AddOn.find(2)
         output << add_on2.name
       end
-      if (payment.add_on3)
+      if payment.add_on3
         add_on3 = AddOn.find(3)
         output << add_on3.name
       end
@@ -111,22 +112,22 @@ ActiveAdmin.register Payment do
         row :addons do |payment|
           #payment.add_ons.map{|a| a.name }.join(", ").html_safe
           output = []
-          if (payment.add_on1)
+          if payment.add_on1
             add_on1 = AddOn.find(1)
             output << add_on1.name
           end
-          if (payment.add_on2)
+          if payment.add_on2
             add_on2 = AddOn.find(2)
             output << add_on2.name
           end
-          if (payment.add_on3)
+          if payment.add_on3
             add_on3 = AddOn.find(3)
             output << add_on3.name
           end
           output.join(', ').html_safe
         end
-        row :start_date, label: "Start Date"
-        row :expiry_date, label: "Expired Date"
+        row :start_date
+        row :expiry_date
         row('Total Paid') do |payment|
           number_to_currency payment.total_cost
         end

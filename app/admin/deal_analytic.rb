@@ -18,7 +18,9 @@ ActiveAdmin.register DealAnalytic do
     selectable_column
     column "Deal Id", :deal_id
     column "Deal Title" do |da|
-      auto_link da.deal
+      div :class => "descriptionCol" do
+        auto_link da.deal
+      end
     end
     column "Start Date" do |da|
       da.deal.start_date

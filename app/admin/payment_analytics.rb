@@ -117,6 +117,7 @@ ActiveAdmin.register_page "Payment Analytics" do
       all_plan_ids = Plan.pluck(:id)
       @plan_months_series = Array.new
       @addon_months_series = Array.new
+      @plan_months_statistics = Array.new
 
       all_plan_ids.each do |id|
         # Plan json [name, months, drilldown]
@@ -124,7 +125,13 @@ ActiveAdmin.register_page "Payment Analytics" do
         plan_months = PaymentService.get_plan_months(id).to_f
         plan_count = PaymentService.count_plan_payments(id)
         plan_average_months = plan_months / plan_count
-        plan_json = {name: plan_name, y: plan_average_months.round(2), drilldown: plan_name}.to_json
+
+        variance = PaymentService.calculate_variance(id, plan_average_months, plan_count)
+        sd = Math.sqrt(variance)
+        max = PaymentService.get_max_months(id)
+        min = PaymentService.get_min_months(id)
+
+        plan_json = {name: plan_name, y: plan_average_months.round(2), drilldown: plan_name, variance: variance.round(3), sd: sd.round(3), max: max, min: min}.to_json
         @plan_months_series.push plan_json
 
         # Addons for each plan [name, id, data]
@@ -132,11 +139,17 @@ ActiveAdmin.register_page "Payment Analytics" do
         addons = PlanService.get_addon_ids(id)
         addon_data_months = Array.new
         addons.each do |a|
-          addon = Array.new    # addon consists of [name, month]
-          addon.push PlanService.get_addon_names(a)
-          addon_average_months = PaymentService.get_addon_months(a).to_f / PaymentService.count_addon_payments(a)
-          addon.push addon_average_months.round(2)
-          addon_data_months.push addon
+          addon_name = PlanService.get_addon_names(a)
+          addon_count = PaymentService.count_addon_payments(a)
+          addon_average_months = PaymentService.get_addon_months(a).to_f / addon_count
+
+          variance = PaymentService.calculate_addon_variance(a, addon_average_months, addon_count)
+          sd = Math.sqrt(variance)
+          max = PaymentService.get_addon_max_months(a)
+          min = PaymentService.get_addon_min_months(a)
+
+          addon_json = {name: addon_name, y: addon_average_months.round(2), variance: variance.round(3), sd: sd.round(3), max: max, min: min}
+          addon_data_months.push addon_json
         end
         # Pass json
         addon_json = {name: "Addons", id: plan_name, data: addon_data_months}.to_json

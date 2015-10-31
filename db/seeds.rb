@@ -95,7 +95,7 @@ plan_payment_id = plan_payment_id + 1
 start_date = '01-01-2015'.to_date
 end_date = '01-12-2015'.to_date
 Payment.new(id: 1002, start_date: start_date, expiry_date: end_date, total_cost: 385, add_on1: true, add_on2: false,
-            add_on3: false, plan1: true, paid: true, merchant_id: '1002', months: 4).save(validate: false)
+            add_on3: false, plan1: true, paid: true, merchant_id: '1002', months: 11).save(validate: false)
 PlanPayment.create(id: plan_payment_id, plan_id: 1, payment_id: payment_id)
 AddOnPayment.create(id: add_on_payment_id, add_on_id: 1, payment_id: payment_id)
 payment_id = payment_id + 1

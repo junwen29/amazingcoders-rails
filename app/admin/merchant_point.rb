@@ -6,6 +6,10 @@ ActiveAdmin.register MerchantPoint do
   permit_params :operation, :points, :reason, :merchant_id
   actions :all, except: [:show, :destroy]
 
+  scope :all
+  scope :credit
+  scope :debit
+
   # remove_filter :payments, :updated_at
   filter :merchant, as: :select, collection: proc { Merchant.all }
   filter :operation, as: :select, collection: ["Credit", "Debit"]
@@ -20,25 +24,19 @@ ActiveAdmin.register MerchantPoint do
 
   # INDEX
   index do
-   # selectable_column
+    selectable_column
     id_column
     column "Merchant", :merchant_id do |point|
       auto_link point.merchant
     end
-=begin
-    if (:operation == "Add")
-      column :burps do |b|
-        "+" + b
-      end
-    else
-      column :burps
-    end
-=end
     column :operation
     column :points
-    column :reason
+    column "Reason" do |point|
+      div :class => "descriptionCol" do
+        point.reason
+      end
+    end
     column "Changed at", :created_at
-
     # actions
   end
 
