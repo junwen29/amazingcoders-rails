@@ -106,6 +106,7 @@ class AnalyticsController < ApplicationController
   def individual_deal_statistic
     if check_has_deal_statistics
       get_wishlist_to_view
+      get_view_to_redemption
     else
       render "analytics/error"
     end
@@ -164,5 +165,10 @@ class AnalyticsController < ApplicationController
   private
   def get_wishlist_to_view
     @wishlist_to_view = DealAnalyticService.get_wishlist_to_view(@deal.id)
+  end
+
+  private
+  def get_view_to_redemption
+    @view_to_redemption = DealAnalyticService.get_view_to_redeem_chart(@deal.id)
   end
 end

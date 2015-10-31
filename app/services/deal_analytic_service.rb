@@ -504,6 +504,36 @@ class DealAnalyticService
       array << cumulative
       array << non_cumulative
     end
+
+    def get_view_to_redeem_chart(deal_id)
+      array = Array.new
+      cumulative = Array.new
+      non_cumulative = Array.new
+      activate_date = Deal.find(deal_id).activate_date.to_date
+      expiry_date = Deal.find(deal_id).expiry_date
+      if expiry_date <= Date.today
+        end_date = expiry_date
+      else
+        end_date = Date.today
+      end
+      num = 0
+      while activate_date <= end_date
+        view_counts = ViewcountService.get_uniq_view_count(deal_id, activate_date).to_f
+        user_ids = ViewcountService.get_uniq_user_id(deal_id, activate_date)
+        redeem_count = RedemptionService.count_uniq_redemptions(deal_id, user_ids).to_f
+        conversion = (redeem_count/view_counts)*100
+        cumulative << conversion.round(2)
+        if num == 0
+          non_cumulative << conversion.round(2)
+        else
+          non_cumulative << (cumulative[num] - cumulative[num-1])
+        end
+        num = num + 1
+        activate_date = activate_date + 1.days
+      end
+      array << cumulative
+      array << non_cumulative
+    end
   end
 
   class << self
