@@ -448,6 +448,14 @@ class DealAnalyticService
       conversion.round(2)
     end
 
+    # returns percentage of user who redeemed more than once
+    def get_multiple_redeems_percentage(deal_id)
+      user_count = RedemptionService.count_uniq_redemptions(deal_id).to_f
+      multiple_redeems = RedemptionService.num_users_multiple(deal_id).to_f
+      percentage = (multiple_redeems/user_count)*100
+      percentage.round(2)
+    end
+
   end
 
   class << self

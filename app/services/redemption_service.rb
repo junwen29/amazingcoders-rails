@@ -50,6 +50,17 @@ class RedemptionService
       end
     end
 
+    def num_users_multiple(deal_id)
+      user_ids = Redemption.where(deal_id: deal_id).select(:user_id).distinct.pluck(:user_id)
+      num_users = 0
+      user_ids.each do |ui|
+        if Redemption.where(deal_id: deal_id, user_id: ui).count > 1
+          num_users = num_users + 1
+        end
+      end
+      num_users
+    end
+
   end
 
   class << self

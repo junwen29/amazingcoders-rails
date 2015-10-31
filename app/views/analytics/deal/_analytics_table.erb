@@ -14,6 +14,7 @@
               <th>Title</th>
               <th style="text-align: center;">Conversion Rate<br>Wishlisters to Views</th>
               <th style="text-align: center;">Conversion Rate<br>Unique Views to Redemptions</th>
+              <th style="text-align: center;">Percentage of users who redeem more than once</th>
               <th style="text-align: center;">Average Time between same User Redemption</th>
               <th colspan="1"></th>
             </tr>
@@ -24,6 +25,7 @@
                       <td><%= deal.title %></td>
                       <td style="text-align: center;"><%= DealAnalyticService.get_wishlist_to_views(deal.id) %>%</td>
                       <td style="text-align: center;"><%= DealAnalyticService.get_views_to_redeem(deal.id) %>%</td>
+                      <td style="text-align: center;"> <%= DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>%</td>
                       <td></td>
                       <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
                     </tr>
@@ -46,6 +48,7 @@
             <th>Title</th>
             <th style="text-align: center;">Conversion Rate<br>Wish Lister to Views</th>
             <th style="text-align: center;">Conversion Rate<br>Unique Views to Redemption</th>
+            <th style="text-align: center;">Percentage of users who redeem more than once</th>
             <th style="text-align: center;">Average Time between same User Redemption</th>
             <th colspan="1"></th>
             </tr>
@@ -56,6 +59,7 @@
                       <td><%= deal.title %></td>
                       <td style="text-align: center;"><%= DealAnalyticService.get_wishlist_to_views(deal.id) %>%</td>
                       <td style="text-align: center;"><%= DealAnalyticService.get_views_to_redeem(deal.id) %>%</td>
+                      <td style="text-align: center;"> <%= DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>%</td>
                       <td></td>
                       <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
                     </tr>
