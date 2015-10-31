@@ -1,0 +1,40 @@
+<%= render 'layouts/biz/dash' %>
+<!--delete??-->
+<div class="contentWrapper">
+  <div class="content">
+
+    <!-- Flash Error Message -->
+    <% if @payment.errors.any? %>
+        <div id="error_explanation" class="alert alert-error">
+          <h5>
+            <%= pluralize(@payment.errors.count, "error") %> prohibited this payment from being saved:
+          </h5>
+          <ul>
+            <% @payment.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <!-- Content Heading -->
+    <div class="pull-left">
+      <p class="b2 content-title">1 Free Month</p>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="content-separator"></div>
+
+
+    <%= render :partial => 'form/payment_gift_extend_form' %>
+    <%= link_to 'Back', gifts_path, class: "btn btn-big btn-default" %>
+  </div><!-- /content -->
+</div><!-- /contentWrapper -->
+
+<%= content_for :lean_overlay do %>
+<% end %>
+
+<%= content_for :body_footer do %>
+<% end %>
+
+

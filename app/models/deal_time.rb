@@ -10,4 +10,8 @@ class DealTime < ActiveRecord::Base
     errors.add(:started_at, " of deal must be before end time") unless
         started_at < ended_at
   end
+
+  def valid_hour (time)
+    valid = time > started_at && time < ended_at
+  end
 end

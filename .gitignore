@@ -20,3 +20,6 @@
 
 # Ignore picture upload
 /public/system
+
+# ignore cloudinary keys
+cloudinary.yml

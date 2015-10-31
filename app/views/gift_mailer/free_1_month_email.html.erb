@@ -1,0 +1,28 @@
+<p>Dear <%= @user %>!</p>
+
+<p>You have successfully redeemed <b><%= @gift.name %></b> from Burpple!
+<p>Here are the details for your free 1 month of upgrade:</p>
+
+<p>
+  Plan subscribed:
+  <% if (@payment.plan1)  %>
+      <span class="label label-default">Deal Listing Service</span>
+  <% end %>
+<br>
+  Start Date:
+  <strong><%= @payment.start_date %></strong>
+<br>
+  Expiry Date:
+  <strong><%= @payment.expiry_date %></strong>
+</p>
+
+<p>
+You have spent <b><%= @gift.points %> Burps</b> and have <b><%= @points_left %> Burps</b> left!
+</p>
+
+<p>To redeem more gifts on Burpple, follow this link: https://amazingcodersrails.herokuapp.com<%= @url %>
+  <br>
+  Thank you for using Burpple. Have a nice day!</p>
+
+<p>Best regards,<br>
+  Dixon</p>

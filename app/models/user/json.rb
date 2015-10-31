@@ -5,6 +5,7 @@ module User::Json
     def to_auth_json(json, options = {})
       to_account_json(json, options = {})
       json.auth_token       authentication_token
+      json.total_points     total_points
     end
 
     # for account api
@@ -15,16 +16,32 @@ module User::Json
       # json.phone    phone
 
     end
-  end
 
-  def to_json(json, options = {})
-    json.id id
-    json.first_name first_name
-    json.last_name last_name
-    json.username   username
+    def to_json(json, options = {})
+      json.id id
+      json.first_name first_name
+      json.last_name last_name
+      json.username   username
 
-    json.updated_at updated_at
-    json.created_at created_at
+      json.updated_at updated_at
+      json.created_at created_at
+      json.num_wishes UserService.get_num_wishes(id)
+      json.num_bookmarks UserService.get_num_bookmarks(id)
+    end
+
+    def to_show_owner(json, options = {})
+      json.id id
+      json.first_name first_name
+      json.last_name last_name
+      json.username   username
+      json.email email
+      json.total_points total_points
+      json.updated_at updated_at
+      json.created_at created_at
+      json.num_wishes UserService.get_num_wishes(id)
+      json.num_bookmarks UserService.get_num_bookmarks(id)
+    end
+
   end
 
 end

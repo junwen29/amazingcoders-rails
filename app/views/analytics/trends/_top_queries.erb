@@ -1,0 +1,71 @@
+<div class="col-lg-6">
+  <h3 style="padding-bottom: 20px">Popular Keywords</h3>
+  <div class="content">
+    <ul>
+      <p>Top 10 queries from users in Deals Feed</p>
+      <% i = 1 %>
+      <% @top_query.each do |tq| %>
+          <li>
+            <span class="name">#<%= i %> <%= tq.query %></span>
+            <span class="count"><%= tq.num_count %></span>
+          </li>
+          <% i += 1 %>
+      <% end %>
+    </ul>
+  </div><!--/content-->
+</div><!--col-lg-6-->
+
+<style>
+    .content {
+        position:relative;
+        min-width:350px;
+    }
+
+    .content ul{
+        font-size: medium;
+        margin:0;
+        padding:0;
+        list-style: none;
+        border:5px solid #CCC;
+        background: rgba(40,40,40,0.75);
+    }
+    .content ul p{
+        font-size: large;
+        font-weight:bold;
+        color:#FFF;
+        font-family: helvetica;
+        padding:4% 5%;
+        border-bottom: 1px solid #555;
+        margin: 0px 0px !important;
+    }
+
+    .content ul li{
+        position: relative;
+        color:#FFF;
+        font-family: helvetica;
+        padding:2% 5%;
+        border-bottom: 1px solid #555;
+    }
+
+    .content ul li:last-child{
+        border-bottom:none;
+    }
+
+    .name{
+        font-weight:bold;
+    }
+    .count{
+        display:inline-block;
+        float:right;
+        color:#06FF00;
+        font-weight:bold;
+    }
+    .count:after{
+        content:' searches';
+        color:#CCC;
+        font-weight:normal;
+    }
+    .content ul{
+        border-radius: 20px;
+    }
+</style>

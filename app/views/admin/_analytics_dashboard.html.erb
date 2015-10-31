@@ -1,0 +1,125 @@
+<div class="columns">
+
+  <div class="col-lg-3">
+    <div class="small-box bg-aqua">
+      <div class="inner">
+        <h2 style="color: white;">
+          <%= deal_subscription_count %>
+        </h2>
+        <h3 style="color: white;">
+          Subscriptions
+        </h3>
+      </div>
+      <div class="icon">
+        <i class="ion ion-android-contacts"></i>
+      </div>
+      <a href="/admin/payments" class="small-box-footer">
+        More info
+      </a>
+    </div>
+  </div>
+
+  <div class="col-lg-3">
+    <div class="small-box bg-green">
+      <div class="inner">
+        <h2 style="color: white;">
+          <%= number_to_currency premiums %>
+        </h2>
+        <h3 style="color: white;">
+          Premium Paid
+        </h3>
+      </div>
+      <div class="icon">
+        <i class="ion ion-cash"></i>
+      </div>
+      <a href="/admin/payments" class="small-box-footer">
+        More info
+      </a>
+    </div>
+  </div>
+
+  <div class="col-lg-3">
+    <div class="small-box bg-yellow">
+      <div class="inner">
+        <h2 style="color: white;">
+          <%= active_deals %>
+        </h2>
+        <h3 style="color: white;">
+          Active Deals
+        </h3>
+      </div>
+      <div class="icon">
+        <i class="ion ion-clock"></i>
+      </div>
+      <a href="/admin/deals" class="small-box-footer">
+        More info
+      </a>
+    </div>
+  </div>
+
+  <div class="col-lg-3">
+    <div class="small-box bg-red">
+      <div class="inner">
+        <h2 style="color: white;">
+          <%= redemption_count %>
+        </h2>
+        <h3 style="color: white;">
+          Redeemed Deals
+        </h3>
+      </div>
+      <div class="icon">
+        <i class="ion ion-checkmark-circled"></i>
+      </div>
+      <a href="/admin/redemptions" class="small-box-footer">
+        More info
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <link rel="stylesheet" type="text/css" media="screen" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" />
+  <style>
+      .small-box {
+          position: relative;
+          display: block;
+          border-radius: 2px;
+          margin-bottom: 15px;
+      }
+      .bg-aqua {
+          background-color: #00C0EF !important;
+      }
+      .bg-green {
+          background-color: #00A65A !important;
+      }
+      .bg-yellow {
+          background-color: #F39C12 !important;
+      }
+      .bg-red {
+          background-color: #F56954 !important;
+      }
+      .inner {
+          padding: 20px;
+      }
+      .icon {
+          position: absolute;
+          top: 10px;
+          bottom: 5px;
+          right: 20px;
+          z-index: 0;
+          font-size: 90px;
+          color: rgba(0, 0, 0, 0.15);
+      }
+      .small-box-footer {
+          position: relative;
+          text-align: center;
+          text-decoration: none;
+          padding: 3px 0px;
+          color: white !important;
+          display: block;
+          z-index: 10;
+          background: rgba(0, 0, 0, 0.1) none repeat scroll 0% 0%;
+          text-decoration: none;
+      }
+  </style>
+</footer>

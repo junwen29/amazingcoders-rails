@@ -1,6 +1,10 @@
 <p>
   <strong>Venue Photo</strong><br>
-  <%= image_tag @venue.photo.url, :size => "100x100" %>
+  <% if @venue.photo.present? %>
+      <%= cl_image_tag(@venue.photo.path, {size: '100x100', crop: :fit}) %>
+  <% else %>
+      <%= image_tag 'biz/burpple_logo.png', :size => '100x100' %>
+  <% end %>
 </p>
 
 <p>
@@ -40,3 +44,29 @@
   <strong>Contact No</strong>
   <%= @venue.phone %>
 </p>
+
+<hr>
+<% if @payment.blank? || !@payment.paid? %>
+    <div class="well col-lg-6 col-lg-offset-3" style="text-align: center; font-weight: bold">
+      <p>Opps! You do not have not subscribed to our Deal Listing Service.</p>
+      <p><%= link_to 'Subscribe now', new_payment_path %></p>
+    </div>
+    <br><br><br><br>
+<% elsif @deals.blank? %>
+    <div class="well col-lg-6 col-lg-offset-3" style="text-align: center; font-weight: bold">
+      <p>Opps! You do not have any active deals for this location. You can create a
+        deal <%= link_to 'here', new_deal_path %>.</p>
+    </div>
+    <br><br><br>
+<% else %>
+    <h3>Current Deals Offered</h3>
+    <% deal_num = 1 %>
+    <% @deals.each do |deal| %>
+        <p><%= deal_num %>) <%= link_to deal.title, deal_path(deal) %></p>
+        <% deal_num = deal_num + 1 %>
+    <% end %>
+
+    <div style="text-align:center">
+      <%= link_to 'Add New Deal', new_deal_path, class: "btn btn-lg btn-success" %>
+    </div>
+<% end %>

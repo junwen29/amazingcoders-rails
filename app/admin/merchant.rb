@@ -1,10 +1,14 @@
 ActiveAdmin.register Merchant do
+  # Remove Create New Deal button
+  config.clear_action_items!
+
   menu :parent => "Merchant", :priority => 1
   actions :all, except: [:edit]
 
   filter :venues
   filter :deals
   filter :email
+  filter :total_points
   filter :current_sign_in_at
   filter :sign_in_count
   filter :created_at
@@ -18,6 +22,7 @@ ActiveAdmin.register Merchant do
     selectable_column
     id_column
     column :email
+    column :total_points
     column :current_sign_in_at
     column :sign_in_count
     column :created_at
@@ -30,6 +35,7 @@ ActiveAdmin.register Merchant do
       attributes_table_for f do
         row :id
         row :email
+        row :total_points
         row :reset_password_token
         row :reset_password_sent_at
         row :remember_created_at

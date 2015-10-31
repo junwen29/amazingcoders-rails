@@ -58,7 +58,7 @@
 
       <p class="form-textarea clearfix">
         <%= f.label "Description" %>
-        <span><%= f.text_area :bio, :rows => '6', :cols => '32', :placeholder => 'Enter a short description of your business..' %></span>
+        <span><%= f.text_area :bio, :rows => '6', :cols => '30', :placeholder => 'Enter a short description of your business', :style => 'width: 100%' %></span>
       </p>
 
       <p class="form-text clearfix">
@@ -69,7 +69,9 @@
       <p class="form-text clearfix">
         <%= f.label :photo, 'Upload an image of your venue!' %>
       </p>
-      <%= f.file_field :photo %>
+
+      <%= f.attachinary_file_field :photo %>
+      <%= f.hidden_field(:photo_cache) %>
       <em>For best effect, upload an image of 150x150</em>
 
       <div style="margin-top: 30px">

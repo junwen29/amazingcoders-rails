@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  # this will generate '/attachinary/cors' which will be used for iframe file transfers (for unsupported browsers).
+  mount Attachinary::Engine => '/attachinary'
+
+
+
   devise_for :users
 
 ################# Android
@@ -10,6 +15,7 @@ Rails.application.routes.draw do
           post '/sign_in' => 'sessions#create'
           delete '/sign_out' => 'sessions#destroy'
           post '/sign_up' => 'registrations#create'
+          get '/profile' => 'sessions#get_owner'
         end
       end
 
@@ -18,11 +24,9 @@ Rails.application.routes.draw do
       # deals api
       scope '/deals' do
         get '' => 'deals#index', :as => 'deals'
-        get 'venues/:id' => 'venues#get_venues_for_deal', :as => 'get_venues_for_deal'
 
         scope '/:id' do
           get ''  => 'deals#get_deal', :as => 'get_deal'
-
 
           # bookmark api
           post    '/bookmarks' => "bookmarks#create"
@@ -33,8 +37,6 @@ Rails.application.routes.draw do
       # venues api
       scope '/venues' do
         get '' => 'venues#index', :as => 'venues'
-        #### TODO change this route or fetching of venues should include associated json deals
-        get '/deals/:id' => 'deals#get_deals_for_venue', :as => 'get_deals_for_venue'
 
         scope '/:id' do
           get ''=> 'venues#get_venue', :as => 'get_venue'
@@ -58,6 +60,23 @@ Rails.application.routes.draw do
       # get '/notifications' => "activities#notifications"
       # get '/notifications/count' => "activities#notification_count"
 
+      # analytics api
+      scope '/analytics' do
+        post '/deal'        => 'analytics#register_deal_view_count'
+        post '/query'       => 'analytics#register_query'
+        post '/redemption'  => 'analytics#register_redemption'
+      end
+
+      # redemption api
+      scope '/redemption' do
+        post ''       => 'redemptions#create'
+        get '/index'  => 'redemptions#index'
+      end
+
+      # feedback api
+      scope '/feedback' do
+        post '' => 'feedbacks#create'
+      end
     end
   end
 
@@ -71,11 +90,24 @@ Rails.application.routes.draw do
   devise_for :merchants, controllers: { sessions: "merchants/sessions", registrations: "merchants/registrations"}
   resources :venues
   resources :merchants
+  resources :merchant_points
+  resources :merchant_feedbacks
+  resources :gifts
+  resources :merchant_points
 
   resources :deals
   resources :payments do
     resources :charges
   end
+  resources :analytics do
+    collection do
+      get :venue
+      get :trends
+    end
+  end
+
+  get '/payments/gift_extend' => 'payments#gift_extend', :as => :gift_extend
+  post 'payments/extend' => 'payments#extend', :as => :payments_extend
 
 # To change a deal into active deal then going back to index page
   get 'deals/:id/activate' => 'deals#activate', :as => 'active_deal'
@@ -85,6 +117,12 @@ Rails.application.routes.draw do
 
   get 'merchant_pages/home' => 'merchant_pages#home', :as => :merchant_home
   get 'merchant_pages/help' => 'merchant_pages#help', :as => :merchant_help
+
+  # Get analytics by venues
+  get 'analytics/venue' => 'analytics#venue', :as => :analytics_venue
+
+# Get analytics by trends
+  get 'analytics/trends' => 'analytics#trends', :as => :analytics_trends
 
   resources :merchant_pages
   root :to => 'merchant_pages#home'

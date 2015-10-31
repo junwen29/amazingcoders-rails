@@ -1,0 +1,2 @@
+module MerchantFeedbacksHelper
+end

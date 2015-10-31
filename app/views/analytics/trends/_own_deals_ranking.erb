@@ -1,0 +1,69 @@
+<div class="panel panel-primary">
+  <div class="panel-heading panel-heading-custom">
+    <h4>Your Active Deals Ranking this Week!</h4>
+  </div>
+  <div class="panel-body">
+    <strong>By Redemption Count</strong>
+    <table class="table table-bordered table-hover table-responsive">
+      <tr>
+        <th>Rank</th>
+        <th>Title</th>
+        <th>Type of Deal</th>
+        <th>Description</th>
+      </tr>
+
+      <% @own_deals.each do |od| %>
+          <% deal = Deal.find(od[0]) %>
+          <tr>
+            <% if od[2] > 0 %>
+                <td>
+                  <p id="rank"><%= od[1] %></p>
+                  <span class="glyphicon glyphicon-triangle-top" style="color:green; float:right;"><%= od[2] %></span>
+                </td>
+            <% elsif od[2] == 0 %>
+                <td>
+                  <p id="rank"><%= od[1] %></p>
+                  <span class="glyphicon glyphicon-minus" style="color:#2d41ff; float:right;">  </span>
+                </td>
+            <% elsif od[2] < 0 %>
+                <td>
+                  <p id="rank"><%= od[1] %></p>
+                  <span class="glyphicon glyphicon-triangle-bottom" style="color:red; float:right;"><%= od[2].abs %></span>
+                </td>
+            <% else %>
+                <td>
+                  <p id="rank"><%= od[1] %></p>
+                  <span class="label label-warning" style=" float:right;"><%= od[2] %></span>
+                </td>
+            <% end %>
+            <td>
+              <%= deal.title %>
+            </td>
+            <td>
+              <%= deal.type_of_deal %>
+            </td>
+            <td><%= deal.description %></td>
+          </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<style>
+
+    .panel-primary > .panel-heading-custom {
+        background: #ea1f6c;
+        color: #fff;
+        border-color: #ea1f6c;
+    }
+
+    .panel-primary {
+        border-color: #ea1f6c;
+    }
+
+    p#rank {
+        font-weight: bold;
+        font-size: 120%;
+        display: inline;
+    }
+</style>
