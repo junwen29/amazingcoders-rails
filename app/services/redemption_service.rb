@@ -61,6 +61,36 @@ class RedemptionService
       num_users
     end
 
+    # Returns array of unique user_ids who redeem the deal
+    # If multiple_redeem = true, get only user_ids of those who redeem multiple times
+    def get_user_ids(deal_id, multiple_redeem = false)
+      if multiple_redeem
+        user_ids = Array.new
+        all_users = Redemption.where(deal_id: deal_id).select(:user_id).distinct.pluck(:user_id)
+        all_users.each do |au|
+          if Redemption.where(deal_id: deal_id, user_id: au).count > 1
+            user_ids << au
+          end
+        end
+        user_ids
+      else
+        Redemption.where(deal_id: deal_id).select(:user_id).distinct.pluck(:user_id)
+      end
+    end
+
+    def get_average_days_between_redeems(deal_id, user_ids)
+      total_days = 0
+      total_redemption = 0
+      user_ids.each do |ui|
+        maximum_date = Redemption.where(deal_id: deal_id, user_id: ui).maximum(:created_at).to_date
+        minimum_date = Redemption.where(deal_id: deal_id, user_id: ui).minimum(:created_at).to_date
+        total_days = total_days + (maximum_date - minimum_date).to_i
+        total_redemption = total_redemption + Redemption.where(deal_id: deal_id, user_id: ui).count - 1
+      end
+      average = ((total_days.to_f)/(total_redemption.to_f))
+      average.round(2)
+    end
+
   end
 
   class << self

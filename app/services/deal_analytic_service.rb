@@ -456,6 +456,12 @@ class DealAnalyticService
       percentage.round(2)
     end
 
+    # returns average time between users who redeem more than once
+    def average_time_btw_multiple_redeem(deal_id)
+      multiple_redeems_user_ids = RedemptionService.get_user_ids(deal_id, true)
+      RedemptionService.get_average_days_between_redeems(deal_id, multiple_redeems_user_ids)
+    end
+
   end
 
   class << self

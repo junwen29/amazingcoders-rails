@@ -26,7 +26,7 @@
                       <td style="text-align: center;"><%= DealAnalyticService.get_wishlist_to_views(deal.id) %>%</td>
                       <td style="text-align: center;"><%= DealAnalyticService.get_views_to_redeem(deal.id) %>%</td>
                       <td style="text-align: center;"> <%= DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>%</td>
-                      <td></td>
+                      <td style="text-align: center;"> <%= DealAnalyticService.average_time_btw_multiple_redeem(deal.id) %> days</td>
                       <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
                     </tr>
                 <% end %>
@@ -60,7 +60,7 @@
                       <td style="text-align: center;"><%= DealAnalyticService.get_wishlist_to_views(deal.id) %>%</td>
                       <td style="text-align: center;"><%= DealAnalyticService.get_views_to_redeem(deal.id) %>%</td>
                       <td style="text-align: center;"> <%= DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>%</td>
-                      <td></td>
+                      <td style="text-align: center;"> <%= DealAnalyticService.average_time_btw_multiple_redeem(deal.id) %> days</td>
                       <td><%= link_to 'Show', deal_path(deal), class: "btn btn-xs btn-default" %></td>
                     </tr>
                 <% end %>
