@@ -362,7 +362,7 @@ class DealAnalyticService
     def get_app_traffic(start_date, end_date)
       total_vc = Array.new
       while start_date.next_week < end_date
-        total_vc.push get_all_viewcounts(start_date, start_date.next_week)
+        total_vc.push get_all_viewcounts(start_date.utc, start_date.next_week.utc)
         start_date = start_date.next_week
       end
       total_vc
