@@ -15,9 +15,9 @@
         </tr>
         <% @merchant_feedbacks.each do |merchant_feedback| %>
             <tr>
-              <td class="longCol" style="max-width: 200px;"><%= merchant_feedback.title %></td>
+              <td style="max-width: 200px;"><%= merchant_feedback.title %></td>
               <td><%= merchant_feedback.category %></td>
-              <td class="longCol" style="max-width: 300px"><%= merchant_feedback.content %></td>
+              <td style="max-width: 300px"><%= merchant_feedback.content %></td>
               <td style="width: 200px"><%= merchant_feedback.created_at.strftime("%d/%m/%Y %r") %></td>
               <td>
                 <% if merchant_feedback.resolved %>

@@ -1981,14 +1981,14 @@
     text-align: left;
   }
 
-  .longCol {
+  .long-column {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     max-width: 200px;
   }
 
-  .longCol:hover {
+  .long-column:hover {
     text-overflow: inherit;
     overflow: visible;
     white-space: pre-wrap;
