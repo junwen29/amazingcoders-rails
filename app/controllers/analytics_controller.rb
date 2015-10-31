@@ -32,6 +32,7 @@ class AnalyticsController < ApplicationController
 
   def show
     @deal = Deal.find(params[:id])
+    individual_deal_statistic
   end
 
   # Check if user has the subscribed to any deal analytics addons
@@ -102,6 +103,14 @@ class AnalyticsController < ApplicationController
     end
   end
 
+  def individual_deal_statistic
+    if check_has_deal_statistics
+      get_wishlist_to_view
+    else
+      render "analytics/error"
+    end
+  end
+
   private
   def deal_analytics_by_total
     @deals_daily_total = DealAnalyticService.get_analytics_for_line_graph(merchant_id, Date.today.beginning_of_quarter, Date.today)
@@ -150,5 +159,10 @@ class AnalyticsController < ApplicationController
   private
   def get_overall_popular_deal_type
     @popular_deal_type = DealAnalyticService.get_overall_popular_deal_type
+  end
+
+  private
+  def get_wishlist_to_view
+    @wishlist_to_view = DealAnalyticService.get_wishlist_to_view(@deal.id)
   end
 end

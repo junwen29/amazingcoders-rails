@@ -466,6 +466,44 @@ class DealAnalyticService
       end
     end
 
+    # returns a nested array
+    # array[0] is cumulative increase in percentage per hour
+    # array[1] is change in percentage per hour
+    def get_wishlist_to_view(deal_id)
+      array = Array.new
+      cumulative = Array.new
+      non_cumulative = Array.new
+      activate_date = Deal.find(deal_id).activate_date.beginning_of_hour.to_datetime
+      deal_expiry_date =  Deal.find(deal_id).expiry_date.to_datetime.in_time_zone("Singapore").end_of_day
+      end_time = activate_date.end_of_hour
+      current = DateTime.now.beginning_of_hour + 1.hours
+
+      if (deal_expiry_date - activate_date)/1.days < 7.0
+        final = deal_expiry_date
+      elsif (current.to_f - activate_date.to_f)/1.days > 7.0
+        final = activate_date + 7.days
+      else
+        final = current
+      end
+
+      num_wishlist = WishService.num_wishlist_deal(deal_id, activate_date).to_f
+      user_id = WishService.get_user_id(deal_id, activate_date)
+      num = 0
+      while end_time <= final
+        num_views = Viewcount.where(user_id: user_id, deal_id: deal_id, :entry => 'merchant_push_notification', created_at: activate_date..end_time).count.to_f
+        conversion = (num_views/num_wishlist)*100
+        cumulative << conversion.round(2)
+        if num == 0
+          non_cumulative << conversion.round(2)
+        else
+          non_cumulative << (cumulative[num] - cumulative[num-1])
+        end
+        num = num + 1
+        end_time = end_time + 1.hours
+      end
+      array << cumulative
+      array << non_cumulative
+    end
   end
 
   class << self
