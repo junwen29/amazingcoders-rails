@@ -65,6 +65,20 @@ while merchant_id <= 1100
   merchant_id = merchant_id + 1
 end
 
+# Seed 100 users
+user_id = 1000
+while user_id < 1100
+  user = User.new(id: user_id)
+  user.first_name = 'user'+user_id.to_s
+  user.last_name = 'user'+user_id.to_s
+  user.username = 'user'+user_id.to_s
+  user.email = 'user'+user_id.to_s+'@gmail.com'
+  user.password ='12345678'
+  user.password_confirmation = '12345678'
+  user.save
+  user_id = user_id + 1
+end
+
 # Seed payments and associated tables
 payment_id = 1000
 plan_payment_id = 1000
