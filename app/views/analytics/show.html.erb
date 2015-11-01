@@ -17,9 +17,13 @@
 
     <!-- Content Body -->
     <!--TODO: VIEW Render partials only for merchants with access-->
-    <%= render :partial => 'analytics/deal/wishlist_to_views' %><br>
-    <%= render :partial => 'analytics/deal/views_to_redemption' %><br>
-    <%= render :partial => 'analytics/deal/multiple_redeems' %><br>
+    <% if @payment.add_on1 && deal.pushed %>
+        <%= render :partial => 'analytics/deal/wishlist_to_views' %><br>
+    <% end %>
+    <% if deal.redeemable && (deal.start_date <= Date.today) %>
+        <%= render :partial => 'analytics/deal/views_to_redemption' %><br>
+        <%= render :partial => 'analytics/deal/multiple_redeems' %><br>
+    <% end %>
     <div style="text-align:center">
       <%= link_to 'Back to Analytics', analytics_path, class: "btn btn-big btn-info" %>
     </div>

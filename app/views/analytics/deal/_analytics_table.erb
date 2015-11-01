@@ -25,15 +25,22 @@
                 <% if (deal.expiry_date.future?|| deal.expiry_date.today?) && deal.active %>
                     <tr>
                       <td><%= deal.title %></td>
-                      <td style="text-align: center;"><%= DealAnalyticService.get_wishlist_to_views(deal.id) %>%</td>
+                      <% if @payment.add_on1 && deal.pushed %>
+                        <td style="text-align: center;"><%= DealAnalyticService.get_wishlist_to_views(deal.id) %>%</td>
+                      <% elsif @payment.add_on1 && !deal.pushed %>
+                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not been pushed hence, data cannot be gathered">N/A</p></td>
+                      <% else %>
+                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="You have no purchased the push deal add_on hence, this feature is lock">N/A</p></td>
+                      <% end %>
+
                       <% if deal.redeemable && (deal.start_date <= Date.today) %>
                           <td style="text-align: center;"><%= DealAnalyticService.get_views_to_redeem(deal.id) %>%</td>
                           <td style="text-align: center;"> <%= DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>%</td>
                           <td style="text-align: center;"> <%= DealAnalyticService.average_time_btw_multiple_redeem(deal.id) %></td>
                       <% elsif deal.redeemable && (deal.start_date > Date.today)%>
-                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gatherd">N/A</p></td>
-                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gatherd">N/A</p></td>
-                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gatherd">N/A</p></td>
+                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
+                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
+                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
                       <% else %>
                           <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                           <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
@@ -41,9 +48,15 @@
                       <% end %>
                       <td>
                         <%= link_to analytic_path(deal) do %>
-                            <button class="btn btn-success" type="button">
-                              Show Charts
-                            </button>
+                            <% if (@payment.add_on1 && deal.pushed) || (deal.redeemable && (deal.start_date <= Date.today)) %>
+                                <button class="btn btn-success" type="button">
+                                  Show Charts
+                                </button>
+                            <%else %>
+                                <button class="btn btn-default disabled" type="button" data-toggle="tooltip" data-placement="top" title="As all data in table is N/A there are no futhur details to be shown">
+                                  Show Charts
+                                </button>
+                            <% end %>
                         <% end %>
                       </td>
                     </tr>
@@ -75,25 +88,37 @@
                 <% if deal.expiry_date.past? && deal.active %>
                     <tr>
                       <td><%= deal.title %></td>
-                      <td style="text-align: center;"><%= DealAnalyticService.get_wishlist_to_views(deal.id) %>%</td>
+                      <% if @payment.add_on1 && deal.pushed %>
+                          <td style="text-align: center;"><%= DealAnalyticService.get_wishlist_to_views(deal.id) %>%</td>
+                      <% elsif @payment.add_on1 && !deal.pushed %>
+                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not been pushed hence, data cannot be gathered">N/A</p></td>
+                      <% else %>
+                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="You have no purchased the push deal add_on hence, this feature is lock">N/A</p></td>
+                      <% end %>
                       <% if deal.redeemable && (deal.start_date <= Date.today) %>
                           <td style="text-align: center;"><%= DealAnalyticService.get_views_to_redeem(deal.id) %>%</td>
                           <td style="text-align: center;"> <%= DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>%</td>
                           <td style="text-align: center;"> <%= DealAnalyticService.average_time_btw_multiple_redeem(deal.id) %></td>
                       <% elsif deal.redeemable && (deal.start_date > Date.today)%>
-                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gatherd">N/A</p></td>
-                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gatherd">N/A</p></td>
-                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gatherd">N/A</p></td>
+                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
+                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
+                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
                       <% else %>
                           <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                           <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                           <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                       <% end %>
                       <td>
-                        <%= link_to analytic_path(deal.id) do %>
-                            <button class="btn btn-success" type="button">
-                              Show Charts
-                            </button>
+                        <%= link_to analytic_path(deal) do %>
+                            <% if (@payment.add_on1 && deal.pushed) || (deal.redeemable && (deal.start_date <= Date.today)) %>
+                                <button class="btn btn-success" type="button">
+                                  Show Charts
+                                </button>
+                            <%else %>
+                                <button class="btn btn-default disabled" type="button" data-toggle="tooltip" data-placement="top" title="As all data in table is N/A there are no futhur details to be shown">
+                                  Show Charts
+                                </button>
+                            <% end %>
                         <% end %>
                       </td>
                     </tr>
