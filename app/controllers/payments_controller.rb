@@ -10,9 +10,23 @@ class PaymentsController < ApplicationController
     @addon1 = AddOn.find(1)
     @addon2 = AddOn.find(2)
     @addon3 = AddOn.find(3)
-    overall = (PaymentService.count_plan_payments(1).to_f / PaymentService.count_total_payments )*100
-    active = (PaymentService.count_active_premiums(Date.today, 1).to_f  / PaymentService.count_total_payments )*100
-    @plan_hint = overall.to_s + "% of Food Merchants have used Premium Deals Services and " + active.to_s + "% of Food Merchants are currently using it."
+
+    overall_plan = (PaymentService.count_plan_payments(1).to_f / PaymentService.count_total_payments )*100
+    active_plan = (PaymentService.count_active_premiums(Date.today, 1).to_f  / PaymentService.count_total_payments )*100
+    @plan_hint = overall_plan.to_s + "% of Food Merchants have used Premium Deals Services and " + active_plan.to_s + "% of Food Merchants are currently using it."
+
+    overall_addon1 = (PaymentService.count_unique_addon_payments(1).to_f / PaymentService.count_total_payments)*100
+    active_addon1 = (PaymentService.count_active_addons(Date.today, 1).to_f / PaymentService.count_total_payments)*100
+    @addon1_hint1 = overall_addon1.to_s + "% of Food Merchants have used " + @addon1.name + " and " + active_addon1.to_s + "% of Food Merchants are currently using it."
+
+    overall_addon2 = (PaymentService.count_unique_addon_payments(2).to_f / PaymentService.count_total_payments)*100
+    active_addon2 = (PaymentService.count_active_addons(Date.today, 2).to_f / PaymentService.count_total_payments)*100
+    @addon2_hint1 = overall_addon2.to_s + "% of Food Merchants have used " + @addon2.name + " and " + active_addon2.to_s + "% of Food Merchants are currently using it."
+
+    overall_addon3 = (PaymentService.count_unique_addon_payments(3).to_f / PaymentService.count_total_payments)*100
+    active_addon3 = (PaymentService.count_active_addons(Date.today, 3).to_f / PaymentService.count_total_payments)*100
+    @addon3_hint1 = overall_addon3.to_s + "% of Food Merchants have used " + @addon3.name + " and " + active_addon3.to_s + "% of Food Merchants are currently using it."
+
   end
 
   # Disable
