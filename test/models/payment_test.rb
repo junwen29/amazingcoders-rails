@@ -5,7 +5,9 @@ class PaymentTest < ActiveSupport::TestCase
     merchant = merchant_one
     merchant.save
     payment = payment_one(Date.today, 1)
-    assert payment.save
+    assert_difference('merchant.reload.payments.count', +1) do
+      assert payment.save
+    end
   end
 
   test "should not save without start date" do
