@@ -284,8 +284,8 @@ class DealAnalyticService
       past_top_deals = get_active_deals_ranking(last_week_start,last_week_end)
 
       ranking = Array.new
-      current_ranking = 0
       top_merchant_deals.each do |tmd|
+        current_ranking = 0
         deal_ranking = Array.new
         deal_ranking << tmd[0]
         while current_ranking < top_deals.size
