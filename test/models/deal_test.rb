@@ -181,6 +181,22 @@ class DealTest < ActiveSupport::TestCase
     end
   end
 
+  test "should not save deal without venue" do
+    merchant = merchant_one
+    merchant.save
+
+    payment = payment_one(Date.today, 1)
+    payment.save
+
+    start_date = Date.tomorrow
+    end_date = start_date + 1.days
+    redeemable = true
+    multiple_use = true
+
+    deal = save_deal_one(merchant.id, nil, start_date, end_date, redeemable, multiple_use)
+    assert_not deal.save
+  end
+
   private
   def save_deal_one(merchant, venue, start_date, end_date, redeemable, multiple_use)
     created_at = Date.today
