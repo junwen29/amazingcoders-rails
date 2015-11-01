@@ -42,20 +42,47 @@ class RedemptionService
       redemptions.count
     end
 
-    def count_uniq_redemptions(deal_id, user_id = nil)
+    def count_uniq_redemptions(deal_id, user_id = nil, date = nil)
       if user_id == nil
-        Redemption.where(deal_id: deal_id).select(:user_id).distinct.count
+        if date == nil
+          Redemption.where(deal_id: deal_id).select(:user_id).distinct.count
+        else
+          start_date = Deal.find(deal_id).start_date.to_datetime.in_time_zone("Singapore").beginning_of_day
+          date = date.to_datetime.in_time_zone("Singapore").end_of_day
+          Redemption.where(deal_id: deal_id, created_at: start_date..date).select(:user_id).distinct.count
+        end
       else
-        Redemption.where(deal_id: deal_id).where(user_id: user_id).select(:user_id).distinct.count
+        if date == nil
+          Redemption.where(deal_id: deal_id).where(user_id: user_id).select(:user_id).distinct.count
+        else
+          start_date = Deal.find(deal_id).start_date.to_datetime.in_time_zone("Singapore").beginning_of_day
+          date = date.to_datetime.in_time_zone("Singapore").end_of_day
+          Redemption.where(deal_id: deal_id, created_at: start_date..date).where(user_id: user_id).select(:user_id).distinct.count
+        end
       end
     end
 
-    def num_users_multiple(deal_id)
-      user_ids = Redemption.where(deal_id: deal_id).select(:user_id).distinct.pluck(:user_id)
+    def num_users_multiple(deal_id, date = nil)
+      start_date = Deal.find(deal_id).start_date.to_datetime.in_time_zone("Singapore").beginning_of_day
+      if date == nil
+        user_ids = Redemption.where(deal_id: deal_id).select(:user_id).distinct.pluck(:user_id)
+      else
+        date = date.to_datetime.in_time_zone("Singapore").end_of_day
+        user_ids = Redemption.where(deal_id: deal_id, created_at: start_date..date).select(:user_id).distinct.pluck(:user_id)
+      end
       num_users = 0
-      user_ids.each do |ui|
-        if Redemption.where(deal_id: deal_id, user_id: ui).count > 1
-          num_users = num_users + 1
+      if date == nil
+        user_ids.each do |ui|
+          if Redemption.where(deal_id: deal_id, user_id: ui).count > 1
+            num_users = num_users + 1
+          end
+        end
+      else
+        date = date.to_datetime.in_time_zone("Singapore").end_of_day
+        user_ids.each do |ui|
+          if Redemption.where(deal_id: deal_id, user_id: ui, created_at: start_date..date).count > 1
+            num_users = num_users + 1
+          end
         end
       end
       num_users

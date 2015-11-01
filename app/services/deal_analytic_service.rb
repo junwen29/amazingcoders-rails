@@ -534,6 +534,35 @@ class DealAnalyticService
       array << cumulative
       array << non_cumulative
     end
+
+    def get_ratio_multiple_redeems(deal_id)
+      array = Array.new
+      cumulative = Array.new
+      non_cumulative = Array.new
+      start_date = Deal.find(deal_id).start_date
+      end_date = Deal.find(deal_id).expiry_date
+      if end_date <= Date.today
+        stop_date = end_date
+      else
+        stop_date = Date.today
+      end
+      num = 0
+      while start_date <= stop_date
+        user_count = RedemptionService.count_uniq_redemptions(deal_id, nil, start_date).to_f
+        multiple_redeems = RedemptionService.num_users_multiple(deal_id, start_date).to_f
+        percentage = (multiple_redeems/user_count)*100
+        cumulative << percentage.round(2)
+        if num == 0
+          non_cumulative << percentage.round(2)
+        else
+          non_cumulative << (cumulative[num] - cumulative[num-1])
+        end
+        num = num + 1
+        start_date = start_date + 1.days
+      end
+      array << cumulative
+      array << non_cumulative
+    end
   end
 
   class << self
