@@ -139,6 +139,8 @@ class DealsController < ApplicationController
   def activate
     @deal.update_attribute(:active, true)
     @deal.create_deal_analytic
+    @deal.activate_date = DateTime.now
+    @deal.save
     flash[:success] = "Deal has been successfully activated! If you require to edit or delete the deal please email Burpple for admin help."
     redirect_to deals_path
   end

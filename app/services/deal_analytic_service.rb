@@ -81,7 +81,12 @@ class DealAnalyticService
         num_view_array = Array.new
         num_redeem_array = Array.new
         deal_array = Array.new
-        view_start_date = Viewcount.where(:deal_id => d.id).first.created_at.beginning_of_day
+        view_start_date = Viewcount.where(:deal_id => d.id).first
+        if view_start_date.blank?
+          view_start_date = Date.today
+        else
+          view_start_date = view_start_date.created_at.beginning_of_day
+        end
         temp = view_start_date
 
         # If start date of deal is after given start date, we will start from deal start date
@@ -424,6 +429,140 @@ class DealAnalyticService
       deal_analytics
     end
 
+    # returns conversion rate of num wishlisters to viewers in percentage
+    def get_wishlist_to_views(deal_id)
+      activate_date = Deal.find(deal_id).activate_date
+      num_wishlist = WishService.num_wishlist_deal(deal_id, activate_date).to_f
+      user_id = WishService.get_user_id(deal_id, activate_date)
+      num_views = Viewcount.where(user_id: user_id, deal_id: deal_id).uniq.where(:entry => 'merchant_push_notification').count.to_f
+      conversion = (num_views/num_wishlist)*100
+      conversion.round(2)
+    end
+
+    # returns conversion rate of num unique views to redeems in percentage
+    def get_views_to_redeem(deal_id)
+      view_counts = ViewcountService.get_uniq_view_count(deal_id).to_f
+      user_ids = ViewcountService.get_uniq_user_id(deal_id)
+      redeem_count = RedemptionService.count_uniq_redemptions(deal_id, user_ids).to_f
+      conversion = (redeem_count/view_counts)*100
+      conversion.round(2)
+    end
+
+    # returns percentage of user who redeemed more than once
+    def get_multiple_redeems_percentage(deal_id)
+      user_count = RedemptionService.count_uniq_redemptions(deal_id).to_f
+      multiple_redeems = RedemptionService.num_users_multiple(deal_id).to_f
+      percentage = (multiple_redeems/user_count)*100
+      percentage.round(2)
+    end
+
+    # returns average time between users who redeem more than once
+    def average_time_btw_multiple_redeem(deal_id)
+      multiple_redeems_user_ids = RedemptionService.get_user_ids(deal_id, true)
+      if multiple_redeems_user_ids.blank?
+        'No Redeems Yet'
+      else
+        (RedemptionService.get_average_days_between_redeems(deal_id, multiple_redeems_user_ids).to_s + ' days')
+      end
+    end
+
+    # returns a nested array
+    # array[0] is cumulative increase in percentage per hour
+    # array[1] is change in percentage per hour
+    def get_wishlist_to_view(deal_id)
+      array = Array.new
+      cumulative = Array.new
+      non_cumulative = Array.new
+      activate_date = Deal.find(deal_id).activate_date.beginning_of_hour.to_datetime
+      deal_expiry_date =  Deal.find(deal_id).expiry_date.to_datetime.in_time_zone("Singapore").end_of_day
+      end_time = activate_date.end_of_hour
+      current = DateTime.now.beginning_of_hour + 1.hours
+
+      if (deal_expiry_date - activate_date)/1.days <= 7.0
+        final = deal_expiry_date
+      elsif (current.to_f - activate_date.to_f)/1.days > 7.0
+        final = activate_date + 7.days
+      else
+        final = current
+      end
+
+      num_wishlist = WishService.num_wishlist_deal(deal_id, activate_date).to_f
+      user_id = WishService.get_user_id(deal_id, activate_date)
+      num = 0
+      while end_time <= final
+        num_views = Viewcount.where(user_id: user_id, deal_id: deal_id, :entry => 'merchant_push_notification', created_at: activate_date..end_time).count.to_f
+        conversion = (num_views/num_wishlist)*100
+        cumulative << conversion.round(2)
+        if num == 0
+          non_cumulative << conversion.round(2)
+        else
+          non_cumulative << (cumulative[num] - cumulative[num-1])
+        end
+        num = num + 1
+        end_time = end_time + 1.hours
+      end
+      array << cumulative
+      array << non_cumulative
+    end
+
+    def get_view_to_redeem_chart(deal_id)
+      array = Array.new
+      cumulative = Array.new
+      non_cumulative = Array.new
+      activate_date = Deal.find(deal_id).activate_date.to_date
+      expiry_date = Deal.find(deal_id).expiry_date
+      if expiry_date <= Date.today
+        end_date = expiry_date
+      else
+        end_date = Date.today
+      end
+      num = 0
+      while activate_date <= end_date
+        view_counts = ViewcountService.get_uniq_view_count(deal_id, activate_date).to_f
+        user_ids = ViewcountService.get_uniq_user_id(deal_id, activate_date)
+        redeem_count = RedemptionService.count_uniq_redemptions(deal_id, user_ids).to_f
+        conversion = (redeem_count/view_counts)*100
+        cumulative << conversion.round(2)
+        if num == 0
+          non_cumulative << conversion.round(2)
+        else
+          non_cumulative << (cumulative[num] - cumulative[num-1])
+        end
+        num = num + 1
+        activate_date = activate_date + 1.days
+      end
+      array << cumulative
+      array << non_cumulative
+    end
+
+    def get_ratio_multiple_redeems(deal_id)
+      array = Array.new
+      cumulative = Array.new
+      non_cumulative = Array.new
+      start_date = Deal.find(deal_id).start_date
+      end_date = Deal.find(deal_id).expiry_date
+      if end_date <= Date.today
+        stop_date = end_date
+      else
+        stop_date = Date.today
+      end
+      num = 0
+      while start_date <= stop_date
+        user_count = RedemptionService.count_uniq_redemptions(deal_id, nil, start_date).to_f
+        multiple_redeems = RedemptionService.num_users_multiple(deal_id, start_date).to_f
+        percentage = (multiple_redeems/user_count)*100
+        cumulative << percentage.round(2)
+        if num == 0
+          non_cumulative << percentage.round(2)
+        else
+          non_cumulative << (cumulative[num] - cumulative[num-1])
+        end
+        num = num + 1
+        start_date = start_date + 1.days
+      end
+      array << cumulative
+      array << non_cumulative
+    end
   end
 
   class << self

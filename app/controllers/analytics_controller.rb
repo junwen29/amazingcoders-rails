@@ -30,6 +30,11 @@ class AnalyticsController < ApplicationController
     render "analytics/trends"
   end
 
+  def show
+    @deal = Deal.find(params[:id])
+    individual_deal_statistic
+  end
+
   # Check if user has the subscribed to any deal analytics addons
   private
   def check_has_analytics_access
@@ -69,6 +74,8 @@ class AnalyticsController < ApplicationController
       deal_analytics_by_day
       # Show popular deal type
       deal_analytics_by_type_and_redemption
+      # Show analytics table
+      deal_analytics_table
     else
       render "analytics/error"
     end
@@ -96,6 +103,16 @@ class AnalyticsController < ApplicationController
     end
   end
 
+  def individual_deal_statistic
+    if check_has_deal_statistics
+      get_wishlist_to_view
+      get_view_to_redemption
+      get_multiple_redeems
+    else
+      render "analytics/error"
+    end
+  end
+
   private
   def deal_analytics_by_total
     @deals_daily_total = DealAnalyticService.get_analytics_for_line_graph(merchant_id, Date.today.beginning_of_quarter, Date.today)
@@ -114,6 +131,11 @@ class AnalyticsController < ApplicationController
   private
   def deal_analytics_by_venue
     @deals_by_venue = DealAnalyticService.get_analytics_for_deals_by_venue(merchant_id)
+  end
+
+  private
+  def deal_analytics_table
+    @deals = MerchantService.get_all_deals(merchant_id).order(title: :asc)
   end
 
   private
@@ -139,5 +161,20 @@ class AnalyticsController < ApplicationController
   private
   def get_overall_popular_deal_type
     @popular_deal_type = DealAnalyticService.get_overall_popular_deal_type
+  end
+
+  private
+  def get_wishlist_to_view
+    @wishlist_to_view = DealAnalyticService.get_wishlist_to_view(@deal.id)
+  end
+
+  private
+  def get_view_to_redemption
+    @view_to_redemption = DealAnalyticService.get_view_to_redeem_chart(@deal.id)
+  end
+
+  private
+  def get_multiple_redeems
+    @multiple_redeems = DealAnalyticService.get_ratio_multiple_redeems(@deal.id)
   end
 end
