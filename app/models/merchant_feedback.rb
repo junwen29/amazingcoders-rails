@@ -6,5 +6,7 @@ class MerchantFeedback < ActiveRecord::Base
   validates(:category, presence: true)
   validates(:content,presence: true)
 
-  
+  scope :resolved, -> {where("resolved = ?", true)}
+  scope :unresolved, -> {where("resolved = ?", false)}
+
 end

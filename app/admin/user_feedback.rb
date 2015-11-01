@@ -1,5 +1,5 @@
-ActiveAdmin.register MerchantFeedback do
-  menu :parent => "Merchant", :priority => 4
+ActiveAdmin.register UserFeedback do
+  menu :parent => "User", :priority => 3
 
   config.clear_action_items!
   actions :all, except: [:show, :destroy]
@@ -8,7 +8,7 @@ ActiveAdmin.register MerchantFeedback do
   scope :resolved
   scope :unresolved
 
-  filter :merchant, as: :select, collection: proc { Merchant.all }
+  filter :user, as: :select, collection: proc { User.all }
   filter :category, as: :select, collection: ["Suggestion", "Complaint", "Issue"]
   filter :title, as: :string
   filter :resolved, as: :boolean
@@ -17,8 +17,8 @@ ActiveAdmin.register MerchantFeedback do
   index do
     selectable_column
     column :id
-    column "Merchant", :merchant_id do |feedback|
-      auto_link feedback.merchant
+    column "User", :user_id do |feedback|
+      auto_link feedback.user
     end
     column :title
     column :category
@@ -35,7 +35,7 @@ ActiveAdmin.register MerchantFeedback do
     f.semantic_errors
     f.inputs "Follow up Feedback" do
       f.input :id, label: 'Ticket ID', :input_html => { :disabled => true }
-      f.input :merchant, :input_html => { :disabled => true }
+      f.input :user, :input_html => { :disabled => true }
       f.input :title, label: 'Title', :input_html => { :disabled => true }
       f.input :category, label: 'Category', as: :select, collection: ["Suggestion", "Complaint", "Issue"]
       f.input :content, label: 'Content', :input_html => { :disabled => true }

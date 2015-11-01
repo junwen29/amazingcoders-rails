@@ -7,6 +7,9 @@
               chart: {
                   type: 'column'
               },
+              exporting: {
+                  filename: 'Popularity of Deals in Venues ' + new Date().toDateString()
+              },
               credits: {
                   enabled: false
               },
@@ -29,8 +32,8 @@
                           enabled: true,
                           align: 'center',
                           color: '#000000',
-                          overflow: 'justify',
-                          crop: true
+                          crop: false,
+                          overflow: 'none'
                       },
                       pointWidth: 150,
                       groupPadding: 0.06
@@ -58,7 +61,7 @@
                               y: <%= @deals_for_venue[0][loop][redeem_placement] %>,
                               drilldown: "<%= @deals_for_venue[0][loop][0] %>" + " active",
                               dataLabels: {
-                                  format: "<%= @deals_for_venue[0][loop][0] %>\n" + " " + '<span style="color: #F10DAA"><%= @deals_for_venue[0][loop][redeem_placement] %> Redemptions</span>'
+                                  format: "<%= @deals_for_venue[0][loop][0] %><br/>" + " " + '<span style="color: #F10DAA"><%= @deals_for_venue[0][loop][redeem_placement] %> Redemptions</span>'
                               }
                           }
                       ]
@@ -79,7 +82,7 @@
                               y: <%= @deals_for_venue[1][loop][redeem_placement] %>,
                               drilldown: "<%= @deals_for_venue[1][loop][0] %>" + " past",
                               dataLabels: {
-                                  format: "<%= @deals_for_venue[1][loop][0] %>\n" + " " + '<span style="color: #F10DAA"><%= @deals_for_venue[1][loop][redeem_placement] %> Redemptions </span>'
+                                  format: "<%= @deals_for_venue[1][loop][0] %><br/>" + " " + '<span style="color: #F10DAA"><%= @deals_for_venue[1][loop][redeem_placement] %> Redemptions </span>'
                               }
                           }
                       ],
@@ -115,7 +118,7 @@
                       <% loop = 0 %>
                       <% while loop < num_of_active_deals %>
                       {
-                          name: "Venues",
+                          name: "Redemptions",
                           id: "<%= @deals_for_venue[0][loop][0] %>" + " active",
                           data: [
                               <% inner_loop = 1 %>
@@ -134,7 +137,7 @@
                       <% loop = 0 %>
                       <% while loop < num_of_expired_deals %>
                       {
-                          name: "Venues",
+                          name: "Redemptions",
                           id: "<%= @deals_for_venue[1][loop][0] %>" + " past",
                           data: [
                               <% inner_loop = 1 %>

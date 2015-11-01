@@ -61,12 +61,12 @@ class DealAnalyticService
     # array [0][0][3] gives array of redemption count
     # array [0][0][4] gives start_date of view count in utc format
     # array [2] gives array of expired deal names
-    def get_analytics_for_line_graph(merchant_id, start_date, end_date)
+    def get_analytics_for_line_graph(merchant_id, start_date, end_date, total = true)
       array = Array.new
       active_deals = MerchantService.get_active_deals_that_are_active_between_two_dates(merchant_id, start_date, end_date).order(title: :asc)
       past_deals = MerchantService.get_past_deals_that_are_active_between_two_dates(merchant_id, start_date, end_date).order(title: :asc)
-      active_deals_array = get_view_and_redemption_count_by_day(active_deals, start_date, end_date)
-      past_deals_array = get_view_and_redemption_count_by_day(past_deals, start_date, end_date)
+      active_deals_array = get_view_and_redemption_count_by_day(active_deals, start_date, end_date, total)
+      past_deals_array = get_view_and_redemption_count_by_day(past_deals, start_date, end_date, total)
       expired_deals = past_deals.pluck(:title)
       array << active_deals_array
       array << past_deals_array
@@ -75,7 +75,7 @@ class DealAnalyticService
     end
 
     # Returns an array of all deals view and redemption count from start to end date by day
-    def get_view_and_redemption_count_by_day(deals, start_date, end_date)
+    def get_view_and_redemption_count_by_day(deals, start_date, end_date, total)
       overall_deals_array = Array.new
       deals.each do |d|
         num_view_array = Array.new
@@ -101,14 +101,26 @@ class DealAnalyticService
         deal_array << d.title
         deal_array << Time.parse((redemption_start_date).to_s).to_f * 1000
 
-        while view_start_date <= temp_end_date
+        if total
+          while view_start_date <= temp_end_date
           num_view_array << Viewcount.where(deal_id: d.id).where(created_at: d.created_at..view_start_date.end_of_day).count
           view_start_date = view_start_date + 1.days
-        end
+          end
 
-        while redemption_start_date <= temp_end_date
-          num_redeem_array <<  Redemption.where(deal_id: d.id).where(created_at: d.created_at..redemption_start_date.end_of_day).count
-          redemption_start_date = redemption_start_date + 1.days
+          while redemption_start_date <= temp_end_date
+            num_redeem_array << Redemption.where(deal_id: d.id).where(created_at: d.created_at..redemption_start_date.end_of_day).count
+            redemption_start_date = redemption_start_date + 1.days
+          end
+        else
+          while view_start_date <= temp_end_date
+            num_view_array << Viewcount.where(deal_id: d.id).where(created_at: view_start_date.beginning_of_day..view_start_date.end_of_day).count
+            view_start_date = view_start_date + 1.days
+          end
+
+          while redemption_start_date <= temp_end_date
+            num_redeem_array << Redemption.where(deal_id: d.id).where(created_at: redemption_start_date.beginning_of_day..redemption_start_date.end_of_day).count
+            redemption_start_date = redemption_start_date + 1.days
+          end
         end
         deal_array << num_view_array
         deal_array << num_redeem_array
@@ -222,9 +234,32 @@ class DealAnalyticService
       overall_deals_array
     end
 
+    # Find all active deals between two periods and of a merchant if given.
+    # Sort the deals by largest redemption between the two periods to lowest redemption
+    # Returns an array of deal_id and redemption count
+    def get_active_deals_ranking(start_date, end_date, merchant_id = nil)
+      if merchant_id == nil
+        active_deals = Deal.where("active = ? AND ((? BETWEEN start_date AND expiry_date) OR (? BETWEEN start_date AND expiry_date))",
+                                  true, start_date, end_date).pluck(:id)
+      else
+        active_deals = Deal.where("active = ? AND merchant_id = ? AND ((? BETWEEN start_date AND expiry_date) OR (? BETWEEN start_date AND expiry_date))",
+                                  true, merchant_id, start_date, end_date).pluck(:id)
+      end
+
+      deal_ranking = Array.new
+      active_deals.each do |ad|
+        deal = Array.new
+        deal << ad
+        deal << Redemption.where(deal_id: ad).where(created_at: start_date..end_date).count
+        deal_ranking << deal
+      end
+      deal_ranking.sort_by(&:last).reverse
+    end
+
     def get_top_active_deals(limit = 10)
-      active_deals = DealService.get_active_deals.where(:redeemable => true).pluck(:id)
-      top_10_deal_ids = DealAnalytic.where(deal_id: active_deals).order(redemption_count: :desc).limit(limit).pluck(:deal_id)
+      start_date = Date.today.beginning_of_week
+      end_date = Date.today.end_of_day
+      get_active_deals_ranking(start_date, end_date).take(limit)
     end
 
     def get_top_queries(limit = 10)
@@ -233,15 +268,40 @@ class DealAnalyticService
     end
 
     def get_own_deals_ranking(merchant_id)
-      active_deals = DealService.get_active_deals.where(:redeemable => true).pluck(:id)
-      top_deals = DealAnalytic.where(deal_id: active_deals).order(redemption_count: :desc)
-      merchant_active_deals = MerchantService.get_active_redeemable_deals(merchant_id).pluck(:id)
-      top_merchant_deals = DealAnalytic.where(deal_id: merchant_active_deals).order(redemption_count: :desc).pluck(:deal_id)
+      start_date = Date.today.beginning_of_week
+      end_date = Date.today.end_of_day
+
+      last_week_start = start_date - 7.days
+      last_week_end = Date.today.end_of_week - 7.days
+
+      top_deals = get_active_deals_ranking(start_date, end_date)
+      top_merchant_deals = get_active_deals_ranking(start_date, end_date, merchant_id)
+      past_top_deals = get_active_deals_ranking(last_week_start,last_week_end)
+
       ranking = Array.new
-      top_merchant_deals.each do |ad|
+      current_ranking = 0
+      top_merchant_deals.each do |tmd|
         deal_ranking = Array.new
-        deal_ranking << ad
-        deal_ranking << top_deals.map(&:deal_id).index(ad)
+        deal_ranking << tmd[0]
+        while current_ranking < top_deals.size
+          if top_deals[current_ranking][0] == tmd[0]
+            deal_ranking << current_ranking + 1
+            break
+          end
+          current_ranking = current_ranking + 1
+        end
+
+        past_ranking = 0
+        past_top_deals.each do |ptd|
+          if tmd[0] == ptd[0]
+            deal_ranking << past_ranking + 1 - deal_ranking[1]
+            break
+          end
+          past_ranking = past_ranking + 1
+        end
+        if deal_ranking[2].blank?
+          deal_ranking << 'new'
+        end
         ranking << deal_ranking
       end
       ranking

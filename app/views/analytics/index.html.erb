@@ -18,6 +18,7 @@
     <!-- Content Body -->
     <!--TODO: VIEW Render partials only for merchants with access-->
     <%= render :partial => 'analytics/deal/analytics_line_count' %><br>
+    <%= render :partial => 'analytics/deal/deal_perf_by_day' %><br>
     <% if MerchantService.get_active_past_redeemable_deals(session[:merchant_id]).blank? %>
         <%= render :partial => 'analytics/deal/no_redeemable_deal_error' %>
     <% else %>

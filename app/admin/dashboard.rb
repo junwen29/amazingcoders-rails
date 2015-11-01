@@ -5,18 +5,20 @@ ActiveAdmin.register_page "Dashboard" do
   content title: proc{ I18n.t("active_admin.dashboard") } do
 
     columns do
-      date = Date.today.beginning_of_month
+      # Show analytic figures for this month
+      date = Date.today.end_of_month
       @deal_subscription_count = PaymentService.count_active_premiums(date, 1)
-      @total_premiums = PaymentService.get_total_payments
+      @total_premiums = PaymentService.get_total_payments(date)
       @active_deals = DealService.count_all_active_deals
-      # TODO: Add dashboard figure for redeemed deals
+      @redemption_count = RedemptionService.count_all_redemptions(Date.today.beginning_of_month, date)
 
       column do
         render partial: 'admin/analytics_dashboard',
                :locals => {
                    :deal_subscription_count => @deal_subscription_count,
                    :premiums => @total_premiums,
-                   :active_deals => @active_deals
+                   :active_deals => @active_deals,
+                   :redemption_count => @redemption_count
                }
       end
     end

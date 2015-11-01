@@ -94,6 +94,9 @@
               credits: {
                   enabled: false
               },
+              exporting: {
+                  filename: 'Deal Traffic ' + new Date().toDateString()
+              },
               chart: {
                   zoomType: 'x'
               },
@@ -148,6 +151,9 @@
           var chart = new Highcharts.Chart({
               credits: {
                   enabled: false
+              },
+              exporting: {
+                  filename: 'Popular Deal Types ' + new Date().toDateString()
               },
               chart: {
                   type: 'pie',

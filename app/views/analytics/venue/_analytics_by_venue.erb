@@ -7,6 +7,9 @@
               chart: {
                   type: 'column'
               },
+              exporting: {
+                  filename: 'Popularity of Venues ' + new Date().toDateString()
+              },
               credits: {
                   enabled: false
               },
@@ -20,7 +23,7 @@
                   allowDecimals: false,
                   min: 0,
                   title: {
-                      text: 'Number of Users'
+                      text: 'Number of Redeems'
                   }
               },
               xAxis: {
@@ -37,8 +40,9 @@
                       dataLabels: {
                           enabled: true,
                           align: 'center',
-                          overflow:"justify",
-                          color: '#000000'
+                          color: '#000000',
+                          crop: false,
+                          overflow: 'none'
                       },
                       pointWidth: 150,
                       groupPadding: 0.1
@@ -57,7 +61,7 @@
                               y: <%= @deals_by_venue[loop][redeem_placement] %>,
                               drilldown: "<%= @deals_by_venue[loop][0] %>" + " redeem",
                               dataLabels: {
-                                  format: '<%= @deals_by_venue[loop][0] %>\n' + " " + '<span style="color: #F10DAA"><%= @deals_by_venue[loop][redeem_placement] %> Redemptions </span>'
+                                  format: '<%= @deals_by_venue[loop][0] %><br/>' + " " + '<span style="color: #F10DAA"><%= @deals_by_venue[loop][redeem_placement] %> Redemptions </span>'
                               }
                           }
                       ]

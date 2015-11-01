@@ -2,9 +2,7 @@ Rails.application.routes.draw do
   # this will generate '/attachinary/cors' which will be used for iframe file transfers (for unsupported browsers).
   mount Attachinary::Engine => '/attachinary'
 
-  resources :gifts
 
-  resources :merchant_points
 
   devise_for :users
 
@@ -17,6 +15,7 @@ Rails.application.routes.draw do
           post '/sign_in' => 'sessions#create'
           delete '/sign_out' => 'sessions#destroy'
           post '/sign_up' => 'registrations#create'
+          get '/profile' => 'sessions#get_owner'
         end
       end
 
@@ -63,14 +62,20 @@ Rails.application.routes.draw do
 
       # analytics api
       scope '/analytics' do
-        post '/deal' => 'analytics#register_deal_view_count'
-        post '/query' => 'analytics#register_query'
-        post '/redemption' => 'analytics#register_redemption'
+        post '/deal'        => 'analytics#register_deal_view_count'
+        post '/query'       => 'analytics#register_query'
+        post '/redemption'  => 'analytics#register_redemption'
       end
 
+      # redemption api
       scope '/redemption' do
-        post '' => 'redemptions#create'
-        get '/index' => 'redemptions#index'
+        post ''       => 'redemptions#create'
+        get '/index'  => 'redemptions#index'
+      end
+
+      # feedback api
+      scope '/feedback' do
+        post '' => 'feedbacks#create'
       end
     end
   end
@@ -87,6 +92,8 @@ Rails.application.routes.draw do
   resources :merchants
   resources :merchant_points
   resources :merchant_feedbacks
+  resources :gifts
+  resources :merchant_points
 
   resources :deals
   resources :payments do

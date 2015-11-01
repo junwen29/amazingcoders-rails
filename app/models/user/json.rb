@@ -25,6 +25,21 @@ module User::Json
 
       json.updated_at updated_at
       json.created_at created_at
+      json.num_wishes UserService.get_num_wishes(id)
+      json.num_bookmarks UserService.get_num_bookmarks(id)
+    end
+
+    def to_show_owner(json, options = {})
+      json.id id
+      json.first_name first_name
+      json.last_name last_name
+      json.username   username
+      json.email email
+      json.total_points total_points
+      json.updated_at updated_at
+      json.created_at created_at
+      json.num_wishes UserService.get_num_wishes(id)
+      json.num_bookmarks UserService.get_num_bookmarks(id)
     end
 
   end
