@@ -31,4 +31,15 @@ class ActiveSupport::TestCase
                 total_cost: cost, add_on1: true, add_on2: true, add_on3: true, plan1: true,
                 paid: true, merchant_id: '9999', months: months)
   end
+
+  def venue_one(name, street, zipcode, neighbourhood, phone)
+    Venue.new(id: 9999, name: name, street: street, zipcode: zipcode, city: 'Singapore',
+                 state: 'Singapore', country: 'Singapore', neighbourhood: neighbourhood,
+                 bio: 'ChickenUp is well known and best loved for serving Authentic Korean Fried Chicken.
+By adapting the Korean methods of removing the fat from the skin and double-frying, Chicken Up Created its own distinct
+variation of fried chicken, featuring juicy, sumptuous and tender chicken meat under its thin and crunchy skin without
+being too greasy. Best known for its signature SpicyUp and YangNyum style fried chicken. ChickenUp also serves several
+variations of the dish with the accompaniment of different sauces such as soya and curry sauces.', phone: phone,
+                 address_2: '#01-44 to 47', merchant_id: '9999')
+  end
 end
