@@ -309,7 +309,7 @@ class DealAnalyticService
         end
         ranking << deal_ranking
       end
-      ranking
+      ranking.sort{|a,b,c| a[1] <=> b[1]}
     end
 
     # array[0] gives first deal_type
