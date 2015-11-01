@@ -475,17 +475,17 @@ UserQuery.create(id: '1010', query: 'buffet', num_count: '3812', query_type: 'De
 
 # Seed Data for number of wish listers
 i = 1000
-while i < 1132
+while i < 1030
   Wish.create(id: i, venue_id: 1000, user_id: i)
   i = i + 1
 end
 
-while i < 1301
+while i < 1070
   Wish.create(id: i, venue_id: 1001, user_id: i)
   i = i + 1
 end
 
-while i < 1451
+while i < 1100
   Wish.create(id: i, venue_id: 1002, user_id: i)
   i = i + 1
 end
