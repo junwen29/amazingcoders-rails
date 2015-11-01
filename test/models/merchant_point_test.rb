@@ -10,9 +10,27 @@ class MerchantPointTest < ActiveSupport::TestCase
     operation = "Credit"
     merchant_id = merchant.id
     date = Date.today
-    merchant_point = MerchantPoint.new(id: 9999, reason: reason, points: points, operation: operation,
+    merchant_point = MerchantPoint.create(id: 9999, reason: reason, points: points, operation: operation,
                                       created_at: date, updated_at: date, merchant_id: merchant_id)
+
     assert merchant_point.save
+    assert_equal(merchant.reload.total_points, points)
+  end
+
+  test "debit merchant point" do
+    merchant = merchant_one
+    merchant.save
+
+    reason = "Paid for a Plan upgrade"
+    points = 100
+    operation = "Debit"
+    merchant_id = merchant.id
+    date = Date.today
+    merchant_point = MerchantPoint.create(id: 9999, reason: reason, points: points, operation: operation,
+                                          created_at: date, updated_at: date, merchant_id: merchant_id)
+
+    assert merchant_point.save
+    assert_equal(merchant.reload.total_points, -points)
   end
 
   test "view loyalty point" do
