@@ -9,7 +9,9 @@ class MerchantFeedbackTest < ActiveSupport::TestCase
     category = "Complaint"
     content = "Cannot download PDF file"
     merchant_feedback = save_merchant_feedback(title, category, content)
-    assert merchant_feedback.save
+    assert_difference('merchant.reload.merchant_feedbacks.count', +1) do
+      assert merchant_feedback.save
+    end
   end
 
   test "should not save merchant feedback without title" do

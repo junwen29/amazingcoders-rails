@@ -11,7 +11,9 @@ class VenueTest < ActiveSupport::TestCase
     neighbourhood = 'Tampines'
     phone = '65880308'
     venue = venue_one(name, street, zipcode, neighbourhood, phone)
-    assert venue.save
+    assert_difference('merchant.reload.venues.count', +1) do     # assert merchant has 1 more venue
+      assert venue.save       # assert venue is saved
+    end
   end
 
   test "should not save venue without name" do
