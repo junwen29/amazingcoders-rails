@@ -83,13 +83,7 @@ class VenueTest < ActiveSupport::TestCase
     # create venue
     merchant = merchant_one
     merchant.save
-    name = "Chicken Up @ Tampines"
-    street = '2 Tampines Central 5'
-    zipcode = '529509'
-    neighbourhood = 'Tampines'
-    phone = '65880308'
-    venue = venue_one(name, street, zipcode, neighbourhood, phone)
-    venue.save
+    venue = save_venue_one
 
     # edit venue
     name = "Chicken Down"
@@ -101,13 +95,7 @@ class VenueTest < ActiveSupport::TestCase
     # create venue
     merchant = merchant_one
     merchant.save
-    name = "Chicken Up @ Tampines"
-    street = '2 Tampines Central 5'
-    zipcode = '529509'
-    neighbourhood = 'Tampines'
-    phone = '65880308'
-    venue = venue_one(name, street, zipcode, neighbourhood, phone)
-    venue.save
+    venue = save_venue_one
 
     # delete venue
     assert_difference('Venue.count', -1) do
@@ -119,6 +107,16 @@ class VenueTest < ActiveSupport::TestCase
     # create venue id 9999
     merchant = merchant_one
     merchant.save
+    save_venue_one
+
+    # check venue id 9999 exists
+    venue = Venue.find(9999)
+    assert_not_nil venue
+  end
+
+
+  private
+  def save_venue_one()
     name = "Chicken Up @ Tampines"
     street = '2 Tampines Central 5'
     zipcode = '529509'
@@ -126,10 +124,6 @@ class VenueTest < ActiveSupport::TestCase
     phone = '65880308'
     venue = venue_one(name, street, zipcode, neighbourhood, phone)
     venue.save
-
-    # check venue id 9999 exists
-    venue = Venue.find(9999)
-    assert_not_nil venue
+    venue
   end
-
 end

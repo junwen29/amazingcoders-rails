@@ -42,9 +42,4 @@ being too greasy. Best known for its signature SpicyUp and YangNyum style fried 
 variations of the dish with the accompaniment of different sauces such as soya and curry sauces.', phone: phone,
                  address_2: '#01-44 to 47', merchant_id: '9999')
   end
-
-  def merchant_feedback_one(title, category, content)
-    MerchantFeedback.new(id: 9999, title: title, category: category, content: content, resolved: false,
-                          created_at: Date.today, updated_at: Date.today, merchant_id: '9999')
-  end
 end
