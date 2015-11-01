@@ -9,7 +9,7 @@
 
     <!-- Content Heading -->
     <div class="pull-left">
-      <p class="b2 content-title">Aggregate Trends</p>
+      <p class="b3 content-title">Analytics for <%= @deal.title %></p>
     </div>
 
     <div class="clearfix"></div>
@@ -20,8 +20,9 @@
     <%= render :partial => 'analytics/deal/wishlist_to_views' %><br>
     <%= render :partial => 'analytics/deal/views_to_redemption' %><br>
     <%= render :partial => 'analytics/deal/multiple_redeems' %><br>
-    <%= link_to 'Back to Analytics', analytics_path, class: "btn btn-big btn-info" %>
-
+    <div style="text-align:center">
+      <%= link_to 'Back to Analytics', analytics_path, class: "btn btn-big btn-info" %>
+    </div>
   </div>
   <!-- /content -->
 </div><!-- /contentWrapper -->
