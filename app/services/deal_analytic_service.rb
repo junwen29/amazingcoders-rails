@@ -509,7 +509,7 @@ class DealAnalyticService
       array = Array.new
       cumulative = Array.new
       non_cumulative = Array.new
-      activate_date = Deal.find(deal_id).activate_date.to_date
+      start_date = Deal.find(deal_id).start_date
       expiry_date = Deal.find(deal_id).expiry_date
       if expiry_date <= Date.today
         end_date = expiry_date
@@ -517,9 +517,9 @@ class DealAnalyticService
         end_date = Date.today
       end
       num = 0
-      while activate_date <= end_date
-        view_counts = ViewcountService.get_uniq_view_count(deal_id, activate_date).to_f
-        user_ids = ViewcountService.get_uniq_user_id(deal_id, activate_date)
+      while start_date <= end_date
+        view_counts = ViewcountService.get_uniq_view_count(deal_id, start_date).to_f
+        user_ids = ViewcountService.get_uniq_user_id(deal_id, start_date)
         redeem_count = RedemptionService.count_uniq_redemptions(deal_id, user_ids).to_f
         conversion = (redeem_count/view_counts)*100
         cumulative << conversion.round(2)
@@ -529,7 +529,7 @@ class DealAnalyticService
           non_cumulative << (cumulative[num] - cumulative[num-1])
         end
         num = num + 1
-        activate_date = activate_date + 1.days
+        start_date = start_date + 1.days
       end
       array << cumulative
       array << non_cumulative
