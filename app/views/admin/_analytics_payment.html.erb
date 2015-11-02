@@ -277,7 +277,12 @@
 
               tooltip: {
                   headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                  pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> months per merchant<br/>'
+                  pointFormat: '<span style="color:{point.color}">{point.name}</span>: ' +
+                  '<br/>Average: <b>{point.y}</b> months ' +
+                  '<br/>Variance: <b>{point.variance}</b>' +
+                  '<br/>Standard Deviation: <b>{point.sd}</b>' +
+                  '<br/>Max: <b>{point.max}</b> months ' +
+                  '<br/>Min: <b>{point.min}</b> months '
               },
 
               series: [{

@@ -11,10 +11,9 @@
           <% end %>
           <th>Title</th>
           <th>Image</th>
-          <th>Description</th>
+          <th>Venue</th>
           <th>Start Date</th>
           <th>Expiry Date</th>
-          <th>Venue</th>
           <% if @payment.add_on2 %>
               <th>Unique Views</th>
               <th>Redeems</th>
@@ -49,14 +48,13 @@
                         <%= image_tag 'biz/burpple_logo.png', :size => '100x100' %>
                     <% end %>
                   </td>
-                  <td><%= deal.description %></td>
-                  <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
-                  <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
-                  <td>
+                  <td style="min-width: 250px;">
                     <% deal.venues.each do |venue| %>
                         <%= venue.name %><br/>
                     <% end %>
                   </td>
+                  <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
+                  <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
                   <% if @payment.add_on2 %>
                       <td id='num'><%= DealAnalyticService.get_unique_view_count(deal.id) %></td>
                       <% if deal.redeemable && (deal.start_date <= Date.today) %>
@@ -123,7 +121,7 @@
                   <td><%= deal.description %></td>
                   <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
                   <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
-                  <td>
+                  <td style="min-width: 200px;">
                     <% deal.venues.each do |venue| %>
                         <%= venue.name %><br/>
                     <% end %>
@@ -196,7 +194,7 @@
                   <td><%= deal.description %></td>
                   <td><%= deal.start_date.strftime("%d/%m/%Y") %></td>
                   <td><%= deal.expiry_date.strftime("%d/%m/%Y") %></td>
-                  <td>
+                  <td style="min-width: 200px;">
                     <% deal.venues.each do |venue| %>
                         <%= venue.name %><br/>
                     <% end %>

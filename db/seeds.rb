@@ -95,7 +95,7 @@ plan_payment_id = plan_payment_id + 1
 start_date = '01-01-2015'.to_date
 end_date = '01-12-2015'.to_date
 Payment.new(id: 1002, start_date: start_date, expiry_date: end_date, total_cost: 385, add_on1: true, add_on2: false,
-            add_on3: false, plan1: true, paid: true, merchant_id: '1002', months: 4).save(validate: false)
+            add_on3: false, plan1: true, paid: true, merchant_id: '1002', months: 11).save(validate: false)
 PlanPayment.create(id: plan_payment_id, plan_id: 1, payment_id: payment_id)
 AddOnPayment.create(id: add_on_payment_id, add_on_id: 1, payment_id: payment_id)
 payment_id = payment_id + 1
@@ -826,3 +826,26 @@ while starting_user_id <= ending_user_id
   user.save
   starting_user_id = starting_user_id + 1
 end
+
+# Merchant Feedback
+date = DateTime.parse("2015-11-02 00:00:00")
+merchant = 1000
+MerchantFeedback.create(id: 1000, title: "Live chat CS support", category: "Suggestion", content: "Good to have some online live chat support", resolved: false, created_at: date, updated_at: date, merchant_id: merchant)
+MerchantFeedback.create(id: 1001, title: "Poor service", category: "Complaint", content: "Rude customer service", resolved: false, created_at: date, updated_at: date, merchant_id: merchant)
+
+# User id 1000
+starting_user_id = 1000
+user = User.new(id: starting_user_id)
+user.first_name = 'user'+starting_user_id.to_s
+user.last_name = 'user'+starting_user_id.to_s
+user.username = 'user'+starting_user_id.to_s
+user.email = 'user'+starting_user_id.to_s+'@gmail.com'
+user.password ='12345678'
+user.password_confirmation = '12345678'
+user.save
+
+# User Feedback
+date = DateTime.parse("2015-11-02 00:00:00")
+UserFeedback.create(id: 1000, title: "Suggestion to add kids menu", category: "Suggestion", content: "Add some healthy food for small kids", resolved: false, created_at: date, updated_at: date, user_id: 1000)
+UserFeedback.create(id: 1001, title: "Poor service", category: "Complaint", content: "Rude customer service", resolved: false, created_at: date, updated_at: date, user_id: 1000)
+

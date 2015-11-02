@@ -16,13 +16,17 @@ ActiveAdmin.register Redemption do
     selectable_column
     column :id
     column "Deal", sortable: "deal_id" do |r|
-      auto_link r.deal
+      div :class => "descriptionCol" do
+        auto_link r.deal
+      end
     end
     column "User", sortable: "user_id" do |r|
       auto_link r.user
     end
     column "Venue", sortable: "venue_id" do |r|
-      Venue.find(r.venue_id).name
+      div :class => "venuesCol" do
+        Venue.find(r.venue_id).name
+      end
     end
     column "Redeemed on", sortable: "created_at" do |r|
       r.created_at.localtime.strftime("%B %d, %Y %H:%M")

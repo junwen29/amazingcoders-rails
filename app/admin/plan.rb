@@ -20,7 +20,11 @@ ActiveAdmin.register Plan do
     selectable_column
     column :id
     column "Name", :name
-    column "Description", :description
+    column "Description" do |plan|
+      div :class => "descriptionCol" do
+        plan.description
+      end
+    end
     column "Cost", :cost do |plan|
       number_to_currency plan.cost
     end

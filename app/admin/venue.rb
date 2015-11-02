@@ -32,9 +32,21 @@ ActiveAdmin.register Venue do
     column "Merchant", :merchant_id do |venue|
       auto_link venue.merchant
     end
-    column "Venue", :name
-    column "Information", :bio
-    column "Street", :street
+    column "Venue" do |venue|
+      div :class => "venuesCol" do
+        venue.name
+      end
+    end
+    column "Information" do |venue|
+      div :class => "descriptionCol" do
+        venue.bio
+      end
+    end
+    column "Street" do |venue|
+      div :class => "venuesCol" do
+        venue.street
+      end
+    end
     actions
   end
 
