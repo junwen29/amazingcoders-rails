@@ -13,12 +13,15 @@ class PaymentsController < ApplicationController
 
   end
 
-  # Disable
-=begin
   def edit
     @payment = Payment.find(params[:id])
+    @plan = Plan.all
+    @plan1 = Plan.find(1)
+    @addon1 = AddOn.find(1)
+    @addon2 = AddOn.find(2)
+    @addon3 = AddOn.find(3)
   end
-=end
+
 
   def index
     @payments = Payment.all
@@ -167,6 +170,11 @@ class PaymentsController < ApplicationController
     end
 
     total_cost
+  end
+
+  private
+  def extend_plan
+
   end
 
 

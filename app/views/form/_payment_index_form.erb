@@ -67,6 +67,7 @@
           <th>Start Date</th>
           <th>Expiry Date</th>
           <th>Payment Date</th>
+          <th>Extension</th>
         </tr>
 
         <% @payments.each do |p| %>
@@ -102,6 +103,7 @@
               <td><%= payment.start_date.strftime("%d/%m/%Y") %> </td>
               <td><%= payment.expiry_date.strftime("%d/%m/%Y") %> </td>
               <td><%= payment.created_at.strftime("%d/%m/%Y %r")%></td>
+              <td><%= link_to 'Modify', edit_payment_path(payment), class: "btn btn-big btn-success" %></td>
             </tr>
         <% end %>
       </table>
