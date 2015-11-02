@@ -26,7 +26,11 @@
                     <tr>
                       <td><%= deal.title %></td>
                       <% if @payment.add_on1 && deal.pushed %>
-                        <td style="text-align: center;"><%= DealAnalyticService.get_wishlist_to_views(deal.id) %>%</td>
+                          <% if DealAnalyticService.get_wishlist_to_views(deal.id) == 'nil' %>
+                              <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="As you have no wishlisters when you pushed your deal, data cannot be gathered">N/A</p></td>
+                          <% else %>
+                              <td style="text-align: center;"><%= DealAnalyticService.get_wishlist_to_views(deal.id) %>%</td>
+                          <% end %>
                       <% elsif @payment.add_on1 && !deal.pushed %>
                           <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not been pushed hence, data cannot be gathered">N/A</p></td>
                       <% else %>
@@ -47,7 +51,7 @@
                           <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                       <% end %>
                       <td>
-                        <% if (@payment.add_on1 && deal.pushed) || (deal.redeemable && (deal.start_date <= Date.today)) %>
+                        <% if (@payment.add_on1 && deal.pushed && DealAnalyticService.get_wishlist_to_views(deal.id) != 'nil') || (deal.redeemable && (deal.start_date <= Date.today)) %>
                             <%= link_to analytic_path(deal) do %>
                                 <button class="btn btn-success" type="button">
                                   Show Charts
@@ -89,7 +93,11 @@
                     <tr>
                       <td><%= deal.title %></td>
                       <% if @payment.add_on1 && deal.pushed %>
-                          <td style="text-align: center;"><%= DealAnalyticService.get_wishlist_to_views(deal.id) %>%</td>
+                          <% if DealAnalyticService.get_wishlist_to_views(deal.id) == 'nil' %>
+                              <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="As you have no wishlisters when you pushed your deal, data cannot be gathered">N/A</p></td>
+                          <% else %>
+                              <td style="text-align: center;"><%= DealAnalyticService.get_wishlist_to_views(deal.id) %>%</td>
+                          <% end %>
                       <% elsif @payment.add_on1 && !deal.pushed %>
                           <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not been pushed hence, data cannot be gathered">N/A</p></td>
                       <% else %>
@@ -109,7 +117,7 @@
                           <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                       <% end %>
                       <td>
-                        <% if (@payment.add_on1 && deal.pushed) || (deal.redeemable && (deal.start_date <= Date.today)) %>
+                        <% if (@payment.add_on1 && deal.pushed && DealAnalyticService.get_wishlist_to_views(deal.id) != 'nil') || (deal.redeemable && (deal.start_date <= Date.today)) %>
                             <%= link_to analytic_path(deal) do %>
                                 <button class="btn btn-success" type="button">
                                   Show Charts
