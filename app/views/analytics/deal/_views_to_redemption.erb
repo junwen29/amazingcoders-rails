@@ -54,7 +54,7 @@
                       }
                   },
                   series: {
-                      pointStart: <%= Time.parse((@deal.activate_date.beginning_of_hour).to_s).to_f * 1000 %>,
+                      pointStart: <%= Time.parse(@deal.start_date.to_s).to_f * 1000 %>,
                       pointInterval: 3600 * 1000 * 24
                   }
               },
