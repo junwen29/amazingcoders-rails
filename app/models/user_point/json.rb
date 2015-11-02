@@ -10,7 +10,7 @@ module UserPoint::Json
       json.operation  self.operation
 
       json.user do
-        user.to_json json
+        self.user.to_json json
       end
     end
 

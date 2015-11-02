@@ -9,6 +9,7 @@ class UserPointService
       p.operation = operation
       p.user_id = user_id
       p.save
+      return p
     end
 
   end
