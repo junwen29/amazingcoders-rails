@@ -105,9 +105,13 @@ class AnalyticsController < ApplicationController
 
   def individual_deal_statistic
     if check_has_deal_statistics
-      get_wishlist_to_view
-      get_view_to_redemption
-      get_multiple_redeems
+      if @deal.pushed
+        get_wishlist_to_view
+      end
+      if @deal.active
+        get_view_to_redemption
+        get_multiple_redeems
+      end
     else
       render "analytics/error"
     end
