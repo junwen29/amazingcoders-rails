@@ -109,7 +109,6 @@ Rails.application.routes.draw do
   get '/payments/gift_extend' => 'payments#gift_extend', :as => :gift_extend
   post 'payments/extend' => 'payments#extend', :as => :payments_extend
   patch '/payments/:id/extend_plan' => 'payments#extend_plan', :as => :payments_extend_plan
-  get '/payments/:id/modify' => 'payments#modify', :as => :payments_modify
 
 # To change a deal into active deal then going back to index page
   get 'deals/:id/activate' => 'deals#activate', :as => 'active_deal'

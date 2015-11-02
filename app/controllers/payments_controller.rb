@@ -132,18 +132,36 @@ class PaymentsController < ApplicationController
     end
   end
 
-def extend_plan
-  @payment.update(payment_params)
-  redirect_to payments_path
-end
-
-  def modify
+  def extend_plan
     @payment = Payment.find(params[:id])
-    @plan = Plan.all
-    @plan1 = Plan.find(1)
-    @addon1 = AddOn.find(1)
-    @addon2 = AddOn.find(2)
-    @addon3 = AddOn.find(3)
+    cost_before = calculate_price(@payment)
+    if @payment.update(payment_params)
+      cost_after = calculate_price(@payment)*@payment.months
+      cost_to_pay = cost_after - cost_before
+      @payment.update(total_cost: cost_to_pay)
+      # Update join table in addon_payment
+      @add_on_payment = @payment.add_on_payments.build
+      if (params[:payment][:add_on1] == "true")
+        @payment.add_on_payments.build(:add_on_id => 1)
+      end
+      if (params[:payment][:add_on2] == "true")
+        @payment.add_on_payments.build(:add_on_id => 2)
+      end
+      if (params[:payment][:add_on3] == "true")
+        @payment.add_on_payments.build(:add_on_id => 3)
+      end
+# change expiry_date
+      redirect_to new_payment_charge_path(@payment)
+    else
+      flash[:error] = "Failed to upgrade plan"
+
+      @plan = Plan.all
+      @plan1 = Plan.find(1)
+      @addon1 = AddOn.find(1)
+      @addon2 = AddOn.find(2)
+      @addon3 = AddOn.find(3)
+    render 'edit'
+    end
   end
 
   def destroy

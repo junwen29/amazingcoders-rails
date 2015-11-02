@@ -9,6 +9,13 @@ class PaymentService
       overlapping_payments.count
     end
 
+    def get_overlapping_dates(merchant_id, new_start_date, months)
+      all_payments = Payment.where(:merchant_id => merchant_id)
+      valid_payments = all_payments.where('expiry_date >= ? AND paid = ? AND plan1 = ?', Date.today, true, true)
+      overlapping_payments = valid_payments.where('start_date > ? AND start_date <= ?', new_start_date, new_start_date.months_since(months))
+      overlapping_payments.count
+    end
+
     def count_total_payments()
       Merchant.count
     end
@@ -115,6 +122,29 @@ class PaymentService
 
     def get_addon_min_months(addon_id)
       min = Payment.joins(:add_on_payments).where('add_on_payments.add_on_id' => addon_id).order(months: :asc).limit(1).pluck(:months).first
+    end
+
+    def calculate_price (payment)
+      total_cost = 0
+      deal_plan_cost = Plan.find(1).cost      # deal listing plan has id = 1
+      add_on1_cost = AddOn.find(1).cost
+      add_on2_cost = AddOn.find(2).cost
+      add_on3_cost = AddOn.find(3).cost
+
+      if payment.plan1
+        total_cost = total_cost + deal_plan_cost
+      end
+      if payment.add_on1
+        total_cost = total_cost + add_on1_cost
+      end
+      if payment.add_on2
+        total_cost = total_cost + add_on2_cost
+      end
+      if payment.add_on3
+        total_cost = total_cost + add_on3_cost
+      end
+
+      total_cost
     end
   end
 

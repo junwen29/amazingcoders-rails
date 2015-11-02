@@ -38,7 +38,7 @@
 
 
   <div class="content-separator"></div>
-  <%= form_for @payment, url: payments_extend_plan_path do |f| %>
+  <%= form_for @payment, url: payments_extend_plan_path(@payment) do |f| %>
       <div id="plan1" >
         <div class="form-textarea clearfix">
           <div class="col-lg-7" style="padding-left:0px">
