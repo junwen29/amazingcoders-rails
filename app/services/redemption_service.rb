@@ -20,8 +20,14 @@ class RedemptionService
       never_redeem_before = redemption.blank?
 
       if never_redeem_before
-        redemption = Redemption.create(deal_id: deal_id, user_id: user_id, venue_id: venue_id)
+        # award burps
+        venue = Venue.find(venue_id)
+        #eg. title =  'Salmon deal at Salmon Village'
+        point = UserPointService.new_point(deal.title.to_s + 'at ' + venue.name.to_s, '5'.to_i, "Credit", user_id)
+
+        redemption = Redemption.create(deal_id: deal_id, user_id: user_id, venue_id: venue_id, user_point_id: point.id)
         Deal.increment_counter(:num_of_redeems, deal_id)
+
         return redemption, error
       elsif multiple_redeem #redeem before but deal allows more than 1 redeem
         redemption = Redemption.create(deal_id: deal_id, user_id: user_id, venue_id: venue_id)

@@ -17,6 +17,11 @@ module Redemption::Json
         venue.to_simple_json json
       end
 
+      user_point = UserPoint.find(self.user_point_id)
+      json.user_point do
+        user_point.to_json json
+      end
+
     end
 
     def to_json(json, options = {})
