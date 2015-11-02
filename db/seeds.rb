@@ -375,10 +375,12 @@ DealVenue.create(id: '1022', deal_id: 1008, venue_id: 1003)
 start_date = '01-01-2015'.to_date
 end_date = '24-04-2015'.to_date
 created_at = start_date - 10.days
+activate_date = '30-12-2014'.to_datetime.in_time_zone("Singapore") - 8.hours
 Deal.new(id: '1009', title: '18 Chefs SG50 Set Meal 1 For 1', redeemable: true, multiple_use: true, type_of_deal: 'Freebies',
          description: 'Open Heart Surgery Fried Rice (for 4), Black Beauty, Peach in a Jar, Homemade Ice Lemon Tea x4 buy 1 get 1 free!',
          start_date: start_date, expiry_date: end_date, t_c: 'Not valid for Eighteen Chefs employees & their families. Dine in only',
-         pushed: true, merchant_id: 1002, active: true, num_of_redeems: 0, created_at: created_at, push_date: activate_date).save(validate: false)
+         pushed: true, merchant_id: 1002, active: true, num_of_redeems: 0, created_at: created_at, activate_date: activate_date,
+         push_date: activate_date).save(validate: false)
 DealDay.new(id: '1016', deal_id: 1009, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
 DealTime.create(id: '1016', deal_day_id: 1016, started_at: start_time_1, ended_at: end_time_1)
 DealVenue.create(id: '1023', deal_id: 1009, venue_id: 1004)
@@ -389,10 +391,12 @@ DealVenue.create(id: '1026', deal_id: 1009, venue_id: 1007)
 start_date = '01-03-2015'.to_date
 end_date = '24-08-2015'.to_date
 created_at = start_date - 10.days
+activate_date = '28-02-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
 Deal.new(id: '1010', title: 'Student/NSmen Meal Avaliable Any Time And Day', redeemable: true, multiple_use: true, type_of_deal: 'Discount',
          description: 'Pasta/Cheese Baked Rice. Choose from Step 3A, B, C or D. Ice Lemon Tea. Ice Cream. Student from $6.40! NSmen From $7.40',
          start_date: start_date, expiry_date: end_date, t_c: 'Valid only when in uniform or 11B/Student ID presented',
-         pushed: true, merchant_id: 1002, active: true, num_of_redeems: 0, created_at: created_at, push_date: activate_date).save(validate: false)
+         pushed: true, merchant_id: 1002, active: true, num_of_redeems: 0, created_at: created_at, activate_date: activate_date,
+         push_date: activate_date).save(validate: false)
 DealDay.new(id: '1017', deal_id: 1010, mon: true, tue: true, wed: true, thur: true, fri: true, sat: false, sun: false).save(validate: false)
 DealTime.create(id: '1017', deal_day_id: 1017, started_at: start_time_1, ended_at: end_time_1)
 DealVenue.create(id: '1027', deal_id: 1010, venue_id: 1004)
