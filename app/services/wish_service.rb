@@ -54,45 +54,23 @@ class WishService
     end
 
     # Total num of users who wish list the venues associated with a deal
-    def num_wishlist_deal(deal_id, activate_date = nil)
-      deal_venue = DealVenue.where(:deal_id => deal_id)
-      num = 0
-      user_id = []
-      deal_venue.each do |dv|
-        if activate_date == nil
-          wishes = Wish.where(:venue_id => dv.venue_id)
-        else
-          wishes = Wish.where(:venue_id => dv.venue_id).where('created_at <= ?',activate_date)
-        end
-        user_id.each do |u|
-          wishes = wishes.reject{|r| r.user_id == u}
-        end
-        wishes.each do |w|
-          user_id << w.user_id
-        end
-        num = num + wishes.count
+    def num_wishlist_deal(deal_id, push_date = nil)
+      venue_id = DealVenue.where(:deal_id => deal_id).pluck(:venue_id)
+      if push_date == nil
+        Wish.where(venue_id: venue_id).select(:user_id).distinct.count
+      else
+        Wish.where(venue_id: venue_id).where('created_at <= ?',push_date).select(:user_id).distinct.count
       end
-      num
     end
 
     # Get array of user id who wishlist the venues associated with a deal
-    def get_user_id(deal_id, activate_date = nil)
-      deal_venue = DealVenue.where(:deal_id => deal_id)
-      user_id = []
-      deal_venue.each do |dv|
-        if activate_date == nil
-          wishes = Wish.where(:venue_id => dv.venue_id)
-        else
-          wishes = Wish.where(:venue_id => dv.venue_id).where('created_at <= ?',activate_date)
-        end
-        user_id.each do |u|
-          wishes = wishes.reject{|r| r.user_id == u}
-        end
-        wishes.each do |w|
-          user_id << w.user_id
-        end
+    def get_user_id(deal_id, push_date = nil)
+      venue_id = DealVenue.where(:deal_id => deal_id).pluck(:venue_id)
+      if push_date == nil
+        Wish.where(venue_id: venue_id).select(:user_id).distinct
+      else
+        Wish.where(venue_id: venue_id).where('created_at <= ?',push_date).select(:user_id).distinct
       end
-      user_id
     end
   end
 
