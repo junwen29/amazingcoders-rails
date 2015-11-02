@@ -1,11 +1,5 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  [value: MyString
-  count: 1
-  type: 
+one: {}
 
-two:
-  [value: MyString
-  count: 1
-  type: 
+two: {}
