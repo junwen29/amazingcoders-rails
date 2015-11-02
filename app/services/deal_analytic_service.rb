@@ -431,9 +431,9 @@ class DealAnalyticService
 
     # returns conversion rate of num wishlisters to viewers in percentage
     def get_wishlist_to_views(deal_id)
-      activate_date = Deal.find(deal_id).activate_date
-      num_wishlist = WishService.num_wishlist_deal(deal_id, activate_date).to_f
-      user_id = WishService.get_user_id(deal_id, activate_date)
+      push_date = Deal.find(deal_id).push_date
+      num_wishlist = WishService.num_wishlist_deal(deal_id, push_date).to_f
+      user_id = WishService.get_user_id(deal_id, push_date)
       num_views = Viewcount.where(user_id: user_id, deal_id: deal_id).uniq.where(:entry => 'merchant_push_notification').count.to_f
       conversion = (num_views/num_wishlist)*100
       conversion.round(2)
@@ -473,24 +473,24 @@ class DealAnalyticService
       array = Array.new
       cumulative = Array.new
       non_cumulative = Array.new
-      activate_date = Deal.find(deal_id).activate_date.beginning_of_hour.to_datetime
+      push_date = Deal.find(deal_id).push_date.beginning_of_hour.to_datetime
       deal_expiry_date =  Deal.find(deal_id).expiry_date.to_datetime.in_time_zone("Singapore").end_of_day
-      end_time = activate_date.end_of_hour
+      end_time = push_date.end_of_hour
       current = DateTime.now.beginning_of_hour + 1.hours
 
-      if (deal_expiry_date - activate_date)/1.days <= 7.0
+      if (deal_expiry_date - push_date)/1.days <= 7.0
         final = deal_expiry_date
-      elsif (current.to_f - activate_date.to_f)/1.days > 7.0
-        final = activate_date + 7.days
+      elsif (current.to_f - push_date.to_f)/1.days > 7.0
+        final = push_date + 7.days
       else
         final = current
       end
 
-      num_wishlist = WishService.num_wishlist_deal(deal_id, activate_date).to_f
-      user_id = WishService.get_user_id(deal_id, activate_date)
+      num_wishlist = WishService.num_wishlist_deal(deal_id, push_date).to_f
+      user_id = WishService.get_user_id(deal_id, push_date)
       num = 0
       while end_time <= final
-        num_views = Viewcount.where(user_id: user_id, deal_id: deal_id, :entry => 'merchant_push_notification', created_at: activate_date..end_time).count.to_f
+        num_views = Viewcount.where(user_id: user_id, deal_id: deal_id, :entry => 'merchant_push_notification', created_at: push_date..end_time).count.to_f
         conversion = (num_views/num_wishlist)*100
         cumulative << conversion.round(2)
         if num == 0
