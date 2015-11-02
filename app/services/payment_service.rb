@@ -31,6 +31,21 @@ class PaymentService
       plan_premiums.count
     end
 
+    def count_addons_cross_sell(add_on1, add_on2, add_on3)
+      if add_on1 && add_on2
+        all_premiums = Payment.where('paid = ? AND add_on1 = ? AND add_on2 = ?',
+                                     true, add_on1, add_on2).select(:merchant_id).distinct.count
+      elsif add_on1 && add_on3
+        all_premiums = Payment.where('paid = ? AND add_on1 = ? AND add_on3 = ?',
+                                     true, add_on1, add_on3).select(:merchant_id).distinct.count
+      elsif add_on2 && add_on3
+        all_premiums = Payment.where('paid = ? AND add_on2 = ? AND add_on3 = ?',
+                                     true, add_on2, add_on3).select(:merchant_id).distinct.count
+      end
+
+      all_premiums
+    end
+
     def count_active_addons(date, addon_id)
       all_premiums = Payment.where('start_date <= ? AND expiry_date >= ? AND paid = ?', date, date, true)
       plan_premiums = all_premiums.joins(:add_on_payments).where('add_on_payments.add_on_id' => addon_id)
