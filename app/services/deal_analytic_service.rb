@@ -520,7 +520,7 @@ class DealAnalyticService
       while start_date <= end_date
         view_counts = ViewcountService.get_uniq_view_count(deal_id, start_date).to_f
         user_ids = ViewcountService.get_uniq_user_id(deal_id, start_date)
-        redeem_count = RedemptionService.count_uniq_redemptions(deal_id, user_ids).to_f
+        redeem_count = RedemptionService.count_uniq_redemptions(deal_id, user_ids, start_date).to_f
         conversion = (redeem_count/view_counts)*100
         cumulative << conversion.round(2)
         if num == 0
