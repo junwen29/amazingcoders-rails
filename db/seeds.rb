@@ -1,6 +1,8 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
+# TODO: Change this data to presentation date and data for analytics will be seeding till that date
+final_end_date = "2015-12-01 00:00:00"
 
 Plan.create(id: '1', name: 'Premium Deals Services', cost: '30', description: 'Allows unlimited creation of deals. Publishing of up to 5 active deals')
 
@@ -608,7 +610,7 @@ DealAnalytic.create(id: 1001, deal_id: 1001, view_count: num_view_count, unique_
 starting_redemption = redemption
 user_id = 1000
 start_date = DateTime.parse("2015-10-10 00:00:00")
-end_date = DateTime.parse("2015-10-29 00:00:00")
+end_date = DateTime.parse(final_end_date)
 while start_date <= end_date
   limit = redemption + rand(0..6)
   venue_id = rand(1000..1002)
@@ -652,7 +654,7 @@ num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
 start_date = DateTime.parse("2015-10-07 00:00:00")
-end_date = DateTime.parse("2015-10-29 00:00:00")
+end_date = DateTime.parse(final_end_date)
 created_at = '07-10-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
 user_id = 1000
 while user_id < 1089
@@ -685,7 +687,7 @@ DealAnalytic.create(id: 1002, deal_id: 1002, view_count: num_view_count, unique_
 starting_redemption = redemption
 user_id = 1000
 start_date = DateTime.parse("2015-10-15 00:00:00")
-end_date = DateTime.parse("2015-10-29 00:00:00")
+end_date = DateTime.parse(final_end_date)
 while start_date <= end_date
   limit = redemption + rand(0..6)
   venue_id = rand(1000..1002)
@@ -732,7 +734,7 @@ num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
 start_date = DateTime.parse("2015-10-12 00:00:00")
-end_date = DateTime.parse("2015-10-29 00:00:00")
+end_date = DateTime.parse(final_end_date)
 created_at = '12-10-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
 user_id = 1000
 while user_id < 1100
@@ -766,7 +768,7 @@ DealAnalytic.create(id: 1003, deal_id: 1003, view_count: num_view_count, unique_
 starting_redemption = redemption
 user_id = 1000
 start_date = DateTime.parse("2015-10-19 00:00:00")
-end_date = DateTime.parse("2015-10-29 00:00:00")
+end_date = DateTime.parse(final_end_date)
 while start_date <= end_date
   limit = redemption + rand(0..6)
   venue_id = rand(1000..1002)
@@ -824,7 +826,7 @@ num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
 start_date = DateTime.parse("2015-10-15 00:00:00")
-end_date = DateTime.parse("2015-10-29 00:00:00")
+end_date = DateTime.parse(final_end_date)
 created_at = '15-10-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
 user_id = 1000
 while user_id < 1100
@@ -856,7 +858,7 @@ DealAnalytic.create(id: 1004, deal_id: 1004, view_count: num_view_count, unique_
 # Seed DealAnalytics for View count for deal 1011
 starting_redemption = redemption
 start_date = DateTime.parse("2015-03-01 00:00:00")
-end_date = DateTime.parse("2015-10-29 00:00:00")
+end_date = DateTime.parse(final_end_date)
 while start_date <= end_date
   limit = redemption + rand(0..30)
   venue_id = rand(1000..1002)
@@ -870,7 +872,7 @@ num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
 start_date = DateTime.parse("2015-02-25 00:00:00")
-end_date = DateTime.parse("2015-10-29 00:00:00")
+end_date = DateTime.parse(final_end_date)
 while start_date <= end_date
   limit = view_count + rand(20..40)
   while view_count < limit
@@ -888,7 +890,7 @@ venue_id = 1008
 # Seed DealAnalytics for View count for deal 1012
 starting_redemption = redemption
 start_date = DateTime.parse("2015-03-01 00:00:00")
-end_date = DateTime.parse("2015-10-29 00:00:00")
+end_date = DateTime.parse(final_end_date)
 while start_date <= end_date
   limit = redemption + rand(0..30)
   while redemption < limit
@@ -901,7 +903,7 @@ num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
 start_date = DateTime.parse("2015-02-25 00:00:00")
-end_date = DateTime.parse("2015-10-29 00:00:00")
+end_date = DateTime.parse(final_end_date)
 while start_date <= end_date
   limit = view_count + rand(20..40)
   while view_count < limit
@@ -917,7 +919,7 @@ DealAnalytic.create(id: 1006, deal_id: 1012, view_count: num_view_count, unique_
 # Seed DealAnalytics for View count for deal 1013
 starting_redemption = redemption
 start_date = DateTime.parse("2015-03-01 00:00:00")
-end_date = DateTime.parse("2015-10-29 00:00:00")
+end_date = DateTime.parse(final_end_date)
 while start_date <= end_date
   limit = redemption + rand(0..30)
   while redemption < limit
@@ -930,7 +932,7 @@ num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
 start_date = DateTime.parse("2015-02-25 00:00:00")
-end_date = DateTime.parse("2015-10-29 00:00:00")
+end_date = DateTime.parse(final_end_date)
 while start_date <= end_date
   limit = view_count + rand(20..40)
   while view_count < limit
@@ -946,7 +948,7 @@ DealAnalytic.create(id: 1007, deal_id: 1013, view_count: num_view_count, unique_
 # Seed DealAnalytics for View count for deal 1014
 starting_redemption = redemption
 start_date = DateTime.parse("2015-03-01 00:00:00")
-end_date = DateTime.parse("2015-10-29 00:00:00")
+end_date = DateTime.parse(final_end_date)
 while start_date <= end_date
   limit = redemption + rand(0..3)
   while redemption < limit
@@ -959,7 +961,7 @@ num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
 start_date = DateTime.parse("2015-02-25 00:00:00")
-end_date = DateTime.parse("2015-10-29 00:00:00")
+end_date = DateTime.parse(final_end_date)
 while start_date <= end_date
   limit = view_count + rand(0..5)
   while view_count < limit
@@ -975,7 +977,7 @@ DealAnalytic.create(id: 1008, deal_id: 1014, view_count: num_view_count, unique_
 # Seed DealAnalytics for View count for deal 1015
 starting_redemption = redemption
 start_date = DateTime.parse("2015-03-01 00:00:00")
-end_date = DateTime.parse("2015-10-29 00:00:00")
+end_date = DateTime.parse(final_end_date)
 while start_date <= end_date
   limit = redemption + rand(0..7)
   while redemption < limit
@@ -988,7 +990,7 @@ num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
 start_date = DateTime.parse("2015-02-25 00:00:00")
-end_date = DateTime.parse("2015-10-29 00:00:00")
+end_date = DateTime.parse(final_end_date)
 while start_date <= end_date
   limit = view_count + rand(20..40)
   while view_count < limit
@@ -1004,7 +1006,7 @@ DealAnalytic.create(id: 1009, deal_id: 1015, view_count: num_view_count, unique_
 # Seed DealAnalytics for View count for deal 1016
 starting_redemption = redemption
 start_date = DateTime.parse("2015-03-01 00:00:00")
-end_date = DateTime.parse("2015-10-29 00:00:00")
+end_date = DateTime.parse(final_end_date)
 while start_date <= end_date
   limit = redemption + rand(0..20)
   while redemption < limit
@@ -1017,7 +1019,7 @@ num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
 start_date = DateTime.parse("2015-02-25 00:00:00")
-end_date = DateTime.parse("2015-10-29 00:00:00")
+end_date = DateTime.parse(final_end_date)
 while start_date <= end_date
   limit = view_count + rand(0..30)
   while view_count < limit
@@ -1033,7 +1035,7 @@ DealAnalytic.create(id: 1010, deal_id: 1016, view_count: num_view_count, unique_
 # Seed DealAnalytics for View count for deal 1017
 starting_redemption = redemption
 start_date = DateTime.parse("2015-03-01 01:00:00")
-end_date = DateTime.parse("2015-10-29 01:00:00")
+end_date = DateTime.parse(final_end_date) + 1.hours
 while start_date <= end_date
   limit = redemption + rand(10..20)
   while redemption < limit
@@ -1046,7 +1048,7 @@ num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
 start_date = DateTime.parse("2015-02-25 01:00:00")
-end_date = DateTime.parse("2015-10-29 01:00:00")
+end_date = DateTime.parse(final_end_date) + 1.hours
 while start_date <= end_date
   limit = view_count + rand(15..25)
   while view_count < limit
