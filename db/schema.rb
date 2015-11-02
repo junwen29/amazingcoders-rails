@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151030095118) do
+ActiveRecord::Schema.define(version: 20151102130240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,6 +162,7 @@ ActiveRecord::Schema.define(version: 20151030095118) do
     t.boolean  "active",             default: false
     t.integer  "num_of_redeems",     default: 0
     t.datetime "activate_date"
+    t.datetime "push_date"
   end
 
   add_index "deals", ["merchant_id"], name: "index_deals_on_merchant_id", using: :btree
