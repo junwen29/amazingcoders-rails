@@ -1,54 +1,43 @@
-<!-- show list of plans -->
-<div class="panel-group" id="accordion1">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        Premium Services
-      </h4>
-    </div>
-    <div id="collapseTwo" >
-      <div class="panel-body">
-        <!-- Here we insert another nested accordion -->
-        <div class="panel-group" id="accordion2">
-          <% @plan.each do |p| %>
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h4 class="panel-title">
-                    <%= p.name %> <span class="label label-warning"><%= number_to_currency p.cost %></span>
-                  </h4>
-                  <h6><%= p.description %></h6>
-                </div>
-                <div id="collapseInner_<%= p.id %>" >
-                  <div class="panel-body">
-                    <div class="table-responsive">
-                      <table class="table table-bordered table-hover">
-                        <tr>
-                          <th>Add-On(s)</th>
-                          <th>Description</th>
-                          <th>Extra Cost</th>
-                        </tr>
-
-                        <% p.add_ons.each do |a| %>
-                            <tr>
-                              <td><%= a.name %></td>
-                              <td><%= a.description %></td>
-                              <td><span class="label label-warning"> +<%= number_to_currency a.cost %></span></td>
-                            </tr>
-                        <% end %>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="form-style-10">
   <h1>Choose upgrades <span>Upgrade your plan to enjoy premium features!</span></h1>
+
+  <!-- show list of plans -->
+  <div class="panel-group" id="accordion2">
+    <% @plan.each do |p| %>
+        <div class="panel panel-default" >
+          <div class="panel-heading" >
+            <h4 class="panel-title">
+              <%= p.name %> <span class="label label-warning"><%= number_to_currency p.cost %></span>
+            </h4>
+            <h6><%= p.description %></h6>
+          </div>
+          <div id="collapseInner_<%= p.id %>" >
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <tr>
+                    <th>Add-On(s)</th>
+                    <th>Description</th>
+                    <th>Extra Cost</th>
+                  </tr>
+
+                  <% p.add_ons.each do |a| %>
+                      <tr>
+                        <td><%= a.name %></td>
+                        <td><%= a.description %></td>
+                        <td><span class="label label-warning"> +<%= number_to_currency a.cost %></span></td>
+                      </tr>
+                  <% end %>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+    <% end %>
+  </div>
+
+
+  <div class="content-separator"></div>
   <%= form_for @payment, url: payments_path do |f| %>
       <div id="plan1" >
         <div class="form-textarea clearfix">
