@@ -103,7 +103,7 @@
               <td><%= payment.start_date.strftime("%d/%m/%Y") %> </td>
               <td><%= payment.expiry_date.strftime("%d/%m/%Y") %> </td>
               <td><%= payment.created_at.strftime("%d/%m/%Y %r")%></td>
-              <td><%= link_to 'Modify', edit_payment_path(payment), class: "btn btn-big btn-success" %></td>
+              <td><%= link_to 'Modify', payments_modify_path(payment), class: "btn btn-big btn-success" %></td>
             </tr>
         <% end %>
       </table>

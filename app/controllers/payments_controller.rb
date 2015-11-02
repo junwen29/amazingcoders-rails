@@ -13,6 +13,7 @@ class PaymentsController < ApplicationController
 
   end
 
+
   def edit
     @payment = Payment.find(params[:id])
     @plan = Plan.all
@@ -122,31 +123,34 @@ class PaymentsController < ApplicationController
   end
 
   def update
-    if payment.update(payment_params)
+    if @payment.update(payment_params)
       flash[:success] = "Payment successfully updated!"
-      redirect_to @payment
+      redirect_to payments_extend_plan_path
     else
       flash[:error] = "Failed to update payment!"
       render 'new'
     end
   end
 
+def extend_plan
+  @payment.update(payment_params)
+  redirect_to payments_path
+end
 
+  def modify
+    @payment = Payment.find(params[:id])
+    @plan = Plan.all
+    @plan1 = Plan.find(1)
+    @addon1 = AddOn.find(1)
+    @addon2 = AddOn.find(2)
+    @addon3 = AddOn.find(3)
+  end
 
   def destroy
     @payment.destroy
     flash[:success] = "Payment deleted!"
     redirect_to payments_path
   end
-
-
-=begin
-  private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_payment
-  #  @payment = Payment.find(params[:id])
-  end
-=end
 
   private
   def calculate_price (payment)
@@ -172,10 +176,6 @@ class PaymentsController < ApplicationController
     total_cost
   end
 
-  private
-  def extend_plan
-
-  end
 
 
   private
