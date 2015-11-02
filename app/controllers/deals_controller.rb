@@ -135,7 +135,7 @@ class DealsController < ApplicationController
 
   # Change non-active deal to active
   def push
-    @deal.psuh_date = DateTime.now
+    @deal.push_date = DateTime.now
     @deal.save
     tokens = []
     venues = DealService.get_all_venues(@deal.id)
