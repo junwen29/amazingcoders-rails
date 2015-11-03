@@ -58,7 +58,7 @@ Rails.application.routes.draw do
 
       # notifications api
       scope 'notifications' do
-      get '/notifications' => "notifications#index_by_user"
+      get '' => "notifications#index_by_user"
       # get '/notifications/count' => "activities#notification_count"
       end
 
