@@ -4,7 +4,7 @@ class Api::P1::NotificationsController < Api::P1::ApplicationController
     user_id = params[:user_id]
 
     #limit notifications to recent 10
-    notifications = Notification.where(:user_id => user_id).limit(10).order('created_at DESC')
+    notifications = Notification.where(:user_id => user_id).order('created_at DESC')
     render_jbuilders(notifications) do |json,notification|
       notification.to_json json
     end
