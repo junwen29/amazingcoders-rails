@@ -145,13 +145,13 @@ class DealsController < ApplicationController
 
   # Change non-active deal to active
   def push
-    tokens = DeviceService.tokens_by_venue_wishlist(@deal.id)
+    user_ids, tokens = DeviceService.tokens_by_venue_wishlist(@deal.id)
     item_type = "deal"
     item_id = @deal.id
     item_name = @deal.title
     message = '**Check out the new deal now!** Click to view more details.'
 
-    NotificationService.send_notification(tokens, item_type,item_id, item_name, message)
+    NotificationService.send_notification(user_ids, tokens, item_type,item_id, item_name, message)
 
     @deal.update_attribute(:pushed, true)
 
