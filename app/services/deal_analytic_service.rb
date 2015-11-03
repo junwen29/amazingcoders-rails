@@ -459,6 +459,17 @@ class DealAnalyticService
       percentage.round(2)
     end
 
+    # returns average number of redemptions for multiple users
+    def average_redemption_multiple_users(deal_id)
+      multiple_redeems_user_ids = RedemptionService.get_user_ids(deal_id, true)
+      multiple_redeems = Redemption.where(deal_id: deal_id, user_id: multiple_redeems_user_ids).count
+      if multiple_redeems_user_ids.blank?
+        'No Redeems Yet'
+      else
+        multiple_redeems/multiple_redeems_user_ids.count
+      end
+    end
+
     # returns average time between users who redeem more than once
     def average_time_btw_multiple_redeem(deal_id)
       multiple_redeems_user_ids = RedemptionService.get_user_ids(deal_id, true)

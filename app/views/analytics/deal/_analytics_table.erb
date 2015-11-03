@@ -17,6 +17,7 @@
               <th style="text-align: center;">Conversion Rate<br>Wishlisters to Views</th>
               <th style="text-align: center;">Conversion Rate<br>Unique Views to Redemptions</th>
               <th style="text-align: center;">Percentage/Number of users who redeem more than once</th>
+              <th style="text-align: center;">Average Multiple Redemption</th>
               <th style="text-align: center;">Average Time between same User Redemption</th>
               <th colspan="1"></th>
             </tr>
@@ -40,12 +41,15 @@
                       <% if deal.redeemable && (deal.start_date <= Date.today) %>
                           <td style="text-align: center;"><%= DealAnalyticService.get_views_to_redeem(deal.id) %>%</td>
                           <td style="text-align: center;"> <%= DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>% = <%= RedemptionService.num_users_multiple(deal.id) %> Users</td>
+                          <td style="text-align: center;"> <%= DealAnalyticService.average_redemption_multiple_users(deal.id) %></td>
                           <td style="text-align: center;"> <%= DealAnalyticService.average_time_btw_multiple_redeem(deal.id) %></td>
                       <% elsif deal.redeemable && (deal.start_date > Date.today)%>
                           <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
                           <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
                           <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
+                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
                       <% else %>
+                          <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                           <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                           <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                           <td>.<p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
@@ -74,6 +78,7 @@
             <th style="text-align: center;">Conversion Rate<br>Wish Lister to Views</th>
             <th style="text-align: center;">Conversion Rate<br>Unique Views to Redemption</th>
             <th style="text-align: center;">Percentage/Number of users who redeem more than once</th>
+            <th style="text-align: center;">Average Multiple Redemption</th>
             <th style="text-align: center;">Average Time between same User Redemption</th>
             <th colspan="1"></th>
             </tr>
@@ -96,12 +101,15 @@
                       <% if deal.redeemable && (deal.start_date <= Date.today) %>
                           <td style="text-align: center;"><%= DealAnalyticService.get_views_to_redeem(deal.id) %>%</td>
                           <td style="text-align: center;"> <%= DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>% = <%= RedemptionService.num_users_multiple(deal.id) %> Users</td>
+                          <td style="text-align: center;"> <%= DealAnalyticService.average_redemption_multiple_users(deal.id) %></td>
                           <td style="text-align: center;"> <%= DealAnalyticService.average_time_btw_multiple_redeem(deal.id) %></td>
                       <% elsif deal.redeemable && (deal.start_date > Date.today)%>
                           <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
                           <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
                           <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
+                          <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
                       <% else %>
+                          <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                           <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                           <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                           <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
