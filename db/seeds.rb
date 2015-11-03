@@ -516,13 +516,10 @@ while user_id < 1078
     created_at = created_at + rand(1..3).hours
   end
 end
-user_id = 1000
+user_id = 1100
 while start_date <= end_date
   limit = view_count + rand(20..40)
   while view_count < limit
-    if user_id == 1078
-      user_id = 1000
-    end
     Viewcount.create(id: view_count, deal_id: 1000, user_id: user_id, created_at: start_date)
     view_count = view_count + 1
     user_id = user_id + 1
@@ -593,13 +590,10 @@ while user_id < 1072
     created_at = created_at + rand(1..3).hours
   end
 end
-user_id = 1000
+user_id = 1100
 while start_date <= end_date
   limit = view_count + rand(20..40)
   while view_count < limit
-    if user_id == 1078
-      user_id = 1000
-    end
     Viewcount.create(id: view_count, deal_id: 1001, user_id: user_id, created_at: start_date)
     view_count = view_count + 1
     user_id = user_id + 1
@@ -670,13 +664,10 @@ while user_id < 1089
     created_at = created_at + rand(1..3).hours
   end
 end
-user_id = 1000
+user_id = 1100
 while start_date <= end_date
   limit = view_count + rand(rand(50..55)..rand(60..120))
   while view_count < limit
-    if user_id == 1078
-      user_id = 1000
-    end
     Viewcount.create(id: view_count, deal_id: 1002, user_id: user_id, created_at: start_date)
     view_count = view_count + 1
     user_id = user_id + 1
@@ -750,13 +741,10 @@ while user_id < 1100
     created_at = created_at + rand(1..3).hours
   end
 end
-user_id = 1000
+user_id = 1100
 while start_date <= end_date
   limit = view_count + rand(rand(20..30)..rand(60..100))
   while view_count < limit
-    if user_id == 1078
-      user_id = 1000
-    end
     Viewcount.create(id: view_count, deal_id: 1003, user_id: user_id, created_at: start_date)
     view_count = view_count + 1
     user_id = user_id + 1
@@ -842,13 +830,10 @@ while user_id < 1100
     created_at = created_at + rand(1..3).hours
   end
 end
-user_id = 1000
+user_id = 1100
 while start_date <= end_date
   limit = view_count + rand(rand(10..30)..rand(40..50))
   while view_count < limit
-    if user_id == 1078
-      user_id = 1000
-    end
     Viewcount.create(id: view_count, deal_id: 1004, user_id: user_id, created_at: start_date)
     view_count = view_count + 1
     user_id = user_id + 1
