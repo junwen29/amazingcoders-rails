@@ -135,6 +135,8 @@ class PaymentsController < ApplicationController
   def extend_plan
     @payment = Payment.find(params[:id])
     cost_before = calculate_price(@payment)
+
+
     if @payment.update(payment_params)
       cost_after = calculate_price(@payment)*@payment.months
       cost_to_pay = cost_after - cost_before

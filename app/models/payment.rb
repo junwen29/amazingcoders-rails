@@ -21,9 +21,10 @@ class Payment < ActiveRecord::Base
 
   validates(:start_date, presence: true)
   validates(:months, presence: true)
-  validate :start_date_not_past
+  validate :start_date_not_past, :on => :save
   validate :check_overlapping_plans, :on => :save
   validate :check_extend, :on => :update
+  validate :check_months, :on => :update
 
   # Process Validation Methods
   def ensure_plan_checked
@@ -52,6 +53,10 @@ class Payment < ActiveRecord::Base
 
   def check_extend
     errors.add(:base, 'Extension of plan clashes with other existing plans') if ((extend_plan) rescue ArgumentError == ArgumentError)
+  end
+
+  def check_months
+    errors.add(:base, 'Please select a greater number of months from original plan') if ((start_date.months_since(months) <= expiry_date) rescue ArgumentError == ArgumentError)
   end
 
   private
