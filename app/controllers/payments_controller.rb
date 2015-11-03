@@ -134,11 +134,20 @@ class PaymentsController < ApplicationController
 
   def extend_plan
     @payment = Payment.find(params[:id])
-    cost_before = calculate_price(@payment)
+    cost_before = calculate_price(@payment) * @payment.months
 
 
     if @payment.update(payment_params)
-      cost_after = calculate_price(@payment)*@payment.months
+=begin
+      months_before = date_diff(@payment.start_date, @payment.expiry_date)
+      months_diff = @payment.months - months_before
+=end
+=begin
+      expiry_date = @payment.expiry_date
+      @payment.update(expiry_date: @payment.start_date.months_since(params[:months]))
+      months_diff = date_diff(expiry_date, @payment.expiry_date)
+=end
+      cost_after = calculate_price(@payment) * @payment.months
       cost_to_pay = cost_after - cost_before
       @payment.update(total_cost: cost_to_pay)
       # Update join table in addon_payment
@@ -152,7 +161,8 @@ class PaymentsController < ApplicationController
       if (params[:payment][:add_on3] == "true")
         @payment.add_on_payments.build(:add_on_id => 3)
       end
-# change expiry_date
+      
+      @payment.update(expiry_date: @payment.start_date.months_since(@payment.months))
       redirect_to new_payment_charge_path(@payment)
     else
       flash[:error] = "Failed to upgrade plan"
@@ -162,7 +172,7 @@ class PaymentsController < ApplicationController
       @addon1 = AddOn.find(1)
       @addon2 = AddOn.find(2)
       @addon3 = AddOn.find(3)
-    render 'edit'
+      render 'edit'
     end
   end
 
@@ -192,11 +202,12 @@ class PaymentsController < ApplicationController
     if payment.add_on3
       total_cost = total_cost + add_on3_cost
     end
-
     total_cost
   end
 
-
+  def date_diff(date1,date2)
+    (date2.year * 12 + date2.month) - (date1.year * 12 + date1.month)
+  end
 
   private
   def payment_params
