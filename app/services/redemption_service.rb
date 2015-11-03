@@ -79,9 +79,20 @@ class RedemptionService
         end
       else
         date = date.to_datetime.in_time_zone("Singapore").end_of_day
-        user_ids.each do |ui|
-          if Redemption.where(deal_id: deal_id, user_id: ui, created_at: start_date..date).count > 1
-            num_users = num_users + 1
+        total_redeems = Redemption.where(deal_id: deal_id, user_id: user_ids, created_at: start_date..date).count
+        total_users = user_ids.count
+        if total_redeems != total_users
+          user_ids.each do |ui|
+            # When this occurs it means that each user has only one redeem so there won't be any multiple redeems left
+            if total_redeems == total_users
+              break
+            end
+            user_redemption = Redemption.where(deal_id: deal_id, user_id: ui, created_at: start_date..date).count
+            if user_redemption > 1
+              num_users = num_users + 1
+            end
+            total_redeems = total_redeems - user_redemption
+            total_users = total_users - 1
           end
         end
       end
