@@ -432,11 +432,11 @@ class DealAnalyticService
     # returns conversion rate of num wishlisters to viewers in percentage
     def get_wishlist_to_views(deal_id)
       push_date = Deal.find(deal_id).push_date
-      num_wishlist = WishService.num_wishlist_deal(deal_id, push_date).to_f
+      user_id = WishService.get_user_id(deal_id, push_date)
+      num_wishlist = user_id.size
       if num_wishlist == 0
         return 'N/A'
       end
-      user_id = WishService.get_user_id(deal_id, push_date)
       num_views = Viewcount.where(user_id: user_id, deal_id: deal_id).uniq.where(:entry => 'merchant_push_notification').count.to_f
       conversion = (num_views/num_wishlist)*100
       conversion.round(2)

@@ -64,34 +64,42 @@ class RedemptionService
 
     def num_users_multiple(deal_id, date = nil)
       start_date = Deal.find(deal_id).start_date.to_datetime.in_time_zone("Singapore").beginning_of_day
+      # When this occurs it means that each user has only one redeem so there won't be any multiple redeems left
       if date == nil
         user_ids = Redemption.where(deal_id: deal_id).select(:user_id).distinct.pluck(:user_id)
+        total_redemptions = Redemption.where(deal_id: deal_id, user_id: user_ids).count
       else
         date = date.to_datetime.in_time_zone("Singapore").end_of_day
         user_ids = Redemption.where(deal_id: deal_id, created_at: start_date..date).select(:user_id).distinct.pluck(:user_id)
+        total_redemptions = Redemption.where(deal_id: deal_id, user_id: user_ids, created_at: start_date..date).count
       end
       num_users = 0
+      total_users = user_ids.count
       if date == nil
         user_ids.each do |ui|
-          if Redemption.where(deal_id: deal_id, user_id: ui).count > 1
+          if total_users == total_redemptions
+            break
+          end
+          user_redemption = Redemption.where(deal_id: deal_id, user_id: ui).count
+          if user_redemption > 1
             num_users = num_users + 1
           end
+          total_redemptions = total_redemptions - user_redemption
+          total_users = total_users - 1
         end
       else
         date = date.to_datetime.in_time_zone("Singapore").end_of_day
-        total_redeems = Redemption.where(deal_id: deal_id, user_id: user_ids, created_at: start_date..date).count
-        total_users = user_ids.count
-        if total_redeems != total_users
+        if total_redemptions != total_users
           user_ids.each do |ui|
             # When this occurs it means that each user has only one redeem so there won't be any multiple redeems left
-            if total_redeems == total_users
+            if total_users == total_redemptions
               break
             end
             user_redemption = Redemption.where(deal_id: deal_id, user_id: ui, created_at: start_date..date).count
             if user_redemption > 1
               num_users = num_users + 1
             end
-            total_redeems = total_redeems - user_redemption
+            total_redemptions = total_redemptions - user_redemption
             total_users = total_users - 1
           end
         end
