@@ -453,8 +453,8 @@ class DealAnalyticService
 
     # returns percentage of user who redeemed more than once
     def get_multiple_redeems_percentage(deal_id)
-      user_count = RedemptionService.count_uniq_redemptions(deal_id).to_f
-      multiple_redeems = RedemptionService.num_users_multiple(deal_id).to_f
+      user_count = RedemptionService.count_uniq_redemptions(deal_id, nil, Date.today).to_f
+      multiple_redeems = RedemptionService.num_users_multiple(deal_id, Date.today).to_f
       percentage = (multiple_redeems/user_count)*100
       percentage.round(2)
     end
@@ -462,11 +462,12 @@ class DealAnalyticService
     # returns average number of redemptions for multiple users
     def average_redemption_multiple_users(deal_id)
       multiple_redeems_user_ids = RedemptionService.get_user_ids(deal_id, true)
-      multiple_redeems = Redemption.where(deal_id: deal_id, user_id: multiple_redeems_user_ids).count
+      date = DateTime.now.in_time_zone("Singapore").end_of_day
+      multiple_redeems = Redemption.where(deal_id: deal_id, user_id: multiple_redeems_user_ids).where('created_at <= ?', date).count
       if multiple_redeems_user_ids.blank?
         'No Redeems Yet'
       else
-        multiple_redeems/multiple_redeems_user_ids.count
+        (multiple_redeems.to_f/multiple_redeems_user_ids.count.to_f).round(2)
       end
     end
 
