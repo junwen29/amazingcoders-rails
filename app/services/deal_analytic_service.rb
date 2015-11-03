@@ -519,6 +519,10 @@ class DealAnalyticService
       else
         end_date = Date.today
       end
+      if (end_date-start_date).to_i > 30
+        start_date = end_date - 1.months
+      end
+      array << start_date
       num = 0
       while start_date <= end_date
         view_counts = ViewcountService.get_uniq_view_count(deal_id, start_date).to_f
@@ -549,6 +553,10 @@ class DealAnalyticService
       else
         stop_date = Date.today
       end
+      if (stop_date-start_date).to_i > 30
+        start_date = stop_date - 1.months
+      end
+      array << start_date
       num = 0
       while start_date <= stop_date
         user_count = RedemptionService.count_uniq_redemptions(deal_id, nil, start_date).to_f
