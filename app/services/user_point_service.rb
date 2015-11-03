@@ -9,6 +9,13 @@ class UserPointService
       p.operation = operation
       p.user_id = user_id
       p.save
+
+      user = User.find(user_id)
+      user.notifications.create(item_type: 'user_point',
+                                item_id: p.id,
+                                item_name: reason,
+                                message: 'Congratulations, you have been awarded ' + point.to_s + ' burps!')
+
       return p
     end
 
