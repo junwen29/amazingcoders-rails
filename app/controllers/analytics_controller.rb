@@ -32,6 +32,11 @@ class AnalyticsController < ApplicationController
 
   def show
     @deal = Deal.find(params[:id])
+    unless session[:merchant_id] == @deal.merchant_id
+      flash[:error] = "You don't have access to this page!"
+      redirect_to analytics_path
+      return
+    end
     individual_deal_statistic
   end
 
