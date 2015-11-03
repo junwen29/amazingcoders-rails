@@ -9,7 +9,7 @@
 
     <!-- Content Heading -->
     <div class="pull-left">
-      <p class="b2 content-title">Deal Analytics by Deals</p>
+      <p class="b3 content-title">Analytics for <%= @deal.title %></p>
     </div>
 
     <div class="clearfix"></div>
@@ -17,18 +17,16 @@
 
     <!-- Content Body -->
     <!--TODO: VIEW Render partials only for merchants with access-->
-    <%= render :partial => 'analytics/deal/analytics_line_count' %>
-    <%= render :partial => 'analytics/deal/deal_perf_by_day' %><br>
-    <% if MerchantService.get_active_past_redeemable_deals(session[:merchant_id]).blank? %>
-        <%= render :partial => 'analytics/deal/no_redeemable_deal_error' %>
-    <% else %>
-        <%= render :partial => 'analytics/deal/popular_deal_type' %><br>
+    <% if @payment.add_on1 && @deal.pushed && DealAnalyticService.get_wishlist_to_views(@deal.id) != 'nil' %>
+        <%= render :partial => 'analytics/deal/wishlist_to_views' %><br>
     <% end %>
-
-    <div style="margin-top: 10px">
-    <%= render :partial => 'analytics/deal/analytics_table' %>
+    <% if @deal.redeemable && (@deal.start_date <= Date.today) %>
+        <%= render :partial => 'analytics/deal/views_to_redemption' %><br>
+        <%= render :partial => 'analytics/deal/multiple_redeems' %><br>
+    <% end %>
+    <div style="text-align:center">
+      <%= link_to 'Back to Analytics', analytics_path, class: "btn btn-big btn-info" %>
     </div>
-
   </div>
   <!-- /content -->
 </div><!-- /contentWrapper -->
