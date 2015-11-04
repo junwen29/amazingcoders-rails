@@ -18,15 +18,9 @@ module User::Json
     end
 
     def to_json(json, options = {})
-      json.id id
-      json.first_name first_name
-      json.last_name last_name
-      json.username   username
+      self.to_show_owner(json, options)
 
-      json.updated_at updated_at
-      json.created_at created_at
-      json.num_wishes UserService.get_num_wishes(id)
-      json.num_bookmarks UserService.get_num_bookmarks(id)
+      user_points_to_json(json)
     end
 
     def to_show_owner(json, options = {})
@@ -42,6 +36,17 @@ module User::Json
       json.num_bookmarks UserService.get_num_bookmarks(id)
     end
 
+    def user_points_to_json(json)
+      json.set! :user_points do
+        json.array! self.user_points do |user_point|
+          json.id user_point.id
+          json.reason user_point.reason
+          json.points user_point.points
+          json.operation user_point.operation
+        end
+      end
+
+    end
   end
 
 end

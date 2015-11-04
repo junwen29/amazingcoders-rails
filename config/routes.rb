@@ -56,9 +56,11 @@ Rails.application.routes.draw do
         delete '' => 'devices#destroy'
       end
 
-      # TODO notifications
-      # get '/notifications' => "activities#notifications"
+      # notifications api
+      scope 'notifications' do
+      get '' => "notifications#index_by_user"
       # get '/notifications/count' => "activities#notification_count"
+      end
 
       # analytics api
       scope '/analytics' do
@@ -76,6 +78,13 @@ Rails.application.routes.draw do
       # feedback api
       scope '/feedback' do
         post '' => 'feedbacks#create'
+      end
+
+      # gift api
+      scope '/gifts' do
+        get '' => 'user_points#index'
+        post '/redeem' => 'user_points#create'
+        get '/records' => 'user_points#get_user_points'
       end
     end
   end

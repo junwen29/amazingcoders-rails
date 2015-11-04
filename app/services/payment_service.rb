@@ -28,9 +28,34 @@ class PaymentService
       Payment.joins(:add_on_payments).where('add_on_payments.add_on_id' => addon_id).count
     end
 
+    def count_unique_addon_payments(addon_id)
+      Payment.joins(:add_on_payments).where('add_on_payments.add_on_id' => addon_id).select(:merchant_id).distinct.count
+    end
+
     def count_active_premiums(date, plan_id=1)
       all_premiums = Payment.where('start_date <= ? AND expiry_date >= ? AND paid = ?', date, date, true)
       plan_premiums = all_premiums.joins(:plan_payments).where('plan_payments.plan_id' => plan_id)
+      plan_premiums.count
+    end
+
+    def count_addons_cross_sell(add_on1, add_on2, add_on3)
+      if add_on1 && add_on2
+        all_premiums = Payment.where('paid = ? AND add_on1 = ? AND add_on2 = ?',
+                                     true, add_on1, add_on2).select(:merchant_id).distinct.count
+      elsif add_on1 && add_on3
+        all_premiums = Payment.where('paid = ? AND add_on1 = ? AND add_on3 = ?',
+                                     true, add_on1, add_on3).select(:merchant_id).distinct.count
+      elsif add_on2 && add_on3
+        all_premiums = Payment.where('paid = ? AND add_on2 = ? AND add_on3 = ?',
+                                     true, add_on2, add_on3).select(:merchant_id).distinct.count
+      end
+
+      all_premiums
+    end
+
+    def count_active_addons(date, addon_id)
+      all_premiums = Payment.where('start_date <= ? AND expiry_date >= ? AND paid = ?', date, date, true)
+      plan_premiums = all_premiums.joins(:add_on_payments).where('add_on_payments.add_on_id' => addon_id)
       plan_premiums.count
     end
 
