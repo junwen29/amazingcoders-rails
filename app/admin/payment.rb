@@ -148,6 +148,8 @@ ActiveAdmin.register Payment do
       f.input :add_on1, label: "Push Notification Add On"
       f.input :add_on2, label: "Deal Statistics Add On"
       f.input :add_on3, label: "Aggregate Trends Add On"
+      f.input :start_date, as: :datepicker, label: "Start Date"
+      f.input :expiry_date, as: :datepicker, label: "Expiry Date"
       f.input :total_cost, as: :string, :hint => "No need to specify currency - defaulted to SGD $. Input to 2 decimal places. e.g. 10.00"
     end
     f.actions
