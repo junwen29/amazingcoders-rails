@@ -32,6 +32,7 @@ ActiveAdmin.register Payment do
   scope :all
   scope :active
   scope :expired
+  scope :future
 
   # preserve_default_filters!
   remove_filter :plan1, :add_on1, :add_on2, :add_on3, :add_on_payments, :plan_payments, :charge, :paid, :created_at, :updated_at
