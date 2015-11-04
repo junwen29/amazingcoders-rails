@@ -1,0 +1,76 @@
+<div id="multiple_redeems" class="col-lg-12" style="padding-bottom: 20px;"></div>
+
+<footer>
+  <script>
+      $( document ).ready(function() {
+          Highcharts.setOptions({
+              global: {
+                  useUTC: false
+              }
+          });
+          $('#multiple_redeems').highcharts({
+              credits: {
+                  enabled: false
+              },
+              exporting: {
+                  filename: 'Percentage of users who redeem multiple times ' + new Date().toDateString()
+              },
+              chart: {
+                  zoomType: 'x'
+              },
+              title: {
+                  text: 'Percentage of users who redeem multiple times'
+              },
+              subtitle: {
+                  text: '<span style="color: #f35b5b">Overall users who are converted across time period </span>' +
+                  '<br><span style="color: #7f84e8">Change in percentage of users converted across last day</span>'
+              },
+              xAxis: {
+                  type: 'datetime'
+              },
+              yAxis: {
+                  title: {
+                      text: 'Percentage of Conversion'
+                  },
+                  labels: {
+                      formatter: function() {
+                          return this.value + ' %';
+                      }
+                  }
+              },
+              legend: {
+                  enabled: true
+              },
+              plotOptions: {
+                  area: {
+                      marker: {
+                          radius: 2
+                      },
+                      lineWidth: 1,
+                      states: {
+                          hover: {
+                              lineWidth: 1
+                          }
+                      }
+                  },
+                  series: {
+                      pointStart: <%= Time.parse((@multiple_redeems[0]).to_s).to_f * 1000 %>,
+                      pointInterval: 3600 * 1000 * 24
+                  }
+              },
+              tooltip: {
+                  valueSuffix: '%'
+              },
+              series: [{
+                  type: 'column',
+                  name: 'Overall',
+                  data: <%= @multiple_redeems[1] %>
+              }, {
+                  type: 'column',
+                  name: 'Change',
+                  data: <%= @multiple_redeems[2] %>
+              }]
+          });
+      });
+  </script>
+</footer>

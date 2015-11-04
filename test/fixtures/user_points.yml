@@ -1,13 +1,5 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  reason: MyString
-  points: 1
-  operation: MyString
-  user_id: 1
+one: {}
 
-two:
-  reason: MyString
-  points: 1
-  operation: MyString
-  user_id: 1
+two: {}

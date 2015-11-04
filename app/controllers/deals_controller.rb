@@ -139,12 +139,16 @@ class DealsController < ApplicationController
   def activate
     @deal.update_attribute(:active, true)
     @deal.create_deal_analytic
+    @deal.activate_date = DateTime.now
+    @deal.save
     flash[:success] = "Deal has been successfully activated! If you require to edit or delete the deal please email Burpple for admin help."
     redirect_to deals_path
   end
 
   # Change non-active deal to active
   def push
+    @deal.push_date = DateTime.now
+    @deal.save
     user_ids, tokens = DeviceService.tokens_by_venue_wishlist(@deal.id)
     item_type = "deal"
     item_id = @deal.id
