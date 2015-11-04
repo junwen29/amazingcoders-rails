@@ -15,7 +15,7 @@
           <p>
             <strong>Plan: </strong>
             <% if @current_payment.plan1 %>
-                <span class="label label-default">Deals Listing Service</span>
+                <span class="label label-default">Premium Deals Services</span>
             <% end %>
           </p>
           <p>
@@ -67,6 +67,7 @@
           <th>Start Date</th>
           <th>Expiry Date</th>
           <th>Payment Date</th>
+          <th>Modify</th>
         </tr>
 
         <% @payments.each do |p| %>
@@ -74,7 +75,7 @@
                 <% p.destroy %>
             <% end %>
         <% end %>
-        <% @payments.each do |payment| %>
+        <% @payments.order(created_at: :desc).each do |payment| %>
             <tr>
               <td><%= payment.id %></td>
               <td><%= number_to_currency payment.total_cost %></td>
@@ -102,6 +103,7 @@
               <td><%= payment.start_date.strftime("%d/%m/%Y") %> </td>
               <td><%= payment.expiry_date.strftime("%d/%m/%Y") %> </td>
               <td><%= payment.created_at.strftime("%d/%m/%Y %r")%></td>
+              <td><%= link_to 'Modify', edit_payment_path(payment), class: "btn btn-big btn-success" %></td>
             </tr>
         <% end %>
       </table>
