@@ -145,7 +145,7 @@ class PaymentsController < ApplicationController
 
       #if it is not an upgrade
       if cost_to_pay == 0
-        @payment.errors.add(:months, "must be greater than the current ")
+        @payment.errors.add(:months, "must be greater than that of the original plan")
 
         @plan = Plan.all
         @plan1 = Plan.find(1)

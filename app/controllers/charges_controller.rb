@@ -58,7 +58,7 @@ class ChargesController < ApplicationController
     end
 
     @merchant.update(total_points: total_points)
-    redirect_to payment_path(@payment.id)
+    redirect_to payments_path
 
   end
 end
