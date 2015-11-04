@@ -56,9 +56,11 @@ Rails.application.routes.draw do
         delete '' => 'devices#destroy'
       end
 
-      # TODO notifications
-      # get '/notifications' => "activities#notifications"
+      # notifications api
+      scope 'notifications' do
+      get '' => "notifications#index_by_user"
       # get '/notifications/count' => "activities#notification_count"
+      end
 
       # analytics api
       scope '/analytics' do
