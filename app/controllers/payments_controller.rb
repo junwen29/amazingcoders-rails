@@ -40,6 +40,11 @@ class PaymentsController < ApplicationController
 
   def edit
     @payment = Payment.find(params[:id])
+    unless session[:merchant_id] == @payment.merchant_id
+      flash[:error] = "You don't have access to this page!"
+      redirect_to payments_path
+      return
+    end
     @plan = Plan.all
     @plan1 = Plan.find(1)
     @addon1 = AddOn.find(1)
@@ -117,7 +122,6 @@ class PaymentsController < ApplicationController
 
   def gift_extend
     @payment = Payment.new
-    #upcoming payment includes current payment as well
   end
 
   def extend
@@ -159,7 +163,11 @@ class PaymentsController < ApplicationController
   #when you try to modify a plan
   def extend_plan
     @payment = Payment.find(params[:id])
-
+    unless session[:merchant_id] == @payment.merchant_id
+      flash[:error] = "You don't have access to this page!"
+      redirect_to payments_path
+      return
+    end
     #if the merchant is extending the number of months
     if payment_params[:months] != nil
       #if the plan periods overlap

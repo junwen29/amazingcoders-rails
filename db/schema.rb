@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151030095118) do
+ActiveRecord::Schema.define(version: 20151103041754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,6 +162,7 @@ ActiveRecord::Schema.define(version: 20151030095118) do
     t.boolean  "active",             default: false
     t.integer  "num_of_redeems",     default: 0
     t.datetime "activate_date"
+    t.datetime "push_date"
   end
 
   add_index "deals", ["merchant_id"], name: "index_deals_on_merchant_id", using: :btree
@@ -223,6 +224,16 @@ ActiveRecord::Schema.define(version: 20151030095118) do
   add_index "merchants", ["email"], name: "index_merchants_on_email", unique: true, using: :btree
   add_index "merchants", ["reset_password_token"], name: "index_merchants_on_reset_password_token", unique: true, using: :btree
 
+  create_table "notifications", force: true do |t|
+    t.integer  "user_id"
+    t.string   "item_type"
+    t.integer  "item_id"
+    t.string   "item_name"
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "payments", force: true do |t|
     t.date     "start_date"
     t.date     "expiry_date"
@@ -267,6 +278,7 @@ ActiveRecord::Schema.define(version: 20151030095118) do
     t.integer  "venue_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_point_id"
   end
 
   add_index "redemptions", ["deal_id"], name: "index_redemptions_on_deal_id", using: :btree
@@ -369,15 +381,5 @@ ActiveRecord::Schema.define(version: 20151030095118) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "wishlists", force: true do |t|
-    t.integer  "venue_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "wishlists", ["user_id"], name: "index_wishlists_on_user_id", using: :btree
-  add_index "wishlists", ["venue_id"], name: "index_wishlists_on_venue_id", using: :btree
 
 end
