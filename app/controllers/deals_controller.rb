@@ -23,6 +23,12 @@ class DealsController < ApplicationController
   end
 
   def edit
+    deal = Deal.find(params[:id])
+    unless session[:merchant_id] == deal.merchant_id && deal.active == false
+      flash[:error] = "You don't have access to this page!"
+      redirect_to deals_path
+      return
+    end
     # For drop down form
     @all_venues = MerchantService.get_all_venues(merchant_id)
     @deal_venue = @deal.deal_venues.build
@@ -103,6 +109,12 @@ class DealsController < ApplicationController
   end
 
   def show
+    @deal = Deal.find(params[:id])
+    unless session[:merchant_id] == @deal.merchant_id
+      flash[:error] = "You don't have access to this page!"
+      redirect_to deals_path
+      return
+    end
     @qr = RQRCode::QRCode.new(@deal.id.to_s + "_" + @deal.created_at.to_s).to_img.resize(200, 200).to_data_url
     respond_to do |format|
       format.html
@@ -127,35 +139,23 @@ class DealsController < ApplicationController
   def activate
     @deal.update_attribute(:active, true)
     @deal.create_deal_analytic
+    @deal.activate_date = DateTime.now
+    @deal.save
     flash[:success] = "Deal has been successfully activated! If you require to edit or delete the deal please email Burpple for admin help."
     redirect_to deals_path
   end
 
   # Change non-active deal to active
   def push
-    tokens = []
-    venues = DealService.get_all_venues(@deal.id)
-
-    # load tokens via users wishes
-    venues.each { |venue|
-      users = VenueService.wishes_by_venue(venue.id)
-      users.each { |user|
-        user.devices.each { |device|
-          tokens << device.token
-        }
-      }
-    }
-    gcm = GCM.new("AIzaSyBGQPh58s2ow6H_OabGrh4vRmzNaNkdRcU")
-
+    @deal.push_date = DateTime.now
+    @deal.save
+    user_ids, tokens = DeviceService.tokens_by_venue_wishlist(@deal.id)
     item_type = "deal"
     item_id = @deal.id
     item_name = @deal.title
     message = '**Check out the new deal now!** Click to view more details.'
 
-    options = {data:
-                   {message: message, item_type: item_type, item_id: item_id.to_s, item_name: item_name.to_s}
-    }
-    response = gcm.send(tokens, options)
+    NotificationService.send_notification(user_ids, tokens, item_type,item_id, item_name, message)
 
     @deal.update_attribute(:pushed, true)
 

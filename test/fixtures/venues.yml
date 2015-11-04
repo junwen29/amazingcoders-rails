@@ -9,3 +9,17 @@ one: {}
 #
 two: {}
 #  column: value
+
+tvenue:
+  id: 9999
+  name: 'tvenue_name'
+  street: 'tvenue_street'
+  zipcode: '654321'
+  city: 'Singapore'
+  state: 'tvenue_state'
+  country: 'Singapore'
+  neighbourhood: 'tvenue_neighbourhood'
+  bio: 'tvenue_description'
+  phone: '12345678'
+  address_2: '#01-23'
+  merchant_id: 9999

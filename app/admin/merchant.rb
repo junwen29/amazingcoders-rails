@@ -3,7 +3,7 @@ ActiveAdmin.register Merchant do
   config.clear_action_items!
 
   menu :parent => "Merchant", :priority => 1
-  actions :all, except: [:edit]
+  actions :all
 
   filter :venues
   filter :deals
@@ -23,7 +23,6 @@ ActiveAdmin.register Merchant do
     id_column
     column :email
     column :total_points
-    column :current_sign_in_at
     column :sign_in_count
     column :created_at
     actions
@@ -51,5 +50,17 @@ ActiveAdmin.register Merchant do
     active_admin_comments
   end
 
+  # EDIT
+  form do |f|
+    f.semantic_errors
+    f.inputs "Edit points" do
+      f.input :id, label: 'Merchant ID', :input_html => { :disabled => true }
+      f.input :email, :input_html => { :disabled => true }
+      f.input :total_points, label: 'Merchant Points'
+    end
+    f.actions
+  end
+
+  permit_params :total_points
 
 end

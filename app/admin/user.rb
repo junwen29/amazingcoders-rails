@@ -3,9 +3,24 @@ ActiveAdmin.register User do
 
   # Remove Create New User button
   config.clear_action_items!
-  actions :all, except: [:edit]
+  actions :all
   action_item :only => :show do
     link_to "Back", admin_users_path
+  end
+  batch_action :reward_ROTD, form: {points: :text} do |ids, inputs|
+    User.find(ids).each do |user|
+      points = inputs['points'].to_i
+      reason = "Awarded for Review of the Day"
+      point = UserPoint.create(points: points, reason: reason, operation: "Credit", user_id: user.id, created_at: Time.now, updated_at: Time.now)
+
+      tokens = DeviceService.tokens_by_user user.id
+      notification = user.notifications.create(item_type: 'user_point',
+                                item_id: point.id,
+                                item_name: reason,
+                                message: 'Congratulations, you have been awarded ' + point.points.to_s + ' burps!')
+      NotificationService.send_notification_by_user(notification.id, tokens)
+    end
+    redirect_to collection_path, alert: "The users have been awarded points for Review of the Day"
   end
 
   filter :first_name
@@ -23,7 +38,6 @@ ActiveAdmin.register User do
     column :username
     column :email
     column :total_points
-    column :current_sign_in_at
     column :sign_in_count
     column :created_at
     actions
@@ -54,6 +68,19 @@ ActiveAdmin.register User do
     end
     active_admin_comments
   end
+
+  # EDIT
+  form do |f|
+    f.semantic_errors
+    f.inputs "Edit points" do
+      f.input :username, label: 'Username', :input_html => { :disabled => true }
+      f.input :email, :input_html => { :disabled => true }
+      f.input :total_points, label: 'User Points'
+    end
+    f.actions
+  end
+
+  permit_params :total_points
 
 
 end

@@ -21,9 +21,13 @@ ActiveAdmin.register AddOn do
     column :id
     column "Name", :name
     column "Type", :addon_type
-    column "Description", :description
-    column "Cost", :cost do |plan|
-      number_to_currency plan.cost
+    column "Description" do |addon|
+      div :class => "descriptionCol" do
+        addon.description
+      end
+    end
+    column "Cost", :cost do |addon|
+      number_to_currency addon.cost
     end
     column "Plan", :plan_id
     column "Created At", :created_at

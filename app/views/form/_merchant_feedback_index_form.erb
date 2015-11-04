@@ -3,26 +3,25 @@
     <h4>Feedbacks History (Past Submitted Feedbacks)</h4>
   </div>
   <div class="panel-body" style="padding-bottom:0px">
-    <table class="table table-bordered table-hover table-responsive">
-      <tr>
-        <th>Title</th>
-        <th>Category</th>
-        <th>Description</th>
-        <th>Date and Time of Submitted Feedback</th>
-        <th colspan="3"></th>
-      </tr>
-      <% @merchant_feedbacks.each do |merchant_feedback| %>
-          <tr>
-            <td><%= merchant_feedback.title %></td>
-            <td><%= merchant_feedback.category %></td>
-            <td><%= merchant_feedback.content %></td>
-            <td><%= merchant_feedback.created_at.strftime("%d/%m/%Y %r") %></td>
-
-            <td><%= link_to 'View', merchant_feedback_path(merchant_feedback), class:"btn btn-xs btn-default" %></td>
-            <!--<td><%= link_to 'Edit', edit_merchant_feedback_path(merchant_feedback) %></td>-->
-            <!--<td><%= link_to 'Delete Request', merchant_feedback, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
-          </tr>
-      <% end %>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Description</th>
+          <th>Submitted on</th>
+          <th></th>
+        </tr>
+        <% @merchant_feedbacks.each do |merchant_feedback| %>
+            <tr>
+              <td style="max-width: 200px;"><%= merchant_feedback.title %></td>
+              <td><%= merchant_feedback.category %></td>
+              <td style="max-width: 300px"><%= merchant_feedback.content %></td>
+              <td style="width: 200px"><%= merchant_feedback.created_at.strftime("%d/%m/%Y %r") %></td>
+              <td><%= link_to 'View', merchant_feedback_path(merchant_feedback), class:"btn btn-xs btn-default" %></td>
+            </tr>
+        <% end %>
+      </table>
+    </div>
   </div>
 </div>

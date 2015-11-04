@@ -12,10 +12,26 @@
 @import "active_admin/_base";
 
 div.venuesCol {
-  width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 150px;
+}
+div.venuesCol:hover {
+  text-overflow: inherit;
+  overflow: visible;
+  white-space: pre-wrap;
 }
 div.descriptionCol {
-  width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+}
+div.descriptionCol:hover {
+  text-overflow: inherit;
+  overflow: visible;
+  white-space: pre-wrap;
 }
 
 div.numberCol {
