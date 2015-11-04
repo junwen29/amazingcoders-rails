@@ -22,6 +22,24 @@ class NotificationService
       return response
     end
 
+    def send_notification_by_user(notification_id, tokens)
+      gcm = GCM.new("AIzaSyBGQPh58s2ow6H_OabGrh4vRmzNaNkdRcU")
+      notification = Notification.find(notification_id)
+
+      options = {
+          data:
+              {
+                  message:   notification.message,
+                  item_type: notification.item_type,
+                  item_id:   notification.item_id.to_s,
+                  item_name: notification.item_name.to_s
+              }
+      }
+      response = gcm.send(tokens, options)
+      return response
+
+    end
+
   end
 
   class << self

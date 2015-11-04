@@ -10,7 +10,15 @@ ActiveAdmin.register User do
   batch_action :reward_ROTD, form: {points: :text} do |ids, inputs|
     User.find(ids).each do |user|
       points = inputs['points'].to_i
-      UserPoint.create(points: points, reason: "Awarded for Review of the Day", operation: "Credit", user_id: user.id, created_at: Time.now, updated_at: Time.now)
+      reason = "Awarded for Review of the Day"
+      point = UserPoint.create(points: points, reason: reason, operation: "Credit", user_id: user.id, created_at: Time.now, updated_at: Time.now)
+
+      tokens = DeviceService.tokens_by_user user.id
+      notification = user.notifications.create(item_type: 'user_point',
+                                item_id: point.id,
+                                item_name: reason,
+                                message: 'Congratulations, you have been awarded ' + point.points.to_s + ' burps!')
+      NotificationService.send_notification_by_user(notification.id, tokens)
     end
     redirect_to collection_path, alert: "The users have been awarded points for Review of the Day"
   end
