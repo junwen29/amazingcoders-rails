@@ -131,13 +131,19 @@ class PaymentsController < ApplicationController
     @payment = Merchant.find(merchant_id).payments.new(payment_params)
     @plan1 = Plan.find(1)
 
-
-    @plan_payment = @payment.plan_payments.new
-    if (params[:payment][:plan1] == "true")
-      @payment.plan_payments.build(:plan_id => 1)
-    end
-
     if PaymentService.extend_plan(@payment)
+
+      @plan_payment = @payment.plan_payments.new
+      if (params[:payment][:plan1] == "true")
+        @payment.plan_payments.build(:plan_id => 1)
+      end
+
+      @add_on_payment = @payment.add_on_payments.build
+      @payment.add_on_payments.build(:add_on_id => 1)
+      @payment.add_on_payments.build(:add_on_id => 2)
+      @payment.add_on_payments.build(:add_on_id => 3)
+
+
       @payment.update(expiry_date: @payment.start_date.months_since(1))
       MerchantPointService.create_extend_point(merchant_id)
       flash[:success] = "Gift Redeemed!"
