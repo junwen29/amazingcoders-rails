@@ -47,7 +47,7 @@
 
         <p>
           Expiry Date:
-          <strong><%= @payment.expiry_date %></strong>
+          <strong><%= @payment.start_date.months_since(@payment.months) %></strong>
         </p>
 
         <h3>

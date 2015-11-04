@@ -1,0 +1,298 @@
+<div class="form-style-10">
+  <h1>Modify your plan <span>Upgrade with addons to enjoy more features or extend the duration of your plan!</span></h1>
+
+  <!-- show list of plans -->
+  <div class="panel-group" id="accordion2">
+
+
+    <div class="panel panel-default" >
+      <div class="panel-heading" >
+        <h4 class="panel-title">
+          <%= @plan1.name %> <span class="label label-warning"><%= number_to_currency @plan1.cost %></span>
+        </h4>
+        <h6><%= @plan1.description %></h6>
+      </div>
+      <div id="collapseInner_<%= @plan1.id %>" >
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <tr>
+                <th>Add-On(s)</th>
+                <th>Description</th>
+                <th>Extra Cost</th>
+              </tr>
+
+              <% @plan1.add_ons.each do |a| %>
+                  <tr>
+                    <td><%= a.name %></td>
+                    <td><%= a.description %></td>
+                    <td><span class="label label-warning"> +<%= number_to_currency a.cost %></span></td>
+                  </tr>
+              <% end %>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        Plan to be modified
+      </h4>
+    </div>
+    <div class="panel-body">
+      <div class="col-lg-6">
+        <p>
+          <strong>Plan: </strong>
+          <% if @payment.plan1 %>
+              <span class="label label-default">Premium Deals Services</span>
+          <% end %>
+        </p>
+        <p>
+          <strong>Add-Ons: </strong>
+          <% if !(@payment.add_on1) && !(@payment.add_on2) && !(@payment.add_on3)%>
+              <span class="label label-inverse">None</span>
+          <% else %>
+              <% if @payment.add_on1 %>
+                  <span class="label label-info">Push Notification</span>
+              <% end %>
+              <% if @payment.add_on2 %>
+                  <span class="label label-success">Deals Statistics</span>
+              <% end %>
+              <% if @payment.add_on3 %>
+                  <span class="label label-warning">Aggregate Trends</span>
+              <% end %>
+          <% end %>
+        </p>
+      </div>
+      <div class="col-lg-6">
+        <p>
+          <strong>Start Date: </strong>
+          <%= @payment.start_date.strftime("%d/%m/%Y") %>
+        </p>
+        <p>
+          <strong>Expiry Date: </strong>
+          <%= @payment.expiry_date.strftime("%d/%m/%Y") %>
+        </p>
+      </div>
+    </div><!-- panel-body -->
+  </div><!-- panel -->
+
+  <div id = "button"> <center>
+    <button name="button_addon" id="button_addon" class="btn-info"
+            type="button" data-toggle="tooltip" data-placement="top" title="You are required to re-login to enjoy the features of the addons after upgrade."
+            onclick=showAddon() > Upgrade Plan with Add On </button>
+    <button name="button_plan" id="button_plan" class="btn-info" onclick=showPlan()> Extend Plan </button>
+  </center>
+  </div>
+
+  <div id = "extend_plan" style="display: none;">
+    <div class="content-separator"></div>
+    <%= form_for @payment, url: payments_extend_plan_path(@payment) do |f| %>
+
+        <p class="form-select clearfix">
+          <%= f.label :months, "Number of months to extend from: " + @payment.expiry_date.strftime("%d/%m/%Y") %>
+          <span><%= f.select :months, (1..12) %></span>
+        </p>
+        <p class="form-select clearfix">
+          <%= f.submit "Proceed to Checkout", :class => 'btn btn-big btn-success' %>
+          <%= link_to 'Back', payments_path, class: "btn btn-big btn-default" %>
+        </p>
+
+    <% end %>
+  </div>
+
+
+  <div id = "upgrade_addon" style="display: none;">
+    <div class="content-separator"></div>
+    <%= form_for @payment, url: payments_extend_plan_path(@payment) do |f| %>
+
+        <!-- show list of addons -->
+        <% if !@payment.add_on1 %>
+            <div class="form-textarea clearfix">
+              <div class="col-lg-7"  style="padding-left:0px">
+                <p>
+                  <%= f.label :add_on1, "Include #{@addon1.name} Add-on (#{number_to_currency @addon1.cost})" %>
+                  <em><%= @addon1.description %></em>
+                </p>
+                <% if @payment.add_on1 == true %>
+                    <p class="form-select half" style="margin-top: 0px;">
+                      <%= f.label :add_on1, "Yes", :value => true %>
+                      <%= f.radio_button :add_on1, true, :disabled => true%>
+                    </p>
+                    <p class="form-select" style="margin-top: 0px;">
+                      <%= f.label :add_on1, "No", :value => false %>
+                      <%= f.radio_button :add_on1, false, :disabled => true%>
+                    </p>
+                <% else %>
+                    <p class="form-select half" style="margin-top: 0px;">
+                      <%= f.label :add_on1, "Yes", :value => true %>
+                      <%= f.radio_button :add_on1, true%>
+                    </p>
+                    <p class="form-select" style="margin-top: 0px;">
+                      <%= f.label :add_on1, "No", :value => false %>
+                      <%= f.radio_button :add_on1, false%>
+                    </p>
+                <% end %>
+              </div>
+
+              <div class="col-lg-5" id="addon1_hint1" style="display:none;">
+                <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small"><%= @addon1_hint2 %></p>
+              </div>
+              <div class="col-lg-5" id="addon1_hint2" style="display:none;">
+                <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small"><%= @addon1_hint1 %></p>
+              </div>
+            </div>
+        <%end%>
+
+        <% if !@payment.add_on2 %>
+            <div class="form-textarea clearfix">
+              <div class="col-lg-7" style="padding-left:0px">
+                <p>
+                  <%= f.label :add_on2, "Include #{@addon2.name} Add-on (#{number_to_currency @addon2.cost})" %>
+                  <em><%= @addon2.description %></em>
+                </p>
+                <% if @payment.add_on2 == true %>
+                    <p class="form-select half" style="margin-top: 0px;">
+                      <%= f.label :add_on2, "Yes", :value => true %>
+                      <%= f.radio_button :add_on2, true, :disabled => true%>
+                    </p>
+                    <p class="form-select" style="margin-top: 0px;">
+                      <%= f.label :add_on2, "No", :value => false %>
+                      <%= f.radio_button :add_on2, false, :disabled => true%>
+                    </p>
+                <% else %>
+                    <p class="form-select half" style="margin-top: 0px;">
+                      <%= f.label :add_on2, "Yes", :value => true %>
+                      <%= f.radio_button :add_on2, true%>
+                    </p>
+                    <p class="form-select" style="margin-top: 0px;">
+                      <%= f.label :add_on2, "No", :value => false %>
+                      <%= f.radio_button :add_on2, false%>
+                    </p>
+                <% end %>
+              </div>
+
+              <div class="col-lg-5" id="addon2_hint1" style="display:none;">
+                <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small"><%= @addon2_hint2 %></p>
+              </div>
+
+              <div class="col-lg-5" id="addon2_hint2" style="display:none;">
+                <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small"><%= @addon2_hint1 %></p>
+              </div>
+            </div>
+        <% end %>
+
+        <% if !@payment.add_on3 %>
+            <div class="form-textarea clearfix">
+              <div class="col-lg-7"  style="padding-left:0px">
+                <p>
+                  <%= f.label :add_on3, "Include #{@addon3.name} Add-on (#{number_to_currency @addon3.cost})" %>
+                  <em><%= @addon3.description %></em>
+                </p>
+                <% if @payment.add_on3 == true %>
+                    <p class="form-select half" style="margin-top: 0px;">
+                      <%= f.label :add_on3, "Yes", :value => true %>
+                      <%= f.radio_button :add_on3, true, :disabled => true %>
+                    </p>
+                    <p class="form-select" style="margin-top: 0px;">
+                      <%= f.label :add_on3, "No", :value => false %>
+                      <%= f.radio_button :add_on3, false, :disabled => true%>
+                    </p>
+                <% else %>
+                    <p class="form-select half" style="margin-top: 0px;">
+                      <%= f.label :add_on3, "Yes", :value => true %>
+                      <%= f.radio_button :add_on3, true %>
+                    </p>
+                    <p class="form-select" style="margin-top: 0px;">
+                      <%= f.label :add_on3, "No", :value => false %>
+                      <%= f.radio_button :add_on3, false %>
+                    </p>
+
+                <% end %>
+              </div>
+
+              <div class="col-lg-5" id="addon3_hint1" style="display:none;">
+                <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small"><%= @addon3_hint2 %></p>
+              </div>
+
+              <div class="col-lg-5" id="addon3_hint2" style="display:none;">
+                <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small"><%= @addon3_hint1 %></p>
+              </div>
+            </div>
+        <%end%>
+
+        <p class="form-select clearfix">
+          <%= f.submit "Proceed to Checkout", :class => 'btn btn-big btn-success' %>
+          <%= link_to 'Back', payments_path, class: "btn btn-big btn-default" %>
+        </p>
+
+    <% end %>
+  </div>
+</div>
+
+<!--JQuery for showing hints-->
+<script>
+    //working
+    $('#plan1').change(function (event) {
+        $('#payment_plan1_hint').show();
+    });
+
+    $('#payment_add_on1_true').click(function (event) {
+        $('#addon1_hint1').show();
+        $('#addon1_hint2').hide();
+    });
+
+    $('#payment_add_on1_false').click(function (event) {
+        $('#addon1_hint2').show();
+        $('#addon1_hint1').hide();
+
+    });
+
+    $('#payment_add_on2_true').click(function (event) {
+        $('#addon2_hint1').show();
+        $('#addon2_hint2').hide();
+    });
+
+    $('#payment_add_on2_false').click(function (event) {
+        $('#addon2_hint2').show();
+        $('#addon2_hint1').hide();
+    });
+
+    $('#payment_add_on3_true').click(function (event) {
+        $('#addon3_hint1').show();
+        $('#addon3_hint2').hide();
+    });
+
+    $('#payment_add_on3_false').click(function (event) {
+        $('#addon3_hint2').show();
+        $('#addon3_hint1').hide();
+    });
+
+    $('#payment_add_on3_false').click(function (event) {
+        $('#addon3_hint2').show();
+        $('#addon3_hint1').hide();
+    });
+
+    $('#payment_add_on3_false').click(function (event) {
+        $('#addon3_hint2').show();
+        $('#addon3_hint1').hide();
+    });
+
+    function showAddon() {
+        $("#button").button().click(function () {
+            $('#upgrade_addon').show();
+            $('#extend_plan').hide();
+        });
+    }
+
+    function showPlan() {
+        $("#button").button().click(function () {
+            $('#upgrade_addon').hide();
+            $('#extend_plan').show();
+        });
+    }
+</script>
