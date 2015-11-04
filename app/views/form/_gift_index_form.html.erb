@@ -8,7 +8,7 @@
         <th></th>
       </tr>
 
-      <% @gifts.where(gift_type: "Merchant").find_each do |p| %>
+      <% @gifts.where(gift_type: "Merchant").order(start_date: :asc).find_each do |p| %>
           <tr>
             <td><%= p.name %></td>
             <td><%= p.points %></td>
