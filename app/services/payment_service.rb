@@ -38,6 +38,10 @@ class PaymentService
       plan_premiums.count
     end
 
+    def count_active_payments(date)
+      Payment.where('start_date <= ? AND expiry_date >= ? AND paid = ?', date, date, true).count
+    end
+
     def count_addons_cross_sell(add_on1, add_on2, add_on3)
       if add_on1 && add_on2
         all_premiums = Payment.where('paid = ? AND add_on1 = ? AND add_on2 = ?',
@@ -58,6 +62,8 @@ class PaymentService
       plan_premiums = all_premiums.joins(:add_on_payments).where('add_on_payments.add_on_id' => addon_id)
       plan_premiums.count
     end
+
+
 
     def get_total_payments(date = -1)
       if date == -1
