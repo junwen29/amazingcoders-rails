@@ -1,7 +1,12 @@
 class UserPoint < ActiveRecord::Base
+
+  include UserPoint::Json
+
   belongs_to :user
 
   after_create :edit_total
+
+  include UserPoint::Json
 
   scope :credit, -> {where("operation = ?", 'Credit')}
   scope :debit, -> {where("operation = ?", 'Debit')}
