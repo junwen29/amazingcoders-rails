@@ -81,9 +81,9 @@
     </div><!-- panel-body -->
   </div><!-- panel -->
 
-  <div id = "button"> <center>
-    <button name="button_addon" id="button_addon" onclick="showAddon()">Upgrade Add On</button>
-    <button name="button_plan" id="button_plan" onclick="showPlan()">Extend Plan</button>
+  <div id = "button" "> <center>
+    <button name="button_addon" id="button_addon" class="btn-info" onclick=showAddon()> Upgrade Plan with Add On </button>
+    <button name="button_plan" id="button_plan" class="btn-info" onclick=showPlan()> Extend Plan </button>
   </center>
   </div>
 
@@ -92,7 +92,7 @@
     <%= form_for @payment, url: payments_extend_plan_path(@payment) do |f| %>
 
         <p class="form-select clearfix">
-          <%= f.label :months, "Number of months for plan:" %>
+          <%= f.label :months, "Number of months to extend from: " + @payment.expiry_date.strftime("%d/%m/%Y") %>
           <span><%= f.select :months, (1..12) %></span>
         </p>
         <p class="form-select clearfix">
