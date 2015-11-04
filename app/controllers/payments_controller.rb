@@ -132,38 +132,44 @@ class PaymentsController < ApplicationController
     end
   end
 
+  #when you try to modify a plan
   def extend_plan
     @payment = Payment.find(params[:id])
     cost_before = calculate_price(@payment) * @payment.months
 
-
     if @payment.update(payment_params)
-=begin
-      months_before = date_diff(@payment.start_date, @payment.expiry_date)
-      months_diff = @payment.months - months_before
-=end
-=begin
-      expiry_date = @payment.expiry_date
-      @payment.update(expiry_date: @payment.start_date.months_since(params[:months]))
-      months_diff = date_diff(expiry_date, @payment.expiry_date)
-=end
+
       cost_after = calculate_price(@payment) * @payment.months
+
       cost_to_pay = cost_after - cost_before
-      @payment.update(total_cost: cost_to_pay)
-      # Update join table in addon_payment
-      @add_on_payment = @payment.add_on_payments.build
-      if (params[:payment][:add_on1] == "true")
-        @payment.add_on_payments.build(:add_on_id => 1)
+
+      #if it is not an upgrade
+      if cost_to_pay == 0
+        @payment.errors.add(:months, "must be greater than the current ")
+
+        @plan = Plan.all
+        @plan1 = Plan.find(1)
+        @addon1 = AddOn.find(1)
+        @addon2 = AddOn.find(2)
+        @addon3 = AddOn.find(3)
+        render 'edit'
+      else
+        @payment.update(total_cost: cost_to_pay, expiry_date: @payment.start_date.months_since(@payment.months))
+
+        # Update join table in addon_payment
+        @add_on_payment = @payment.add_on_payments.build
+        if (params[:payment][:add_on1] == "true")
+          @payment.add_on_payments.build(:add_on_id => 1)
+        end
+        if (params[:payment][:add_on2] == "true")
+          @payment.add_on_payments.build(:add_on_id => 2)
+        end
+        if (params[:payment][:add_on3] == "true")
+          @payment.add_on_payments.build(:add_on_id => 3)
+        end
+        redirect_to new_payment_charge_path(@payment)
       end
-      if (params[:payment][:add_on2] == "true")
-        @payment.add_on_payments.build(:add_on_id => 2)
-      end
-      if (params[:payment][:add_on3] == "true")
-        @payment.add_on_payments.build(:add_on_id => 3)
-      end
-      
-      @payment.update(expiry_date: @payment.start_date.months_since(@payment.months))
-      redirect_to new_payment_charge_path(@payment)
+
     else
       flash[:error] = "Failed to upgrade plan"
 

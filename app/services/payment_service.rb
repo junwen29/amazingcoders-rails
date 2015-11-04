@@ -90,6 +90,15 @@ class PaymentService
       payment.update(plan1: true, add_on1: false, add_on2: false, add_on3: false, total_cost: 0, months: 1, paid: true)
     end
 
+=begin
+    def calculate_price_and_expiry(payment, cost_before)
+      cost_after = calculate_price(payment) * payment.months
+      cost_to_pay = cost_after - cost_before
+      payment.update(total_cost: cost_to_pay, expiry_date: payment.start_date.months_since(payment.months))
+    end
+=end
+
+
     def calculate_variance(plan_id = 1, mean, n)
       plan_months = Payment.joins(:plan_payments).where('plan_payments.plan_id' => plan_id).pluck(:months)
       sum = 0
@@ -107,7 +116,7 @@ class PaymentService
       end
       sum / (n-1)
     end
-    
+
     def get_max_months(plan_id = 1)
       max = Payment.joins(:plan_payments).where('plan_payments.plan_id' => plan_id).order(months: :desc).limit(1).pluck(:months).first
     end

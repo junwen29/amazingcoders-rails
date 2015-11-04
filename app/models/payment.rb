@@ -1,4 +1,5 @@
 class Payment < ActiveRecord::Base
+
   #has_many :plans
   has_many :add_on_payments, dependent: :destroy
   has_many :add_ons, through:  :add_on_payments
@@ -56,7 +57,7 @@ class Payment < ActiveRecord::Base
   end
 
   def check_months
-    errors.add(:base, 'Please select a greater number of months from original plan') if ((start_date.months_since(months) <= expiry_date) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'Please select a greater number of months from original plan') if ((start_date.months_since(months) < expiry_date) rescue ArgumentError == ArgumentError)
   end
 
   private
