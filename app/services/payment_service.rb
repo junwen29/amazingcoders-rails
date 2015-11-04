@@ -9,10 +9,10 @@ class PaymentService
       overlapping_payments.count
     end
 
-    def get_overlapping_dates(merchant_id, new_start_date, months)
+    def get_overlapping_dates(merchant_id, start_date, expiry_date, months)
       all_payments = Payment.where(:merchant_id => merchant_id)
       valid_payments = all_payments.where('expiry_date >= ? AND paid = ? AND plan1 = ?', Date.today, true, true)
-      overlapping_payments = valid_payments.where('start_date > ? AND start_date <= ?', new_start_date, new_start_date.months_since(months))
+      overlapping_payments = valid_payments.where('start_date > ? AND start_date <= ?', start_date, expiry_date.months_since(months))
       overlapping_payments.count
     end
 

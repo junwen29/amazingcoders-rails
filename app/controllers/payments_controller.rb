@@ -135,51 +135,48 @@ class PaymentsController < ApplicationController
   #when you try to modify a plan
   def extend_plan
     @payment = Payment.find(params[:id])
-    cost_before = calculate_price(@payment) * @payment.months
 
-    if @payment.update(payment_params)
+    #if the merchant is extending the number of months
+    if payment_params[:months] != nil
+      #if the plan periods overlap
+      cost_to_pay = (calculate_price(@payment) * payment_params[:months].to_i)
 
-      cost_after = calculate_price(@payment) * @payment.months
-
-      cost_to_pay = cost_after - cost_before
-
-      #if it is not an upgrade
-      if cost_to_pay == 0
-        @payment.errors.add(:months, "must be greater than that of the original plan")
-
+      if PaymentService.get_overlapping_dates(merchant_id, @payment.start_date, @payment.expiry_date, payment_params[:months].to_i) != 0
+        @payment.errors.add(:base, 'Extension of plan clashes with other existing plans')
         @plan = Plan.all
         @plan1 = Plan.find(1)
         @addon1 = AddOn.find(1)
         @addon2 = AddOn.find(2)
         @addon3 = AddOn.find(3)
         render 'edit'
-      else
-        @payment.update(total_cost: cost_to_pay, expiry_date: @payment.start_date.months_since(@payment.months))
 
-        # Update join table in addon_payment
-        @add_on_payment = @payment.add_on_payments.build
-        if (params[:payment][:add_on1] == "true")
-          @payment.add_on_payments.build(:add_on_id => 1)
-        end
-        if (params[:payment][:add_on2] == "true")
-          @payment.add_on_payments.build(:add_on_id => 2)
-        end
-        if (params[:payment][:add_on3] == "true")
-          @payment.add_on_payments.build(:add_on_id => 3)
-        end
+      else #else proceed with payment
+        @payment.update(total_cost: cost_to_pay, months: @payment.months + payment_params[:months].to_i)
         redirect_to new_payment_charge_path(@payment)
+
       end
-
+      #else it is a plan upgrade with addons
     else
-      flash[:error] = "Failed to upgrade plan"
+      cost_before = calculate_price(@payment) * @payment.months
+      @payment.update(payment_params)
+      cost_after = (calculate_price(@payment) * @payment.months)
+      cost_to_pay = cost_after - cost_before
+      @payment.update(total_cost: cost_to_pay)
 
-      @plan = Plan.all
-      @plan1 = Plan.find(1)
-      @addon1 = AddOn.find(1)
-      @addon2 = AddOn.find(2)
-      @addon3 = AddOn.find(3)
-      render 'edit'
+      # Update join table in addon_payment
+      @add_on_payment = @payment.add_on_payments.build
+      if (params[:payment][:add_on1] == "true")
+        @payment.add_on_payments.build(:add_on_id => 1)
+      end
+      if (params[:payment][:add_on2] == "true")
+        @payment.add_on_payments.build(:add_on_id => 2)
+      end
+      if (params[:payment][:add_on3] == "true")
+        @payment.add_on_payments.build(:add_on_id => 3)
+      end
+      redirect_to new_payment_charge_path(@payment)
     end
+
   end
 
   def destroy
