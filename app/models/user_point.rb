@@ -1,4 +1,7 @@
 class UserPoint < ActiveRecord::Base
+
+  include UserPoint::Json
+
   belongs_to :user
 
   after_create :edit_total

@@ -79,6 +79,13 @@ Rails.application.routes.draw do
       scope '/feedback' do
         post '' => 'feedbacks#create'
       end
+
+      # gift api
+      scope '/gifts' do
+        get '' => 'user_points#index'
+        post '/redeem' => 'user_points#create'
+        get '/records' => 'user_points#get_user_points'
+      end
     end
   end
 

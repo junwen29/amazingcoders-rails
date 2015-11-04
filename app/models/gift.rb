@@ -1,5 +1,7 @@
 class Gift < ActiveRecord::Base
 
+  include Gift::Json
+
   def extend_plan
     flash[:success] = "Gift Redeemed!"
     reason = "Redeemed " + gift.name
