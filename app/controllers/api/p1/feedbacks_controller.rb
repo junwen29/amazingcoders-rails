@@ -16,4 +16,13 @@ class Api::P1::FeedbacksController < Api::P1::ApplicationController
     render_error_response(:bad_request)
 
   end
+
+  def get_feedbacks
+    user = User.find_by_id params[:id]
+    user_feedbacks = user.user_feedbacks
+    render_jbuilders(user_feedbacks) do |json, user_feedback|
+      user_feedback.to_json(json)
+    end
+  end
+
 end
