@@ -105,7 +105,7 @@ class PaymentService
     end
 
     def extend_plan(payment)
-      payment.update(plan1: true, add_on1: false, add_on2: false, add_on3: false, total_cost: 0, months: 1, paid: true)
+      payment.update(plan1: true, add_on1: true, add_on2: true, add_on3: true, total_cost: 0, months: 1, paid: true)
     end
 
     def calculate_variance(plan_id = 1, mean, n)
