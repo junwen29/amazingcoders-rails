@@ -15,7 +15,7 @@ ActiveAdmin.register Payment do
         flash[:success] = "Payment successfully updated!"
         # TODO - DEMO: Uncomment for demonstration
         # merchant_id = @payment.merchant_id
-        # PaymentMailer.update_subscription_admin("valued merchant", @payment, MerchantService.get_email(merchant_id)).deliver
+        PaymentMailer.update_subscription_admin("valued merchant", @payment, MerchantService.get_email(merchant_id)).deliver
         redirect_to admin_payment_path
       else
         flash[:error] = "Failed to update payment!"
@@ -33,6 +33,12 @@ ActiveAdmin.register Payment do
   scope :active
   scope :expired
   scope :future
+  scope :dashboard do |payments|
+    date = Date.today.end_of_month
+    plan_id = 1
+    all_premiums = payments.where('start_date <= ? AND expiry_date >= ? AND paid = ?', date, date, true)
+    plan_premiums = all_premiums.joins(:plan_payments).where('plan_payments.plan_id' => plan_id)
+  end
 
   # preserve_default_filters!
   remove_filter :plan1, :add_on1, :add_on2, :add_on3, :add_on_payments, :plan_payments, :charge, :paid, :created_at, :updated_at
@@ -148,8 +154,6 @@ ActiveAdmin.register Payment do
       f.input :add_on1, label: "Push Notification Add On"
       f.input :add_on2, label: "Deal Statistics Add On"
       f.input :add_on3, label: "Aggregate Trends Add On"
-      f.input :start_date, as: :datepicker, label: "Start Date"
-      f.input :expiry_date, as: :datepicker, label: "Expiry Date"
       f.input :total_cost, as: :string, :hint => "No need to specify currency - defaulted to SGD $. Input to 2 decimal places. e.g. 10.00"
     end
     f.actions

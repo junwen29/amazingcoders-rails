@@ -8,6 +8,13 @@ ActiveAdmin.register Redemption do
     link_to "Back", "/admin/redemptions"
   end
 
+  scope :all
+  scope :dashboard do |redemptions|
+    start_date = Date.today.beginning_of_month
+    end_date = Date.today.end_of_month
+    redemptions.where('created_at >= ? AND created_at <= ?', start_date, end_date)
+  end
+
   filter :deal, label: "Deals", :collection => proc {(Deal.active).map{|d| [d.title, d.id]}}
   filter :user, :collection => proc {(User.all).map{|u| [u.username, u.id]}}
   filter :created_at, label: "Redeemed on"
