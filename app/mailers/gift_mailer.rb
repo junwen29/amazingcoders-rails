@@ -18,4 +18,12 @@ class GiftMailer < ActionMailer::Base
     mail(to: email, subject: "You have redeemed a gift at Burpple!")
   end
 
+  # Users
+  def user_gift_email(user, gift)
+    @username = user.username
+    @points_left = user.total_points
+    email = user.email
+    mail(to: email, subject: "You have redeemed a gift at Burpple!")
+  end
+
 end

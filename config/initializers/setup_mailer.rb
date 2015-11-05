@@ -1,15 +1,4 @@
 ActionMailer::Base.delivery_method = :smtp
-=begin
-ActionMailer::Base.smtp_settings = {
-    :address        => 'smtp.mail.com',
-    :domain         => 'mail.com',
-    :port           => 587,
-    :user_name      => 'burpple@mail.com',
-    :password       => 'qwerty123',
-    :authentication => :plain,
-    :enable_starttls_auto => true
-}
-=end
 
 ActionMailer::Base.smtp_settings = {
     :address        => 'smtp.gmail.com',
