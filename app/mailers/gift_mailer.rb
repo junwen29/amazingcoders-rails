@@ -22,6 +22,8 @@ class GiftMailer < ActionMailer::Base
   def user_gift_email(user, gift)
     @username = user.username
     @points_left = user.total_points
+    @gift = gift
+    @url = "https://amazingcodersrails.herokuapp.com" + gifts_path
     email = user.email
     mail(to: email, subject: "You have redeemed a gift at Burpple!")
   end
