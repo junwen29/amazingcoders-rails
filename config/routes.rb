@@ -78,6 +78,7 @@ Rails.application.routes.draw do
       # feedback api
       scope '/feedback' do
         post '' => 'feedbacks#create'
+        get '/view' => 'feedbacks#get_feedbacks'
       end
 
       # gift api
