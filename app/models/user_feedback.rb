@@ -1,5 +1,7 @@
 class UserFeedback < ActiveRecord::Base
 
+  include UserFeedback::Json
+
   belongs_to :user
 
   validates(:title, presence: true)
