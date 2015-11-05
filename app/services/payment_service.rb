@@ -9,6 +9,13 @@ class PaymentService
       overlapping_payments.count
     end
 
+    def get_overlapping_dates(merchant_id, start_date, expiry_date, months)
+      all_payments = Payment.where(:merchant_id => merchant_id)
+      valid_payments = all_payments.where('expiry_date >= ? AND paid = ? AND plan1 = ?', Date.today, true, true)
+      overlapping_payments = valid_payments.where('start_date > ? AND start_date <= ?', start_date, expiry_date.months_since(months))
+      overlapping_payments.count
+    end
+
     def count_total_payments()
       Merchant.count
     end
@@ -31,6 +38,10 @@ class PaymentService
       plan_premiums.count
     end
 
+    def count_active_payments(date)
+      Payment.where('start_date <= ? AND expiry_date >= ? AND paid = ?', date, date, true).count
+    end
+
     def count_addons_cross_sell(add_on1, add_on2, add_on3)
       if add_on1 && add_on2
         all_premiums = Payment.where('paid = ? AND add_on1 = ? AND add_on2 = ?',
@@ -51,6 +62,8 @@ class PaymentService
       plan_premiums = all_premiums.joins(:add_on_payments).where('add_on_payments.add_on_id' => addon_id)
       plan_premiums.count
     end
+
+
 
     def get_total_payments(date = -1)
       if date == -1
@@ -105,8 +118,17 @@ class PaymentService
     end
 
     def extend_plan(payment)
-      payment.update(plan1: true, add_on1: false, add_on2: false, add_on3: false, total_cost: 0, months: 1, paid: true)
+      payment.update(plan1: true, add_on1: true, add_on2: true, add_on3: true, total_cost: 0, months: 1, paid: true)
     end
+
+=begin
+    def calculate_price_and_expiry(payment, cost_before)
+      cost_after = calculate_price(payment) * payment.months
+      cost_to_pay = cost_after - cost_before
+      payment.update(total_cost: cost_to_pay, expiry_date: payment.start_date.months_since(payment.months))
+    end
+=end
+
 
     def calculate_variance(plan_id = 1, mean, n)
       plan_months = Payment.joins(:plan_payments).where('plan_payments.plan_id' => plan_id).pluck(:months)
@@ -125,7 +147,7 @@ class PaymentService
       end
       sum / (n-1)
     end
-    
+
     def get_max_months(plan_id = 1)
       max = Payment.joins(:plan_payments).where('plan_payments.plan_id' => plan_id).order(months: :desc).limit(1).pluck(:months).first
     end
@@ -140,6 +162,29 @@ class PaymentService
 
     def get_addon_min_months(addon_id)
       min = Payment.joins(:add_on_payments).where('add_on_payments.add_on_id' => addon_id).order(months: :asc).limit(1).pluck(:months).first
+    end
+
+    def calculate_price (payment)
+      total_cost = 0
+      deal_plan_cost = Plan.find(1).cost      # deal listing plan has id = 1
+      add_on1_cost = AddOn.find(1).cost
+      add_on2_cost = AddOn.find(2).cost
+      add_on3_cost = AddOn.find(3).cost
+
+      if payment.plan1
+        total_cost = total_cost + deal_plan_cost
+      end
+      if payment.add_on1
+        total_cost = total_cost + add_on1_cost
+      end
+      if payment.add_on2
+        total_cost = total_cost + add_on2_cost
+      end
+      if payment.add_on3
+        total_cost = total_cost + add_on3_cost
+      end
+
+      total_cost
     end
   end
 
