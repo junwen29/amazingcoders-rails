@@ -1,5 +1,5 @@
 class GiftMailer < ActionMailer::Base
-  default from: "burpple@mail.com"
+  default from: "noreplyburpple@gmail.com"
 
   def gift_email(user, merchant, gift, email)
     @user = user
