@@ -11,7 +11,7 @@ class PaymentsController < ApplicationController
     @addon2 = AddOn.find(2)
     @addon3 = AddOn.find(3)
 
-    active_premiums = PaymentService.count_active_payments(Date.today)
+    #active_premiums = PaymentService.count_active_payments(Date.today)
     total_payments = PaymentService.count_total_payments
 
     overall_plan = ((PaymentService.count_plan_payments(1).to_f / total_payments )*100).round(1)
@@ -19,7 +19,7 @@ class PaymentsController < ApplicationController
     @plan_hint = overall_plan.round(1).to_s + "% of Food Merchants have used Premium Deals Services and " + active_plan.round(1).to_s + "% of Food Merchants are currently using it."
 
     overall_addon1 = (PaymentService.count_unique_addon_payments(1).to_f / total_payments)*100
-    active_addon1 = (PaymentService.count_active_addons(Date.today, 1).to_f / active_premiums)*100
+    active_addon1 = (PaymentService.count_active_addons(Date.today, 1).to_f / total_payments)*100
     @addon1_hint1 = overall_addon1.round(1).to_s + "% of Food Merchants have used " + @addon1.name + " and " + active_addon1.round(1).to_s + "% of Food Merchants are currently using it."
 
     addon_1_with_2 = ((PaymentService.count_addons_cross_sell(true, true, false).to_f / Payment.count)*100).round(1)
@@ -27,14 +27,14 @@ class PaymentsController < ApplicationController
     @addon1_hint2 = "Food Merchants purchased " + @addon1.name + " with " + @addon2.name + " " + addon_1_with_2.round(1).to_s + "% of the time. " + "Food Merchants purchased " + @addon1.name + " with " + @addon3.name + " " + addon_1_with_3.round(1).to_s + "% of the time. "
 
     overall_addon2 = (PaymentService.count_unique_addon_payments(2).to_f / total_payments)*100
-    active_addon2 = (PaymentService.count_active_addons(Date.today, 2).to_f / active_premiums)*100
+    active_addon2 = (PaymentService.count_active_addons(Date.today, 2).to_f / total_payments)*100
     @addon2_hint1 = overall_addon2.round(1).to_s + "% of Food Merchants have used " + @addon2.name + " and " + active_addon2.round(1).to_s + "% of Food Merchants are currently using it."
 
     addon_2_with_3 = ((PaymentService.count_addons_cross_sell(false, true, true).to_f / Payment.count)*100).round(1)
     @addon2_hint2 = "Food Merchants purchased " + @addon2.name + " with " + @addon1.name + " " + addon_1_with_2.round(1).to_s + "% of the time. " + "Food Merchants purchased " + @addon2.name + " with " + @addon3.name + " " + addon_2_with_3.round(1).to_s + "% of the time. "
 
     overall_addon3 = (PaymentService.count_unique_addon_payments(3).to_f / total_payments)*100
-    active_addon3 = (PaymentService.count_active_addons(Date.today, 3).to_f / active_premiums)*100
+    active_addon3 = (PaymentService.count_active_addons(Date.today, 3).to_f / total_payments)*100
     @addon3_hint1 = overall_addon3.round(1).to_s + "% of Food Merchants have used " + @addon3.name + " and " + active_addon3.round(1).to_s + "% of Food Merchants are currently using it."
 
     @addon3_hint2 = "Food Merchants purchased " + @addon3.name + " with " + @addon1.name + " " + addon_1_with_3.round(1).to_s + "% of the time. " + "Food Merchants purchased " + @addon3.name + " with " + @addon2.name + " " + addon_2_with_3.round(1).to_s + "% of the time. "
