@@ -75,7 +75,7 @@
                 <% p.destroy %>
             <% end %>
         <% end %>
-        <% @payments.order(created_at: :desc).each do |payment| %>
+        <% @payments.order(updated_at: :desc).each do |payment| %>
             <tr>
               <td><%= payment.id %></td>
               <td><%= number_to_currency payment.total_cost %></td>
@@ -102,7 +102,7 @@
               </td>
               <td><%= payment.start_date.strftime("%d/%m/%Y") %> </td>
               <td><%= payment.expiry_date.strftime("%d/%m/%Y") %> </td>
-              <td><%= payment.created_at.strftime("%d/%m/%Y %r")%></td>
+              <td><%= payment.updated_at.strftime("%d/%m/%Y %r")%></td>
               <td><%= link_to 'Modify', edit_payment_path(payment), class: "btn btn-big btn-success" %></td>
             </tr>
         <% end %>
