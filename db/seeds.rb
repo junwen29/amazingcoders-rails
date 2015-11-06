@@ -85,7 +85,16 @@ while merchant_id <= 1100
 end
 
 # Seed 100 users
-user_id = 1000
+user = User.new(id: 1000)
+user.first_name = 'Ser Ming'
+user.last_name = 'Goh'
+user.username = 'serming'
+user.email = 'gohserming@gmail.com'
+user.password ='12345678'
+user.password_confirmation = '12345678'
+user.total_points = 100
+user.save
+user_id = 1001
 while user_id < 1100
   user = User.new(id: user_id)
   user.first_name = 'user'+user_id.to_s
@@ -94,7 +103,19 @@ while user_id < 1100
   user.email = 'user'+user_id.to_s+'@gmail.com'
   user.password ='12345678'
   user.password_confirmation = '12345678'
+  user.total_points = 100
   user.save
+  user_id = user_id + 1
+end
+user_id = 1000
+id = 1000
+while user_id < 1100
+  i = 0
+  while i < 20
+    UserPoint.create(id: id, reason: 'Redeem Deal', points: 5, operation: 'Credit', user_id: user_id)
+    i = i + 1
+    id = id + 1
+  end
   user_id = user_id + 1
 end
 
@@ -1113,10 +1134,10 @@ end
 date = DateTime.parse("2015-11-02 00:00:00")
 merchant = 1000
 MerchantFeedback.create(id: 1000, title: "Live chat CS support", category: "Suggestion", content: "Good to have some online live chat support", resolved: false, created_at: date, updated_at: date, merchant_id: merchant)
-MerchantFeedback.create(id: 1001, title: "Poor service", category: "Complaint", content: "Rude customer service", resolved: false, created_at: date, updated_at: date, merchant_id: merchant)
+MerchantFeedback.create(id: 1001, title: "Poor service", category: "Complaint", content: "Rude customer service", resolved: true, created_at: date, updated_at: date, merchant_id: merchant)
 
 # User Feedback
 date = DateTime.parse("2015-11-02 00:00:00")
 UserFeedback.create(id: 1000, title: "Suggestion to add kids menu", category: "Suggestion", content: "Add some healthy food for small kids", resolved: false, created_at: date, updated_at: date, user_id: 1000)
-UserFeedback.create(id: 1001, title: "Poor service", category: "Complaint", content: "Rude customer service", resolved: false, created_at: date, updated_at: date, user_id: 1000)
+UserFeedback.create(id: 1001, title: "Poor service", category: "Complaint", content: "Rude customer service", resolved: true, created_at: date, updated_at: date, user_id: 1000)
 
