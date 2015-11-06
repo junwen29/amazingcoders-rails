@@ -11,6 +11,19 @@ class UserPoint < ActiveRecord::Base
   scope :credit, -> {where("operation = ?", 'Credit')}
   scope :debit, -> {where("operation = ?", 'Debit')}
 
+  validate :ensure_no_negative
+
+  def ensure_no_negative
+    user = User.find(user_id)
+    total_points = user.total_points
+    if operation == "Debit"
+      total_points -= points
+    end
+    if total_points < 0
+      errors.add(:base, 'User cannot have negative points: ' + total_points.to_s)
+    end
+  end
+
   private
   def edit_total
     point = UserPoint.last
