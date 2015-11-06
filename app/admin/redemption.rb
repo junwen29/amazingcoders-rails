@@ -32,11 +32,14 @@ ActiveAdmin.register Redemption do
     end
     column "Venue", sortable: "venue_id" do |r|
       div :class => "venuesCol" do
-        Venue.find(r.venue_id).name
+        venue = Venue.find_by_id(r.venue_id)
+        if venue.present?
+          venue.name
+        end
       end
     end
     column "Redeemed on", sortable: "created_at" do |r|
-      r.created_at.localtime.strftime("%B %d, %Y %H:%M")
+      r.created_at.strftime("%B %d, %Y %H:%M")
     end
     actions
   end
@@ -54,7 +57,10 @@ ActiveAdmin.register Redemption do
           f.deal.merchant
         end
         row "Venue redeemed at" do
-          Venue.find(f.venue_id).name
+          venue = Venue.find_by_id(f.venue_id)
+          if venue.present?
+            venue.name
+          end
         end
         row "User who redeemed" do
           f.user
