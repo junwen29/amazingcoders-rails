@@ -56,18 +56,18 @@ ActiveAdmin.register Deal do
   # INDEX
   index do
     selectable_column
-    column "Title" do |deal|
+    column "Title", sortable: 'title' do |deal|
       div :class => "descriptionCol" do
         deal.title
       end
     end
     column "Type", :type_of_deal
-    column "Description" do |deal|
+    column "Description", sortable: 'description' do |deal|
       div :class => "descriptionCol" do
         deal.description
       end
     end
-    column "Merchant", :merchant_id do |deal|
+    column "Merchant" do |deal|
       auto_link deal.merchant
     end
     column "Venues" do |deal|

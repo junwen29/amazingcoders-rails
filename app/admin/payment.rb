@@ -93,7 +93,7 @@ ActiveAdmin.register Payment do
       end
       output.join(', ').html_safe
     end
-    column "Premium Paid", :total_cost do |payment|
+    column "Premium Paid", sortable: 'total_cost' do |payment|
       number_to_currency payment.total_cost
     end
     column "Start Date", :start_date
