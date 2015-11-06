@@ -4,8 +4,9 @@
   </div>
   <div class="panel-body">
     <% have_own_deal = false %>
-    <% if @own_deals.nil? %>
+    <% @own_deals.each do |od| %>
         <% have_own_deal = true %>
+        <% break %>
     <% end %>
     <% if have_own_deal %>
         <strong>By Redemption Count</strong>
@@ -28,17 +29,17 @@
                 <% elsif od[2] > 0 %>
                     <td>
                       <p id="rank"><%= od[1] %></p>
-                      <span class="glyphicon glyphicon-triangle-top" style="color:green; float:right;"><%= od[2] %></span>
+                      <span class="glyphicon glyphicon-triangle-top" style="color:green; float:right;" data-toggle="tooltip" data-placement="top" title="Change in position from previous week"><%= od[2] %></span>
                     </td>
                 <% elsif od[2] == 0 %>
                     <td>
                       <p id="rank"><%= od[1] %></p>
-                      <span class="glyphicon glyphicon-minus" style="color:#2d41ff; float:right;">  </span>
+                      <span class="glyphicon glyphicon-minus" style="color:#2d41ff; float:right;" data-toggle="tooltip" data-placement="top" title="Change in position from previous week">  </span>
                     </td>
                 <% elsif od[2] < 0 %>
                     <td>
                       <p id="rank"><%= od[1] %></p>
-                      <span class="glyphicon glyphicon-triangle-bottom" style="color:red; float:right;"><%= od[2].abs %></span>
+                      <span class="glyphicon glyphicon-triangle-bottom" style="color:red; float:right;" data-toggle="tooltip" data-placement="top" title="Change in position from previous week" style="color:red; float:right;"><%= od[2].abs %></span>
                     </td>
                 <% end %>
                 <td>
@@ -50,11 +51,12 @@
                 <td><%= deal.description %></td>
               </tr>
           <% end %>
+        </table>
     <% else %>
         <div class="well col-lg-12" style="text-align: center; font-weight: bold">
-          <p>Oops! You do not have any active deals that has started yet! Please wait till your deal starts and come visit again!</p>
+          <p>Oops! You do not have any active deals that has started yet! Please wait till your deal starts and come
+            visit again!</p>
         </div>
-        </table>
     <% end %>
   </div>
 </div>
@@ -77,3 +79,9 @@
         display: inline;
     }
 </style>
+
+<script id="bsJs" type="text/javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
