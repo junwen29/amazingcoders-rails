@@ -22,7 +22,6 @@ class AnalyticsController < ApplicationController
     else
       render 'analytics/no_view_error'
     end
-  else
   end
 
   def venue
@@ -32,10 +31,21 @@ class AnalyticsController < ApplicationController
       render 'analytics/no_deal_error'
     elsif MerchantService.get_active_past_redeemable_deals(merchant_id).blank?
       render 'analytics/no_redeemable_deal_error'
-    else
+    end
+    have_redemptions = false
+    deals = MerchantService.get_all_active_and_past_deals(merchant_id)
+    deals.each do |d|
+      if !Redemption.where(deal_id: d.id).blank?
+        have_redemptions = true
+        break
+      end
+    end
+    if have_redemptions
       # Deal Statistics by Venues
       deal_statistics_by_venue
       render "analytics/venue"
+    else
+      render 'analytics/no_redeem_error'
     end
   end
 
