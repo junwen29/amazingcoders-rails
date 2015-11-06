@@ -5,7 +5,7 @@ class GiftMailer < ActionMailer::Base
     @user = user
     @gift = gift
     @points_left = merchant.total_points
-    @url = gifts_path
+    @url = "https://amazingcodersrails.herokuapp.com" + gifts_path
     mail(to: email, subject: "You have redeemed a gift at Burpple!")
   end
 
@@ -23,7 +23,6 @@ class GiftMailer < ActionMailer::Base
     @username = user.username
     @points_left = user.total_points
     @gift = gift
-    @url = "https://amazingcodersrails.herokuapp.com" + gifts_path
     email = user.email
     mail(to: email, subject: "You have redeemed a gift at Burpple!")
   end
