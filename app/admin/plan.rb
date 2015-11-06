@@ -1,6 +1,7 @@
 ActiveAdmin.register Plan do
   # Allow edit
   permit_params :name, :cost, :description
+  config.sort_order = "id_asc"
 
   # Sidebar
   sidebar "Plan Add Ons", only: [:show, :edit] do

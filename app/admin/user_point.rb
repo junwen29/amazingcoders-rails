@@ -6,6 +6,8 @@ ActiveAdmin.register UserPoint do
   permit_params :operation, :points, :reason, :user_id
   actions :all, except: [:show, :edit, :destroy]
 
+  config.sort_order = "id_asc"
+
   scope :all
   scope :credit
   scope :debit

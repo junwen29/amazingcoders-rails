@@ -3,6 +3,7 @@ ActiveAdmin.register Deal do
 
   # Remove Create New Deal button
   config.clear_action_items!
+  config.sort_order = "id_asc"
 
   controller do
     def update

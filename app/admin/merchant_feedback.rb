@@ -2,6 +2,8 @@ ActiveAdmin.register MerchantFeedback do
   menu :parent => "Merchant", :priority => 4
 
   config.clear_action_items!
+  config.sort_order = "id_asc"
+
   actions :all, except: [:destroy]
   action_item :only => :show do
     link_to "Back", "/admin/merchant_feedbacks"

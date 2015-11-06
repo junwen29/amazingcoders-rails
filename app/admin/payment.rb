@@ -1,6 +1,7 @@
 ActiveAdmin.register Payment do
   # actions :all, except: [:edit] # forbid edit to payment information
   config.clear_action_items!
+  config.sort_order = "id_asc"
 
   menu :parent => "Payment", :priority => 1
 
