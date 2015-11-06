@@ -100,7 +100,7 @@
                           id: "<%= @deals_by_venue[loop][0] %>" + " redeem",
                           data: [
                               <% inner_loop = 1 %>
-                              <% num_of_deals = @deals_by_venue[loop].size - 2 %>
+                              <% num_of_deals = @deals_by_venue[loop].size - 1 %>
                               <% while inner_loop < num_of_deals %>
                               [
                                   "<%= @deals_by_venue[loop][inner_loop][0] %>", <%= @deals_by_venue[loop][inner_loop][1] %>
