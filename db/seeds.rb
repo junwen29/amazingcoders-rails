@@ -32,37 +32,54 @@ merchant = Merchant.new(id: '1000')
 merchant.email = 'amazingcoders8mc@gmail.com'
 merchant.password = 'burppleadmin'
 merchant.password_confirmation = 'burppleadmin'
-merchant.total_points = 0
+merchant.total_points = 1040
 merchant.save
 
 merchant = Merchant.new(id: '1001')
 merchant.email = 'woonyong92@gmail.com'
 merchant.password = '12345678'
 merchant.password_confirmation = '12345678'
-merchant.total_points = 0
+merchant.total_points = 90
 merchant.save
 
 merchant = Merchant.new(id: '1002')
 merchant.email = 'jkcheong92@gmail.com'
 merchant.password = '12345678'
 merchant.password_confirmation = '12345678'
-merchant.total_points = 0
+merchant.total_points = 385
 merchant.save
 
 merchant = Merchant.new(id: '1003')
 merchant.email = 'junwen29@gmail.com'
 merchant.password = '12345678'
 merchant.password_confirmation = '12345678'
-merchant.total_points = 0
 merchant.save
 
 merchant_id = 1004
+while merchant_id <= 1010
+  merchant = Merchant.new(id: merchant_id)
+  merchant.email = merchant_id.to_s + '@gmail.com'
+  merchant.password = '12345678'
+  merchant.password_confirmation = '12345678'
+  merchant.total_points = 100
+  merchant.save
+  merchant_id = merchant_id + 1
+end
+while merchant_id <= 1050
+  merchant = Merchant.new(id: merchant_id)
+  merchant.email = merchant_id.to_s + '@gmail.com'
+  merchant.password = '12345678'
+  merchant.password_confirmation = '12345678'
+  merchant.total_points = 40
+  merchant.save
+  merchant_id = merchant_id + 1
+end
 while merchant_id <= 1100
   merchant = Merchant.new(id: merchant_id)
   merchant.email = merchant_id.to_s + '@gmail.com'
   merchant.password = '12345678'
   merchant.password_confirmation = '12345678'
-  merchant.total_points = 0
+  merchant.total_points = 45
   merchant.save
   merchant_id = merchant_id + 1
 end
@@ -87,51 +104,61 @@ plan_payment_id = 1000
 add_on_payment_id = 1000
 
 start_date = '01-05-2015'.to_date
-end_date = '01-05-2016'.to_date
+end_date = start_date + 1.years
+start_datetime = start_date.to_datetime.in_time_zone('Singapore').beginning_of_day
 Payment.new(id: 1000, start_date: start_date, expiry_date: end_date, total_cost: 540, add_on1: true, add_on2: true,
-            add_on3: true, plan1: true, paid: true, merchant_id: '1000', months: 12).save(validate: false)
-PlanPayment.create(id: plan_payment_id, plan_id: 1, payment_id: payment_id)
-AddOnPayment.create(id: add_on_payment_id, add_on_id: 1, payment_id: payment_id)
+            add_on3: true, plan1: true, paid: true, merchant_id: '1000', months: 12, created_at: start_datetime).save(validate: false)
+PlanPayment.create(id: plan_payment_id, plan_id: 1, payment_id: payment_id, created_at: start_datetime)
+AddOnPayment.create(id: add_on_payment_id, add_on_id: 1, payment_id: payment_id, created_at: start_datetime)
 add_on_payment_id = add_on_payment_id + 1
-AddOnPayment.create(id: add_on_payment_id, add_on_id: 2, payment_id: payment_id)
+AddOnPayment.create(id: add_on_payment_id, add_on_id: 2, payment_id: payment_id, created_at: start_datetime)
 add_on_payment_id = add_on_payment_id + 1
-AddOnPayment.create(id: add_on_payment_id, add_on_id: 3, payment_id: payment_id)
+AddOnPayment.create(id: add_on_payment_id, add_on_id: 3, payment_id: payment_id, created_at: start_datetime)
 payment_id = payment_id + 1
 plan_payment_id = plan_payment_id + 1
 add_on_payment_id = add_on_payment_id + 1
+MerchantPoint.create(id: 1000, reason: 'Paid for a plan upgrade', points: 1040, operation: 'Credit', merchant_id: 1000)
 
 start_date = '01-09-2015'.to_date
-end_date = '01-12-2015'.to_date
+end_date = start_date + 3.months
+start_datetime = start_date.to_datetime.in_time_zone('Singapore').beginning_of_day
 Payment.new(id: 1001, start_date: start_date, expiry_date: end_date, total_cost: 90, add_on1: false, add_on2: false,
-            add_on3: false, plan1: true, paid: true, merchant_id: '1001', months: 3).save(validate: false)
-PlanPayment.create(id: plan_payment_id, plan_id: 1, payment_id: payment_id)
+            add_on3: false, plan1: true, paid: true, merchant_id: '1001', months: 3, created_at: start_datetime).save(validate: false)
+PlanPayment.create(id: plan_payment_id, plan_id: 1, payment_id: payment_id, created_at: start_datetime)
 payment_id = payment_id + 1
 plan_payment_id = plan_payment_id + 1
+MerchantPoint.create(id: 1001, reason: 'Paid for a plan upgrade', points: 90, operation: 'Credit', merchant_id: 1001)
 
 start_date = '01-01-2015'.to_date
-end_date = '01-12-2015'.to_date
+end_date = start_date + 11.months
+start_datetime = start_date.to_datetime.in_time_zone('Singapore').beginning_of_day
 Payment.new(id: 1002, start_date: start_date, expiry_date: end_date, total_cost: 385, add_on1: true, add_on2: false,
-            add_on3: false, plan1: true, paid: true, merchant_id: '1002', months: 11).save(validate: false)
-PlanPayment.create(id: plan_payment_id, plan_id: 1, payment_id: payment_id)
-AddOnPayment.create(id: add_on_payment_id, add_on_id: 1, payment_id: payment_id)
+            add_on3: false, plan1: true, paid: true, merchant_id: '1002', months: 11, created_at: start_datetime).save(validate: false)
+PlanPayment.create(id: plan_payment_id, plan_id: 1, payment_id: payment_id, created_at: start_datetime)
+AddOnPayment.create(id: add_on_payment_id, add_on_id: 1, payment_id: payment_id, created_at: start_datetime)
 payment_id = payment_id + 1
 plan_payment_id = plan_payment_id + 1
 add_on_payment_id = add_on_payment_id + 1
+MerchantPoint.create(id: 1002, reason: 'Paid for a plan upgrade', points: 385, operation: 'Credit', merchant_id: 1002)
 
 # merchant_id 1003 has no payment
 
 merchant_id = 1004
 start_date = '01-12-2014'.to_date
+start_datetime = start_date.to_datetime.in_time_zone('Singapore').beginning_of_day
 end_date = start_date + 2.months
 while merchant_id < 1010
-  Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '100.00', add_on1: false, add_on2: false, add_on3: false, plan1: false, paid: true, created_at: start_date, updated_at: '2015-10-01 00:00:00', merchant_id: merchant_id, months: 2).save(validate: false)
-  PlanPayment.create(id: plan_payment_id, plan_id: 1000, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
-  AddOnPayment.create(id: add_on_payment_id, add_on_id: 1000, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
+  Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '100.00', add_on1: false, add_on2: false,
+              add_on3: false, plan1: false, paid: true, created_at: start_datetime, updated_at: start_datetime, merchant_id: merchant_id, months: 2).save(validate: false)
+  PlanPayment.create(id: plan_payment_id, plan_id: 1000, payment_id: payment_id, created_at: start_datetime, updated_at: start_datetime)
+  AddOnPayment.create(id: add_on_payment_id, add_on_id: 1000, payment_id: payment_id, created_at: start_datetime, updated_at: start_datetime)
   add_on_payment_id = add_on_payment_id + 1
-  AddOnPayment.create(id: add_on_payment_id, add_on_id: 1001, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
+  AddOnPayment.create(id: add_on_payment_id, add_on_id: 1001, payment_id: payment_id, created_at: start_datetime, updated_at: start_datetime)
   start_date = start_date + 1.months
   end_date = start_date + 2.months
+  start_datetime = start_date.to_datetime.in_time_zone('Singapore').beginning_of_day
   payment_id = payment_id + 1
+  MerchantPoint.create(id: merchant_id, reason: 'Paid for a plan upgrade', points: 100, operation: 'Credit', merchant_id: merchant_id)
   merchant_id = merchant_id + 1
   plan_payment_id = plan_payment_id + 1
   add_on_payment_id = add_on_payment_id + 1
@@ -151,12 +178,13 @@ while merchant_id < 1050
     end_date = end_date + 1.months
   end
   payment_id = payment_id + 1
+  MerchantPoint.create(id: merchant_id, reason: 'Paid for a plan upgrade', points: 100, operation: 'Credit',merchant_id: merchant_id)
   merchant_id = merchant_id + 1
   plan_payment_id = plan_payment_id + 1
   add_on_payment_id = add_on_payment_id + 1
 end
 
-while merchant_id <= 1100
+while merchant_id < 1100
   Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '45.00', add_on1: true, add_on2: true, add_on3: true, plan1: true, paid: true, created_at: start_date, updated_at: '2015-10-01 00:00:00', merchant_id: merchant_id, months: 1).save(validate: false)
   PlanPayment.create(id: plan_payment_id, plan_id: 1, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
   AddOnPayment.create(id: add_on_payment_id, add_on_id: 1, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
@@ -169,6 +197,7 @@ while merchant_id <= 1100
     end_date = end_date + 1.months
   end
   payment_id = payment_id + 1
+  MerchantPoint.create(id: merchant_id, reason: 'Paid for a plan upgrade', points: 100, operation: 'Credit', merchant_id: merchant_id)
   merchant_id = merchant_id + 1
   plan_payment_id = plan_payment_id + 1
   add_on_payment_id = add_on_payment_id + 1
