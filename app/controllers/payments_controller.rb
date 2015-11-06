@@ -180,7 +180,7 @@ class PaymentsController < ApplicationController
       #if the plan periods overlap
       cost_to_pay = (calculate_price(@payment) * payment_params[:months].to_i)
 
-      if PaymentService.get_overlapping_dates(merchant_id, @payment.start_date, @payment.expiry_date, payment_params[:months].to_i) != 0
+      if PaymentService.get_overlapping_dates(merchant_id, @payment.expiry_date, payment_params[:months].to_i) != 0
         @payment.errors.add(:base, 'Extension of plan clashes with other existing plans')
         @plan = Plan.all
         @plan1 = Plan.find(1)
