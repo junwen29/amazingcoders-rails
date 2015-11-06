@@ -7,8 +7,22 @@ class AnalyticsController < ApplicationController
     elsif MerchantService.get_all_active_and_past_deals(merchant_id).blank?
       render 'analytics/no_deal_error'
     end
-    # Deal Statistics by Deals
-    deal_statistics_by_deal
+    # This is to ensure that there is at least one deal with view counts
+    have_views = false
+    deals = MerchantService.get_all_active_and_past_deals(merchant_id)
+    deals.each do |d|
+      if !Viewcount.where(deal_id: d.id).blank?
+        have_views = true
+        break
+      end
+    end
+    if have_views
+      # Deal Statistics by Deals
+      deal_statistics_by_deal
+    else
+      render 'analytics/no_view_error'
+    end
+  else
   end
 
   def venue

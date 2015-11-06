@@ -108,22 +108,22 @@ class DealAnalyticService
 
         if total
           while view_start_date <= temp_end_date
-          num_view_array << Viewcount.where(deal_id: d.id).where(created_at: d.created_at..view_start_date.end_of_day).count
+          num_view_array << Viewcount.where(deal_id: d.id).where(created_at: d.created_at..view_start_date.to_datetime.in_time_zone("Singapore").end_of_day).count
           view_start_date = view_start_date + 1.days
           end
 
           while redemption_start_date <= temp_end_date
-            num_redeem_array << Redemption.where(deal_id: d.id).where(created_at: d.created_at..redemption_start_date.end_of_day).count
+            num_redeem_array << Redemption.where(deal_id: d.id).where(created_at: d.created_at..redemption_start_date.to_datetime.in_time_zone("Singapore").end_of_day).count
             redemption_start_date = redemption_start_date + 1.days
           end
         else
           while view_start_date <= temp_end_date
-            num_view_array << Viewcount.where(deal_id: d.id).where(created_at: view_start_date.beginning_of_day..view_start_date.end_of_day).count
+            num_view_array << Viewcount.where(deal_id: d.id).where(created_at: view_start_date.beginning_of_day..view_start_date.to_datetime.in_time_zone("Singapore").end_of_day).count
             view_start_date = view_start_date + 1.days
           end
 
           while redemption_start_date <= temp_end_date
-            num_redeem_array << Redemption.where(deal_id: d.id).where(created_at: redemption_start_date.beginning_of_day..redemption_start_date.end_of_day).count
+            num_redeem_array << Redemption.where(deal_id: d.id).where(created_at: redemption_start_date.beginning_of_day..redemption_start_date.to_datetime.in_time_zone("Singapore").end_of_day).count
             redemption_start_date = redemption_start_date + 1.days
           end
         end
