@@ -23,7 +23,7 @@ class Payment < ActiveRecord::Base
   validates(:start_date, presence: true)
   validates(:months, presence: true)
   validate :start_date_not_past, :on => :save
-  validate :check_overlapping_plans, :on => :save
+  validate :check_overlapping_plans
 =begin
   validate :check_extend, :on => :update
   validate :check_months, :on => :update
@@ -54,6 +54,7 @@ class Payment < ActiveRecord::Base
     errors.add(:base, 'You already have a plan in this period') if ((overlapping_payment) rescue ArgumentError == ArgumentError)
   end
 
+=begin
   def check_extend
     errors.add(:base, 'Extension of plan clashes with other existing plans') if ((extend_plan) rescue ArgumentError == ArgumentError)
   end
@@ -61,11 +62,12 @@ class Payment < ActiveRecord::Base
   def check_months
     errors.add(:base, 'Please select a greater number of months than original plan') if ((start_date.months_since(months) < expiry_date) rescue ArgumentError == ArgumentError)
   end
+=end
 
   private
   # find number of overlapping payments
   def overlapping_payment
-    num = PaymentService.get_overlapping_payments(merchant_id, start_date)
+    num = PaymentService.get_overlapping_payments(merchant_id, start_date, months)
     if num > 0
       true
     else
@@ -73,6 +75,7 @@ class Payment < ActiveRecord::Base
     end
   end
 
+=begin
   private
   def extend_plan
     num = PaymentService.get_overlapping_dates(merchant_id, start_date, months)
@@ -82,6 +85,7 @@ class Payment < ActiveRecord::Base
       false
     end
   end
+=end
 
 
 end

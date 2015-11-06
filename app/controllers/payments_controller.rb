@@ -76,29 +76,27 @@ class PaymentsController < ApplicationController
     @plan1 = Plan.find(1)
 
 
-    @total_cost = calculate_price(@payment)
-    @payment.update(total_cost: @total_cost*@payment.months)
-
-
-    # Update join table in addon_payment
-    @add_on_payment = @payment.add_on_payments.build
-    if (params[:payment][:add_on1] == "true")
-      @payment.add_on_payments.build(:add_on_id => 1)
-    end
-    if (params[:payment][:add_on2] == "true")
-      @payment.add_on_payments.build(:add_on_id => 2)
-    end
-    if (params[:payment][:add_on3] == "true")
-      @payment.add_on_payments.build(:add_on_id => 3)
-    end
-
-    # Update join table in plan_payment
-    @plan_payment = @payment.plan_payments.new
-    if (params[:payment][:plan1] == "true")
-      @payment.plan_payments.build(:plan_id => 1)
-    end
 
     if @payment.save
+      # Update join table in addon_payment
+      @add_on_payment = @payment.add_on_payments.build
+      if (params[:payment][:add_on1] == "true")
+        @payment.add_on_payments.build(:add_on_id => 1)
+      end
+      if (params[:payment][:add_on2] == "true")
+        @payment.add_on_payments.build(:add_on_id => 2)
+      end
+      if (params[:payment][:add_on3] == "true")
+        @payment.add_on_payments.build(:add_on_id => 3)
+      end
+
+      # Update join table in plan_payment
+      @plan_payment = @payment.plan_payments.new
+      if (params[:payment][:plan1] == "true")
+        @payment.plan_payments.build(:plan_id => 1)
+      end
+      @total_cost = calculate_price(@payment)
+      @payment.update(total_cost: @total_cost*@payment.months)
       # flash[:success] = "Success in registering plan"
       redirect_to new_payment_charge_path(@payment.id)
       #if token is created successfully, go to show page and check if charge is created.
