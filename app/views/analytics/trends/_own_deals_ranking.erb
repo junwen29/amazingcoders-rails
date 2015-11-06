@@ -3,49 +3,59 @@
     <h4>Your Active Deals Ranking this Week!</h4>
   </div>
   <div class="panel-body">
-    <strong>By Redemption Count</strong>
-    <table class="table table-bordered table-hover table-responsive">
-      <tr>
-        <th>Rank</th>
-        <th>Title</th>
-        <th>Type of Deal</th>
-        <th>Description</th>
-      </tr>
-
-      <% @own_deals.each do |od| %>
-          <% deal = Deal.find(od[0]) %>
+    <% have_own_deal = false %>
+    <% if @own_deals.nil? %>
+        <% have_own_deal = true %>
+    <% end %>
+    <% if have_own_deal %>
+        <strong>By Redemption Count</strong>
+        <table class="table table-bordered table-hover table-responsive">
           <tr>
-            <% if od[2] == 'new' %>
-                <td>
-                  <p id="rank"><%= od[1] %></p>
-                  <span class="label label-warning" style=" float:right;"><%= od[2] %></span>
-                </td>
-            <% elsif od[2] > 0 %>
-                <td>
-                  <p id="rank"><%= od[1] %></p>
-                  <span class="glyphicon glyphicon-triangle-top" style="color:green; float:right;"><%= od[2] %></span>
-                </td>
-            <% elsif od[2] == 0 %>
-                <td>
-                  <p id="rank"><%= od[1] %></p>
-                  <span class="glyphicon glyphicon-minus" style="color:#2d41ff; float:right;">  </span>
-                </td>
-            <% elsif od[2] < 0 %>
-                <td>
-                  <p id="rank"><%= od[1] %></p>
-                  <span class="glyphicon glyphicon-triangle-bottom" style="color:red; float:right;"><%= od[2].abs %></span>
-                </td>
-            <% end %>
-            <td>
-              <%= deal.title %>
-            </td>
-            <td>
-              <%= deal.type_of_deal %>
-            </td>
-            <td><%= deal.description %></td>
+            <th>Rank</th>
+            <th>Title</th>
+            <th>Type of Deal</th>
+            <th>Description</th>
           </tr>
-      <% end %>
-    </table>
+
+          <% @own_deals.each do |od| %>
+              <% deal = Deal.find(od[0]) %>
+              <tr>
+                <% if od[2] == 'new' %>
+                    <td>
+                      <p id="rank"><%= od[1] %></p>
+                      <span class="label label-warning" style=" float:right;"><%= od[2] %></span>
+                    </td>
+                <% elsif od[2] > 0 %>
+                    <td>
+                      <p id="rank"><%= od[1] %></p>
+                      <span class="glyphicon glyphicon-triangle-top" style="color:green; float:right;"><%= od[2] %></span>
+                    </td>
+                <% elsif od[2] == 0 %>
+                    <td>
+                      <p id="rank"><%= od[1] %></p>
+                      <span class="glyphicon glyphicon-minus" style="color:#2d41ff; float:right;">  </span>
+                    </td>
+                <% elsif od[2] < 0 %>
+                    <td>
+                      <p id="rank"><%= od[1] %></p>
+                      <span class="glyphicon glyphicon-triangle-bottom" style="color:red; float:right;"><%= od[2].abs %></span>
+                    </td>
+                <% end %>
+                <td>
+                  <%= deal.title %>
+                </td>
+                <td>
+                  <%= deal.type_of_deal %>
+                </td>
+                <td><%= deal.description %></td>
+              </tr>
+          <% end %>
+    <% else %>
+        <div class="well col-lg-12" style="text-align: center; font-weight: bold">
+          <p>Oops! You do not have any active deals that has started yet! Please wait till your deal starts and come visit again!</p>
+        </div>
+        </table>
+    <% end %>
   </div>
 </div>
 
