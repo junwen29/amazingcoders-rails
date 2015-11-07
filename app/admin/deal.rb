@@ -3,15 +3,19 @@ ActiveAdmin.register Deal do
 
   # Remove Create New Deal button
   config.clear_action_items!
+  config.sort_order = "id_asc"
 
   controller do
     def update
       @deal = Deal.find(params[:id])
+
       if @deal.update_columns(deal_params)
         flash[:success] = "Deal successfully updated!"
+
         # TODO - DEMO: Uncomment on demonstration
-        # merchant_id = @deal.merchant_id
-        # DealMailer.update_deal_email_admin("valued merchant", @deal, MerchantService.get_email(merchant_id)).deliver
+        #merchant_id = @deal.merchant_id
+        #DealMailer.update_deal_email_admin("valued merchant", @deal, MerchantService.get_email(merchant_id)).deliver
+
         redirect_to admin_deal_path
       else
         flash[:error] = "Failed to update deal!"
@@ -20,10 +24,10 @@ ActiveAdmin.register Deal do
 
     private
     def deal_params
-      params.require(:deal).permit(:start_date, :title, :redeemable, :multiple_use, :image, :type_of_deal, :description, :location, :t_c, :pushed, :active,
+      params.require(:deal).permit(:venue_ids, :start_date, :title, :redeemable, :multiple_use, :image, :type_of_deal, :description, :location, :t_c, :pushed, :active,
                                    deal_days_attributes: [:id, :mon, :tue, :wed, :thur, :fri, :sat, :sun, :_destroy,
                                                           deal_times_attributes: [:id, :started_at, :ended_at, :_destroy]],
-                                   deal_venues_attributes: [:id, :qrCodeLink], venues_attributes: [:id, :location])
+                                   deal_venues_attributes: [:id, :deal_id, :venue_id], venues_attributes: [:id, :location])
     end
   end
 
@@ -31,6 +35,10 @@ ActiveAdmin.register Deal do
   scope :active
   scope :waiting
   scope :expired
+  scope :dashboard do |deals|
+    deals.where('expiry_date >= ? AND active = true', Date.today)
+  end
+
 
   filter :merchant, :collection => proc {(Merchant.all).map{|m| [m.email, m.id]}}
   filter :venues, label: 'Venues',:collection => proc {(Venue.all).map{|v| [v.name, v.id]}}
@@ -49,18 +57,18 @@ ActiveAdmin.register Deal do
   # INDEX
   index do
     selectable_column
-    column "Title" do |deal|
+    column "Title", sortable: 'title' do |deal|
       div :class => "descriptionCol" do
         deal.title
       end
     end
     column "Type", :type_of_deal
-    column "Description" do |deal|
+    column "Description", sortable: 'description' do |deal|
       div :class => "descriptionCol" do
         deal.description
       end
     end
-    column "Merchant", :merchant_id do |deal|
+    column "Merchant" do |deal|
       auto_link deal.merchant
     end
     column "Venues" do |deal|
@@ -150,13 +158,11 @@ ActiveAdmin.register Deal do
       f.input :t_c, label: "Terms and Conditions"
     end
 
-=begin
-# Admin should NOT be able to edit datetime of deals
+    # Admin should NOT be able to edit datetime of deals
     f.inputs "Deal Schedule" do
-      f.input :start_date, label: "Start Date", :as => :string
-      f.input :expiry_date, label: "Expiry Date", :as => :string
+      f.input :start_date, label: "Start Date", :as => :datepicker
+      f.input :expiry_date, label: "Expiry Date", :as => :datepicker
     end
-=end
 
     f.inputs "Deal Status" do
       f.input :active, label: "Deal Activated?"

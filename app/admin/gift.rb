@@ -1,4 +1,5 @@
 ActiveAdmin.register Gift do
+  config.sort_order = "id_asc"
 
   # Allow edit
   permit_params :name, :points, :description, :gift_type
