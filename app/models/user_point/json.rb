@@ -8,7 +8,7 @@ module UserPoint::Json
       json.reason     self.reason
       json.points     self.points
       json.operation  self.operation
-      json.created_at self.created_at
+      json.created_at self.created_at.strftime("%Y-%m-%dT%H:%M:%SZ%Z")
 
       json.user do
         self.user.to_json json
