@@ -6,21 +6,22 @@ class AnalyticsController < ApplicationController
       render 'analytics/no_venue_error'
     elsif MerchantService.get_all_active_and_past_deals(merchant_id).blank?
       render 'analytics/no_deal_error'
-    end
-    # This is to ensure that there is at least one deal with view counts
-    have_views = false
-    deals = MerchantService.get_all_active_and_past_deals(merchant_id)
-    deals.each do |d|
-      if !Viewcount.where(deal_id: d.id).blank?
-        have_views = true
-        break
-      end
-    end
-    if have_views
-      # Deal Statistics by Deals
-      deal_statistics_by_deal
     else
-      render 'analytics/no_view_error'
+      # This is to ensure that there is at least one deal with view counts
+      have_views = false
+      deals = MerchantService.get_all_active_and_past_deals(merchant_id)
+      deals.each do |d|
+        if !Viewcount.where(deal_id: d.id).blank?
+          have_views = true
+          break
+        end
+      end
+      if have_views
+        # Deal Statistics by Deals
+        deal_statistics_by_deal
+      else
+        render 'analytics/no_view_error'
+      end
     end
   end
 
@@ -31,21 +32,22 @@ class AnalyticsController < ApplicationController
       render 'analytics/no_deal_error'
     elsif MerchantService.get_active_past_redeemable_deals(merchant_id).blank?
       render 'analytics/no_redeemable_deal_error'
-    end
-    have_redemptions = false
-    deals = MerchantService.get_all_active_and_past_deals(merchant_id)
-    deals.each do |d|
-      if !Redemption.where(deal_id: d.id).blank?
-        have_redemptions = true
-        break
-      end
-    end
-    if have_redemptions
-      # Deal Statistics by Venues
-      deal_statistics_by_venue
-      render "analytics/venue"
     else
-      render 'analytics/no_redeem_error'
+      have_redemptions = false
+      deals = MerchantService.get_all_active_and_past_deals(merchant_id)
+      deals.each do |d|
+        if !Redemption.where(deal_id: d.id).blank?
+          have_redemptions = true
+          break
+        end
+      end
+      if have_redemptions
+        # Deal Statistics by Venues
+        deal_statistics_by_venue
+        render "analytics/venue"
+      else
+        render 'analytics/no_redeem_error'
+      end
     end
   end
 
