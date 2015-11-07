@@ -9,6 +9,8 @@ ActionMailer::Base.smtp_settings = {
     :authentication => :plain,
     :enable_starttls_auto => true
 }
-if Rails.env.development?
+
+# TODO: Remove this interceptor for actual demonstration
+#if Rails.env.development?
     ActionMailer::Base.register_interceptor(DevelopmentMailInterceptor)
-end
+#end
