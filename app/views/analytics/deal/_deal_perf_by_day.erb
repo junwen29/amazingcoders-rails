@@ -1,4 +1,4 @@
-<div id="analytics_line_day" class="col-lg-12" style="padding-bottom: 20px;"></div>
+<div id="analytics_line_day" class="col-lg-12" style="padding-bottom: 20px; overflow-x: auto"></div>
 
 <footer>
   <script>
@@ -12,8 +12,14 @@
               credits: {
                   enabled: false
               },
+              chart: {
+                  reflow: false
+              },
               exporting: {
-                  filename: 'Non Cumulative Performance ' + new Date().toDateString()
+                  filename: 'Non Cumulative Performance ' + new Date().toDateString(),
+                  scale: 1,
+                  sourceWidth: 1259,
+                  sourceHeight: 400
               },
               title: {
                   text: 'Performance of Deals Across Time Period'

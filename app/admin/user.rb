@@ -3,6 +3,8 @@ ActiveAdmin.register User do
 
   # Remove Create New User button
   config.clear_action_items!
+  config.sort_order = "id_asc"
+
   actions :all
   action_item :only => :show do
     link_to "Back", admin_users_path

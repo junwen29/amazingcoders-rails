@@ -82,10 +82,14 @@
   </div><!-- panel -->
 
   <div id = "button"> <center>
-    <button name="button_addon" id="button_addon" class="btn-info"
-            type="button" data-toggle="tooltip" data-placement="top" title="You are required to re-login to enjoy the features of the addons after upgrade."
-            onclick=showAddon() > Upgrade Plan with Add On </button>
+    <% unless @payment.add_on1 && @payment.add_on2 && @payment.add_on3 %>
+        <button name="button_addon" id="button_addon" class="btn-info"
+                type="button" data-toggle="tooltip" data-placement="top" title="You are required to re-login to enjoy the features of the addons after upgrade."
+                onclick=showAddon() > Upgrade Plan with Add On </button>
+    <% end %>
+    <% if PaymentService.get_overlapping_dates(session[:merchant_id], @payment.expiry_date, 1) == 0 %>
     <button name="button_plan" id="button_plan" class="btn-info" onclick=showPlan()> Extend Plan </button>
+        <% end %>
   </center>
   </div>
 
@@ -142,7 +146,7 @@
               <div class="col-lg-5" id="addon1_hint1" style="display:none;">
                 <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small"><%= @addon1_hint2 %></p>
               </div>
-              <div class="col-lg-5" id="addon1_hint2" style="display:none;">
+              <div class="col-lg-5" id="addon1_hint2" >
                 <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small"><%= @addon1_hint1 %></p>
               </div>
             </div>
@@ -180,7 +184,7 @@
                 <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small"><%= @addon2_hint2 %></p>
               </div>
 
-              <div class="col-lg-5" id="addon2_hint2" style="display:none;">
+              <div class="col-lg-5" id="addon2_hint2" >
                 <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small"><%= @addon2_hint1 %></p>
               </div>
             </div>
@@ -219,7 +223,7 @@
                 <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small"><%= @addon3_hint2 %></p>
               </div>
 
-              <div class="col-lg-5" id="addon3_hint2" style="display:none;">
+              <div class="col-lg-5" id="addon3_hint2" >
                 <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small"><%= @addon3_hint1 %></p>
               </div>
             </div>
@@ -249,7 +253,6 @@
     $('#payment_add_on1_false').click(function (event) {
         $('#addon1_hint2').show();
         $('#addon1_hint1').hide();
-
     });
 
     $('#payment_add_on2_true').click(function (event) {
@@ -265,16 +268,6 @@
     $('#payment_add_on3_true').click(function (event) {
         $('#addon3_hint1').show();
         $('#addon3_hint2').hide();
-    });
-
-    $('#payment_add_on3_false').click(function (event) {
-        $('#addon3_hint2').show();
-        $('#addon3_hint1').hide();
-    });
-
-    $('#payment_add_on3_false').click(function (event) {
-        $('#addon3_hint2').show();
-        $('#addon3_hint1').hide();
     });
 
     $('#payment_add_on3_false').click(function (event) {

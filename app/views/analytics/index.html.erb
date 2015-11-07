@@ -17,16 +17,40 @@
 
     <!-- Content Body -->
     <!--TODO: VIEW Render partials only for merchants with access-->
+    <div class="col-lg-12" style="padding-bottom: 20px;">
+      <p class="b3 content-title">Performance of Deal</p>
+    </div>
     <%= render :partial => 'analytics/deal/analytics_line_count' %>
     <%= render :partial => 'analytics/deal/deal_perf_by_day' %><br>
+    <div class="col-lg-12" style="padding-bottom: 20px;">
+      <p class="b3 content-title">Popularity of Deal Types</p>
+    </div>
     <% if MerchantService.get_active_past_redeemable_deals(session[:merchant_id]).blank? %>
         <%= render :partial => 'analytics/deal/no_redeemable_deal_error' %>
     <% else %>
-        <%= render :partial => 'analytics/deal/popular_deal_type' %><br>
+        <% deals = MerchantService.get_active_past_redeemable_deals(session[:merchant_id]) %>
+        <% have_redemption = false %>
+        <% deals.each do |d| %>
+            <% if !Redemption.where(deal_id: d.id).blank? %>
+                <% have_redemption = true %>
+                <% break %>
+            <% end %>
+        <% end %>
+        <% if have_redemption %>
+            <%= render :partial => 'analytics/deal/popular_deal_type' %><br>
+        <% else %>
+            <div class = "well col-lg-6 col-lg-offset-3" style="text-align: center; font-weight: bold">
+              <p>Oops! There you do not have any redemptions yet! Probably because it is a new deal. Don't worry come back later to see your charts!</p>
+            </div>
+        <% end %>
     <% end %>
 
+    <div class="col-lg-12" style="padding-bottom: 20px;">
+      <p class="b3 content-title">Deal Statistics</p><br>
+    </div>
+
     <div style="margin-top: 10px">
-    <%= render :partial => 'analytics/deal/analytics_table' %>
+        <%= render :partial => 'analytics/deal/analytics_table' %>
     </div>
 
   </div>

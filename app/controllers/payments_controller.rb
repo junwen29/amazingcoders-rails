@@ -11,7 +11,7 @@ class PaymentsController < ApplicationController
     @addon2 = AddOn.find(2)
     @addon3 = AddOn.find(3)
 
-    active_premiums = PaymentService.count_active_payments(Date.today)
+    #active_premiums = PaymentService.count_active_payments(Date.today)
     total_payments = PaymentService.count_total_payments
 
     overall_plan = ((PaymentService.count_plan_payments(1).to_f / total_payments )*100).round(1)
@@ -19,7 +19,7 @@ class PaymentsController < ApplicationController
     @plan_hint = overall_plan.round(1).to_s + "% of Food Merchants have used Premium Deals Services and " + active_plan.round(1).to_s + "% of Food Merchants are currently using it."
 
     overall_addon1 = (PaymentService.count_unique_addon_payments(1).to_f / total_payments)*100
-    active_addon1 = (PaymentService.count_active_addons(Date.today, 1).to_f / active_premiums)*100
+    active_addon1 = (PaymentService.count_active_addons(Date.today, 1).to_f / total_payments)*100
     @addon1_hint1 = overall_addon1.round(1).to_s + "% of Food Merchants have used " + @addon1.name + " and " + active_addon1.round(1).to_s + "% of Food Merchants are currently using it."
 
     addon_1_with_2 = ((PaymentService.count_addons_cross_sell(true, true, false).to_f / Payment.count)*100).round(1)
@@ -27,14 +27,14 @@ class PaymentsController < ApplicationController
     @addon1_hint2 = "Food Merchants purchased " + @addon1.name + " with " + @addon2.name + " " + addon_1_with_2.round(1).to_s + "% of the time. " + "Food Merchants purchased " + @addon1.name + " with " + @addon3.name + " " + addon_1_with_3.round(1).to_s + "% of the time. "
 
     overall_addon2 = (PaymentService.count_unique_addon_payments(2).to_f / total_payments)*100
-    active_addon2 = (PaymentService.count_active_addons(Date.today, 2).to_f / active_premiums)*100
+    active_addon2 = (PaymentService.count_active_addons(Date.today, 2).to_f / total_payments)*100
     @addon2_hint1 = overall_addon2.round(1).to_s + "% of Food Merchants have used " + @addon2.name + " and " + active_addon2.round(1).to_s + "% of Food Merchants are currently using it."
 
     addon_2_with_3 = ((PaymentService.count_addons_cross_sell(false, true, true).to_f / Payment.count)*100).round(1)
     @addon2_hint2 = "Food Merchants purchased " + @addon2.name + " with " + @addon1.name + " " + addon_1_with_2.round(1).to_s + "% of the time. " + "Food Merchants purchased " + @addon2.name + " with " + @addon3.name + " " + addon_2_with_3.round(1).to_s + "% of the time. "
 
     overall_addon3 = (PaymentService.count_unique_addon_payments(3).to_f / total_payments)*100
-    active_addon3 = (PaymentService.count_active_addons(Date.today, 3).to_f / active_premiums)*100
+    active_addon3 = (PaymentService.count_active_addons(Date.today, 3).to_f / total_payments)*100
     @addon3_hint1 = overall_addon3.round(1).to_s + "% of Food Merchants have used " + @addon3.name + " and " + active_addon3.round(1).to_s + "% of Food Merchants are currently using it."
 
     @addon3_hint2 = "Food Merchants purchased " + @addon3.name + " with " + @addon1.name + " " + addon_1_with_3.round(1).to_s + "% of the time. " + "Food Merchants purchased " + @addon3.name + " with " + @addon2.name + " " + addon_2_with_3.round(1).to_s + "% of the time. "
@@ -53,6 +53,30 @@ class PaymentsController < ApplicationController
     @addon1 = AddOn.find(1)
     @addon2 = AddOn.find(2)
     @addon3 = AddOn.find(3)
+
+    total_payments = PaymentService.count_total_payments
+
+    overall_addon1 = (PaymentService.count_unique_addon_payments(1).to_f / total_payments)*100
+    active_addon1 = (PaymentService.count_active_addons(Date.today, 1).to_f / total_payments)*100
+    @addon1_hint1 = overall_addon1.round(1).to_s + "% of Food Merchants have used " + @addon1.name + " and " + active_addon1.round(1).to_s + "% of Food Merchants are currently using it."
+
+    addon_1_with_2 = ((PaymentService.count_addons_cross_sell(true, true, false).to_f / Payment.count)*100).round(1)
+    addon_1_with_3 = ((PaymentService.count_addons_cross_sell(true, false, true).to_f / Payment.count)*100).round(1)
+    @addon1_hint2 = "Food Merchants purchased " + @addon1.name + " with " + @addon2.name + " " + addon_1_with_2.round(1).to_s + "% of the time. " + "Food Merchants purchased " + @addon1.name + " with " + @addon3.name + " " + addon_1_with_3.round(1).to_s + "% of the time. "
+
+    overall_addon2 = (PaymentService.count_unique_addon_payments(2).to_f / total_payments)*100
+    active_addon2 = (PaymentService.count_active_addons(Date.today, 2).to_f / total_payments)*100
+    @addon2_hint1 = overall_addon2.round(1).to_s + "% of Food Merchants have used " + @addon2.name + " and " + active_addon2.round(1).to_s + "% of Food Merchants are currently using it."
+
+    addon_2_with_3 = ((PaymentService.count_addons_cross_sell(false, true, true).to_f / Payment.count)*100).round(1)
+    @addon2_hint2 = "Food Merchants purchased " + @addon2.name + " with " + @addon1.name + " " + addon_1_with_2.round(1).to_s + "% of the time. " + "Food Merchants purchased " + @addon2.name + " with " + @addon3.name + " " + addon_2_with_3.round(1).to_s + "% of the time. "
+
+    overall_addon3 = (PaymentService.count_unique_addon_payments(3).to_f / total_payments)*100
+    active_addon3 = (PaymentService.count_active_addons(Date.today, 3).to_f / total_payments)*100
+    @addon3_hint1 = overall_addon3.round(1).to_s + "% of Food Merchants have used " + @addon3.name + " and " + active_addon3.round(1).to_s + "% of Food Merchants are currently using it."
+
+    @addon3_hint2 = "Food Merchants purchased " + @addon3.name + " with " + @addon1.name + " " + addon_1_with_3.round(1).to_s + "% of the time. " + "Food Merchants purchased " + @addon3.name + " with " + @addon2.name + " " + addon_2_with_3.round(1).to_s + "% of the time. "
+
   end
 
 
@@ -76,29 +100,27 @@ class PaymentsController < ApplicationController
     @plan1 = Plan.find(1)
 
 
-    @total_cost = calculate_price(@payment)
-    @payment.update(total_cost: @total_cost*@payment.months)
-
-
-    # Update join table in addon_payment
-    @add_on_payment = @payment.add_on_payments.build
-    if (params[:payment][:add_on1] == "true")
-      @payment.add_on_payments.build(:add_on_id => 1)
-    end
-    if (params[:payment][:add_on2] == "true")
-      @payment.add_on_payments.build(:add_on_id => 2)
-    end
-    if (params[:payment][:add_on3] == "true")
-      @payment.add_on_payments.build(:add_on_id => 3)
-    end
-
-    # Update join table in plan_payment
-    @plan_payment = @payment.plan_payments.new
-    if (params[:payment][:plan1] == "true")
-      @payment.plan_payments.build(:plan_id => 1)
-    end
 
     if @payment.save
+      # Update join table in addon_payment
+      @add_on_payment = @payment.add_on_payments.build
+      if (params[:payment][:add_on1] == "true")
+        @payment.add_on_payments.build(:add_on_id => 1)
+      end
+      if (params[:payment][:add_on2] == "true")
+        @payment.add_on_payments.build(:add_on_id => 2)
+      end
+      if (params[:payment][:add_on3] == "true")
+        @payment.add_on_payments.build(:add_on_id => 3)
+      end
+
+      # Update join table in plan_payment
+      @plan_payment = @payment.plan_payments.new
+      if (params[:payment][:plan1] == "true")
+        @payment.plan_payments.build(:plan_id => 1)
+      end
+      @total_cost = calculate_price(@payment)
+      @payment.update(total_cost: @total_cost*@payment.months)
       # flash[:success] = "Success in registering plan"
       redirect_to new_payment_charge_path(@payment.id)
       #if token is created successfully, go to show page and check if charge is created.
@@ -109,6 +131,33 @@ class PaymentsController < ApplicationController
       @addon1 = AddOn.find(1)
       @addon2 = AddOn.find(2)
       @addon3 = AddOn.find(3)
+      total_payments = PaymentService.count_total_payments
+
+      overall_plan = ((PaymentService.count_plan_payments(1).to_f / total_payments )*100).round(1)
+      active_plan = ((PaymentService.count_active_premiums(Date.today, 1).to_f / total_payments )*100).round(1)
+      @plan_hint = overall_plan.round(1).to_s + "% of Food Merchants have used Premium Deals Services and " + active_plan.round(1).to_s + "% of Food Merchants are currently using it."
+
+      overall_addon1 = (PaymentService.count_unique_addon_payments(1).to_f / total_payments)*100
+      active_addon1 = (PaymentService.count_active_addons(Date.today, 1).to_f / total_payments)*100
+      @addon1_hint1 = overall_addon1.round(1).to_s + "% of Food Merchants have used " + @addon1.name + " and " + active_addon1.round(1).to_s + "% of Food Merchants are currently using it."
+
+      addon_1_with_2 = ((PaymentService.count_addons_cross_sell(true, true, false).to_f / Payment.count)*100).round(1)
+      addon_1_with_3 = ((PaymentService.count_addons_cross_sell(true, false, true).to_f / Payment.count)*100).round(1)
+      @addon1_hint2 = "Food Merchants purchased " + @addon1.name + " with " + @addon2.name + " " + addon_1_with_2.round(1).to_s + "% of the time. " + "Food Merchants purchased " + @addon1.name + " with " + @addon3.name + " " + addon_1_with_3.round(1).to_s + "% of the time. "
+
+      overall_addon2 = (PaymentService.count_unique_addon_payments(2).to_f / total_payments)*100
+      active_addon2 = (PaymentService.count_active_addons(Date.today, 2).to_f / total_payments)*100
+      @addon2_hint1 = overall_addon2.round(1).to_s + "% of Food Merchants have used " + @addon2.name + " and " + active_addon2.round(1).to_s + "% of Food Merchants are currently using it."
+
+      addon_2_with_3 = ((PaymentService.count_addons_cross_sell(false, true, true).to_f / Payment.count)*100).round(1)
+      @addon2_hint2 = "Food Merchants purchased " + @addon2.name + " with " + @addon1.name + " " + addon_1_with_2.round(1).to_s + "% of the time. " + "Food Merchants purchased " + @addon2.name + " with " + @addon3.name + " " + addon_2_with_3.round(1).to_s + "% of the time. "
+
+      overall_addon3 = (PaymentService.count_unique_addon_payments(3).to_f / total_payments)*100
+      active_addon3 = (PaymentService.count_active_addons(Date.today, 3).to_f / total_payments)*100
+      @addon3_hint1 = overall_addon3.round(1).to_s + "% of Food Merchants have used " + @addon3.name + " and " + active_addon3.round(1).to_s + "% of Food Merchants are currently using it."
+
+      @addon3_hint2 = "Food Merchants purchased " + @addon3.name + " with " + @addon1.name + " " + addon_1_with_3.round(1).to_s + "% of the time. " + "Food Merchants purchased " + @addon3.name + " with " + @addon2.name + " " + addon_2_with_3.round(1).to_s + "% of the time. "
+
       render 'new'
 
     end
@@ -127,11 +176,16 @@ class PaymentsController < ApplicationController
     @payment = Payment.new
   end
 
+  #for gift redemption of 1 free month
   def extend
     @payment = Merchant.find(merchant_id).payments.new(payment_params)
     @plan1 = Plan.find(1)
 
-    if PaymentService.extend_plan(@payment)
+    if PaymentService.get_overlapping_payments(merchant_id, @payment.start_date, 1) == 0
+      @payment.update(plan1: true, add_on1: true, add_on2: true, add_on3: true, total_cost: 0, months: 1, paid: true,
+                      expiry_date: @payment.start_date.months_since(1))
+
+      #@payment.update(paid: true)
 
       @plan_payment = @payment.plan_payments.new
       if (params[:payment][:plan1] == "true")
@@ -143,16 +197,16 @@ class PaymentsController < ApplicationController
       @payment.add_on_payments.build(:add_on_id => 2)
       @payment.add_on_payments.build(:add_on_id => 3)
 
-
-      @payment.update(expiry_date: @payment.start_date.months_since(1))
+      #@payment.update(expiry_date: @payment.start_date.months_since(1))
       MerchantPointService.create_extend_point(merchant_id)
       flash[:success] = "Gift Redeemed!"
       gift = Gift.find_by name: "1 free month"
       #send acknowledgement email for successful redemption of 1 free month
-      #GiftMailer.free_1_month_email("Valued Merchant", @payment, Merchant.find(merchant_id), gift, MerchantService.get_email(merchant_id)).deliver
+      GiftMailer.free_1_month_email("Valued Merchant", @payment, Merchant.find(merchant_id), gift, MerchantService.get_email(merchant_id)).deliver
 
       redirect_to merchant_points_path
     else
+      @payment.errors.add(:base, 'Extension of plan clashes with other existing plans')
       @upcoming_payments = Payment.where("merchant_id = ? AND paid = ? AND expiry_date >= ?", session[:merchant_id], true, Date.today)
       render 'gift_extend'
     end
@@ -169,7 +223,7 @@ class PaymentsController < ApplicationController
     end
   end
 
-  #when you try to modify a plan
+  #when you try to modify a plan (either addon upgrade or plan extension)
   def extend_plan
     @payment = Payment.find(params[:id])
     unless session[:merchant_id] == @payment.merchant_id
@@ -179,30 +233,57 @@ class PaymentsController < ApplicationController
     end
     #if the merchant is extending the number of months
     if payment_params[:months] != nil
-      #if the plan periods overlap
-      cost_to_pay = (calculate_price(@payment) * payment_params[:months].to_i)
 
-      if PaymentService.get_overlapping_dates(merchant_id, @payment.start_date, @payment.expiry_date, payment_params[:months].to_i) != 0
+      #if the plan periods overlap
+      if PaymentService.get_overlapping_dates(merchant_id, @payment.expiry_date, payment_params[:months].to_i) != 0
         @payment.errors.add(:base, 'Extension of plan clashes with other existing plans')
         @plan = Plan.all
         @plan1 = Plan.find(1)
         @addon1 = AddOn.find(1)
         @addon2 = AddOn.find(2)
         @addon3 = AddOn.find(3)
+        total_payments = PaymentService.count_total_payments
+
+        overall_addon1 = (PaymentService.count_unique_addon_payments(1).to_f / total_payments)*100
+        active_addon1 = (PaymentService.count_active_addons(Date.today, 1).to_f / total_payments)*100
+        @addon1_hint1 = overall_addon1.round(1).to_s + "% of Food Merchants have used " + @addon1.name + " and " + active_addon1.round(1).to_s + "% of Food Merchants are currently using it."
+
+        addon_1_with_2 = ((PaymentService.count_addons_cross_sell(true, true, false).to_f / Payment.count)*100).round(1)
+        addon_1_with_3 = ((PaymentService.count_addons_cross_sell(true, false, true).to_f / Payment.count)*100).round(1)
+        @addon1_hint2 = "Food Merchants purchased " + @addon1.name + " with " + @addon2.name + " " + addon_1_with_2.round(1).to_s + "% of the time. " + "Food Merchants purchased " + @addon1.name + " with " + @addon3.name + " " + addon_1_with_3.round(1).to_s + "% of the time. "
+
+        overall_addon2 = (PaymentService.count_unique_addon_payments(2).to_f / total_payments)*100
+        active_addon2 = (PaymentService.count_active_addons(Date.today, 2).to_f / total_payments)*100
+        @addon2_hint1 = overall_addon2.round(1).to_s + "% of Food Merchants have used " + @addon2.name + " and " + active_addon2.round(1).to_s + "% of Food Merchants are currently using it."
+
+        addon_2_with_3 = ((PaymentService.count_addons_cross_sell(false, true, true).to_f / Payment.count)*100).round(1)
+        @addon2_hint2 = "Food Merchants purchased " + @addon2.name + " with " + @addon1.name + " " + addon_1_with_2.round(1).to_s + "% of the time. " + "Food Merchants purchased " + @addon2.name + " with " + @addon3.name + " " + addon_2_with_3.round(1).to_s + "% of the time. "
+
+        overall_addon3 = (PaymentService.count_unique_addon_payments(3).to_f / total_payments)*100
+        active_addon3 = (PaymentService.count_active_addons(Date.today, 3).to_f / total_payments)*100
+        @addon3_hint1 = overall_addon3.round(1).to_s + "% of Food Merchants have used " + @addon3.name + " and " + active_addon3.round(1).to_s + "% of Food Merchants are currently using it."
+
+        @addon3_hint2 = "Food Merchants purchased " + @addon3.name + " with " + @addon1.name + " " + addon_1_with_3.round(1).to_s + "% of the time. " + "Food Merchants purchased " + @addon3.name + " with " + @addon2.name + " " + addon_2_with_3.round(1).to_s + "% of the time. "
+
         render 'edit'
 
       else #else proceed with payment
+        cost_to_pay = (calculate_price(@payment) * payment_params[:months].to_i)
         @payment.update(total_cost: cost_to_pay, months: @payment.months + payment_params[:months].to_i)
         redirect_to new_payment_charge_path(@payment)
 
       end
       #else it is a plan upgrade with addons
     else
+
       cost_before = calculate_price(@payment) * @payment.months
       @payment.update(payment_params)
+
       cost_after = (calculate_price(@payment) * @payment.months)
+
       cost_to_pay = cost_after - cost_before
       @payment.update(total_cost: cost_to_pay)
+      @payment.save
 
       # Update join table in addon_payment
       @add_on_payment = @payment.add_on_payments.build

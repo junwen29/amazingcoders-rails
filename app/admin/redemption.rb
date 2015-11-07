@@ -2,10 +2,19 @@ ActiveAdmin.register Redemption do
   menu :parent => "Deals", :priority => 2
 
   config.clear_action_items!
+  config.sort_order = "id_asc"
+
   actions :all, except: [:edit]
 
   action_item :only => :show do
     link_to "Back", "/admin/redemptions"
+  end
+
+  scope :all
+  scope :dashboard do |redemptions|
+    start_date = Date.today.beginning_of_month
+    end_date = Date.today.end_of_month
+    redemptions.where('created_at >= ? AND created_at <= ?', start_date, end_date)
   end
 
   filter :deal, label: "Deals", :collection => proc {(Deal.active).map{|d| [d.title, d.id]}}
@@ -25,11 +34,14 @@ ActiveAdmin.register Redemption do
     end
     column "Venue", sortable: "venue_id" do |r|
       div :class => "venuesCol" do
-        Venue.find(r.venue_id).name
+        venue = Venue.find_by_id(r.venue_id)
+        if venue.present?
+          venue.name
+        end
       end
     end
     column "Redeemed on", sortable: "created_at" do |r|
-      r.created_at.localtime.strftime("%B %d, %Y %H:%M")
+      r.created_at.strftime("%B %d, %Y %H:%M")
     end
     actions
   end
@@ -47,7 +59,10 @@ ActiveAdmin.register Redemption do
           f.deal.merchant
         end
         row "Venue redeemed at" do
-          Venue.find(f.venue_id).name
+          venue = Venue.find_by_id(f.venue_id)
+          if venue.present?
+            venue.name
+          end
         end
         row "User who redeemed" do
           f.user

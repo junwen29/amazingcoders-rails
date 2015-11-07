@@ -1,14 +1,18 @@
-<div id="venue_chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<div id="venue_chart" style="min-width: 310px; height: 400px; margin: 0 auto; overflow-x: auto"></div>
 
 <footer>
   <script>
       $(document).ready(function () {
           $('#venue_chart').highcharts({
               chart: {
-                  type: 'column'
+                  type: 'column',
+                  reflow: false
               },
               exporting: {
-                  filename: 'Popularity of Venues ' + new Date().toDateString()
+                  filename: 'Popularity of Venues ' + new Date().toDateString(),
+                  scale: 1,
+                  sourceWidth: 1289,
+                  sourceHeight: 400
               },
               credits: {
                   enabled: false
@@ -100,7 +104,7 @@
                           id: "<%= @deals_by_venue[loop][0] %>" + " redeem",
                           data: [
                               <% inner_loop = 1 %>
-                              <% num_of_deals = @deals_by_venue[loop].size - 2 %>
+                              <% num_of_deals = @deals_by_venue[loop].size - 1 %>
                               <% while inner_loop < num_of_deals %>
                               [
                                   "<%= @deals_by_venue[loop][inner_loop][0] %>", <%= @deals_by_venue[loop][inner_loop][1] %>

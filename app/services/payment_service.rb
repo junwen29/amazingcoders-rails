@@ -2,17 +2,21 @@ class PaymentService
 
   module ClassMethods
 
-    def get_overlapping_payments(merchant_id, new_start_date)
+    def get_overlapping_payments(merchant_id, start_date, months)
       all_payments = Payment.where(:merchant_id => merchant_id)
       valid_payments = all_payments.where('expiry_date >= ? AND paid = ? AND plan1 = ?', Date.today, true, true)
-      overlapping_payments = valid_payments.where('expiry_date >= ?', new_start_date)
-      overlapping_payments.count
+      overlapping_payments = valid_payments.where('start_date <= ? AND start_date >= ?', start_date.months_since(months), start_date )
+      overlapping_payments1 = valid_payments.where('start_date <= ? AND expiry_date >= ?', start_date, start_date.months_since(months))
+      overlapping_payments2 = valid_payments.where('expiry_date >= ? AND expiry_date <= ?', start_date, start_date.months_since(months))
+      overlapping_payments.count + overlapping_payments1.count + overlapping_payments2.count
     end
 
-    def get_overlapping_dates(merchant_id, start_date, expiry_date, months)
+    def get_overlapping_dates(merchant_id, expiry_date, months)
       all_payments = Payment.where(:merchant_id => merchant_id)
       valid_payments = all_payments.where('expiry_date >= ? AND paid = ? AND plan1 = ?', Date.today, true, true)
-      overlapping_payments = valid_payments.where('start_date > ? AND start_date <= ?', start_date, expiry_date.months_since(months))
+      overlapping_payments = valid_payments.where('start_date > ? AND start_date <= ?', expiry_date, expiry_date.months_since(months))
+
+     # logger.debug "num overlapping: #{overalapping_payments.count.inspect}"
       overlapping_payments.count
     end
 
@@ -118,7 +122,8 @@ class PaymentService
     end
 
     def extend_plan(payment)
-      payment.update(plan1: true, add_on1: true, add_on2: true, add_on3: true, total_cost: 0, months: 1, paid: true)
+      payment.update(plan1: true, add_on1: true, add_on2: true, add_on3: true, total_cost: 0, months: 1, paid: false,
+                     expiry_date: payment.start_date.months_since(1))
     end
 
 =begin

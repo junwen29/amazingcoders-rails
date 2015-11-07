@@ -1,6 +1,7 @@
 ActiveAdmin.register Payment do
   # actions :all, except: [:edit] # forbid edit to payment information
   config.clear_action_items!
+  config.sort_order = "id_asc"
 
   menu :parent => "Payment", :priority => 1
 
@@ -15,7 +16,7 @@ ActiveAdmin.register Payment do
         flash[:success] = "Payment successfully updated!"
         # TODO - DEMO: Uncomment for demonstration
         # merchant_id = @payment.merchant_id
-        # PaymentMailer.update_subscription_admin("valued merchant", @payment, MerchantService.get_email(merchant_id)).deliver
+        PaymentMailer.update_subscription_admin("valued merchant", @payment, MerchantService.get_email(merchant_id)).deliver
         redirect_to admin_payment_path
       else
         flash[:error] = "Failed to update payment!"
@@ -32,6 +33,13 @@ ActiveAdmin.register Payment do
   scope :all
   scope :active
   scope :expired
+  scope :future
+  scope :dashboard do |payments|
+    date = Date.today.end_of_month
+    plan_id = 1
+    all_premiums = payments.where('start_date <= ? AND expiry_date >= ? AND paid = ?', date, date, true)
+    plan_premiums = all_premiums.joins(:plan_payments).where('plan_payments.plan_id' => plan_id)
+  end
 
   # preserve_default_filters!
   remove_filter :plan1, :add_on1, :add_on2, :add_on3, :add_on_payments, :plan_payments, :charge, :paid, :created_at, :updated_at
@@ -86,7 +94,7 @@ ActiveAdmin.register Payment do
       end
       output.join(', ').html_safe
     end
-    column "Premium Paid", :total_cost do |payment|
+    column "Premium Paid", sortable: 'total_cost' do |payment|
       number_to_currency payment.total_cost
     end
     column "Start Date", :start_date

@@ -1,6 +1,7 @@
 ActiveAdmin.register Venue do
   # Remove Create New Deal button
   config.clear_action_items!
+  config.sort_order = "id_asc"
   
   menu :parent => "Merchant", :priority => 2
 
@@ -29,10 +30,10 @@ ActiveAdmin.register Venue do
   index do
     selectable_column
     column "Id", :id
-    column "Merchant", :merchant_id do |venue|
+    column "Merchant", sortable: 'venue.merchant' do |venue|
       auto_link venue.merchant
     end
-    column "Venue" do |venue|
+    column "Venue", sortable: 'name' do |venue|
       div :class => "venuesCol" do
         venue.name
       end
