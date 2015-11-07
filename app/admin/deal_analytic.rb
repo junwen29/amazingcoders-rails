@@ -2,6 +2,7 @@ ActiveAdmin.register DealAnalytic do
   menu :parent => "Deals", :priority => 3
 
   config.clear_action_items!
+  config.sort_order = "id_asc"
   actions :all, except: [:edit]
 
   action_item :only => :show do

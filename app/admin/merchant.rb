@@ -1,6 +1,7 @@
 ActiveAdmin.register Merchant do
   # Remove Create New Deal button
   config.clear_action_items!
+  config.sort_order = "id_asc"
 
   menu :parent => "Merchant", :priority => 1
   actions :all

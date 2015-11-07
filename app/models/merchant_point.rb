@@ -6,6 +6,19 @@ class MerchantPoint < ActiveRecord::Base
   scope :credit, -> {where("operation = ?", 'Credit')}
   scope :debit, -> {where("operation = ?", 'Debit')}
 
+  validate :ensure_no_negative
+
+  def ensure_no_negative
+    merchant = Merchant.find(merchant_id)
+    total_points = merchant.total_points
+    if operation == "Debit"
+      total_points -= points
+    end
+    if total_points < 0
+      errors.add(:base, 'Merchant cannot have negative points: ' + total_points.to_s)
+    end
+  end
+
   private
   def edit_total
     @point = MerchantPoint.last
