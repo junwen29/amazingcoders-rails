@@ -1,5 +1,5 @@
 class PaymentMailer < ActionMailer::Base
-  default from: "burpple@mail.com"
+  default from: "noreplyburpple@gmail.com"
 
   def subscription_email(user, payment, email)
     @user = user

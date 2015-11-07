@@ -8,14 +8,11 @@ ActiveAdmin.register Deal do
   controller do
     def update
       @deal = Deal.find(params[:id])
-
       if @deal.update_columns(deal_params)
         flash[:success] = "Deal successfully updated!"
-
         # TODO - DEMO: Uncomment on demonstration
-        #merchant_id = @deal.merchant_id
-        #DealMailer.update_deal_email_admin("valued merchant", @deal, MerchantService.get_email(merchant_id)).deliver
-
+        merchant_id = @deal.merchant_id
+        DealMailer.update_deal_email_admin("valued merchant", @deal, MerchantService.get_email(merchant_id)).deliver
         redirect_to admin_deal_path
       else
         flash[:error] = "Failed to update deal!"
@@ -24,10 +21,10 @@ ActiveAdmin.register Deal do
 
     private
     def deal_params
-      params.require(:deal).permit(:venue_ids, :start_date, :title, :redeemable, :multiple_use, :image, :type_of_deal, :description, :location, :t_c, :pushed, :active,
+      params.require(:deal).permit(:start_date, :title, :redeemable, :multiple_use, :image, :type_of_deal, :description, :location, :t_c, :pushed, :active,
                                    deal_days_attributes: [:id, :mon, :tue, :wed, :thur, :fri, :sat, :sun, :_destroy,
                                                           deal_times_attributes: [:id, :started_at, :ended_at, :_destroy]],
-                                   deal_venues_attributes: [:id, :deal_id, :venue_id], venues_attributes: [:id, :location])
+                                   deal_venues_attributes: [:id, :qrCodeLink], venues_attributes: [:id, :location])
     end
   end
 
@@ -38,7 +35,6 @@ ActiveAdmin.register Deal do
   scope :dashboard do |deals|
     deals.where('expiry_date >= ? AND active = true', Date.today)
   end
-
 
   filter :merchant, :collection => proc {(Merchant.all).map{|m| [m.email, m.id]}}
   filter :venues, label: 'Venues',:collection => proc {(Venue.all).map{|v| [v.name, v.id]}}

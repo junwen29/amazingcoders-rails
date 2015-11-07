@@ -1,5 +1,5 @@
 class DealMailer < ActionMailer::Base
-  default from: "burpple@mail.com"
+  default from: "noreplyburpple@gmail.com"
 
   def deal_email(user, deal, email)
     @user = user
