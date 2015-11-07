@@ -18,7 +18,7 @@ class GiftsController < InheritedResources::Base
         render 'payments/gift_extend'
         #redirect_to gift_extend_path
       else
-        flash[:success] = "Gift Redeemed!"
+        flash[:success] = "'" + gift.name + "' redeemed! Please check your email on the details of collection"
         reason = "Redeemed " + gift.name
         MerchantPointService.new_point(reason, gift.points, "Debit", merchant_id)
         # Send out payment acknowledgement email

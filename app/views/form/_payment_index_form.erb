@@ -75,13 +75,13 @@
                 <% p.destroy %>
             <% end %>
         <% end %>
-        <% @payments.order(created_at: :desc).each do |payment| %>
+        <% @payments.order(updated_at: :desc).each do |payment| %>
             <tr>
               <td><%= payment.id %></td>
               <td><%= number_to_currency payment.total_cost %></td>
               <td>
                 <% if payment.plan1 %>
-                    Deals Listing Service
+                    Premium Deals Services
                 <% end %>
               </td>
               <td>
@@ -102,8 +102,22 @@
               </td>
               <td><%= payment.start_date.strftime("%d/%m/%Y") %> </td>
               <td><%= payment.expiry_date.strftime("%d/%m/%Y") %> </td>
-              <td><%= payment.created_at.strftime("%d/%m/%Y %r")%></td>
-              <td><%= link_to 'Modify', edit_payment_path(payment), class: "btn btn-big btn-success" %></td>
+              <td><%= payment.updated_at.strftime("%d/%m/%Y %r")%></td>
+              <td>
+                <% if payment.add_on1 && payment.add_on2 && payment.add_on3 &&
+                        PaymentService.get_overlapping_dates(session[:merchant_id], payment.expiry_date, 1) > 0 %>
+                    <%= link_to edit_payment_path(payment), {:style => 'color:#FFFFFF;', :class => "css_class"} do %>
+                        <button class="btn btn-xs btn-default disabled" type="button" data-toggle="tooltip" data-placement="top"
+                                title="You are unable to extend this plan or purchase any more addons">
+                          Modify
+                        </button>
+                    <% end %>
+
+                    <% else %>
+                    <%= link_to 'Modify', edit_payment_path(payment), class: "btn btn-big btn-success" %>
+                <% end %>
+
+              </td>
             </tr>
         <% end %>
       </table>

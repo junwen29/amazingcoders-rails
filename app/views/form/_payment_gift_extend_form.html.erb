@@ -13,7 +13,7 @@
           <th>Premium Service</th>
         </tr>
 
-        <% @upcoming_payments.each do |payment| %>
+        <% @upcoming_payments.order(start_date: :asc).each do |payment| %>
             <tr>
               <td><%= payment.start_date.strftime("%d/%m/%Y") %> </td>
               <td><%= payment.expiry_date.strftime("%d/%m/%Y") %> </td>

@@ -4,7 +4,7 @@
 <p>Your gift redemption ticket is: <strong><%= @gift.id %></strong></p>
 <p>Please present this email to collect your gift at Burpple HQ. We are located at: <a href="https://www.google.com/maps?daddr=1.308948,103.857547">213 Jalan Besar, Singapore 208897</a> </p>
 
-<p>You have spent <b><%= @gift.points %> Burps</b> and have <b><%= @points_left %> Burps</b> left!</p>
+<p>You have spent <b><%= @gift.points %> Burps</b> and have <b><%= @points_left - @gift.points%> Burps</b> left!</p>
 
 <p>To redeem more gifts on Burpple, follow this link: <%= @url %> </p>
 
