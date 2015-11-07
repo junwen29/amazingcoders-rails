@@ -66,11 +66,15 @@ class MerchantService
     end
 
     def get_active_deals_that_are_active_between_two_dates(merchant_id, start_date, end_date)
-      MerchantService.get_all_active_deals(merchant_id).where("(start_date >= ? AND start_date <= ?) OR (expiry_date >= ? AND expiry_date <= ?) OR (start_date <= ? AND expiry_date >= ?)", start_date, end_date, start_date, end_date, start_date, end_date)
+      start_date = start_date.to_datetime.in_time_zone("Singapore").beginning_of_day
+      end_date = end_date.to_datetime.in_time_zone("Singapore").end_of_day
+      MerchantService.get_all_active_deals(merchant_id).where("(activate_date >= ? AND activate_date <= ?) OR (expiry_date >= ? AND expiry_date <= ?) OR (activate_date <= ? AND expiry_date >= ?)", start_date, end_date, start_date, end_date, start_date, end_date)
     end
 
     def get_past_deals_that_are_active_between_two_dates(merchant_id, start_date, end_date)
-      MerchantService.get_past_deals(merchant_id).where("(start_date >= ? AND start_date <= ?) OR (expiry_date >= ? AND expiry_date <= ?) OR (start_date <= ? AND expiry_date >= ?)", start_date, end_date, start_date, end_date, start_date, end_date)
+      start_date = start_date.to_datetime.in_time_zone("Singapore").beginning_of_day
+      end_date = end_date.to_datetime.in_time_zone("Singapore").end_of_day
+      MerchantService.get_past_deals(merchant_id).where("(activate_date >= ? AND activate_date <= ?) OR (expiry_date >= ? AND expiry_date <= ?) OR (activate_date <= ? AND expiry_date >= ?)", start_date, end_date, start_date, end_date, start_date, end_date)
     end
 
     #for MerchantPoints

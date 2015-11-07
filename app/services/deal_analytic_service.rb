@@ -108,22 +108,22 @@ class DealAnalyticService
 
         if total
           while view_start_date <= temp_end_date
-          num_view_array << Viewcount.where(deal_id: d.id).where(created_at: d.created_at..view_start_date.end_of_day).count
+          num_view_array << Viewcount.where(deal_id: d.id).where(created_at: d.created_at..view_start_date.to_datetime.in_time_zone("Singapore").end_of_day).count
           view_start_date = view_start_date + 1.days
           end
 
           while redemption_start_date <= temp_end_date
-            num_redeem_array << Redemption.where(deal_id: d.id).where(created_at: d.created_at..redemption_start_date.end_of_day).count
+            num_redeem_array << Redemption.where(deal_id: d.id).where(created_at: d.created_at..redemption_start_date.to_datetime.in_time_zone("Singapore").end_of_day).count
             redemption_start_date = redemption_start_date + 1.days
           end
         else
           while view_start_date <= temp_end_date
-            num_view_array << Viewcount.where(deal_id: d.id).where(created_at: view_start_date.beginning_of_day..view_start_date.end_of_day).count
+            num_view_array << Viewcount.where(deal_id: d.id).where(created_at: view_start_date.beginning_of_day..view_start_date.to_datetime.in_time_zone("Singapore").end_of_day).count
             view_start_date = view_start_date + 1.days
           end
 
           while redemption_start_date <= temp_end_date
-            num_redeem_array << Redemption.where(deal_id: d.id).where(created_at: redemption_start_date.beginning_of_day..redemption_start_date.end_of_day).count
+            num_redeem_array << Redemption.where(deal_id: d.id).where(created_at: redemption_start_date.beginning_of_day..redemption_start_date.to_datetime.in_time_zone("Singapore").end_of_day).count
             redemption_start_date = redemption_start_date + 1.days
           end
         end
@@ -445,6 +445,9 @@ class DealAnalyticService
     # returns conversion rate of num unique views to redeems in percentage
     def get_views_to_redeem(deal_id)
       view_counts = ViewcountService.get_uniq_view_count(deal_id).to_f
+      if view_counts == 0
+        return 'No Views Yet'
+      end
       user_ids = ViewcountService.get_uniq_user_id(deal_id)
       redeem_count = RedemptionService.count_uniq_redemptions(deal_id, user_ids).to_f
       conversion = (redeem_count/view_counts)*100
@@ -455,6 +458,9 @@ class DealAnalyticService
     def get_multiple_redeems_percentage(deal_id)
       user_count = RedemptionService.count_uniq_redemptions(deal_id, nil, Date.today).to_f
       multiple_redeems = RedemptionService.num_users_multiple(deal_id, Date.today).to_f
+      if user_count == 0
+        return 'No Redeems Yet'
+      end
       percentage = (multiple_redeems/user_count)*100
       percentage.round(2)
     end

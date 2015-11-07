@@ -36,7 +36,7 @@
                           <% end %>
                       <% end %>
                   <% elsif deal.redeemable && @payment.add_on3 && (deal.start_date > Date.today) %>
-                      <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gatherd">N/A</p></td>
+                      <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
                   <% elsif @payment.add_on3 %>
                       <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                   <% end %>
@@ -60,7 +60,7 @@
                       <% if deal.redeemable && (deal.start_date <= Date.today) %>
                           <td id='num'><%= DealAnalyticService.get_redemption_count(deal.id) %></td>
                       <% elsif deal.redeemable && (deal.start_date > Date.today)%>
-                          <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gatherd">N/A</p></td>
+                          <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
                       <% else %>
                           <td><p id='untracable' data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence data cannot be gathered">N/A</p></td>
                       <% end %>
