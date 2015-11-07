@@ -10,7 +10,7 @@ class Api::P1::FeedbacksController < Api::P1::ApplicationController
     desc.tr("%20", " ")
 
     feedback = UserFeedback.create(:title => title, :category => category, :content => desc, :user_id => user_id)
-
+    FeedbackMailer.user_feedback_email(User.find_by_id(user_id), feedback).deliver
     if feedback.persisted?
       head_ok
       return

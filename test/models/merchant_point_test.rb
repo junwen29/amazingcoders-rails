@@ -21,7 +21,7 @@ class MerchantPointTest < ActiveSupport::TestCase
     merchant = merchant_one
     merchant.save
 
-    reason = "Paid for a Plan upgrade"
+    reason = "Redeem a gift"
     points = 100
     operation = "Debit"
     merchant_id = merchant.id
