@@ -47,7 +47,12 @@
                           <% end %>
 
                           <% if deal.redeemable && (deal.start_date <= Date.today) %>
-                              <td style="text-align: center;"><%= DealAnalyticService.get_views_to_redeem(deal.id) %>%</td>
+                              <% percentage_views = DealAnalyticService.get_views_to_redeem(deal.id) %>
+                              <% if percentage_views == 'No Views Yet' %>
+                                  <td style="text-align: center;"> <%= percentage_views %></td>
+                              <% else %>
+                                  <td style="text-align: center;"> <%= percentage_views %>%</td>
+                              <% end %>
                               <% percentage_redeems = DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>
                               <% if percentage_redeems == 'No Redeems Yet' %>
                                   <td style="text-align: center;"> <%= percentage_redeems %></td>
@@ -126,7 +131,12 @@
                           <% end %>
                           <% if deal.redeemable && (deal.start_date <= Date.today) %>
                               <td style="text-align: center;"><%= DealAnalyticService.get_views_to_redeem(deal.id) %>%</td>
-                              <% percentage_redeems = DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>
+                              <% percentage_views = DealAnalyticService.get_views_to_redeem(deal.id) %>
+                              <% if percentage_views == 'No Views Yet' %>
+                                  <td style="text-align: center;"> <%= percentage_views %></td>
+                              <% else %>
+                                  <td style="text-align: center;"> <%= percentage_views %>%</td>
+                              <% end %>
                               <% if percentage_redeems == 'No Redeems Yet' %>
                                   <td style="text-align: center;"> <%= percentage_redeems %></td>
                               <% else %>
