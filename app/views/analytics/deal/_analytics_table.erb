@@ -27,10 +27,11 @@
                     <tr>
                       <td><%= deal.title %></td>
                       <% if @payment.add_on1 && deal.pushed %>
-                          <% if DealAnalyticService.get_wishlist_to_views(deal.id) == 'nil' %>
+                          <% wishlist_view = DealAnalyticService.get_wishlist_to_views(deal.id) %>
+                          <% if wishlist_view == 'nil' %>
                               <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="As you have no wishlisters when you pushed your deal, data cannot be gathered">N/A</p></td>
                           <% else %>
-                              <td style="text-align: center;"><%= DealAnalyticService.get_wishlist_to_views(deal.id) %>%</td>
+                              <td style="text-align: center;"><%= wishlist_view %>%</td>
                           <% end %>
                       <% elsif @payment.add_on1 && !deal.pushed %>
                           <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not been pushed hence, data cannot be gathered">N/A</p></td>
@@ -40,7 +41,7 @@
 
                       <% if deal.redeemable && (deal.start_date <= Date.today) %>
                           <td style="text-align: center;"><%= DealAnalyticService.get_views_to_redeem(deal.id) %>%</td>
-                          <td style="text-align: center;"> <%= DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>% = <%= RedemptionService.num_users_multiple(deal.id) %> Users</td>
+                          <td style="text-align: center;"> <%= DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>% = <%= RedemptionService.num_users_multiple(deal.id, Date.today) %> Users</td>
                           <td style="text-align: center;"> <%= DealAnalyticService.average_redemption_multiple_users(deal.id) %></td>
                           <td style="text-align: center;"> <%= DealAnalyticService.average_time_btw_multiple_redeem(deal.id) %></td>
                       <% elsif deal.redeemable && (deal.start_date > Date.today)%>
@@ -88,10 +89,11 @@
                     <tr>
                       <td><%= deal.title %></td>
                       <% if @payment.add_on1 && deal.pushed %>
-                          <% if DealAnalyticService.get_wishlist_to_views(deal.id) == 'nil' %>
+                          <% wishlist_view = DealAnalyticService.get_wishlist_to_views(deal.id) %>
+                          <% if wishlist_view == 'nil' %>
                               <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="As you have no wishlisters when you pushed your deal, data cannot be gathered">N/A</p></td>
                           <% else %>
-                              <td style="text-align: center;"><%= DealAnalyticService.get_wishlist_to_views(deal.id) %>%</td>
+                              <td style="text-align: center;"><%= wishlist_view %>%</td>
                           <% end %>
                       <% elsif @payment.add_on1 && !deal.pushed %>
                           <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not been pushed hence, data cannot be gathered">N/A</p></td>
