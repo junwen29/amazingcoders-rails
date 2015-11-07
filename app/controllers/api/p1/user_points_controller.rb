@@ -15,6 +15,7 @@ class Api::P1::UserPointsController < Api::P1::ApplicationController
     reason = gift.name
     operation = 'Debit'
     UserPointService.new_point(reason, points, operation, user_id)
+    GiftMailer.user_gift_email(user, gift).deliver
     head :ok
   end
 

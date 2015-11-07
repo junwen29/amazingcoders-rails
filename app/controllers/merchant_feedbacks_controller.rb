@@ -12,6 +12,8 @@ class MerchantFeedbacksController < ApplicationController
     if merchant_feedback.save
       flash[:success] = "Feedback successfully submitted!"
       redirect_to merchant_feedback
+      # Send out confirmation email
+      FeedbackMailer.merchant_feedback_email(MerchantService.get_email(merchant_id), merchant_feedback).deliver
     else
       flash[:error] = "Failed to submit feedback."
       render 'new'
