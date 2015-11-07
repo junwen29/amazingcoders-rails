@@ -455,6 +455,9 @@ class DealAnalyticService
     def get_multiple_redeems_percentage(deal_id)
       user_count = RedemptionService.count_uniq_redemptions(deal_id).to_f
       multiple_redeems = RedemptionService.num_users_multiple(deal_id).to_f
+      if user_count == 0
+        return 'No Redeems Yet'
+      end
       percentage = (multiple_redeems/user_count)*100
       percentage.round(2)
     end

@@ -48,7 +48,12 @@
 
                           <% if deal.redeemable && (deal.start_date <= Date.today) %>
                               <td style="text-align: center;"><%= DealAnalyticService.get_views_to_redeem(deal.id) %>%</td>
-                              <td style="text-align: center;"> <%= DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>% = <%= RedemptionService.num_users_multiple(deal.id) %> Users</td>
+                              <% percentage_redeems = DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>
+                              <% if percentage_redeems == 'No Redeems Yet' %>
+                                  <td style="text-align: center;"> <%= percentage_redeems %></td>
+                              <% else %>
+                                  <td style="text-align: center;"> <%= percentage_redeems %>% = <%= RedemptionService.num_users_multiple(deal.id) %> Users</td>
+                              <% end %>
                               <td style="text-align: center;"> <%= DealAnalyticService.average_redemption_multiple_users(deal.id) %></td>
                               <td style="text-align: center;"> <%= DealAnalyticService.average_time_btw_multiple_redeem(deal.id) %></td>
                           <% elsif deal.redeemable && (deal.start_date > Date.today)%>
@@ -121,7 +126,12 @@
                           <% end %>
                           <% if deal.redeemable && (deal.start_date <= Date.today) %>
                               <td style="text-align: center;"><%= DealAnalyticService.get_views_to_redeem(deal.id) %>%</td>
-                              <td style="text-align: center;"> <%= DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>% = <%= RedemptionService.num_users_multiple(deal.id) %> Users</td>
+                              <% percentage_redeems = DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>
+                              <% if percentage_redeems == 'No Redeems Yet' %>
+                                  <td style="text-align: center;"> <%= percentage_redeems %></td>
+                              <% else %>
+                                  <td style="text-align: center;"> <%= percentage_redeems %>% = <%= RedemptionService.num_users_multiple(deal.id) %> Users</td>
+                              <% end %>
                               <td style="text-align: center;"> <%= DealAnalyticService.average_redemption_multiple_users(deal.id) %></td>
                               <td style="text-align: center;"> <%= DealAnalyticService.average_time_btw_multiple_redeem(deal.id) %></td>
                           <% elsif deal.redeemable && (deal.start_date > Date.today)%>
