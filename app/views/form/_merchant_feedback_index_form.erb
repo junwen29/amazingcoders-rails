@@ -6,19 +6,19 @@
     <div class="table-responsive">
       <table class="table table-bordered table-hover">
         <tr>
+          <th>Id</th>
           <th>Title</th>
           <th>Category</th>
           <th>Description</th>
           <th>Submitted on</th>
-          <th></th>
         </tr>
         <% @merchant_feedbacks.each do |merchant_feedback| %>
             <tr>
+              <td><%= merchant_feedback.id %></td>
               <td style="max-width: 200px;"><%= merchant_feedback.title %></td>
               <td><%= merchant_feedback.category %></td>
               <td style="max-width: 300px"><%= merchant_feedback.content %></td>
               <td style="width: 200px"><%= merchant_feedback.created_at.strftime("%d/%m/%Y %r") %></td>
-              <td><%= link_to 'View', merchant_feedback_path(merchant_feedback), class:"btn btn-xs btn-default" %></td>
             </tr>
         <% end %>
       </table>
