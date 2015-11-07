@@ -82,10 +82,14 @@
   </div><!-- panel -->
 
   <div id = "button"> <center>
-    <button name="button_addon" id="button_addon" class="btn-info"
-            type="button" data-toggle="tooltip" data-placement="top" title="You are required to re-login to enjoy the features of the addons after upgrade."
-            onclick=showAddon() > Upgrade Plan with Add On </button>
+    <% unless @payment.add_on1 && @payment.add_on2 && @payment.add_on3 %>
+        <button name="button_addon" id="button_addon" class="btn-info"
+                type="button" data-toggle="tooltip" data-placement="top" title="You are required to re-login to enjoy the features of the addons after upgrade."
+                onclick=showAddon() > Upgrade Plan with Add On </button>
+    <% end %>
+    <% if PaymentService.get_overlapping_dates(session[:merchant_id], @payment.expiry_date, 1) == 0 %>
     <button name="button_plan" id="button_plan" class="btn-info" onclick=showPlan()> Extend Plan </button>
+        <% end %>
   </center>
   </div>
 

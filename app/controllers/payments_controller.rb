@@ -132,7 +132,7 @@ class PaymentsController < ApplicationController
       @addon2 = AddOn.find(2)
       @addon3 = AddOn.find(3)
       total_payments = PaymentService.count_total_payments
-      
+
       overall_plan = ((PaymentService.count_plan_payments(1).to_f / total_payments )*100).round(1)
       active_plan = ((PaymentService.count_active_premiums(Date.today, 1).to_f / total_payments )*100).round(1)
       @plan_hint = overall_plan.round(1).to_s + "% of Food Merchants have used Premium Deals Services and " + active_plan.round(1).to_s + "% of Food Merchants are currently using it."

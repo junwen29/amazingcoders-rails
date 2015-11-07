@@ -15,6 +15,8 @@ class PaymentService
       all_payments = Payment.where(:merchant_id => merchant_id)
       valid_payments = all_payments.where('expiry_date >= ? AND paid = ? AND plan1 = ?', Date.today, true, true)
       overlapping_payments = valid_payments.where('start_date > ? AND start_date <= ?', expiry_date, expiry_date.months_since(months))
+
+     # logger.debug "num overlapping: #{overalapping_payments.count.inspect}"
       overlapping_payments.count
     end
 

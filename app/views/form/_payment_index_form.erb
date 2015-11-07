@@ -103,7 +103,21 @@
               <td><%= payment.start_date.strftime("%d/%m/%Y") %> </td>
               <td><%= payment.expiry_date.strftime("%d/%m/%Y") %> </td>
               <td><%= payment.updated_at.strftime("%d/%m/%Y %r")%></td>
-              <td><%= link_to 'Modify', edit_payment_path(payment), class: "btn btn-big btn-success" %></td>
+              <td>
+                <% if payment.add_on1 && payment.add_on2 && payment.add_on3 &&
+                        PaymentService.get_overlapping_dates(session[:merchant_id], payment.expiry_date, 1) > 0 %>
+                    <%= link_to edit_payment_path(payment), {:style => 'color:#FFFFFF;', :class => "css_class"} do %>
+                        <button class="btn btn-xs btn-default disabled" type="button" data-toggle="tooltip" data-placement="top"
+                                title="You are unable to extend this plan or purchase any more addons">
+                          Modify
+                        </button>
+                    <% end %>
+
+                    <% else %>
+                    <%= link_to 'Modify', edit_payment_path(payment), class: "btn btn-big btn-success" %>
+                <% end %>
+
+              </td>
             </tr>
         <% end %>
       </table>
