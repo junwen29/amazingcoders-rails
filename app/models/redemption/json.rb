@@ -5,7 +5,7 @@ module Redemption::Json
 
     def to_json(json, options = {})
       json.id         self.id
-      json.created_at self.created_at
+      json.created_at self.created_at.strftime("%Y-%m-%dT%H:%M:%SZ%Z")
 
       json.user do
         self.user.to_json json
@@ -20,7 +20,7 @@ module Redemption::Json
       venue = Venue.find(self.venue_id)
 
       json.venue do
-        venue.to_simple_json json
+        venue.to_json json
       end
 
       # return user point
