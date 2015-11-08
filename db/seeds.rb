@@ -107,17 +107,19 @@ while user_id < 1100
   user.save
   user_id = user_id + 1
 end
+=begin
 user_id = 1000
 id = 1000
 while user_id < 1100
   i = 0
   while i < 20
-    UserPoint.create(id: id, reason: 'Redeem Deal', points: 5, operation: 'Credit', user_id: user_id)
+    #UserPoint.create(id: id, reason: 'Redeem Deal', points: 5, operation: 'Credit', user_id: user_id)
     i = i + 1
     id = id + 1
   end
   user_id = user_id + 1
 end
+=end
 
 # Seed payments and associated tables
 payment_id = 1000
@@ -138,7 +140,7 @@ AddOnPayment.create(id: add_on_payment_id, add_on_id: 3, payment_id: payment_id,
 payment_id = payment_id + 1
 plan_payment_id = plan_payment_id + 1
 add_on_payment_id = add_on_payment_id + 1
-MerchantPoint.create(id: 1000, reason: 'Paid for a plan upgrade', points: 1040, operation: 'Credit', merchant_id: 1000)
+#MerchantPoint.create(id: 1000, reason: 'Paid for a plan upgrade', points: 1040, operation: 'Credit', merchant_id: 1000)
 
 start_date = '01-09-2015'.to_date
 end_date = start_date + 3.months
@@ -148,7 +150,7 @@ Payment.new(id: 1001, start_date: start_date, expiry_date: end_date, total_cost:
 PlanPayment.create(id: plan_payment_id, plan_id: 1, payment_id: payment_id, created_at: start_datetime)
 payment_id = payment_id + 1
 plan_payment_id = plan_payment_id + 1
-MerchantPoint.create(id: 1001, reason: 'Paid for a plan upgrade', points: 90, operation: 'Credit', merchant_id: 1001)
+#MerchantPoint.create(id: 1001, reason: 'Paid for a plan upgrade', points: 90, operation: 'Credit', merchant_id: 1001)
 
 start_date = '01-01-2015'.to_date
 end_date = start_date + 11.months
@@ -160,7 +162,7 @@ AddOnPayment.create(id: add_on_payment_id, add_on_id: 1, payment_id: payment_id,
 payment_id = payment_id + 1
 plan_payment_id = plan_payment_id + 1
 add_on_payment_id = add_on_payment_id + 1
-MerchantPoint.create(id: 1002, reason: 'Paid for a plan upgrade', points: 385, operation: 'Credit', merchant_id: 1002)
+#MerchantPoint.create(id: 1002, reason: 'Paid for a plan upgrade', points: 385, operation: 'Credit', merchant_id: 1002)
 
 # merchant_id 1003 has no payment
 
@@ -179,7 +181,7 @@ while merchant_id < 1010
   end_date = start_date + 2.months
   start_datetime = start_date.to_datetime.in_time_zone('Singapore').beginning_of_day
   payment_id = payment_id + 1
-  MerchantPoint.create(id: merchant_id, reason: 'Paid for a plan upgrade', points: 140, operation: 'Credit', merchant_id: merchant_id)
+  #MerchantPoint.create(id: merchant_id, reason: 'Paid for a plan upgrade', points: 140, operation: 'Credit', merchant_id: merchant_id)
   merchant_id = merchant_id + 1
   plan_payment_id = plan_payment_id + 1
   add_on_payment_id = add_on_payment_id + 1
@@ -201,7 +203,7 @@ while merchant_id < 1050
     end_date = end_date + 1.months
   end
   payment_id = payment_id + 1
-  MerchantPoint.create(id: merchant_id, reason: 'Paid for a plan upgrade', points: 45, operation: 'Credit',merchant_id: merchant_id)
+  #MerchantPoint.create(id: merchant_id, reason: 'Paid for a plan upgrade', points: 45, operation: 'Credit',merchant_id: merchant_id)
   merchant_id = merchant_id + 1
   plan_payment_id = plan_payment_id + 1
   add_on_payment_id = add_on_payment_id + 1
@@ -218,7 +220,7 @@ while merchant_id < 1100
     end_date = end_date + 1.months
   end
   payment_id = payment_id + 1
-  MerchantPoint.create(id: merchant_id, reason: 'Paid for a plan upgrade', points: 40, operation: 'Credit', merchant_id: merchant_id)
+  #MerchantPoint.create(id: merchant_id, reason: 'Paid for a plan upgrade', points: 40, operation: 'Credit', merchant_id: merchant_id)
   merchant_id = merchant_id + 1
   plan_payment_id = plan_payment_id + 1
   add_on_payment_id = add_on_payment_id + 1
@@ -237,7 +239,7 @@ while merchant_id < 1050
   add_on_payment_id = add_on_payment_id + 1
   AddOnPayment.create(id: add_on_payment_id, add_on_id: 3, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
   payment_id = payment_id + 1
-  MerchantPoint.create(id: id, reason: 'Paid for a plan upgrade', points: 45, operation: 'Credit',merchant_id: merchant_id)
+  #MerchantPoint.create(id: id, reason: 'Paid for a plan upgrade', points: 45, operation: 'Credit',merchant_id: merchant_id)
   id = id + 1
   merchant_id = merchant_id + 1
   plan_payment_id = plan_payment_id + 1
