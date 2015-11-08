@@ -12,9 +12,9 @@ AddOn.create(id: '3', name: 'Aggregate Trends', cost: '5', description: 'See pop
 
 
 # For payment analytics
-Plan.create(id: '1000', name: 'Reservations', cost: '45', description: 'Test payment analytics', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
-AddOn.create(id: '1000', plan_id: '1000', name: 'Reservation Notifications', cost: '10', description: 'Reservation Notification', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
-AddOn.create(id: '1001', plan_id: '1000', name: 'Reservation Statistics', cost: '10', description: 'Reservation Statistics', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
+Plan.create(id: '1000', name: 'Reservations', cost: '50', description: 'Test payment analytics', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
+AddOn.create(id: '1000', plan_id: '1000', name: 'Reservation Notifications', cost: '10', description: 'Reservation Notification', addon_type: 'Notification', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
+AddOn.create(id: '1001', plan_id: '1000', name: 'Reservation Statistics', cost: '10', description: 'Reservation Statistics', addon_type: 'Statistics', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
 
 # For Gifts
 Gift.create(id: '1000', name: '1 free month', points: '600', description: 'Free 1 month subscription to Premium Deals Services with all add-ons. Simply click redeem and select the start date of your plan!', gift_type: 'Merchant', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
@@ -169,7 +169,7 @@ start_date = '01-12-2014'.to_date
 start_datetime = start_date.to_datetime.in_time_zone('Singapore').beginning_of_day
 end_date = start_date + 2.months
 while merchant_id < 1010
-  Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '100.00', add_on1: false, add_on2: false,
+  Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '140.00', add_on1: false, add_on2: false,
               add_on3: false, plan1: false, paid: true, created_at: start_datetime, updated_at: start_datetime, merchant_id: merchant_id, months: 2).save(validate: false)
   PlanPayment.create(id: plan_payment_id, plan_id: 1000, payment_id: payment_id, created_at: start_datetime, updated_at: start_datetime)
   AddOnPayment.create(id: add_on_payment_id, add_on_id: 1000, payment_id: payment_id, created_at: start_datetime, updated_at: start_datetime)
@@ -179,7 +179,7 @@ while merchant_id < 1010
   end_date = start_date + 2.months
   start_datetime = start_date.to_datetime.in_time_zone('Singapore').beginning_of_day
   payment_id = payment_id + 1
-  MerchantPoint.create(id: merchant_id, reason: 'Paid for a plan upgrade', points: 100, operation: 'Credit', merchant_id: merchant_id)
+  MerchantPoint.create(id: merchant_id, reason: 'Paid for a plan upgrade', points: 140, operation: 'Credit', merchant_id: merchant_id)
   merchant_id = merchant_id + 1
   plan_payment_id = plan_payment_id + 1
   add_on_payment_id = add_on_payment_id + 1
