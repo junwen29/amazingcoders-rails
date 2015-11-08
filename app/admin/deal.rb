@@ -38,7 +38,7 @@ ActiveAdmin.register Deal do
 
   filter :merchant, :collection => proc {(Merchant.all).map{|m| [m.email, m.id]}}
   filter :venues, label: 'Venues',:collection => proc {(Venue.all).map{|v| [v.name, v.id]}}
-  filter :type_of_deal
+  filter :type_of_deal, as: :select, collection: ["Discount", "Freebies"]
   filter :description
   filter :start_date, label: 'Start Date'
   filter :expiry_date, label: 'Expiry Date'
