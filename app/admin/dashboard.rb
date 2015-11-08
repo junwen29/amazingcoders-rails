@@ -47,41 +47,18 @@ ActiveAdmin.register_page "Dashboard" do
       strong {link_to "View all Deals", admin_deals_path}
     end
 
-
-=begin
-    panel "Recent Redemptions" do
-      table_for Redemption.order("created_at desc").limit(10) do
-        column "Deal" do |r|
-          auto_link r.deal
-        end
-        column "User" do |r|
-          auto_link r.user
-        end
-        column "Venue" do |r|
-          Venue.find(r.venue_id).name
-        end
-        column "Redeemed on" do |r|
-          r.created_at.localtime.strftime("%B %d, %Y %H:%M")
-        end
-      end
-      strong {link_to "View all Redemptions", admin_redemptions_path}
-    end
-=end
-
     panel "Recent Payments" do
       table_for Payment.order("created_at desc").limit(10) do
         column "Merchant", :merchant_id do |payment|
           auto_link payment.merchant
         end
         column "Plan" do |payment|
-          # auto_link payment.plan
           if (payment.plan1)
             plan = Plan.find(1)
             auto_link plan
           end
         end
         column "Add Ons" do |payment|
-          # payment.add_ons.map{|a| a.name }.join(", ").html_safe
           output = []
           if (payment.add_on1)
             add_on1 = AddOn.find(1)
