@@ -5,7 +5,12 @@ ActiveAdmin.register AddOn do
   # Allow edit
   permit_params :name, :cost, :description, :addon_type
 
-  remove_filter :payments, :add_on_payments
+  filter :plan
+  filter :addon_type, as: :select, collection: ["Notification", "Statistics", "Trends"]
+  filter :name
+  filter :cost
+  filter :description
+  filter :created_at
 
   action_item :only => :index do
     link_to "Back to Plans", "/admin/plans"
