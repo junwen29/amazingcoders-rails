@@ -48,22 +48,6 @@ ActiveAdmin.register Payment do
     link_to "Back", "/admin/payments"
   end
 
-
-  # filter :merchant, :collection => proc {(Merchant.all).map{|m| [m.email, m.id]}}
-  #filter :plan
-  #filter :addons, :collection => AddOn.all.map(&:name)
-  #filter :total_cost
-  #filter :start_date, label: 'Subscription Date'
-  #filter :expiry_date, label: 'Expiry Date'
-  #filter :total_cost, label: 'Premium Paid'
-  #filter :plan1, label: 'Deal Listing Plan'
-  # filter :add_on1, label: 'Push Notification', as: :check_boxes
-  #filter :add_on2, label: 'Deal Statistics'
-  #filter :add_on3, label: 'Aggregate Trends'
-  #filter :created_at
-  #filter :updated_at
-
-
   index do
     selectable_column
     column "Id", :id
@@ -71,28 +55,16 @@ ActiveAdmin.register Payment do
       auto_link payment.merchant
     end
     column "Plan" do |payment|
-      # auto_link payment.plan
+      #auto_link payment.plans
       if payment.plan1
         plan = Plan.find(1)
         auto_link plan
+      else
+        payment.plans.map{|p| p.name }.join(", ").html_safe
       end
     end
     column "Add Ons" do |payment|
-      # payment.add_ons.map{|a| a.name }.join(", ").html_safe
-      output = []
-      if payment.add_on1
-        add_on1 = AddOn.find(1)
-        output << add_on1.name
-      end
-      if payment.add_on2
-        add_on2 = AddOn.find(2)
-        output << add_on2.name
-      end
-      if payment.add_on3
-        add_on3 = AddOn.find(3)
-        output << add_on3.name
-      end
-      output.join(', ').html_safe
+      payment.add_ons.map{|a| a.name }.join(", ").html_safe
     end
     column "Premium Paid", sortable: 'total_cost' do |payment|
       number_to_currency payment.total_cost
@@ -115,24 +87,12 @@ ActiveAdmin.register Payment do
           if (payment.plan1)
             plan = Plan.find(1)
             auto_link plan
+          else
+            payment.plans.map{|p| p.name }.join(", ").html_safe
           end
         end
         row :addons do |payment|
-          #payment.add_ons.map{|a| a.name }.join(", ").html_safe
-          output = []
-          if payment.add_on1
-            add_on1 = AddOn.find(1)
-            output << add_on1.name
-          end
-          if payment.add_on2
-            add_on2 = AddOn.find(2)
-            output << add_on2.name
-          end
-          if payment.add_on3
-            add_on3 = AddOn.find(3)
-            output << add_on3.name
-          end
-          output.join(', ').html_safe
+          payment.add_ons.map{|a| a.name }.join(", ").html_safe
         end
         row :start_date
         row :expiry_date
