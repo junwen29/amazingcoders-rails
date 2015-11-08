@@ -28,8 +28,6 @@ class ChargesController < ApplicationController
           :description => 'Rails Stripe customer',
           :currency    => 'sgd'
       )
-        # Send out payment acknowledgement email
-        PaymentMailer.subscription_email("valued merchant", @payment, MerchantService.get_email(merchant_id)).deliver
 
     rescue Stripe::CardError => e
       flash[:error] = e.message
@@ -58,6 +56,10 @@ class ChargesController < ApplicationController
     end
 
     @merchant.update(total_points: total_points)
+
+    # Send out payment acknowledgement email
+    PaymentMailer.subscription_email("valued merchant", @payment, MerchantService.get_email(merchant_id)).deliver
+
     redirect_to payments_path
 
   end
