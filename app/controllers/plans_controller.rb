@@ -42,8 +42,6 @@ class PlansController < ApplicationController
   def destroy
     @plan = Plan.find(params[:id])
     @plan.destroy
-    #need not add a view for this action since redirecting to the index
-    #action
     #redirect_to plan_path
   end
 

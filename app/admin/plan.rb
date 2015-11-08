@@ -10,7 +10,11 @@ ActiveAdmin.register Plan do
     end
   end
 
-  remove_filter :payments, :plan_payments
+  filter :add_ons
+  filter :name
+  filter :cost
+  filter :description
+  filter :created_at
 
   action_item :only => :show do
     link_to "Back", "/admin/plans"
