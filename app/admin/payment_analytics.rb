@@ -9,6 +9,7 @@ ActiveAdmin.register_page "Payment Analytics" do
       analytics_premium_subscribers
       analytics_premium_profits
       analytics_subscription_months
+      analytics_cross_sell
     end
 
     private
@@ -155,6 +156,29 @@ ActiveAdmin.register_page "Payment Analytics" do
         addon_json = {name: "Addons", id: plan_name, data: addon_data_months}.to_json
         @addon_months_series.push addon_json
       end
+
+    end
+
+    # Get cross selling analytics
+    private
+    def analytics_cross_sell
+      @addon1_name = AddOn.find(1).name
+      @addon2_name = AddOn.find(2).name
+      @addon3_name = AddOn.find(3).name
+
+      plan1_count = PaymentService.count_plan_payments(1).to_f
+      addon1_count = PaymentService.count_addons_cross_sell(true, true, false).to_f
+      addon2_count = PaymentService.count_addons_cross_sell(true, false, true).to_f
+      addon3_count = PaymentService.count_addons_cross_sell(false, true, true).to_f
+
+      @plan1_with_addon1 = ((addon1_count / plan1_count)*100).round(1)
+      @plan1_with_addon2 = ((addon2_count / plan1_count)*100).round(1)
+      @plan1_with_addon3 = ((addon3_count / plan1_count)*100).round(1)
+
+      @addon_1_with_2 = ((addon1_count / Payment.count)*100).round(1)
+      @addon_1_with_3 = ((addon2_count / Payment.count)*100).round(1)
+      @addon_2_with_3 = ((addon3_count / Payment.count)*100).round(1)
+
 
     end
   end
