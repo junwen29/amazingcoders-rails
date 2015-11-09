@@ -3,15 +3,15 @@
 
   <!-- show list of plans -->
   <div class="panel-group" id="accordion2">
-    <% @plan.each do |p| %>
+
         <div class="panel panel-default" >
           <div class="panel-heading" >
             <h4 class="panel-title">
-              <%= p.name %> <span class="label label-warning"><%= number_to_currency p.cost %></span>
+              <%= @plan1.name %> <span class="label label-warning"><%= number_to_currency @plan1.cost %></span>
             </h4>
-            <h6><%= p.description %></h6>
+            <h6><%= @plan1.description %></h6>
           </div>
-          <div id="collapseInner_<%= p.id %>" >
+          <div id="collapseInner_<%= @plan1.id %>" >
             <div class="panel-body">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
@@ -21,7 +21,7 @@
                     <th>Extra Cost</th>
                   </tr>
 
-                  <% p.add_ons.each do |a| %>
+                  <% @plan1.add_ons.each do |a| %>
                       <tr>
                         <td><%= a.name %></td>
                         <td><%= a.description %></td>
@@ -33,7 +33,7 @@
             </div>
           </div>
         </div>
-    <% end %>
+
   </div>
 
 
