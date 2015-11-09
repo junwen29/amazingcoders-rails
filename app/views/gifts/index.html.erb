@@ -1,0 +1,34 @@
+<%= render 'layouts/biz/dash' %>
+
+<div class="contentWrapper">
+  <div class="content">
+
+    <!--Flash messages-->
+    <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+    <% end %>
+
+    <!-- Content Heading -->
+    <div class="pull-left">
+      <p class="b2 content-title">Gifts</p>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="content-separator"></div>
+
+    <!-- Content Body -->
+    <h4 class="panel-title">
+      Total Burps: <%= @merchant.total_points%>
+    </h4>
+
+    <%= render :partial => 'form/gift_index_form' %>
+
+  </div><!-- /content -->
+</div><!-- /contentWrapper -->
+
+<%= content_for :lean_overlay do %>
+<% end %>
+
+<%= content_for :body_footer do %>
+    <%= render :partial => 'layouts/gift_index' %>
+<% end %>
