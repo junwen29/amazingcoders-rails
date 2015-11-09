@@ -2,7 +2,7 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
 # TODO: Change this data to presentation date and data for analytics will be seeding till that date
-final_end_date = "2015-12-01 00:00:00"
+final_end_date = "2015-11-19 00:00:00"
 
 Plan.create(id: '1', name: 'Premium Deals Services', cost: '30', description: 'Allows unlimited creation of deals. Publishing of up to 5 active deals')
 
@@ -406,7 +406,7 @@ DealVenue.create(id: '1017', deal_id: 1005, venue_id: 1002)
 
 start_date = '01-12-2015'.to_date
 end_date = '10-12-2015'.to_date
-created_at = start_date - 10.days
+created_at = start_date - 20.days
 Deal.new(id: '1006', title: 'ONLY $9.90 Off Authentic Korean Half Chicken For 2, Four Flavours To Choose From',
          redeemable: true, multiple_use: true, type_of_deal: 'Discount',
          description: '59% off Korean Half Chicken. Serves 2 pax. Choose from 4 flavours: Spicy Up, Mild Up, Curry Up, Yanghyum',

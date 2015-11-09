@@ -1,6 +1,6 @@
 ActiveAdmin.register AddOn do
   belongs_to :plan
-  config.sort_order = "id_asc"
+  config.sort_order = "created_at_desc"
 
   # Allow edit
   permit_params :name, :cost, :description, :addon_type
