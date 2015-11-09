@@ -83,7 +83,7 @@ class DealAnalyticService
         deal_array = Array.new
         view_start_date = Viewcount.where(:deal_id => d.id).first
         if view_start_date.blank?
-          view_start_date = Date.today
+          view_start_date = DateTime.now.in_time_zone("Singapore").beginning_of_day
         else
           view_start_date = view_start_date.created_at.beginning_of_day
         end
@@ -91,9 +91,9 @@ class DealAnalyticService
 
         # If start date of deal is after given start date, we will start from deal start date
         if d.start_date > start_date
-          redemption_start_date = d.start_date
+          redemption_start_date = d.start_date.beginning_of_day
         else
-          redemption_start_date = start_date
+          redemption_start_date = start_date.beginning_of_day
         end
 
         # If end date of deal is before given end date, we will end at deal end date
