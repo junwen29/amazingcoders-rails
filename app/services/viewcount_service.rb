@@ -1,7 +1,6 @@
 class ViewcountService
 
   module ClassMethods
-    # TODO: Call these methods on Android to update view count
     def getViewCount(deal_id)
       viewcount = Viewcount.where(:deal_id => deal_id)
       if viewcount.empty?

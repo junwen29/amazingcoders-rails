@@ -8,9 +8,13 @@ class RedemptionService
     # }
 
     def validate(deal_id, user_id, venue_id)
+      deal = Deal.find(deal_id)
+      error = RedeemExistsError.new unless deal.present? # invalid QR code
+      return nil, error unless deal.present?
+
       deal = Deal.active.find(deal_id) # TODO check for active deal, deal_days, time
       redeemable = deal.redeemable
-      error = 1 unless deal.present?
+      error = RedeemActiveError.new unless deal.present? # deal is not active
       # valid_time = deal.valid_time
       return nil,error unless redeemable && deal.present?
 
@@ -40,7 +44,7 @@ class RedemptionService
     end
 
     def get_redemptions_by_user_id(user_id)
-      Redemption.where(user_id: user_id)
+      Redemption.where(user_id: user_id).order("created_at DESC")
     end
 
     def count_all_redemptions(start_date, end_date)

@@ -1,7 +1,6 @@
 class DealAnalyticService
 
   module ClassMethods
-    # TODO: Call these methods on Android to update view count and redemption count
     def get_view_count(deal_id)
       DealAnalytic.where(:deal_id => deal_id).pluck(:view_count).sum
     end
