@@ -40,7 +40,7 @@ class RedemptionService
     end
 
     def get_redemptions_by_user_id(user_id)
-      Redemption.where(user_id: user_id)
+      Redemption.where(user_id: user_id).order("created_at DESC")
     end
 
     def count_all_redemptions(start_date, end_date)
