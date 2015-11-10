@@ -46,13 +46,20 @@ class ChargesController < ApplicationController
     MerchantPointService.new_point("Paid for a plan upgrade", @payment.total_cost, "Credit", merchant_id)
 
     flash[:success] = "Plan upgrade completed! You have been awarded " + @payment.total_cost.to_i.to_s + " Burps!"
-    @payment.update(paid: true, total_cost: PaymentService.calculate_price(@payment)*@payment.months, expiry_date: @payment.start_date.months_since(@payment.months))
 
     #if milestone of 12 months is cleared, add 500 to total MerchantPoints
     if (((total_months.to_i + @payment.months.to_i)/12) - (total_months.to_i/12)) != 0
       total_points += 500
       MerchantPointService.new_point("12 months milestone reward", 500, "Credit", merchant_id)
       flash[:success] = "Plan upgrade completed! You have been awarded " + @payment.total_cost.to_i.to_s + " Burps! Thanks for being a loyal user! You have been credited an extra 500 Burps!"
+    end
+    @payment.update(paid: true, total_cost: PaymentService.calculate_price(@payment)*@payment.months, expiry_date: @payment.start_date.months_since(@payment.months))
+
+    old_payment = Payment.where(:merchant_id => merchant_id, :start_date => @payment.start_date)
+    old_payment.each do |p|
+      if p && (p.id != @payment.id)
+        PaymentService.destroy(p)
+      end
     end
 
     @merchant.update(total_points: total_points)
@@ -62,5 +69,18 @@ class ChargesController < ApplicationController
 
     redirect_to payments_path
 
+  end
+
+
+  def new_modify
+    @payment = Payment.find(params[:payment_id])
+
+    unless session[:merchant_id] == @payment.merchant_id #&& @payment.paid == false
+      flash[:error] = "You don't have access to this page!"
+      redirect_to payments_path
+      return
+    end
+    #total_cost = @payment.total_cost
+    #@payment.update(expiry_date: @payment.start_date.months_since(@payment.months))
   end
 end
