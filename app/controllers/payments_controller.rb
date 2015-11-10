@@ -269,13 +269,19 @@ class PaymentsController < ApplicationController
 
       else #else proceed with payment
         cost_to_pay = (calculate_price(@payment) * payment_params[:months].to_i)
-        @payment.update(total_cost: cost_to_pay, months: @payment.months + payment_params[:months].to_i)
-        redirect_to new_payment_charge_path(@payment)
-
+      #  @payment.update(total_cost: cost_to_pay, months: @payment.months + payment_params[:months].to_i)
+        @payment_new = Payment.create(start_date: @payment.start_date, expiry_date: @payment.expiry_date, add_on1: @payment.add_on1,
+                            add_on2: @payment.add_on2, add_on3: @payment.add_on3, plan1: @payment.plan1,
+                            total_cost: cost_to_pay, months: @payment.months + payment_params[:months].to_i, paid: false,
+                            id: Payment.last.id+1, merchant_id: merchant_id)
+        @payment_new.save(validate: false)
+     #   redirect_to payment_new_modify_path(@payment_new)
+        redirect_to new_payment_charge_path(@payment_new)
       end
       #else it is a plan upgrade with addons
     else
 
+=begin
       cost_before = calculate_price(@payment) * @payment.months
       @payment.update(payment_params)
 
@@ -284,19 +290,34 @@ class PaymentsController < ApplicationController
       cost_to_pay = cost_after - cost_before
       @payment.update(total_cost: cost_to_pay)
       @payment.save
+=end
+
+      cost_before = calculate_price(@payment) * @payment.months
+
+
+      @payment_new = Payment.create(start_date: @payment.start_date, expiry_date: @payment.expiry_date, add_on1: @payment.add_on1,
+                                    add_on2: @payment.add_on2, add_on3: @payment.add_on3, plan1: @payment.plan1,
+                                    total_cost: @payment.total_cost, months: @payment.months, paid: false,
+                                    id: Payment.last.id+1, merchant_id: merchant_id)
+      @payment_new.save(validate: false)
+      @payment_new.update(payment_params)
+      cost_after = (calculate_price(@payment_new) * @payment_new.months)
+
+      cost_to_pay = cost_after - cost_before
+      @payment_new.update(total_cost: cost_to_pay)
 
       # Update join table in addon_payment
-      @add_on_payment = @payment.add_on_payments.build
+      @add_on_payment = @payment_new.add_on_payments.build
       if (params[:payment][:add_on1] == "true")
-        @payment.add_on_payments.build(:add_on_id => 1)
+        @payment_new.add_on_payments.build(:add_on_id => 1)
       end
       if (params[:payment][:add_on2] == "true")
-        @payment.add_on_payments.build(:add_on_id => 2)
+        @payment_new.add_on_payments.build(:add_on_id => 2)
       end
       if (params[:payment][:add_on3] == "true")
-        @payment.add_on_payments.build(:add_on_id => 3)
+        @payment_new.add_on_payments.build(:add_on_id => 3)
       end
-      redirect_to new_payment_charge_path(@payment)
+      redirect_to new_payment_charge_path(@payment_new)
     end
 
   end

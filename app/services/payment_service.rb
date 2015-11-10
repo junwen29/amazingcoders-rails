@@ -191,6 +191,12 @@ class PaymentService
 
       total_cost
     end
+
+    def destroy(payment)
+      Payment.destroy(payment.id)
+    end
+
+
   end
 
   class << self
