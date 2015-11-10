@@ -619,7 +619,7 @@ end
 start_date = DateTime.parse("2015-10-10 00:00:00")
 user_id = 1100
 while start_date <= end_date
-  limit = redemption + rand(rand(10..30)..rand(60..100))
+  limit = redemption + rand(rand(10..20)..rand(20..30))
   venue_id = rand(1000..1002)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1001, user_id: user_id, venue_id: venue_id, created_at: start_date)
@@ -646,7 +646,7 @@ while user_id < 1072
 end
 user_id = 1000
 while start_date <= end_date
-  limit = view_count + rand(20..40)
+  limit = view_count + rand(30..40)
   while view_count < limit
     if user_id == 1078
       user_id = 1000
