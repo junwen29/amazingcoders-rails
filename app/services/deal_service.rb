@@ -62,7 +62,7 @@ class DealService
     end
 
     def get_active_deals
-      all_deals = Deal.active
+      all_deals = Deal.active.order("created_at DESC")
     end
 
     def get_popular_deals
@@ -70,7 +70,7 @@ class DealService
     end
 
     def get_bookmark_deals(user_id)
-      deals = BookmarkService.deals_by_user(user_id)
+      deals = BookmarkService.deals_by_user(user_id).order("created_at DESC")
     end
 
     def get_active_deals_by_type (type)
@@ -96,13 +96,11 @@ class DealService
       active_deals.count
     end
 
-    # TODO: Call this method for deal analytics - popular deal type aggregate trends
     def get_all_ids_by_type(deal_type)
       deals = Deal.where(:type_of_deal => deal_type)
       deals.pluck(:id)
     end
 
-    # TODO: Call this method for deal analytics - popular deal type deal statistics
     def get_all_ids_by_type_and_merchant(deal_type, merchant_id)
       deals = Deal.where('type_of_deal = ? AND merchant_id = ?', deal_type, merchant_id)
       deals.pluck(:id)

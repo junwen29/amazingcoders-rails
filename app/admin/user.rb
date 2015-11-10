@@ -3,7 +3,7 @@ ActiveAdmin.register User do
 
   # Remove Create New User button
   config.clear_action_items!
-  config.sort_order = "id_asc"
+  config.sort_order = "created_at_desc"
 
   actions :all
   action_item :only => :show do
@@ -13,9 +13,8 @@ ActiveAdmin.register User do
     User.find(ids).each do |user|
       points = inputs['points'].to_i
       reason = "Awarded for Review of the Day"
-      point = UserPointService.new_point(reason, points, "Credit", user.id)
 
-      # point = UserPoint.create(points: points, reason: reason, operation: "Credit", user_id: user.id, created_at: Time.now, updated_at: Time.now)
+      point = UserPoint.create(points: points, reason: reason, operation: "Credit", user_id: user.id, created_at: Time.now, updated_at: Time.now)
 
       tokens = DeviceService.tokens_by_user user.id
       notification = user.notifications.create(item_type: 'user_point',

@@ -1,17 +1,25 @@
 <div class="form-style-10">
-  <h1>Choose upgrades <span>Upgrade your plan to enjoy premium features!</span></h1>
+  <h1>Select Plan <span>Purchase a plan to enjoy premium features!</span></h1>
 
   <!-- show list of plans -->
   <div class="panel-group" id="accordion2">
-
+    <% @plan.each do |p| %>
         <div class="panel panel-default" >
           <div class="panel-heading" >
             <h4 class="panel-title">
-              <%= @plan1.name %> <span class="label label-warning"><%= number_to_currency @plan1.cost %></span>
+              <% if p.id == 1 %>
+                  <%= p.name %> <span class="label label-warning"><%= number_to_currency p.cost %></span>
+              <% else %>
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseInner_<%= p.id %>">
+                    <%= p.name %> <span class="label label-warning"><%= number_to_currency p.cost %></span>
+                  </a>
+              <% end %>
             </h4>
-            <h6><%= @plan1.description %></h6>
+            <h6><%= p.description %></h6>
           </div>
-          <div id="collapseInner_<%= @plan1.id %>" >
+          <% if p.id != 1 %>
+              <div id="collapseInner_<%= p.id %>" class="collapse">
+          <% end %>
             <div class="panel-body">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
@@ -21,7 +29,7 @@
                     <th>Extra Cost</th>
                   </tr>
 
-                  <% @plan1.add_ons.each do |a| %>
+                  <% p.add_ons.each do |a| %>
                       <tr>
                         <td><%= a.name %></td>
                         <td><%= a.description %></td>
@@ -31,9 +39,11 @@
                 </table>
               </div>
             </div>
-          </div>
+          <% if p.id != 1 %>
+            </div>
+          <% end %>
         </div>
-
+    <% end %>
   </div>
 
 
@@ -53,8 +63,11 @@
             </p>
           </div>
 
-          <div class="col-lg-5" id="payment_plan1_hint" >
+          <div class="col-lg-5" id="payment_plan1_hint1">
             <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small"><%= @plan_hint %></p>
+          </div>
+          <div class="col-lg-5" id="payment_plan1_hint2" style="display:none;">
+            <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small">Why not choose our addons too to complement your premium deals service?</p>
           </div>
         </div>
       </div>
@@ -79,9 +92,9 @@
           </div>
 
           <div class="col-lg-5" id="addon1_hint1" style="display:none;">
-            <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small"><%= @addon1_hint2 %></p>
+            <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small">Consider our other addons too! <%= @addon1_hint2 %></p>
           </div>
-          <div class="col-lg-5" id="addon1_hint2" >
+          <div class="col-lg-5" id="addon1_hint2">
             <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small"><%= @addon1_hint1 %></p>
           </div>
         </div>
@@ -104,10 +117,10 @@
           </div>
 
           <div class="col-lg-5" id="addon2_hint1" style="display:none;">
-            <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small"><%= @addon2_hint2 %></p>
+            <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small">Consider our other addons too! <%= @addon2_hint2 %></p>
           </div>
 
-          <div class="col-lg-5" id="addon2_hint2" >
+          <div class="col-lg-5" id="addon2_hint2">
             <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small"><%= @addon2_hint1 %></p>
           </div>
         </div>
@@ -130,10 +143,10 @@
           </div>
 
           <div class="col-lg-5" id="addon3_hint1" style="display:none;">
-            <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small"><%= @addon3_hint2 %></p>
+            <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small">Consider our other addons too! <%= @addon3_hint2 %></p>
           </div>
 
-          <div class="col-lg-5" id="addon3_hint2" >
+          <div class="col-lg-5" id="addon3_hint2">
             <p style="text-align: justify; color:#F6358A; font-style: italic; font-weight: bold; font-size: small"><%= @addon3_hint1 %></p>
           </div>
         </div>
@@ -171,8 +184,14 @@
 <!--JQuery for showing hints-->
 <script>
     //working
-    $('#plan1').change(function (event) {
-        $('#payment_plan1_hint').show();
+    $('#payment_plan1_true').click(function (event) {
+        $('#payment_plan1_hint1').hide();
+        $('#payment_plan1_hint2').show();
+    });
+
+    $('#payment_plan1_false').click(function (event) {
+        $('#payment_plan1_hint1').show();
+        $('#payment_plan1_hint2').hide();
     });
 
     $('#payment_add_on1_true').click(function (event) {

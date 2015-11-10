@@ -2,19 +2,19 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
 # TODO: Change this data to presentation date and data for analytics will be seeding till that date
-final_end_date = "2015-12-01 00:00:00"
+final_end_date = "2015-11-19 00:00:00"
 
 Plan.create(id: '1', name: 'Premium Deals Services', cost: '30', description: 'Allows unlimited creation of deals. Publishing of up to 5 active deals')
 
-AddOn.create(id: '1', name: 'Push Notification', cost: '5', description: 'Allows 1 Push Notification per deal to Burpple users who have wishlisted your venue!', addon_type: 'notification', created_at: Time.current, updated_at: Time.current, plan_id: '1')
-AddOn.create(id: '2', name: 'Deals Statistics', cost: '5', description: 'See demographics of users to target your deals better!', addon_type: 'statistics', created_at: Time.current, updated_at: Time.current, plan_id: '1')
-AddOn.create(id: '3', name: 'Aggregate Trends', cost: '5', description: 'See popular keywords and trends across different deals!', addon_type: 'trends', created_at: Time.current, updated_at: Time.current, plan_id: '1')
+AddOn.create(id: '1', name: 'Push Notification', cost: '5', description: 'Allows 1 Push Notification per deal to Burpple users who have wishlisted your venue!', addon_type: 'Notification', created_at: Time.current, updated_at: Time.current, plan_id: '1')
+AddOn.create(id: '2', name: 'Deals Statistics', cost: '5', description: 'See demographics of users to target your deals better!', addon_type: 'Statistics', created_at: Time.current, updated_at: Time.current, plan_id: '1')
+AddOn.create(id: '3', name: 'Aggregate Trends', cost: '5', description: 'See popular keywords and trends across different deals!', addon_type: 'Trends', created_at: Time.current, updated_at: Time.current, plan_id: '1')
 
 
 # For payment analytics
-Plan.create(id: '1000', name: 'Reservations', cost: '45', description: 'Test payment analytics', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
-AddOn.create(id: '1000', plan_id: '1000', name: 'Reservation Notifications', cost: '10', description: 'Reservation Notification', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
-AddOn.create(id: '1001', plan_id: '1000', name: 'Reservation Statistics', cost: '10', description: 'Reservation Statistics', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
+Plan.create(id: '1000', name: 'Reservations', cost: '50', description: 'Test payment analytics', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
+AddOn.create(id: '1000', plan_id: '1000', name: 'Reservation Notifications', cost: '10', description: 'Reservation Notification', addon_type: 'Notification', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
+AddOn.create(id: '1001', plan_id: '1000', name: 'Reservation Statistics', cost: '10', description: 'Reservation Statistics', addon_type: 'Statistics', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
 
 # For Gifts
 Gift.create(id: '1000', name: '1 free month', points: '600', description: 'Free 1 month subscription to Premium Deals Services with all add-ons. Simply click redeem and select the start date of your plan!', gift_type: 'Merchant', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
@@ -32,21 +32,18 @@ merchant = Merchant.new(id: '1000')
 merchant.email = 'amazingcoders8mc@gmail.com'
 merchant.password = 'burppleadmin'
 merchant.password_confirmation = 'burppleadmin'
-merchant.total_points = 1040
 merchant.save
 
 merchant = Merchant.new(id: '1001')
 merchant.email = 'woonyong92@gmail.com'
 merchant.password = '12345678'
 merchant.password_confirmation = '12345678'
-merchant.total_points = 90
 merchant.save
 
 merchant = Merchant.new(id: '1002')
 merchant.email = 'jkcheong92@gmail.com'
 merchant.password = '12345678'
 merchant.password_confirmation = '12345678'
-merchant.total_points = 385
 merchant.save
 
 merchant = Merchant.new(id: '1003')
@@ -61,7 +58,6 @@ while merchant_id < 1010
   merchant.email = merchant_id.to_s + '@gmail.com'
   merchant.password = '12345678'
   merchant.password_confirmation = '12345678'
-  merchant.total_points = 100
   merchant.save
   merchant_id = merchant_id + 1
 end
@@ -70,7 +66,6 @@ while merchant_id <= 1050
   merchant.email = merchant_id.to_s + '@gmail.com'
   merchant.password = '12345678'
   merchant.password_confirmation = '12345678'
-  merchant.total_points = 90
   merchant.save
   merchant_id = merchant_id + 1
 end
@@ -79,7 +74,6 @@ while merchant_id <= 1100
   merchant.email = merchant_id.to_s + '@gmail.com'
   merchant.password = '12345678'
   merchant.password_confirmation = '12345678'
-  merchant.total_points = 40
   merchant.save
   merchant_id = merchant_id + 1
 end
@@ -92,7 +86,6 @@ user.username = 'serming'
 user.email = 'gohserming@gmail.com'
 user.password ='12345678'
 user.password_confirmation = '12345678'
-user.total_points = 100
 user.save
 user_id = 1001
 while user_id < 1100
@@ -103,19 +96,7 @@ while user_id < 1100
   user.email = 'user'+user_id.to_s+'@gmail.com'
   user.password ='12345678'
   user.password_confirmation = '12345678'
-  user.total_points = 100
   user.save
-  user_id = user_id + 1
-end
-user_id = 1000
-id = 1000
-while user_id < 1100
-  i = 0
-  while i < 20
-    UserPoint.create(id: id, reason: 'Redeem Deal', points: 5, operation: 'Credit', user_id: user_id)
-    i = i + 1
-    id = id + 1
-  end
   user_id = user_id + 1
 end
 
@@ -138,7 +119,6 @@ AddOnPayment.create(id: add_on_payment_id, add_on_id: 3, payment_id: payment_id,
 payment_id = payment_id + 1
 plan_payment_id = plan_payment_id + 1
 add_on_payment_id = add_on_payment_id + 1
-MerchantPoint.create(id: 1000, reason: 'Paid for a plan upgrade', points: 1040, operation: 'Credit', merchant_id: 1000)
 
 start_date = '01-09-2015'.to_date
 end_date = start_date + 3.months
@@ -148,7 +128,6 @@ Payment.new(id: 1001, start_date: start_date, expiry_date: end_date, total_cost:
 PlanPayment.create(id: plan_payment_id, plan_id: 1, payment_id: payment_id, created_at: start_datetime)
 payment_id = payment_id + 1
 plan_payment_id = plan_payment_id + 1
-MerchantPoint.create(id: 1001, reason: 'Paid for a plan upgrade', points: 90, operation: 'Credit', merchant_id: 1001)
 
 start_date = '01-01-2015'.to_date
 end_date = start_date + 11.months
@@ -160,7 +139,6 @@ AddOnPayment.create(id: add_on_payment_id, add_on_id: 1, payment_id: payment_id,
 payment_id = payment_id + 1
 plan_payment_id = plan_payment_id + 1
 add_on_payment_id = add_on_payment_id + 1
-MerchantPoint.create(id: 1002, reason: 'Paid for a plan upgrade', points: 385, operation: 'Credit', merchant_id: 1002)
 
 # merchant_id 1003 has no payment
 
@@ -169,7 +147,7 @@ start_date = '01-12-2014'.to_date
 start_datetime = start_date.to_datetime.in_time_zone('Singapore').beginning_of_day
 end_date = start_date + 2.months
 while merchant_id < 1010
-  Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '100.00', add_on1: false, add_on2: false,
+  Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '140.00', add_on1: false, add_on2: false,
               add_on3: false, plan1: false, paid: true, created_at: start_datetime, updated_at: start_datetime, merchant_id: merchant_id, months: 2).save(validate: false)
   PlanPayment.create(id: plan_payment_id, plan_id: 1000, payment_id: payment_id, created_at: start_datetime, updated_at: start_datetime)
   AddOnPayment.create(id: add_on_payment_id, add_on_id: 1000, payment_id: payment_id, created_at: start_datetime, updated_at: start_datetime)
@@ -179,7 +157,6 @@ while merchant_id < 1010
   end_date = start_date + 2.months
   start_datetime = start_date.to_datetime.in_time_zone('Singapore').beginning_of_day
   payment_id = payment_id + 1
-  MerchantPoint.create(id: merchant_id, reason: 'Paid for a plan upgrade', points: 100, operation: 'Credit', merchant_id: merchant_id)
   merchant_id = merchant_id + 1
   plan_payment_id = plan_payment_id + 1
   add_on_payment_id = add_on_payment_id + 1
@@ -201,7 +178,6 @@ while merchant_id < 1050
     end_date = end_date + 1.months
   end
   payment_id = payment_id + 1
-  MerchantPoint.create(id: merchant_id, reason: 'Paid for a plan upgrade', points: 45, operation: 'Credit',merchant_id: merchant_id)
   merchant_id = merchant_id + 1
   plan_payment_id = plan_payment_id + 1
   add_on_payment_id = add_on_payment_id + 1
@@ -218,7 +194,6 @@ while merchant_id < 1100
     end_date = end_date + 1.months
   end
   payment_id = payment_id + 1
-  MerchantPoint.create(id: merchant_id, reason: 'Paid for a plan upgrade', points: 40, operation: 'Credit', merchant_id: merchant_id)
   merchant_id = merchant_id + 1
   plan_payment_id = plan_payment_id + 1
   add_on_payment_id = add_on_payment_id + 1
@@ -237,7 +212,6 @@ while merchant_id < 1050
   add_on_payment_id = add_on_payment_id + 1
   AddOnPayment.create(id: add_on_payment_id, add_on_id: 3, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
   payment_id = payment_id + 1
-  MerchantPoint.create(id: id, reason: 'Paid for a plan upgrade', points: 45, operation: 'Credit',merchant_id: merchant_id)
   id = id + 1
   merchant_id = merchant_id + 1
   plan_payment_id = plan_payment_id + 1
@@ -404,7 +378,7 @@ DealVenue.create(id: '1017', deal_id: 1005, venue_id: 1002)
 
 start_date = '01-12-2015'.to_date
 end_date = '10-12-2015'.to_date
-created_at = start_date - 10.days
+created_at = start_date - 20.days
 Deal.new(id: '1006', title: 'ONLY $9.90 Off Authentic Korean Half Chicken For 2, Four Flavours To Choose From',
          redeemable: true, multiple_use: true, type_of_deal: 'Discount',
          description: '59% off Korean Half Chicken. Serves 2 pax. Choose from 4 flavours: Spicy Up, Mild Up, Curry Up, Yanghyum',
@@ -1161,3 +1135,8 @@ date = DateTime.parse("2015-11-02 00:00:00")
 UserFeedback.create(id: 1000, title: "Suggestion to add kids menu", category: "Suggestion", content: "Add some healthy food for small kids", resolved: false, created_at: date, updated_at: date, user_id: 1000)
 UserFeedback.create(id: 1001, title: "Poor service", category: "Complaint", content: "Rude customer service", resolved: true, created_at: date, updated_at: date, user_id: 1000)
 
+# Merchant Points
+MerchantPoint.create(id: 1000, reason: 'Paid for a plan upgrade', points: 1040, operation: 'Credit', merchant_id: 1000)
+
+# User Points
+UserPoint.create(id: 1000, reason: 'Redeem Deal', points: 1000, operation: 'Credit', user_id: 1000)

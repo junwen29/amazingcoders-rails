@@ -14,13 +14,13 @@
           <th>Transaction Date</th>
         </tr>
 
-        <% @points.find_each do |p| %>
+        <% @points.order(created_at: :desc).each do |p| %>
             <tr>
               <td>
                 <% if p.operation == "Credit" %>
-                    <%= "+"%><%=p.points%>
+                    <p style = 'color:green; font-weight: bold' >  <%= "+"%><%=p.points%> </p>
                 <% elsif p.operation == "Debit" %>
-                    <%= "-"%><%=p.points%>
+                   <p style = 'color:red; font-weight: bold' > <%= "-"%><%=p.points%> </p>
                 <% end %>
               </td>
               <td><%= p.reason %></td>

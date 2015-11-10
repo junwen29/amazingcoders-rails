@@ -1,7 +1,7 @@
 ActiveAdmin.register Plan do
   # Allow edit
   permit_params :name, :cost, :description
-  config.sort_order = "id_asc"
+  config.sort_order = "created_at_desc"
 
   # Sidebar
   sidebar "Plan Add Ons", only: [:show, :edit] do
@@ -10,7 +10,11 @@ ActiveAdmin.register Plan do
     end
   end
 
-  remove_filter :payments, :plan_payments
+  filter :add_ons
+  filter :name
+  filter :cost
+  filter :description
+  filter :created_at
 
   action_item :only => :show do
     link_to "Back", "/admin/plans"

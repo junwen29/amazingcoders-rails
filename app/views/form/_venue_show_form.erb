@@ -48,13 +48,13 @@
 <hr>
 <% if @payment.blank? || !@payment.paid? %>
     <div class="well col-lg-6 col-lg-offset-3" style="text-align: center; font-weight: bold">
-      <p>Opps! You do not have not subscribed to our Deal Listing Service.</p>
+      <p>Oops! You have not subscribed to our Deal Listing Service.</p>
       <p><%= link_to 'Subscribe now', new_payment_path %></p>
     </div>
     <br><br><br><br>
 <% elsif @deals.blank? %>
     <div class="well col-lg-6 col-lg-offset-3" style="text-align: center; font-weight: bold">
-      <p>Opps! You do not have any active deals for this location. You can create a
+      <p>Oops! You do not have any active deals for this venue. You can create a
         deal <%= link_to 'here', new_deal_path %>.</p>
     </div>
     <br><br><br>
