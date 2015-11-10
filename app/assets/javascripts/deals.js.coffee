@@ -6,11 +6,11 @@
 jQuery ->
 
 	$('#deal_start_date').datepicker({
-    minDate: 0,
+    minDate: 1,
 	dateFormat: "yy-mm-dd"
 	});
 	$('#deal_expiry_date').datepicker({
-    minDate: 0,
+    minDate: 1,
 	dateFormat: "yy-mm-dd"
 	});
 
