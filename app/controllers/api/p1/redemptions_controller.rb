@@ -14,7 +14,7 @@ class Api::P1::RedemptionsController < Api::P1::ApplicationController
 
     if redemption.blank?
       # render_error_json(error )
-      render_error_json RedeemError.new
+      render_error_json error
     else
       render_jbuilder do |json|
         redemption.to_json json
