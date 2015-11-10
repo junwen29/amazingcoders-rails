@@ -60,14 +60,14 @@
     <div class="table-responsive">
       <table class="table table-bordered table-hover">
         <tr>
-          <th>Transaction ID</th>
+          <th>ID</th>
           <th>Total Amount</th>
           <th>Premium Service</th>
           <th>Add-On(s)</th>
           <th>Start Date</th>
           <th>Expiry Date</th>
           <th>Payment Date</th>
-          <th>Modify</th>
+          <th>Extend</th>
         </tr>
 
         <% @payments.each do |p| %>
@@ -109,12 +109,12 @@
                     <%= link_to edit_payment_path(payment), {:style => 'color:#FFFFFF;', :class => "css_class"} do %>
                         <button class="btn btn-xs btn-default disabled" type="button" data-toggle="tooltip" data-placement="top"
                                 title="You are unable to extend this plan or purchase any more addons">
-                          Modify
+                          Extend
                         </button>
                     <% end %>
 
                     <% else %>
-                    <%= link_to 'Modify', edit_payment_path(payment), class: "btn btn-big btn-success" %>
+                    <%= link_to 'Extend', edit_payment_path(payment), class: "btn btn-big btn-success" %>
                 <% end %>
 
               </td>
