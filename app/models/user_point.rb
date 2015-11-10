@@ -6,8 +6,6 @@ class UserPoint < ActiveRecord::Base
 
   after_create :edit_total
 
-  include UserPoint::Json
-
   scope :credit, -> {where("operation = ?", 'Credit')}
   scope :debit, -> {where("operation = ?", 'Debit')}
 
@@ -26,7 +24,7 @@ class UserPoint < ActiveRecord::Base
 
   private
   def edit_total
-    point = UserPoint.last
+    point = self
     user = User.find(point.user_id)
     total_points = user.total_points
     if point.operation == "Credit"

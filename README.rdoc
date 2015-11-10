@@ -2,40 +2,84 @@
 
 Things to take note when developing:
 
-* Branching 
-	* Checkout from 'develop' Branch
-	* Indicate which system and what feature: <system>/<feature>, for e.g dms/create_deal
+    * Branching
+        * Checkout from 'develop' Branch
+        * Indicate which system and what feature: <system>/<feature>, for e.g dms/create_deal
 
-* Generate Pull Request
-	* Tag the person to notify the pull request
+    * Generate Pull Request
+        * Tag the person to notify the pull request
 
+Things to do to get the application up and running:
 
+    * Ruby version
+        - Ruby 2.0.0
+        - Rails 4.1
+        - windows: install railsinstaller via http://railsinstaller.org/en
 
-Things to take note to get the application up and running:
+    * System dependencies
 
-* Ruby version
+    * Configuration
 
-* System dependencies
+    * Database creation
+        - Postgresql database download via: http://www.postgresql.org/download/
+            * Please choose the right OS version to download, for e.g. install windows 64 or 32 based on PC configuration
+        - Install Postgresql
+            * setup a password for superuser postgres
+            * port be 5433
+            * set locale to be default
 
-* Configuration
+    * Database initialization
+        - Use pgAdmin III console to do the following:
+            * create a corresponding database with name same as database.yml
+            * create a new login role corresponding with database.yml
+            * under the file tab of pgAdmin III, open pg_hba.config
+                % navigate to file path ~Postgresql/9.4/data, open pg_hba.config
+                % enable replication and set to all users
 
-* Database creation
+    * Image Hosting
+        - Get 'Cloudinary.yml' and place it under 'config' folder
+        - bundle install gem 'cloudinary' and gem 'attachinary'
+        - rake db:migrate
 
-* Database initialization
+    * Stripe configurations
+        - add the stripe keys into environment variables as stated in ~initializers/ stripe.rb
 
-* Image Hosting
-    - Get 'Cloudinary.yml' and place it under 'config' folder
-    - bundle install gem 'cloudinary' and gem 'attachinary'
+Things to do to deploy
+    - bundle install
     - rake db:migrate
+    - rails server
+    - set server to listen on 0.0.0.0 (all interface)
+    - deployment to heroku
+        * requires heroku toolbelt
+        * heroku login <email>
+        * git push heroku master
+        * heroku run rails db:migrate
+        * heroku open
+        * heroku logs
 
-* How to run the test suite
+Things to do to run the test suite
+    * Important: navigate to seed.rb, change final_end_date = today's date, for e.g => "2015-12-01 00:00:00"
+    * To run all test cases
+        - rake test:units
+    * To run unit test on merchant
+        - rake test test/models/<test file>, for e.g. => rake test test/models/merchant_test.rb
+    * Directory for unit tests:
+        - ~/test/models
+    * Unit test files
+        - merchant_test.rb
+        - venue_test.rb
+        - payment_test.rb
+        - merchant_feedback_test.rb
+        - merchant_point_test.rb
+        - test_helper.rb
+    * testing accounts
+        - refer to test_accounts.docx
 
-* Services (job queues, cache servers, search engines, etc.)
+Errors
+    * Windows not working with Coffee script above 1.80
+        - Find the gemfile in project folder (should be just a level below the project folder)
+        - Add  gem 'coffee-script-source', '1.8.0' to the gemfile
+        - After that, type bundle update coffee-script-source
 
-* Deployment instructions
-
-* Windows not working with Coffee script above 1.80
-	• Find the gemfile in project folder (should be just a level below the project folder)
-	• Add  gem 'coffee-script-source', '1.8.0' to the gemfile
-	• After that, type bundle update coffee-script-source
-
+Services
+job queues, cache servers, search engines, etc.

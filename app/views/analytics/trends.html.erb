@@ -18,11 +18,7 @@
     <!-- Content Body -->
     <!--TODO: VIEW Render partials only for merchants with access-->
     <%= render :partial => 'analytics/trends/top_deals' %><br>
-    <% if MerchantService.get_active_redeemable_deals(session[:merchant_id]).blank? %>
-        <%= render :partial => 'analytics/trends/no_redeemable_deal_error' %><br>
-    <% else %>
-        <%= render :partial => 'analytics/trends/own_deals_ranking' %><br>
-    <% end %>
+    <%= render :partial => 'analytics/trends/own_deals_ranking' %><br>
     <%= render :partial => 'analytics/trends/top_queries' %><br>
     <%= render :partial => 'analytics/trends/top_deal_types' %><br>
 

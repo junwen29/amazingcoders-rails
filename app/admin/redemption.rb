@@ -2,7 +2,7 @@ ActiveAdmin.register Redemption do
   menu :parent => "Deals", :priority => 2
 
   config.clear_action_items!
-  config.sort_order = "id_asc"
+  config.sort_order = "created_at_desc"
 
   actions :all, except: [:edit]
 
