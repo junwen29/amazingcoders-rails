@@ -53,5 +53,17 @@ module Burpple
       end
     end
 
+    class RedeemExistsError < BurppleError
+      def initialize(message = 'Invalid QR code')
+        super(:existing_error, 'Existing Error', 404, message)
+      end
+    end
+
+    class RedeemActiveError < BurppleError
+      def initialize(message = 'The deal is not available for redemption yet')
+        super(:existing_error, 'Forbidden Error', 403, message)
+      end
+    end
+
   end
 end
