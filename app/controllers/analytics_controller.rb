@@ -13,7 +13,8 @@ class AnalyticsController < ApplicationController
       have_views = false
       deals = MerchantService.get_all_active_and_past_deals(merchant_id)
       deals.each do |d|
-        if !Viewcount.where(deal_id: d.id).blank?
+        have_view_count = Viewcount.where(deal_id: d.id).blank?
+        if !have_view_count
           have_views = true
           break
         end
