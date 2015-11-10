@@ -69,16 +69,5 @@ class ChargesController < ApplicationController
 
   end
 
-
-  def new_modify
-    @payment = Payment.find(params[:payment_id])
-
-    unless session[:merchant_id] == @payment.merchant_id #&& @payment.paid == false
-      flash[:error] = "You don't have access to this page!"
-      redirect_to payments_path
-      return
-    end
-    #total_cost = @payment.total_cost
-    #@payment.update(expiry_date: @payment.start_date.months_since(@payment.months))
-  end
+  
 end
