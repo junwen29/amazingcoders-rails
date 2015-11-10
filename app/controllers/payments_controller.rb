@@ -103,7 +103,7 @@ class PaymentsController < ApplicationController
 
     if @payment.save
       # Update join table in addon_payment
-      @add_on_payment = @payment.add_on_payments.build
+      @payment.add_on_payments.build
       if (params[:payment][:add_on1] == "true")
         @payment.add_on_payments.build(:add_on_id => 1)
       end
@@ -115,7 +115,7 @@ class PaymentsController < ApplicationController
       end
 
       # Update join table in plan_payment
-      @plan_payment = @payment.plan_payments.new
+      @payment.plan_payments.new
       if (params[:payment][:plan1] == "true")
         @payment.plan_payments.build(:plan_id => 1)
       end
