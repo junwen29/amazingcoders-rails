@@ -244,6 +244,13 @@ variation of fried chicken, featuring juicy, sumptuous and tender chicken meat u
 being too greasy. Best known for its signature SpicyUp and YangNyum style fried chicken. ChickenUp also serves several
 variations of the dish with the accompaniment of different sauces such as soya and curry sauces.', phone: '65630337',
              address_2: '#01-01', merchant_id: 1000)
+Venue.create(id: '1009', name: 'Chicken Up @ Bugis', street: '60 Queen Street Singapore', zipcode: '188540', city: 'Singapore',
+             state: 'Singapore', country: 'Singapore', neighbourhood: 'Bugis',  bio: 'ChickenUp is well known and best
+loved for serving Authentic Korean Fried Chicken. By adapting the Korean methods of removing the fat from the skin and
+double-frying, Chicken Up Created its own distinct variation of fried chicken, featuring juicy, sumptuous and tender
+chicken meat under its thin and crunchy skin without being too greasy. Best known for its signature SpicyUp and YangNyum
+style fried chicken. ChickenUp also serves several variations of the dish with the accompaniment of different sauces
+such as soya and curry sauces.', phone: '609690', merchant_id: 1000)
 # For woonyong92@gmail.com
 Venue.create(id: '1003', name: 'Reedz Cafe', street: '15 Kent Ridge Drive', zipcode: '119245', city: 'Singapore',
              state: 'Singapore', country: 'Singapore', neighbourhood: 'Kent Ridge',
