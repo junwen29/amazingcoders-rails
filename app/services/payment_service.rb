@@ -29,7 +29,7 @@ class PaymentService
     end
 
     def count_addon_payments(addon_id)
-      Payment.joins(:add_on_payments).where('add_on_payments.add_on_id' => addon_id).count
+      Payment.joins(:add_on_payments).where('add_on_payments.add_on_id' => addon_id).select(:merchant_id).distinct.count
     end
 
     def count_unique_addon_payments(addon_id)
