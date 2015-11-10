@@ -1,7 +1,6 @@
 class DealAnalyticService
 
   module ClassMethods
-    # TODO: Call these methods on Android to update view count and redemption count
     def get_view_count(deal_id)
       DealAnalytic.where(:deal_id => deal_id).pluck(:view_count).sum
     end
@@ -454,20 +453,29 @@ class DealAnalyticService
       conversion.round(2)
     end
 
-    # returns percentage of user who redeemed more than once
+    # returns percentage and number of user who redeemed more than once
+    # Also returns the user_ids of those who multiple redeem to be used in other functions
     def get_multiple_redeems_percentage(deal_id)
-      user_count = RedemptionService.count_uniq_redemptions(deal_id, nil, Date.today).to_f
-      multiple_redeems = RedemptionService.num_users_multiple(deal_id, Date.today).to_f
+      array = Array.new
+      user_count = RedemptionService.get_user_ids(deal_id).count.to_f
       if user_count == 0
-        return 'No Redeems Yet'
+        array << 'No Redeems Yet'
+        return array
       end
-      percentage = (multiple_redeems/user_count)*100
-      percentage.round(2)
+      multiple_redeems = RedemptionService.get_user_ids(deal_id, true)
+      percentage = (multiple_redeems.count.to_f/user_count)*100
+      array << percentage.round(2)
+      array << multiple_redeems.count.to_f.round(0)
+      array << multiple_redeems
     end
 
     # returns average number of redemptions for multiple users
-    def average_redemption_multiple_users(deal_id)
-      multiple_redeems_user_ids = RedemptionService.get_user_ids(deal_id, true)
+    def average_redemption_multiple_users(deal_id, user_ids = nil)
+      if user_ids == nil
+        multiple_redeems_user_ids = RedemptionService.get_user_ids(deal_id, true)
+      else
+        multiple_redeems_user_ids = user_ids
+      end
       date = DateTime.now.in_time_zone("Singapore").end_of_day
       multiple_redeems = Redemption.where(deal_id: deal_id, user_id: multiple_redeems_user_ids).where('created_at <= ?', date).count
       if multiple_redeems_user_ids.blank?
@@ -478,8 +486,12 @@ class DealAnalyticService
     end
 
     # returns average time between users who redeem more than once
-    def average_time_btw_multiple_redeem(deal_id)
-      multiple_redeems_user_ids = RedemptionService.get_user_ids(deal_id, true)
+    def average_time_btw_multiple_redeem(deal_id, user_ids = nil)
+      if user_ids == nil
+        multiple_redeems_user_ids = RedemptionService.get_user_ids(deal_id, true)
+      else
+        multiple_redeems_user_ids = user_ids
+      end
       if multiple_redeems_user_ids.blank?
         'No Redeems Yet'
       else

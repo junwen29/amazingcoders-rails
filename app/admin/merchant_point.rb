@@ -1,5 +1,5 @@
 ActiveAdmin.register MerchantPoint do
-  config.sort_order = "id_asc"
+  config.sort_order = "created_at_desc"
 
   menu :parent => "Merchant", :priority => 3
 

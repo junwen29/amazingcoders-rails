@@ -12,5 +12,5 @@ ActionMailer::Base.smtp_settings = {
 
 # TODO: Remove this interceptor for actual demonstration
 #if Rails.env.development?
-    ActionMailer::Base.register_interceptor(DevelopmentMailInterceptor)
+    #ActionMailer::Base.register_interceptor(DevelopmentMailInterceptor)
 #end

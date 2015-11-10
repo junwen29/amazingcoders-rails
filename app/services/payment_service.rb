@@ -46,6 +46,19 @@ class PaymentService
       Payment.where('start_date <= ? AND expiry_date >= ? AND paid = ?', date, date, true).count
     end
 
+    def count_plan_addon_cross_sell(plan_id = 1, add_on_id)
+      all_premiums = Payment.where('paid = ? AND plan1 = ?', true, true).select(:merchant_id).distinct.count
+      addon_count = 0
+      if add_on_id == 1
+        addon_count = Payment.where('paid = ? AND plan1 = ? AND add_on1 = ?', true, true, true).select(:merchant_id).distinct.count
+      elsif add_on_id == 2
+        addon_count = Payment.where('paid = ? AND plan1 = ? AND add_on2 = ?', true, true, true).select(:merchant_id).distinct.count
+      elsif add_on_id == 3
+        addon_count = Payment.where('paid = ? AND plan1 = ? AND add_on3 = ?', true, true, true).select(:merchant_id).distinct.count
+      end
+      addon_count / all_premiums.to_f * 100
+    end
+
     def count_addons_cross_sell(add_on1, add_on2, add_on3)
       if add_on1 && add_on2
         all_premiums = Payment.where('paid = ? AND add_on1 = ? AND add_on2 = ?',
@@ -191,6 +204,12 @@ class PaymentService
 
       total_cost
     end
+
+    def destroy(payment)
+      Payment.destroy(payment.id)
+    end
+
+
   end
 
   class << self

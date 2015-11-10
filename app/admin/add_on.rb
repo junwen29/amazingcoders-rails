@@ -1,11 +1,16 @@
 ActiveAdmin.register AddOn do
   belongs_to :plan
-  config.sort_order = "id_asc"
+  config.sort_order = "created_at_desc"
 
   # Allow edit
   permit_params :name, :cost, :description, :addon_type
 
-  remove_filter :payments, :add_on_payments
+  filter :plan
+  filter :addon_type, as: :select, collection: ["Notification", "Statistics", "Trends"]
+  filter :name
+  filter :cost
+  filter :description
+  filter :created_at
 
   action_item :only => :index do
     link_to "Back to Plans", "/admin/plans"

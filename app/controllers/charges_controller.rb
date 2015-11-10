@@ -28,8 +28,6 @@ class ChargesController < ApplicationController
           :description => 'Rails Stripe customer',
           :currency    => 'sgd'
       )
-        # Send out payment acknowledgement email
-        PaymentMailer.subscription_email("valued merchant", @payment, MerchantService.get_email(merchant_id)).deliver
 
     rescue Stripe::CardError => e
       flash[:error] = e.message
@@ -48,7 +46,6 @@ class ChargesController < ApplicationController
     MerchantPointService.new_point("Paid for a plan upgrade", @payment.total_cost, "Credit", merchant_id)
 
     flash[:success] = "Plan upgrade completed! You have been awarded " + @payment.total_cost.to_i.to_s + " Burps!"
-    @payment.update(paid: true, total_cost: PaymentService.calculate_price(@payment)*@payment.months, expiry_date: @payment.start_date.months_since(@payment.months))
 
     #if milestone of 12 months is cleared, add 500 to total MerchantPoints
     if (((total_months.to_i + @payment.months.to_i)/12) - (total_months.to_i/12)) != 0
@@ -56,9 +53,23 @@ class ChargesController < ApplicationController
       MerchantPointService.new_point("12 months milestone reward", 500, "Credit", merchant_id)
       flash[:success] = "Plan upgrade completed! You have been awarded " + @payment.total_cost.to_i.to_s + " Burps! Thanks for being a loyal user! You have been credited an extra 500 Burps!"
     end
+    @payment.update(paid: true, total_cost: PaymentService.calculate_price(@payment)*@payment.months, expiry_date: @payment.start_date.months_since(@payment.months))
+
+    old_payment = Payment.where(:merchant_id => merchant_id, :start_date => @payment.start_date)
+    old_payment.each do |p|
+      if p && (p.id != @payment.id)
+        PaymentService.destroy(p)
+      end
+    end
 
     @merchant.update(total_points: total_points)
+
+    # Send out payment acknowledgement email
+    PaymentMailer.subscription_email("valued merchant", @payment, MerchantService.get_email(merchant_id)).deliver
+
     redirect_to payments_path
 
   end
+
+  
 end

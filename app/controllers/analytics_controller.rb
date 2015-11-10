@@ -2,16 +2,19 @@ class AnalyticsController < ApplicationController
   before_action :check_has_analytics_access
 
   def index
-    if MerchantService.get_all_venues(merchant_id).blank?
+    have_venues = MerchantService.get_all_venues(merchant_id).blank?
+    have_deals = MerchantService.get_all_active_and_past_deals(merchant_id).blank?
+    if have_venues
       render 'analytics/no_venue_error'
-    elsif MerchantService.get_all_active_and_past_deals(merchant_id).blank?
+    elsif have_deals
       render 'analytics/no_deal_error'
     else
       # This is to ensure that there is at least one deal with view counts
       have_views = false
       deals = MerchantService.get_all_active_and_past_deals(merchant_id)
       deals.each do |d|
-        if !Viewcount.where(deal_id: d.id).blank?
+        have_view_count = Viewcount.where(deal_id: d.id).blank?
+        if !have_view_count
           have_views = true
           break
         end

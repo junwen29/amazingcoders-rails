@@ -3,7 +3,7 @@ ActiveAdmin.register User do
 
   # Remove Create New User button
   config.clear_action_items!
-  config.sort_order = "id_asc"
+  config.sort_order = "created_at_desc"
 
   actions :all
   action_item :only => :show do

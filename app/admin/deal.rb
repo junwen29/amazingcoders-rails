@@ -3,14 +3,13 @@ ActiveAdmin.register Deal do
 
   # Remove Create New Deal button
   config.clear_action_items!
-  config.sort_order = "id_asc"
+  config.sort_order = "created_at_desc"
 
   controller do
     def update
       @deal = Deal.find(params[:id])
       if @deal.update_columns(deal_params)
         flash[:success] = "Deal successfully updated!"
-        # TODO - DEMO: Uncomment on demonstration
         merchant_id = @deal.merchant_id
         DealMailer.update_deal_email_admin("valued merchant", @deal, MerchantService.get_email(merchant_id)).deliver
         redirect_to admin_deal_path
@@ -38,7 +37,7 @@ ActiveAdmin.register Deal do
 
   filter :merchant, :collection => proc {(Merchant.all).map{|m| [m.email, m.id]}}
   filter :venues, label: 'Venues',:collection => proc {(Venue.all).map{|v| [v.name, v.id]}}
-  filter :type_of_deal
+  filter :type_of_deal, as: :select, collection: ["Discount", "Freebies"]
   filter :description
   filter :start_date, label: 'Start Date'
   filter :expiry_date, label: 'Expiry Date'
