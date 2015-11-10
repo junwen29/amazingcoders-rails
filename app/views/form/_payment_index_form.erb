@@ -112,8 +112,14 @@
                           Upgrade
                         </button>
                     <% end %>
-
-                    <% else %>
+                <% elsif payment.total_cost == 0 %>
+                    <%= link_to edit_payment_path(payment), {:style => 'color:#FFFFFF;', :class => "css_class"} do %>
+                        <button class="btn btn-xs btn-default disabled" type="button" data-toggle="tooltip" data-placement="top"
+                                title="You are unable to edit a free plan. Please make a new payment instead">
+                          Upgrade
+                        </button>
+                    <% end %>
+                <% else %>
                     <%= link_to 'Upgrade', edit_payment_path(payment), class: "btn btn-big btn-success" %>
                 <% end %>
 
