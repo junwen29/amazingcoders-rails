@@ -139,6 +139,9 @@ class DealsController < ApplicationController
     #need not add a view for this action since redirecting to the index
     #action
     redirect_to deals_path
+
+    # Send out confirmation email
+    DealMailer.delete_deal_email(@deal, MerchantService.get_email(merchant_id)).deliver
   end
 
   # Change non-active deal to active
