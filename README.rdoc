@@ -56,6 +56,16 @@ Things to do to deploy
         * heroku run rails db:migrate
         * heroku open
         * heroku logs
+    -upgrade database
+        ** important run these commands
+        * heroku addons:create heroku-postgresql:hobby-basic
+        * heroku maintenance:on
+        * heroku ps:scale worker=0
+        * heroku pg:copy <DATABASE_URL> <Target Database> --app sushi
+        * heroku pg:copy source-application::OLIVE HEROKU_POSTGRESQL_PINK -a target-application
+        * heroku pg:promote HEROKU_POSTGRESQL_PINK
+        * heroku ps:scale worker=1
+        * heroku maintenance:off
 
 Things to do to run the test suite
     * Important: navigate to seed.rb, change final_end_date = today's date, for e.g => "2015-12-01 00:00:00"
