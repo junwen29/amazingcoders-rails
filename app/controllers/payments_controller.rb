@@ -351,10 +351,6 @@ class PaymentsController < ApplicationController
     total_cost
   end
 
-  def date_diff(date1,date2)
-    (date2.year * 12 + date2.month) - (date1.year * 12 + date1.month)
-  end
-
   private
   def payment_params
     params.require(:payment).permit(:start_date, :expiry_date, :total_cost, :add_on1, :add_on2, :add_on3, :plan1, :paid, :months)
