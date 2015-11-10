@@ -97,7 +97,7 @@ class PaymentsController < ApplicationController
   def create
     #for database
     @payment = Merchant.find(merchant_id).payments.new(payment_params)
-    @plan1 = Plan.find(1)
+   # @plan1 = Plan.find(1)
 
 
 
