@@ -10,6 +10,31 @@
   <div id="plan_months" style="padding-top: 20px"></div>
 </div>
 
+<div style="padding-bottom: 50px;">
+  <h2>Cross Selling Analytics</h2>
+  <div class="cross-sell" style="margin-bottom: 15px; padding-bottom: 10px; background-color: #7CB5EC;">
+    <p class="cross-sell-header" style="color: #434348;">Merchants who bought <%= @plan1_name %></p>
+    <p><%= @plan1_with_addon1 %>% also bought <%= @addon1_name %> add on</p>
+    <p><%= @plan1_with_addon2 %>% also bought <%= @addon2_name %> add on</p>
+    <p><%= @plan1_with_addon3 %>% also bought <%= @addon3_name %> add on</p>
+  </div>
+  <div class="col-lg-4 cross-sell">
+    <p class="cross-sell-header">Merchants who bought <%= @addon1_name %></p>
+    <p><%= @addon_1_with_2 %>% also bought <%= @addon2_name %></p>
+    <p><%= @addon_1_with_3 %>% also bought <%= @addon3_name %></p>
+  </div>
+  <div class="col-lg-4 cross-sell">
+    <p class="cross-sell-header">Merchants who bought <%= @addon2_name %></p>
+    <p><%= @addon_1_with_2 %>% also bought <%= @addon1_name %></p>
+    <p><%= @addon_2_with_3 %>% also bought <%= @addon3_name %></p>
+  </div>
+  <div class="col-lg-4 cross-sell">
+    <p class="cross-sell-header">Merchants who bought <%= @addon3_name %></p>
+    <p><%= @addon_1_with_3 %>% also bought <%= @addon1_name %></p>
+    <p><%= @addon_2_with_3 %>% also bought <%= @addon2_name %></p>
+  </div>
+</div>
+
 <footer>
   <script src="//code.highcharts.com/highcharts.js"></script>
   <script src="//code.highcharts.com/modules/data.js"></script>

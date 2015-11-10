@@ -19,8 +19,6 @@ class AddOnsController < ApplicationController
 
     if @add_on.save
       redirect_to @deal
-      # Send out confirmation email
-      # DealMailer.deal_email("Test Food Merchant", @deal).deliver
     else
       render 'new'
     end
@@ -43,8 +41,6 @@ class AddOnsController < ApplicationController
   def destroy
     @add_on = Add_on.find(params[:id])
     @add_on.destroy
-    #need not add a view for this action since redirecting to the index
-    #action
     #redirect_to add_on_path
   end
 
