@@ -24,7 +24,7 @@ class UserPoint < ActiveRecord::Base
 
   private
   def edit_total
-    point = UserPoint.order('created_at asc').last
+    point = self
     user = User.find(point.user_id)
     total_points = user.total_points
     if point.operation == "Credit"

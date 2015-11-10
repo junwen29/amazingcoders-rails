@@ -21,7 +21,7 @@ class MerchantPoint < ActiveRecord::Base
 
   private
   def edit_total
-    @point = MerchantPoint.order('created_at asc').last
+    @point = self
     @merchant = Merchant.find(@point.merchant_id)
     total_points = @merchant.total_points
     if @point.operation == "Credit"
