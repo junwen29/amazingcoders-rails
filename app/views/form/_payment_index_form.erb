@@ -67,7 +67,7 @@
           <th>Start Date</th>
           <th>Expiry Date</th>
           <th>Payment Date</th>
-          <th>Extend</th>
+          <th></th>
         </tr>
 
         <% @payments.each do |p| %>
@@ -109,12 +109,12 @@
                     <%= link_to edit_payment_path(payment), {:style => 'color:#FFFFFF;', :class => "css_class"} do %>
                         <button class="btn btn-xs btn-default disabled" type="button" data-toggle="tooltip" data-placement="top"
                                 title="You are unable to extend this plan or purchase any more addons">
-                          Extend
+                          Upgrade
                         </button>
                     <% end %>
 
                     <% else %>
-                    <%= link_to 'Extend', edit_payment_path(payment), class: "btn btn-big btn-success" %>
+                    <%= link_to 'Upgrade', edit_payment_path(payment), class: "btn btn-big btn-success" %>
                 <% end %>
 
               </td>
