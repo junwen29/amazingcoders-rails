@@ -42,7 +42,7 @@ module Venue::Json
 
     def deals_json(json)
       json.set! :deals do
-        json.array! self.deals do |deal|
+        json.array! self.deals.active do |deal|
           json.id             deal.id
           json.title          deal.title
           json.type_of_deal   deal.type_of_deal
