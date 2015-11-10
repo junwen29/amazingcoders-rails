@@ -80,7 +80,7 @@ while merchant_id <= 1100
 end
 
 # Seed 100 users
-user = User.new(id: 1000)
+user = User.new(id: 999)
 user.first_name = 'Ser Ming'
 user.last_name = 'Goh'
 user.username = 'serming'
@@ -88,7 +88,7 @@ user.email = 'gohserming@gmail.com'
 user.password ='12345678'
 user.password_confirmation = '12345678'
 user.save
-user_id = 1001
+user_id = 1000
 while user_id < 1100
   user = User.new(id: user_id)
   user.first_name = 'user'+user_id.to_s
@@ -379,7 +379,7 @@ DealVenue.create(id: '1017', deal_id: 1005, venue_id: 1002)
 
 start_date = '01-12-2015'.to_date
 end_date = '10-12-2015'.to_date
-created_at = start_date - 20.days
+created_at = '10-11-2015'.to_date
 Deal.new(id: '1006', title: 'ONLY $9.90 Off Authentic Korean Half Chicken For 2, Four Flavours To Choose From',
          redeemable: true, multiple_use: true, type_of_deal: 'Discount',
          description: '59% off Korean Half Chicken. Serves 2 pax. Choose from 4 flavours: Spicy Up, Mild Up, Curry Up, Yanghyum',
@@ -587,7 +587,7 @@ while start_date <= end_date
   limit = redemption + rand(0..6)
   venue_id = rand(1000..1002)
   while redemption < limit
-    if user_id == 1040
+    if user_id >= 1040
       user_id = 1000
     end
     Redemption.create(id: redemption, deal_id: 1001, user_id: user_id, venue_id: venue_id, created_at: start_date)
@@ -601,7 +601,7 @@ while start_date <= end_date
   limit = redemption + rand(0..6)
   venue_id = rand(1000..1002)
   while redemption < limit
-    if user_id == 1020
+    if user_id >= 1020
       user_id = 1000
     end
     Redemption.create(id: redemption, deal_id: 1001, user_id: user_id, venue_id: venue_id, created_at: start_date)
@@ -664,7 +664,7 @@ while start_date <= end_date
   limit = redemption + rand(0..6)
   venue_id = rand(1000..1002)
   while redemption < limit
-    if user_id == 1070
+    if user_id >= 1070
       user_id = 1000
     end
     Redemption.create(id: redemption, deal_id: 1002, user_id: user_id, venue_id: venue_id, created_at: start_date)
@@ -678,7 +678,7 @@ while start_date <= end_date
   limit = redemption + rand(0..6)
   venue_id = rand(1000..1002)
   while redemption < limit
-    if user_id == 1050
+    if user_id >= 1050
       user_id = 1000
     end
     Redemption.create(id: redemption, deal_id: 1002, user_id: user_id, venue_id: venue_id, created_at: start_date)
@@ -687,19 +687,6 @@ while start_date <= end_date
   end
   start_date = start_date + rand(1..2).days
 end
-start_date = DateTime.parse("2015-10-10 00:00:00")
-user_id = 1100
-while start_date <= end_date
-  limit = redemption + rand(0..rand(5..50))
-  venue_id = rand(1000..1002)
-  while redemption < limit
-    Redemption.create(id: redemption, deal_id: 1002, user_id: user_id, venue_id: venue_id, created_at: start_date)
-    redemption = redemption + 1
-    user_id = user_id + 1
-  end
-  start_date = start_date + 1
-end
-num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
 start_date = DateTime.parse("2015-10-07 00:00:00")
@@ -755,7 +742,7 @@ while start_date <= end_date
   limit = redemption + rand(0..6)
   venue_id = rand(1000..1002)
   while redemption < limit
-    if user_id == 1070
+    if user_id >= 1070
       user_id = 1000
     end
     Redemption.create(id: redemption, deal_id: 1003, user_id: user_id, venue_id: venue_id, created_at: start_date)
@@ -836,7 +823,7 @@ while start_date <= end_date
   limit = redemption + rand(0..6)
   venue_id = rand(1000..1002)
   while redemption < limit
-    if user_id == 1070
+    if user_id >= 1070
       user_id = 1000
     end
     Redemption.create(id: redemption, deal_id: 1004, user_id: user_id, venue_id: venue_id, created_at: start_date)
@@ -852,22 +839,11 @@ while start_date <= end_date
   venue_id = rand(1000..1002)
   while redemption < limit
     if user_id == 1070
-      user_id = 1100
+      user_id = 1000
     end
     Redemption.create(id: redemption, deal_id: 1004, user_id: user_id, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
     user_id = user_id + 1
-  end
-  start_date = start_date + 1
-end
-num_redemption = redemption - starting_redemption
-
-while start_date <= end_date
-  limit = redemption + rand(0..rand(0..30))
-  venue_id = rand(1000..1002)
-  while redemption < limit
-    Redemption.create(id: redemption, deal_id: 1004, user_id: redemption, venue_id: venue_id, created_at: start_date)
-    redemption = redemption + 1
   end
   start_date = start_date + 1
 end
@@ -1128,8 +1104,8 @@ end
 # Merchant Feedback
 date = DateTime.parse("2015-11-02 00:00:00")
 merchant = 1000
-MerchantFeedback.create(id: 1000, title: "Live chat CS support", category: "Suggestion", content: "Good to have some online live chat support", resolved: false, created_at: date, updated_at: date, merchant_id: merchant)
-MerchantFeedback.create(id: 1001, title: "Poor service", category: "Complaint", content: "Rude customer service", resolved: true, created_at: date, updated_at: date, merchant_id: merchant)
+#MerchantFeedback.create(id: 1000, title: "Live chat CS support", category: "Suggestion", content: "Good to have some online live chat support", resolved: false, created_at: date, updated_at: date, merchant_id: merchant)
+#MerchantFeedback.create(id: 1001, title: "Poor service", category: "Complaint", content: "Rude customer service", resolved: true, created_at: date, updated_at: date, merchant_id: merchant)
 
 # User Feedback
 date = DateTime.parse("2015-11-02 00:00:00")
