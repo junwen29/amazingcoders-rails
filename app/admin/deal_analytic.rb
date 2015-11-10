@@ -136,7 +136,6 @@ ActiveAdmin.register DealAnalytic do
     f.actions
   end
 
-  # TODO: Add charts to new route
   collection_action :charts, :method=>:get do
 
   end
