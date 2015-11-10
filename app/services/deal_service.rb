@@ -62,7 +62,7 @@ class DealService
     end
 
     def get_active_deals
-      all_deals = Deal.active
+      all_deals = Deal.active.order("created_at DESC")
     end
 
     def get_popular_deals
@@ -70,7 +70,7 @@ class DealService
     end
 
     def get_bookmark_deals(user_id)
-      deals = BookmarkService.deals_by_user(user_id)
+      deals = BookmarkService.deals_by_user(user_id).order("created_at DESC")
     end
 
     def get_active_deals_by_type (type)
