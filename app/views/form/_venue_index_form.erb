@@ -11,7 +11,7 @@
 
     <% @venues.each do |venue| %>
         <tr>
-          <td>
+          <td style="min-width: 100px;">
             <% if venue.photo.present? %>
                 <%= cl_image_tag(venue.photo.path, { size: '100x100', crop: :fit }) %>
             <% else %>

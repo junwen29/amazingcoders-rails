@@ -6,8 +6,10 @@ ActiveAdmin.register Deal do
   config.sort_order = "created_at_desc"
 
   after_destroy do |deal|
+    merchant_id = deal.merchant_id
     DealMailer.delete_deal_email(deal, MerchantService.get_email(merchant_id)).deliver
   end
+
 
   controller do
     def update
@@ -25,7 +27,7 @@ ActiveAdmin.register Deal do
           item_type = "deal"
           item_id = @deal.id
           item_name = @deal.title
-          message = 'The' + item_name + ' has been removed. Sorry for any inconvenience. '
+          message = 'The ' + item_name + ' has been removed. Sorry for any inconvenience. '
           NotificationService.send_notification(user_ids, tokens, item_type,item_id, item_name, message)
         end
 
