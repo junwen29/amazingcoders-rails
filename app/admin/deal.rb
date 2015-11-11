@@ -12,11 +12,23 @@ ActiveAdmin.register Deal do
   controller do
     def update
       @deal = Deal.find(params[:id])
+      # notify users who bookmarked the deal
+
       if @deal.update_columns(deal_params)
         flash[:success] = "Deal successfully updated!"
         merchant_id = @deal.merchant_id
         DealMailer.update_deal_email_admin("valued merchant", @deal, MerchantService.get_email(merchant_id)).deliver
         redirect_to admin_deal_path
+
+        if deal_params.has_key?('active')
+          user_ids, tokens = DeviceService.tokens_by_deal_bookmarks(@deal.id)
+          item_type = "deal"
+          item_id = @deal.id
+          item_name = @deal.title
+          message = 'The' + item_name + ' has been removed. Sorry for any inconvenience. '
+          NotificationService.send_notification(user_ids, tokens, item_type,item_id, item_name, message)
+        end
+
       else
         flash[:error] = "Failed to update deal!"
       end
