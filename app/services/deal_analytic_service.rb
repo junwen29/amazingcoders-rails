@@ -459,7 +459,10 @@ class DealAnalyticService
       array = Array.new
       user_count = RedemptionService.get_user_ids(deal_id).count.to_f
       if user_count == 0
+        blank_array = Array.new
         array << 'No Redeems Yet'
+        array << blank_array
+        array << blank_array
         return array
       end
       multiple_redeems = RedemptionService.get_user_ids(deal_id, true)
@@ -603,6 +606,52 @@ class DealAnalyticService
       end
       array << cumulative
       array << non_cumulative
+    end
+
+    # Return a nested array
+    # array[0] all active deals
+    # array[1] all expired deals
+    # array[0][0] is first active deals
+    # array[0][0][0] % of wishlisters that have viewed the deal
+    # array[0][0][1] % of users that redeem the deal after viewing it
+    # array[0][0][2] Percentage/Number of users who redeem more than once
+    # array[0][0][3] Average number of redemptions for users who redeemed multiple times
+    # array[0][0][4] Average time span between consecutive redemptions by a user
+    def get_analytics_table(active_deals, past_deals)
+      array = Array.new
+      array << get_deal_statistics(active_deals)
+      array << get_deal_statistics(past_deals)
+      array
+    end
+
+    # array[0] is first deal
+    # array[0][0] is deal
+    # array[0][1] is % of wishlisters that have viewed the deal
+    # array[0][2] is % of users that redeem the deal after viewing it
+    # array[0][3] is Percentage of users who redeem more than once
+    # array[0][4] is Number of users who redeem more than once
+    # array[0][5]  is Average number of redemptions for users who redeemed multiple times
+    # array[0][6] is Average time span between consecutive redemptions by a user
+    def get_deal_statistics(deals)
+      array = Array.new
+      deals.each do |d|
+        deal_array = Array.new
+        deal_array << d
+        deal_array << DealAnalyticService.get_wishlist_to_views(d.id)
+        deal_array << DealAnalyticService.get_views_to_redeem(d.id)
+        percentage = DealAnalyticService.get_multiple_redeems_percentage(d.id)
+        deal_array << percentage[0]
+        deal_array << percentage[1]
+        if percentage[1].blank?
+          deal_array << DealAnalyticService.average_redemption_multiple_users(d.id)
+          deal_array << DealAnalyticService.average_time_btw_multiple_redeem(d.id)
+        else
+          deal_array << DealAnalyticService.average_redemption_multiple_users(d.id, percentage[2])
+          deal_array << DealAnalyticService.average_time_btw_multiple_redeem(d.id, percentage[2])
+        end
+        array << deal_array
+      end
+      array
     end
   end
 
