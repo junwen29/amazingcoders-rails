@@ -23,7 +23,7 @@ class Payment < ActiveRecord::Base
 
   validates(:start_date, presence: true)
   validates(:months, presence: true)
-  validate :start_date_not_past, :on => :save
+  validate :start_date_not_past, :on => :create
   validate :check_overlapping_plans, :on => :create
 
 
