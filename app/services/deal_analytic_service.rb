@@ -243,11 +243,11 @@ class DealAnalyticService
     # Returns an array of deal_id and redemption count
     def get_active_deals_ranking(start_date, end_date, merchant_id = nil)
       if merchant_id == nil
-        active_deals = Deal.where("active = ? AND ((? BETWEEN start_date AND expiry_date) OR (? BETWEEN start_date AND expiry_date))",
-                                  true, start_date, end_date).pluck(:id)
+        active_deals = Deal.where("active = ? AND redeemable = ? AND ((? BETWEEN start_date AND expiry_date) OR (? BETWEEN start_date AND expiry_date))",
+                                  true, true, start_date, end_date).pluck(:id)
       else
-        active_deals = Deal.where("active = ? AND merchant_id = ? AND ((? BETWEEN start_date AND expiry_date) OR (? BETWEEN start_date AND expiry_date))",
-                                  true, merchant_id, start_date, end_date).pluck(:id)
+        active_deals = Deal.where("active = ? AND redeemable = ? AND merchant_id = ? AND ((? BETWEEN start_date AND expiry_date) OR (? BETWEEN start_date AND expiry_date))",
+                                  true, true, merchant_id, start_date, end_date).pluck(:id)
       end
 
       deal_ranking = Array.new
