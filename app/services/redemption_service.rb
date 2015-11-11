@@ -27,7 +27,7 @@ class RedemptionService
         # award burps
         venue = Venue.find(venue_id)
         #eg. title =  'Salmon deal at Salmon Village'
-        point = UserPointService.new_point(deal.title.to_s + 'at ' + venue.name.to_s, '5'.to_i, "Credit", user_id)
+        point = UserPointService.new_point('Redeemed '+ deal.title.to_s + '@ ' + venue.name.to_s, '5'.to_i, "Credit", user_id)
 
         redemption = Redemption.create(deal_id: deal_id, user_id: user_id, venue_id: venue_id, user_point_id: point.id)
         Deal.increment_counter(:num_of_redeems, deal_id)

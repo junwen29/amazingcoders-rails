@@ -2,7 +2,7 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
 # TODO: Change this data to presentation date and data for analytics will be seeding till that date
-final_end_date = "2015-11-19 00:00:00"
+final_end_date = "2015-11-18 00:00:00"
 
 Plan.create(id: '1', name: 'Premium Deals Services', cost: '30', description: 'Allows unlimited creation of deals. Publishing of up to 5 active deals')
 
@@ -19,6 +19,7 @@ AddOn.create(id: '1001', plan_id: '1000', name: 'Reservation Statistics', cost: 
 # For Gifts
 Gift.create(id: '1000', name: '1 free month', points: '600', description: 'Free 1 month subscription to Premium Deals Services with all add-ons. Simply click redeem and select the start date of your plan!', gift_type: 'Merchant', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
 Gift.create(id: '1001', name: 'Burpple Shirt', points: '100', description: 'Get a Burpple Shirt Merchandise!', gift_type: 'Merchant', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
+Gift.create(id: '1002', name: 'Burpple Mug', points: '100', description: 'Get a Burpple Mug Merchandise!', gift_type: 'Merchant', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
 
 # Seed admin
 admin = AdminUser.new(id: '1000')
@@ -78,8 +79,10 @@ while merchant_id <= 1100
   merchant_id = merchant_id + 1
 end
 
+# users that have already been seeded
+seeded_users = Array.new
 # Seed 100 users
-user = User.new(id: 1000)
+user = User.new(id: 999)
 user.first_name = 'Ser Ming'
 user.last_name = 'Goh'
 user.username = 'serming'
@@ -87,7 +90,8 @@ user.email = 'gohserming@gmail.com'
 user.password ='12345678'
 user.password_confirmation = '12345678'
 user.save
-user_id = 1001
+
+user_id = 1000
 while user_id < 1100
   user = User.new(id: user_id)
   user.first_name = 'user'+user_id.to_s
@@ -97,6 +101,7 @@ while user_id < 1100
   user.password ='12345678'
   user.password_confirmation = '12345678'
   user.save
+  seeded_users << user_id
   user_id = user_id + 1
 end
 
@@ -244,6 +249,13 @@ variation of fried chicken, featuring juicy, sumptuous and tender chicken meat u
 being too greasy. Best known for its signature SpicyUp and YangNyum style fried chicken. ChickenUp also serves several
 variations of the dish with the accompaniment of different sauces such as soya and curry sauces.', phone: '65630337',
              address_2: '#01-01', merchant_id: 1000)
+Venue.create(id: '1009', name: 'Chicken Up @ Bugis', street: '60 Queen Street Singapore', zipcode: '188540', city: 'Singapore',
+             state: 'Singapore', country: 'Singapore', neighbourhood: 'Bugis',  bio: 'ChickenUp is well known and best
++loved for serving Authentic Korean Fried Chicken. By adapting the Korean methods of removing the fat from the skin and
++double-frying, Chicken Up Created its own distinct variation of fried chicken, featuring juicy, sumptuous and tender
++chicken meat under its thin and crunchy skin without being too greasy. Best known for its signature SpicyUp and YangNyum
++style fried chicken. ChickenUp also serves several variations of the dish with the accompaniment of different sauces
++such as soya and curry sauces.', phone: '609690', merchant_id: 1000)
 # For woonyong92@gmail.com
 Venue.create(id: '1003', name: 'Reedz Cafe', street: '15 Kent Ridge Drive', zipcode: '119245', city: 'Singapore',
              state: 'Singapore', country: 'Singapore', neighbourhood: 'Kent Ridge',
@@ -280,8 +292,8 @@ start_time_2 = Time.at(39600).utc.strftime("%H:%M:%S")
 end_time_2 = Time.at(75600).utc.strftime("%H:%M:%S")
 
 # Seed deals for amazingcoders8mc@gmail.com
-activate_date = '20-09-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
-start_date = '25-09-2015'.to_date
+activate_date = '30-09-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
+start_date = '01-10-2015'.to_date
 end_date = '20-10-2015'.to_date
 created_at = start_date - 10.days
 Deal.new(id: '1000', title: 'Yangpa Bomb Introductory Promo', redeemable: false, type_of_deal: 'Discount',
@@ -296,10 +308,10 @@ DealVenue.create(id: '1000', deal_id: 1000, venue_id: 1000)
 DealVenue.create(id: '1001', deal_id: 1000, venue_id: 1001)
 DealVenue.create(id: '1002', deal_id: 1000, venue_id: 1002)
 
-start_date = '01-10-2015'.to_date
+start_date = '10-10-2015'.to_date
 end_date = '20-10-2015'.to_date
 created_at = start_date - 10.days
-activate_date = '27-09-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
+activate_date = '09-10-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
 Deal.new(id: '1001', title: '1 For 1 Chicken Up Wings and Korean Bingsu', redeemable: true, multiple_use: false, type_of_deal: 'Freebies',
          description: 'For every wing or bingsu purchased you get another on the house! Enjoy!!!', start_date: start_date, expiry_date: end_date,
          t_c: 'While stock last!', pushed: true, merchant_id: 1000, active: true, num_of_redeems: 0, created_at: created_at, activate_date: activate_date,
@@ -312,10 +324,10 @@ DealVenue.create(id: '1003', deal_id: 1001, venue_id: 1000)
 DealVenue.create(id: '1004', deal_id: 1001, venue_id: 1001)
 DealVenue.create(id: '1005', deal_id: 1001, venue_id: 1002)
 
-start_date = '10-10-2015'.to_date
+start_date = '25-10-2015'.to_date
 end_date = '01-12-2015'.to_date
 created_at = start_date - 10.days
-activate_date = '07-10-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
+activate_date = '23-10-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
 Deal.new(id: '1002', title: '1 Free Soju Cocktails for every Main Meal Purchased', redeemable: true, multiple_use: true, type_of_deal: 'Freebies',
          description: 'Normal Price $25++. Now only $17', start_date: start_date, expiry_date: end_date,
          t_c: 'Deal must be redeemed via Burpple! Only valid for 18 and above', pushed: true, merchant_id: 1000, active: true, num_of_redeems: 0,
@@ -328,10 +340,10 @@ DealVenue.create(id: '1006', deal_id: 1002, venue_id: 1000)
 DealVenue.create(id: '1007', deal_id: 1002, venue_id: 1001)
 DealVenue.create(id: '1008', deal_id: 1002, venue_id: 1002)
 
-start_date = '15-10-2015'.to_date
+start_date = '28-10-2015'.to_date
 end_date = '01-12-2015'.to_date
 created_at = start_date - 10.days
-activate_date = '12-10-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
+activate_date = '25-10-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
 Deal.new(id: '1003', title: '4pcs Fried Chicken @ $8.00', redeemable: true, multiple_use: false, type_of_deal: 'Discount',
          description: 'Normal Price $12++. Now only $8.00', start_date: start_date, expiry_date: end_date,
          t_c: 'Deal must be redeemed via Burpple!', pushed: true, merchant_id: 1000, active: true, num_of_redeems: 0,
@@ -344,10 +356,10 @@ DealVenue.create(id: '1009', deal_id: 1003, venue_id: 1000)
 DealVenue.create(id: '1010', deal_id: 1003, venue_id: 1001)
 DealVenue.create(id: '1011', deal_id: 1003, venue_id: 1002)
 
-start_date = '19-10-2015'.to_date
+start_date = '24-10-2015'.to_date
 end_date = '01-12-2015'.to_date
 created_at = start_date - 10.days
-activate_date = '15-10-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
+activate_date = '20-10-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
 Deal.new(id: '1004', title: '50% OFF Ganjang, Yanguyum Wings and Soju Cocktails!', redeemable: true, multiple_use: true, type_of_deal: 'Discount',
          description: '50% OFF!!!', start_date: start_date, expiry_date: end_date,
          t_c: 'Deal must be redeemed via Burpple! Soju Cocktails is valid only or 18 and above', pushed: true,
@@ -379,7 +391,7 @@ DealVenue.create(id: '1017', deal_id: 1005, venue_id: 1002)
 start_date = '01-12-2015'.to_date
 end_date = '10-12-2015'.to_date
 created_at = start_date - 20.days
-Deal.new(id: '1006', title: 'ONLY $9.90 Off Authentic Korean Half Chicken For 2, Four Flavours To Choose From',
+Deal.new(id: '1006', title: 'ONLY $9.90 Off Korean Chicken',
          redeemable: true, multiple_use: true, type_of_deal: 'Discount',
          description: '59% off Korean Half Chicken. Serves 2 pax. Choose from 4 flavours: Spicy Up, Mild Up, Curry Up, Yanghyum',
          start_date: start_date, expiry_date: end_date, t_c: 'Valid for dine-in only', pushed: false, merchant_id: 1000,
@@ -547,9 +559,9 @@ end
 
 # Seed DealAnalytics for View count for deal 1000
 view_count = 1000
-start_date = DateTime.parse("2015-09-20 00:00:00")
+start_date = DateTime.parse("2015-10-01 00:00:00")
 end_date = DateTime.parse("2015-10-20 00:00:00")
-created_at = '20-09-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
+created_at = '01-10-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
 user_id = 1000
 while user_id < 1078
   limit = user_id + rand(4..12)
@@ -577,10 +589,13 @@ num_view_count = view_count - 1000
 unique_view_count = num_view_count - 22
 DealAnalytic.create(id: 1000, deal_id: 1000, view_count: num_view_count, unique_view_count: unique_view_count, redemption_count: 0)
 
+# Users to be seeded
+seed_users = Array.new
+
 # Seed DealAnalytics for View count for deal 1001
 redemption = 1000
 user_id = 1000
-start_date = DateTime.parse("2015-10-01 00:00:00")
+start_date = DateTime.parse("2015-10-10 00:00:00")
 end_date = DateTime.parse("2015-10-20 00:00:00")
 while start_date <= end_date
   limit = redemption + rand(0..6)
@@ -595,7 +610,7 @@ while start_date <= end_date
   end
   start_date = start_date + rand(1..2).days
 end
-start_date = DateTime.parse("2015-10-01 00:00:00")
+start_date = DateTime.parse("2015-10-10 00:00:00")
 while start_date <= end_date
   limit = redemption + rand(0..6)
   venue_id = rand(1000..1002)
@@ -609,14 +624,19 @@ while start_date <= end_date
   end
   start_date = start_date + rand(1..2).days
 end
-start_date = DateTime.parse("2015-10-01 00:00:00")
+start_date = DateTime.parse("2015-10-10 00:00:00")
 user_id = 1100
 while start_date <= end_date
-  limit = redemption + rand(rand(10..30)..rand(60..100))
+  limit = redemption + rand(rand(10..20)..rand(20..30))
   venue_id = rand(1000..1002)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1001, user_id: user_id, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << user_id
+      end
+    end
     user_id = user_id + 1
   end
   start_date = start_date + 1
@@ -624,9 +644,9 @@ end
 num_redemption = redemption - 1000
 
 starting_view_count = view_count
-start_date = DateTime.parse("2015-09-27 00:00:00")
+start_date = DateTime.parse("2015-10-09 00:00:00")
 end_date = DateTime.parse("2015-10-20 00:00:00")
-created_at = '27-09-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
+created_at = '09-10-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
 user_id = 1000
 while user_id < 1072
   limit = user_id + rand(4..12)
@@ -639,7 +659,7 @@ while user_id < 1072
 end
 user_id = 1000
 while start_date <= end_date
-  limit = view_count + rand(20..40)
+  limit = view_count + rand(30..40)
   while view_count < limit
     if user_id == 1078
       user_id = 1000
@@ -657,7 +677,7 @@ DealAnalytic.create(id: 1001, deal_id: 1001, view_count: num_view_count, unique_
 # Seed DealAnalytics for View count for deal 1002
 starting_redemption = redemption
 user_id = 1000
-start_date = DateTime.parse("2015-10-10 00:00:00")
+start_date = DateTime.parse("2015-10-25 00:00:00")
 end_date = DateTime.parse(final_end_date)
 while start_date <= end_date
   limit = redemption + rand(0..6)
@@ -668,11 +688,16 @@ while start_date <= end_date
     end
     Redemption.create(id: redemption, deal_id: 1002, user_id: user_id, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << user_id
+      end
+    end
     user_id = user_id + rand(0..1)
   end
   start_date = start_date + rand(1..2).days
 end
-start_date = DateTime.parse("2015-10-10 00:00:00")
+start_date = DateTime.parse("2015-10-25 00:00:00")
 while start_date <= end_date
   limit = redemption + rand(0..6)
   venue_id = rand(1000..1002)
@@ -686,7 +711,7 @@ while start_date <= end_date
   end
   start_date = start_date + rand(1..2).days
 end
-start_date = DateTime.parse("2015-10-10 00:00:00")
+start_date = DateTime.parse("2015-10-25 00:00:00")
 user_id = 1100
 while start_date <= end_date
   limit = redemption + rand(0..rand(5..50))
@@ -694,6 +719,11 @@ while start_date <= end_date
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1002, user_id: user_id, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << user_id
+      end
+    end
     user_id = user_id + 1
   end
   start_date = start_date + 1
@@ -701,9 +731,9 @@ end
 num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
-start_date = DateTime.parse("2015-10-07 00:00:00")
+start_date = DateTime.parse("2015-10-23 00:00:00")
 end_date = DateTime.parse(final_end_date)
-created_at = '07-10-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
+created_at = '23-10-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
 user_id = 1000
 while user_id < 1089
   limit = user_id + rand(4..8)
@@ -734,7 +764,7 @@ DealAnalytic.create(id: 1002, deal_id: 1002, view_count: num_view_count, unique_
 # Seed DealAnalytics for View count for deal 1003
 starting_redemption = redemption
 user_id = 1000
-start_date = DateTime.parse("2015-10-15 00:00:00")
+start_date = DateTime.parse("2015-10-28 00:00:00")
 end_date = DateTime.parse(final_end_date)
 while start_date <= end_date
   limit = redemption + rand(0..6)
@@ -749,7 +779,7 @@ while start_date <= end_date
   end
   start_date = start_date + rand(1..2).days
 end
-start_date = DateTime.parse("2015-10-15 00:00:00")
+start_date = DateTime.parse("2015-10-28 00:00:00")
 while start_date <= end_date
   limit = redemption + rand(0..6)
   venue_id = rand(1000..1002)
@@ -759,11 +789,16 @@ while start_date <= end_date
     end
     Redemption.create(id: redemption, deal_id: 1003, user_id: user_id, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << user_id
+      end
+    end
     user_id = user_id + rand(1..3)
   end
   start_date = start_date + rand(1..2).days
 end
-start_date = DateTime.parse("2015-10-15 00:00:00")
+start_date = DateTime.parse("2015-10-28 00:00:00")
 user_id = 1000
 while start_date <= end_date
   limit = redemption + rand(0..rand(10..50))
@@ -774,6 +809,11 @@ while start_date <= end_date
     end
     Redemption.create(id: redemption, deal_id: 1003, user_id: user_id, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << user_id
+      end
+    end
     user_id = user_id + 1
   end
   start_date = start_date + 1
@@ -781,9 +821,9 @@ end
 num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
-start_date = DateTime.parse("2015-10-12 00:00:00")
+start_date = DateTime.parse("2015-10-25 00:00:00")
 end_date = DateTime.parse(final_end_date)
-created_at = '12-10-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
+created_at = '25-10-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
 user_id = 1000
 while user_id < 1100
   limit = user_id + rand(4..8)
@@ -815,7 +855,7 @@ DealAnalytic.create(id: 1003, deal_id: 1003, view_count: num_view_count, unique_
 # Seed DealAnalytics for View count for deal 1004
 starting_redemption = redemption
 user_id = 1000
-start_date = DateTime.parse("2015-10-19 00:00:00")
+start_date = DateTime.parse("2015-10-24 00:00:00")
 end_date = DateTime.parse(final_end_date)
 while start_date <= end_date
   limit = redemption + rand(0..6)
@@ -830,7 +870,7 @@ while start_date <= end_date
   end
   start_date = start_date + rand(1..2).days
 end
-start_date = DateTime.parse("2015-10-19 00:00:00")
+start_date = DateTime.parse("2015-10-24 00:00:00")
 while start_date <= end_date
   limit = redemption + rand(0..6)
   venue_id = rand(1000..1002)
@@ -840,11 +880,16 @@ while start_date <= end_date
     end
     Redemption.create(id: redemption, deal_id: 1004, user_id: user_id, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << user_id
+      end
+    end
     user_id = user_id + rand(1..3)
   end
   start_date = start_date + rand(1..2).days
 end
-start_date = DateTime.parse("2015-10-19 00:00:00")
+start_date = DateTime.parse("2015-10-24 00:00:00")
 user_id = 1000
 while start_date <= end_date
   limit = redemption + rand(0..rand(10..50))
@@ -855,6 +900,11 @@ while start_date <= end_date
     end
     Redemption.create(id: redemption, deal_id: 1004, user_id: user_id, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << user_id
+      end
+    end
     user_id = user_id + 1
   end
   start_date = start_date + 1
@@ -867,15 +917,20 @@ while start_date <= end_date
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1004, user_id: redemption, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << redemption
+      end
+    end
   end
   start_date = start_date + 1
 end
 num_redemption = redemption - starting_redemption
 
 starting_view_count = view_count
-start_date = DateTime.parse("2015-10-15 00:00:00")
+start_date = DateTime.parse("2015-10-20 00:00:00")
 end_date = DateTime.parse(final_end_date)
-created_at = '15-10-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
+created_at = '20-10-2015'.to_datetime.in_time_zone("Singapore") - 8.hours
 user_id = 1000
 while user_id < 1100
   limit = user_id + rand(4..8)
@@ -944,6 +999,11 @@ while start_date <= end_date
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1012, user_id: redemption, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << redemption
+      end
+    end
   end
   start_date = start_date + 1
 end
@@ -972,6 +1032,11 @@ while start_date <= end_date
   limit = redemption + rand(0..30)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1013, user_id: redemption, venue_id: venue_id, created_at: start_date)
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << redemption
+      end
+    end
     redemption = redemption + 1
   end
   start_date = start_date + 1
@@ -1001,6 +1066,11 @@ while start_date <= end_date
   limit = redemption + rand(0..3)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1014, user_id: redemption, venue_id: venue_id, created_at: start_date)
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << redemption
+      end
+    end
     redemption = redemption + 1
   end
   start_date = start_date + 1
@@ -1030,6 +1100,11 @@ while start_date <= end_date
   limit = redemption + rand(0..7)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1015, user_id: redemption, venue_id: venue_id, created_at: start_date)
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << redemption
+      end
+    end
     redemption = redemption + 1
   end
   start_date = start_date + 1
@@ -1059,6 +1134,11 @@ while start_date <= end_date
   limit = redemption + rand(0..20)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1016, user_id: redemption, venue_id: venue_id, created_at: start_date)
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << redemption
+      end
+    end
     redemption = redemption + 1
   end
   start_date = start_date + 1
@@ -1088,6 +1168,11 @@ while start_date <= end_date
   limit = redemption + rand(10..20)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1017, user_id: redemption, venue_id: venue_id, created_at: start_date)
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << redemption
+      end
+    end
     redemption = redemption + 1
   end
   start_date = start_date + 1.day
@@ -1109,31 +1194,18 @@ num_view_count = view_count - starting_view_count
 unique_view_count = num_view_count- rand(50..90)
 DealAnalytic.create(id: 1011, deal_id: 1017, view_count: num_view_count, unique_view_count: unique_view_count, redemption_count: num_redemption)
 
-# Get ending user_id
-ending_user_id = redemption
-starting_user_id = ending_user_id - 31
-while starting_user_id <= ending_user_id
-  user = User.new(id: starting_user_id)
-  user.first_name = 'user'+starting_user_id.to_s
-  user.last_name = 'user'+starting_user_id.to_s
-  user.username = 'user'+starting_user_id.to_s
-  user.email = 'user'+starting_user_id.to_s+'@gmail.com'
+# Seed users for redemption table
+seed_users = seed_users - seeded_users
+seed_users.each do |sd|
+  user = User.new(id: sd)
+  user.first_name = 'user'+sd.to_s
+  user.last_name = 'user'+sd.to_s
+  user.username = 'user'+sd.to_s
+  user.email = 'user'+sd.to_s+'@gmail.com'
   user.password ='12345678'
   user.password_confirmation = '12345678'
   user.save
-  starting_user_id = starting_user_id + 1
 end
-
-# Merchant Feedback
-date = DateTime.parse("2015-11-02 00:00:00")
-merchant = 1000
-MerchantFeedback.create(id: 1000, title: "Live chat CS support", category: "Suggestion", content: "Good to have some online live chat support", resolved: false, created_at: date, updated_at: date, merchant_id: merchant)
-MerchantFeedback.create(id: 1001, title: "Poor service", category: "Complaint", content: "Rude customer service", resolved: true, created_at: date, updated_at: date, merchant_id: merchant)
-
-# User Feedback
-date = DateTime.parse("2015-11-02 00:00:00")
-UserFeedback.create(id: 1000, title: "Suggestion to add kids menu", category: "Suggestion", content: "Add some healthy food for small kids", resolved: false, created_at: date, updated_at: date, user_id: 1000)
-UserFeedback.create(id: 1001, title: "Poor service", category: "Complaint", content: "Rude customer service", resolved: true, created_at: date, updated_at: date, user_id: 1000)
 
 # Merchant Points
 MerchantPoint.create(id: 1000, reason: 'Paid for a plan upgrade', points: 1040, operation: 'Credit', merchant_id: 1000)
