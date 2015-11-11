@@ -90,16 +90,16 @@ class DealAnalyticService
 
         # If start date of deal is after given start date, we will start from deal start date
         if d.start_date > start_date
-          redemption_start_date = d.start_date.beginning_of_day
+          redemption_start_date = d.start_date.in_time_zone("Singapore").beginning_of_day
         else
-          redemption_start_date = start_date.beginning_of_day
+          redemption_start_date = start_date.in_time_zone("Singapore").beginning_of_day
         end
 
         # If end date of deal is before given end date, we will end at deal end date
         if d.expiry_date < end_date
-          temp_end_date = d.expiry_date
+          temp_end_date = d.expiry_date.in_time_zone("Singapore").end_of_day
         else
-          temp_end_date = end_date
+          temp_end_date = end_date.in_time_zone("Singapore").end_of_day
         end
 
         deal_array << d.title
