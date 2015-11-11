@@ -80,7 +80,7 @@ class DealAnalyticService
         num_view_array = Array.new
         num_redeem_array = Array.new
         deal_array = Array.new
-        view_start_date = Viewcount.where(:deal_id => d.id).first
+        view_start_date = Viewcount.where(:deal_id => d.id).order(created_at: :asc).first
         if view_start_date.blank?
           view_start_date = DateTime.now.in_time_zone("Singapore").beginning_of_day
         else
