@@ -189,7 +189,8 @@ while merchant_id < 1050
 end
 
 while merchant_id < 1100
-  Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '40.00', add_on1: true, add_on2: true, add_on3: false, plan1: true, paid: true, created_at: start_date, updated_at: '2015-10-01 00:00:00', merchant_id: merchant_id, months: 1).save(validate: false)
+  created_at = '01-10-2015'.to_date
+  Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '40.00', add_on1: true, add_on2: true, add_on3: false, plan1: true, paid: true, created_at: created_at, updated_at: '2015-10-01 00:00:00', merchant_id: merchant_id, months: 1).save(validate: false)
   PlanPayment.create(id: plan_payment_id, plan_id: 1, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
   AddOnPayment.create(id: add_on_payment_id, add_on_id: 1, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
   add_on_payment_id = add_on_payment_id + 1
