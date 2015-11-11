@@ -33,6 +33,23 @@ class DeviceService
 
       return tokens
     end
+
+    def tokens_by_deal_bookmarks(deal_id)
+      # load tokens via users wishes
+      tokens = []
+      user_ids = []
+      deal = Deal.find(deal_id)
+      users = deal.users
+      users.each { |user|
+        user_ids << user.id
+        user.devices.each { |device|
+          tokens << device.token
+        }
+      }
+
+      return user_ids, tokens #must return tokens
+    end
+
   end
 
   class << self

@@ -19,6 +19,7 @@ class MerchantPointTest < ActiveSupport::TestCase
 
   test "debit merchant point" do
     merchant = merchant_one
+    merchant.total_points = 200
     merchant.save
 
     reason = "Redeem a gift"
@@ -30,7 +31,7 @@ class MerchantPointTest < ActiveSupport::TestCase
                                           created_at: date, updated_at: date, merchant_id: merchant_id)
 
     assert merchant_point.save
-    assert_equal(merchant.reload.total_points, -points)
+    assert_equal(merchant.reload.total_points, 100)
   end
 
   test "view loyalty point" do
