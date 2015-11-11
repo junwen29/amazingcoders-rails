@@ -18,7 +18,7 @@ AddOn.create(id: '1001', plan_id: '1000', name: 'Reservation Statistics', cost: 
 
 # For Gifts
 Gift.create(id: '1000', name: '1 free month', points: '600', description: 'Free 1 month subscription to Premium Deals Services with all add-ons. Simply click redeem and select the start date of your plan!', gift_type: 'Merchant', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
-Gift.create(id: '1001', name: 'Burpple Shirt', points: '100', description: 'Get a Burpple Shirt Merchandise!', gift_type: 'Merchant', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
+Gift.create(id: '1001', name: 'Featured Post', points: '100', description: 'Get 1 month of featured post on Burpple!', gift_type: 'Merchant', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
 Gift.create(id: '1002', name: 'Burpple Mug', points: '100', description: 'Get a Burpple Mug Merchandise!', gift_type: 'Merchant', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
 
 # Seed admin
@@ -189,7 +189,8 @@ while merchant_id < 1050
 end
 
 while merchant_id < 1100
-  Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '40.00', add_on1: true, add_on2: true, add_on3: false, plan1: true, paid: true, created_at: start_date, updated_at: '2015-10-01 00:00:00', merchant_id: merchant_id, months: 1).save(validate: false)
+  created_at = '01-10-2015'.to_date
+  Payment.new(id: payment_id, start_date: start_date, expiry_date: end_date, total_cost: '40.00', add_on1: true, add_on2: true, add_on3: false, plan1: true, paid: true, created_at: created_at, updated_at: '2015-10-01 00:00:00', merchant_id: merchant_id, months: 1).save(validate: false)
   PlanPayment.create(id: plan_payment_id, plan_id: 1, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
   AddOnPayment.create(id: add_on_payment_id, add_on_id: 1, payment_id: payment_id, created_at: start_date, updated_at: '2015-10-01 00:00:00')
   add_on_payment_id = add_on_payment_id + 1
@@ -256,6 +257,14 @@ Venue.create(id: '1009', name: 'Chicken Up @ Bugis', street: '60 Queen Street Si
 +chicken meat under its thin and crunchy skin without being too greasy. Best known for its signature SpicyUp and YangNyum
 +style fried chicken. ChickenUp also serves several variations of the dish with the accompaniment of different sauces
 +such as soya and curry sauces.', phone: '609690', merchant_id: 1000)
+# Seeded for admin to delete
+Venue.create(id: '1010', name: 'Chicken Down @ Redhill', street: '60 Queen Street Singapore', zipcode: '188540', city: 'Singapore',
+             state: 'Singapore', country: 'Singapore', neighbourhood: 'Bugis',  bio: 'ChickenUp is well known and best
++loved for serving Authentic Korean Fried Chicken. By adapting the Korean methods of removing the fat from the skin and
++double-frying, Chicken Up Created its own distinct variation of fried chicken, featuring juicy, sumptuous and tender
++chicken meat under its thin and crunchy skin without being too greasy. Best known for its signature SpicyUp and YangNyum
++style fried chicken. ChickenUp also serves several variations of the dish with the accompaniment of different sauces
++such as soya and curry sauces.', phone: '609690', merchant_id: 1001)
 # For woonyong92@gmail.com
 Venue.create(id: '1003', name: 'Reedz Cafe', street: '15 Kent Ridge Drive', zipcode: '119245', city: 'Singapore',
              state: 'Singapore', country: 'Singapore', neighbourhood: 'Kent Ridge',
