@@ -78,6 +78,8 @@ while merchant_id <= 1100
   merchant_id = merchant_id + 1
 end
 
+# users that have already been seeded
+seeded_users = Array.new
 # Seed 100 users
 user = User.new(id: 1000)
 user.first_name = 'Ser Ming'
@@ -87,6 +89,7 @@ user.email = 'gohserming@gmail.com'
 user.password ='12345678'
 user.password_confirmation = '12345678'
 user.save
+seeded_users << 1000
 user_id = 1001
 while user_id < 1100
   user = User.new(id: user_id)
@@ -97,6 +100,7 @@ while user_id < 1100
   user.password ='12345678'
   user.password_confirmation = '12345678'
   user.save
+  seeded_users << user_id
   user_id = user_id + 1
 end
 
@@ -584,6 +588,9 @@ num_view_count = view_count - 1000
 unique_view_count = num_view_count - 22
 DealAnalytic.create(id: 1000, deal_id: 1000, view_count: num_view_count, unique_view_count: unique_view_count, redemption_count: 0)
 
+# Users to be seeded
+seed_users = Array.new
+
 # Seed DealAnalytics for View count for deal 1001
 redemption = 1000
 user_id = 1000
@@ -624,6 +631,11 @@ while start_date <= end_date
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1001, user_id: user_id, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << user_id
+      end
+    end
     user_id = user_id + 1
   end
   start_date = start_date + 1
@@ -675,6 +687,11 @@ while start_date <= end_date
     end
     Redemption.create(id: redemption, deal_id: 1002, user_id: user_id, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << user_id
+      end
+    end
     user_id = user_id + rand(0..1)
   end
   start_date = start_date + rand(1..2).days
@@ -701,6 +718,11 @@ while start_date <= end_date
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1002, user_id: user_id, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << user_id
+      end
+    end
     user_id = user_id + 1
   end
   start_date = start_date + 1
@@ -766,6 +788,11 @@ while start_date <= end_date
     end
     Redemption.create(id: redemption, deal_id: 1003, user_id: user_id, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << user_id
+      end
+    end
     user_id = user_id + rand(1..3)
   end
   start_date = start_date + rand(1..2).days
@@ -781,6 +808,11 @@ while start_date <= end_date
     end
     Redemption.create(id: redemption, deal_id: 1003, user_id: user_id, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << user_id
+      end
+    end
     user_id = user_id + 1
   end
   start_date = start_date + 1
@@ -847,6 +879,11 @@ while start_date <= end_date
     end
     Redemption.create(id: redemption, deal_id: 1004, user_id: user_id, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << user_id
+      end
+    end
     user_id = user_id + rand(1..3)
   end
   start_date = start_date + rand(1..2).days
@@ -862,6 +899,11 @@ while start_date <= end_date
     end
     Redemption.create(id: redemption, deal_id: 1004, user_id: user_id, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << user_id
+      end
+    end
     user_id = user_id + 1
   end
   start_date = start_date + 1
@@ -874,6 +916,11 @@ while start_date <= end_date
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1004, user_id: redemption, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << redemption
+      end
+    end
   end
   start_date = start_date + 1
 end
@@ -951,6 +998,11 @@ while start_date <= end_date
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1012, user_id: redemption, venue_id: venue_id, created_at: start_date)
     redemption = redemption + 1
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << redemption
+      end
+    end
   end
   start_date = start_date + 1
 end
@@ -979,6 +1031,11 @@ while start_date <= end_date
   limit = redemption + rand(0..30)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1013, user_id: redemption, venue_id: venue_id, created_at: start_date)
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << redemption
+      end
+    end
     redemption = redemption + 1
   end
   start_date = start_date + 1
@@ -1008,6 +1065,11 @@ while start_date <= end_date
   limit = redemption + rand(0..3)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1014, user_id: redemption, venue_id: venue_id, created_at: start_date)
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << redemption
+      end
+    end
     redemption = redemption + 1
   end
   start_date = start_date + 1
@@ -1037,6 +1099,11 @@ while start_date <= end_date
   limit = redemption + rand(0..7)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1015, user_id: redemption, venue_id: venue_id, created_at: start_date)
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << redemption
+      end
+    end
     redemption = redemption + 1
   end
   start_date = start_date + 1
@@ -1066,6 +1133,11 @@ while start_date <= end_date
   limit = redemption + rand(0..20)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1016, user_id: redemption, venue_id: venue_id, created_at: start_date)
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << redemption
+      end
+    end
     redemption = redemption + 1
   end
   start_date = start_date + 1
@@ -1095,6 +1167,11 @@ while start_date <= end_date
   limit = redemption + rand(10..20)
   while redemption < limit
     Redemption.create(id: redemption, deal_id: 1017, user_id: redemption, venue_id: venue_id, created_at: start_date)
+    if (start_date == end_date) || (start_date + 1.days == end_date)
+      if !seed_users.include? user_id
+        seed_users << redemption
+      end
+    end
     redemption = redemption + 1
   end
   start_date = start_date + 1.day
@@ -1116,19 +1193,17 @@ num_view_count = view_count - starting_view_count
 unique_view_count = num_view_count- rand(50..90)
 DealAnalytic.create(id: 1011, deal_id: 1017, view_count: num_view_count, unique_view_count: unique_view_count, redemption_count: num_redemption)
 
-# Get ending user_id
-ending_user_id = redemption
-starting_user_id = ending_user_id - 31
-while starting_user_id <= ending_user_id
-  user = User.new(id: starting_user_id)
-  user.first_name = 'user'+starting_user_id.to_s
-  user.last_name = 'user'+starting_user_id.to_s
-  user.username = 'user'+starting_user_id.to_s
-  user.email = 'user'+starting_user_id.to_s+'@gmail.com'
+# Seed users for redemption table
+seed_users = seed_users - seeded_users
+seed_users.each do |sd|
+  user = User.new(id: sd)
+  user.first_name = 'user'+sd.to_s
+  user.last_name = 'user'+sd.to_s
+  user.username = 'user'+sd.to_s
+  user.email = 'user'+sd.to_s+'@gmail.com'
   user.password ='12345678'
   user.password_confirmation = '12345678'
   user.save
-  starting_user_id = starting_user_id + 1
 end
 
 # Merchant Feedback
