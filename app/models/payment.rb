@@ -50,7 +50,7 @@ class Payment < ActiveRecord::Base
   end
 
   def start_date_not_past
-    errors.add(:base, 'Start date must start from today onwards') if ((start_date < Date.today) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'Start date must start from today onwards') if ((start_date && start_date < Date.today) rescue ArgumentError == ArgumentError)
   end
 
   def check_overlapping_plans
