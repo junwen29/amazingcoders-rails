@@ -391,7 +391,7 @@ DealVenue.create(id: '1017', deal_id: 1005, venue_id: 1002)
 start_date = '01-12-2015'.to_date
 end_date = '10-12-2015'.to_date
 created_at = start_date - 20.days
-Deal.new(id: '1006', title: 'ONLY $9.90 Off Authentic Korean Half Chicken For 2, Four Flavours To Choose From',
+Deal.new(id: '1006', title: 'ONLY $9.90 Off Korean Chicken',
          redeemable: true, multiple_use: true, type_of_deal: 'Discount',
          description: '59% off Korean Half Chicken. Serves 2 pax. Choose from 4 flavours: Spicy Up, Mild Up, Curry Up, Yanghyum',
          start_date: start_date, expiry_date: end_date, t_c: 'Valid for dine-in only', pushed: false, merchant_id: 1000,
