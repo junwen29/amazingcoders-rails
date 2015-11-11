@@ -5,12 +5,15 @@ ActiveAdmin.register Deal do
   config.clear_action_items!
   config.sort_order = "created_at_desc"
 
+  after_destroy do |deal|
+    DealMailer.delete_deal_email(deal, MerchantService.get_email(merchant_id)).deliver
+  end
+
   controller do
     def update
       @deal = Deal.find(params[:id])
       if @deal.update_columns(deal_params)
         flash[:success] = "Deal successfully updated!"
-        # TODO - DEMO: Uncomment on demonstration
         merchant_id = @deal.merchant_id
         DealMailer.update_deal_email_admin("valued merchant", @deal, MerchantService.get_email(merchant_id)).deliver
         redirect_to admin_deal_path

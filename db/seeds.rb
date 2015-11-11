@@ -19,6 +19,7 @@ AddOn.create(id: '1001', plan_id: '1000', name: 'Reservation Statistics', cost: 
 # For Gifts
 Gift.create(id: '1000', name: '1 free month', points: '600', description: 'Free 1 month subscription to Premium Deals Services with all add-ons. Simply click redeem and select the start date of your plan!', gift_type: 'Merchant', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
 Gift.create(id: '1001', name: 'Burpple Shirt', points: '100', description: 'Get a Burpple Shirt Merchandise!', gift_type: 'Merchant', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
+Gift.create(id: '1002', name: 'Burpple Mug', points: '100', description: 'Get a Burpple Mug Merchandise!', gift_type: 'Merchant', created_at: '2015-10-01 00:00:00', updated_at: '2015-10-01 00:00:00')
 
 # Seed admin
 admin = AdminUser.new(id: '1000')
@@ -32,21 +33,18 @@ merchant = Merchant.new(id: '1000')
 merchant.email = 'amazingcoders8mc@gmail.com'
 merchant.password = 'burppleadmin'
 merchant.password_confirmation = 'burppleadmin'
-merchant.total_points = 1040
 merchant.save
 
 merchant = Merchant.new(id: '1001')
 merchant.email = 'woonyong92@gmail.com'
 merchant.password = '12345678'
 merchant.password_confirmation = '12345678'
-merchant.total_points = 90
 merchant.save
 
 merchant = Merchant.new(id: '1002')
 merchant.email = 'jkcheong92@gmail.com'
 merchant.password = '12345678'
 merchant.password_confirmation = '12345678'
-merchant.total_points = 385
 merchant.save
 
 merchant = Merchant.new(id: '1003')
@@ -61,7 +59,6 @@ while merchant_id < 1010
   merchant.email = merchant_id.to_s + '@gmail.com'
   merchant.password = '12345678'
   merchant.password_confirmation = '12345678'
-  merchant.total_points = 100
   merchant.save
   merchant_id = merchant_id + 1
 end
@@ -70,7 +67,6 @@ while merchant_id <= 1050
   merchant.email = merchant_id.to_s + '@gmail.com'
   merchant.password = '12345678'
   merchant.password_confirmation = '12345678'
-  merchant.total_points = 90
   merchant.save
   merchant_id = merchant_id + 1
 end
@@ -79,7 +75,6 @@ while merchant_id <= 1100
   merchant.email = merchant_id.to_s + '@gmail.com'
   merchant.password = '12345678'
   merchant.password_confirmation = '12345678'
-  merchant.total_points = 40
   merchant.save
   merchant_id = merchant_id + 1
 end
@@ -92,7 +87,6 @@ user.username = 'serming'
 user.email = 'gohserming@gmail.com'
 user.password ='12345678'
 user.password_confirmation = '12345678'
-user.total_points = 100
 user.save
 user_id = 1001
 while user_id < 1100
@@ -103,7 +97,6 @@ while user_id < 1100
   user.email = 'user'+user_id.to_s+'@gmail.com'
   user.password ='12345678'
   user.password_confirmation = '12345678'
-  user.total_points = 100
   user.save
   user_id = user_id + 1
 end
@@ -127,7 +120,6 @@ AddOnPayment.create(id: add_on_payment_id, add_on_id: 3, payment_id: payment_id,
 payment_id = payment_id + 1
 plan_payment_id = plan_payment_id + 1
 add_on_payment_id = add_on_payment_id + 1
-#MerchantPoint.create(id: 1000, reason: 'Paid for a plan upgrade', points: 1040, operation: 'Credit', merchant_id: 1000)
 
 start_date = '01-09-2015'.to_date
 end_date = start_date + 3.months
@@ -137,7 +129,6 @@ Payment.new(id: 1001, start_date: start_date, expiry_date: end_date, total_cost:
 PlanPayment.create(id: plan_payment_id, plan_id: 1, payment_id: payment_id, created_at: start_datetime)
 payment_id = payment_id + 1
 plan_payment_id = plan_payment_id + 1
-#MerchantPoint.create(id: 1001, reason: 'Paid for a plan upgrade', points: 90, operation: 'Credit', merchant_id: 1001)
 
 start_date = '01-01-2015'.to_date
 end_date = start_date + 11.months

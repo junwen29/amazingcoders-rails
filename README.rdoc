@@ -41,16 +41,14 @@ Things to do to get the application up and running:
         - bundle install gem 'cloudinary' and gem 'attachinary'
         - rake db:migrate
 
-* How to run the test suite
+    * Stripe configurations
+        - add the stripe keys into environment variables as stated in ~initializers/ stripe.rb
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
+Things to do to deploy
     - bundle install
     - rake db:migrate
     - rails server
     - set server to listen on 0.0.0.0 (all interface)
-
     - deployment to heroku
         * requires heroku toolbelt
         * heroku login <email>
@@ -58,9 +56,40 @@ Things to do to get the application up and running:
         * heroku run rails db:migrate
         * heroku open
         * heroku logs
+    -upgrade database
+        ** important run these commands
+        * heroku addons:create heroku-postgresql:hobby-basic
+        * heroku maintenance:on
+        * heroku ps:scale worker=0
+        * heroku pg:copy <DATABASE_URL> <Target Database> --app sushi
+        * heroku pg:copy source-application::OLIVE HEROKU_POSTGRESQL_PINK -a target-application
+        * heroku pg:promote HEROKU_POSTGRESQL_PINK
+        * heroku ps:scale worker=1
+        * heroku maintenance:off
 
-* Windows not working with Coffee script above 1.80
-	• Find the gemfile in project folder (should be just a level below the project folder)
-	• Add  gem 'coffee-script-source', '1.8.0' to the gemfile
-	• After that, type bundle update coffee-script-source
+Things to do to run the test suite
+    * Important: navigate to seed.rb, change final_end_date = today's date, for e.g => "2015-12-01 00:00:00"
+    * To run all test cases
+        - rake test:units
+    * To run unit test on merchant
+        - rake test test/models/<test file>, for e.g. => rake test test/models/merchant_test.rb
+    * Directory for unit tests:
+        - ~/test/models
+    * Unit test files
+        - merchant_test.rb
+        - venue_test.rb
+        - payment_test.rb
+        - merchant_feedback_test.rb
+        - merchant_point_test.rb
+        - test_helper.rb
+    * testing accounts
+        - refer to test_accounts.docx
 
+Errors
+    * Windows not working with Coffee script above 1.80
+        - Find the gemfile in project folder (should be just a level below the project folder)
+        - Add  gem 'coffee-script-source', '1.8.0' to the gemfile
+        - After that, type bundle update coffee-script-source
+
+Services
+job queues, cache servers, search engines, etc.

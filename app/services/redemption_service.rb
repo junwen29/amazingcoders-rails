@@ -8,9 +8,13 @@ class RedemptionService
     # }
 
     def validate(deal_id, user_id, venue_id)
+      deal = Deal.find(deal_id)
+      error = RedeemExistsError.new unless deal.present? # invalid QR code
+      return nil, error unless deal.present?
+
       deal = Deal.active.find(deal_id) # TODO check for active deal, deal_days, time
       redeemable = deal.redeemable
-      error = 1 unless deal.present?
+      error = RedeemActiveError.new unless deal.present? # deal is not active
       # valid_time = deal.valid_time
       return nil,error unless redeemable && deal.present?
 
@@ -23,7 +27,7 @@ class RedemptionService
         # award burps
         venue = Venue.find(venue_id)
         #eg. title =  'Salmon deal at Salmon Village'
-        point = UserPointService.new_point(deal.title.to_s + 'at ' + venue.name.to_s, '5'.to_i, "Credit", user_id)
+        point = UserPointService.new_point('Redeemed '+ deal.title.to_s + '@ ' + venue.name.to_s, '5'.to_i, "Credit", user_id)
 
         redemption = Redemption.create(deal_id: deal_id, user_id: user_id, venue_id: venue_id, user_point_id: point.id)
         Deal.increment_counter(:num_of_redeems, deal_id)
@@ -40,7 +44,7 @@ class RedemptionService
     end
 
     def get_redemptions_by_user_id(user_id)
-      Redemption.where(user_id: user_id)
+      Redemption.where(user_id: user_id).order("created_at DESC")
     end
 
     def count_all_redemptions(start_date, end_date)

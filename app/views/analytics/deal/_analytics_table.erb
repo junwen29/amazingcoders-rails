@@ -22,11 +22,11 @@
             <% if have_active_deal %>
                 <tr>
                   <th>Title</th>
-                  <th style="text-align: center;">Conversion Rate<br>Wishlisters to Views</th>
-                  <th style="text-align: center;">Conversion Rate<br>Unique Views to Redemptions</th>
-                  <th style="text-align: center;">Percentage/Number of users who redeem more than once</th>
-                  <th style="text-align: center;">Average Multiple Redemption</th>
-                  <th style="text-align: center;">Average Time between same User Redemption</th>
+                  <th style="text-align: center; width: 15%">% of wishlisters that have viewed the deal</th>
+                  <th style="text-align: center; width: 15%">% of users that redeem the deal after viewing it</th>
+                  <th style="text-align: center; width: 15%">Percentage/Number of users who redeem more than once</th>
+                  <th style="text-align: center; width: 15%">Average number of redemptions for users who redeemed multiple times</th>
+                  <th style="text-align: center; width: 15%">Average time span between consecutive redemptions by a user</th>
                   <th colspan="1"></th>
                 </tr>
 
@@ -55,13 +55,13 @@
                                   <td style="text-align: center;"> <%= percentage_views %>%</td>
                               <% end %>
                               <% percentage_redeems = DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>
-                              <% if percentage_redeems == 'No Redeems Yet' %>
-                                  <td style="text-align: center;"> <%= percentage_redeems %></td>
+                              <% if percentage_redeems[0] == 'No Redeems Yet' %>
+                                  <td style="text-align: center;"> <%= percentage_redeems[0] %></td>
                               <% else %>
-                                  <td style="text-align: center;"> <%= percentage_redeems %>% = <%= RedemptionService.num_users_multiple(deal.id) %> Users</td>
+                                  <td style="text-align: center;"> <%= percentage_redeems[0] %>% = <%= percentage_redeems[1] %> Users</td>
                               <% end %>
-                              <td style="text-align: center;"> <%= DealAnalyticService.average_redemption_multiple_users(deal.id) %></td>
-                              <td style="text-align: center;"> <%= DealAnalyticService.average_time_btw_multiple_redeem(deal.id) %></td>
+                              <td style="text-align: center;"> <%= DealAnalyticService.average_redemption_multiple_users(deal.id, percentage_redeems[2]) %></td>
+                              <td style="text-align: center;"> <%= DealAnalyticService.average_time_btw_multiple_redeem(deal.id, percentage_redeems[2]) %></td>
                           <% elsif deal.redeemable && (deal.start_date > Date.today)%>
                               <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
                               <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
@@ -107,11 +107,11 @@
             <% end %>
             <% if have_expired_deal %>
                 <th>Title</th>
-                <th style="text-align: center;">Conversion Rate<br>Wish Lister to Views</th>
-                <th style="text-align: center;">Conversion Rate<br>Unique Views to Redemption</th>
-                <th style="text-align: center;">Percentage/Number of users who redeem more than once</th>
-                <th style="text-align: center;">Average Multiple Redemption</th>
-                <th style="text-align: center;">Average Time between same User Redemption</th>
+                <th style="text-align: center; width: 15%">% of wishlisters that have viewed the deal</th>
+                <th style="text-align: center; width: 15%">% of users that redeem the deal after viewing it</th>
+                <th style="text-align: center; width: 15%">Percentage/Number of users who redeem more than once</th>
+                <th style="text-align: center; width: 15%">Average number of redemptions for users who redeemed multiple times</th>
+                <th style="text-align: center; width: 15%">Average time span between consecutive redemptions by a user</th>
                 <th colspan="1"></th>
                 </tr>
 
@@ -132,7 +132,6 @@
                               <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="You have not purchased the Push Notification addon, hence you cannot view this">N/A</p></td>
                           <% end %>
                           <% if deal.redeemable && (deal.start_date <= Date.today) %>
-                              <td style="text-align: center;"><%= DealAnalyticService.get_views_to_redeem(deal.id) %>%</td>
                               <% percentage_views = DealAnalyticService.get_views_to_redeem(deal.id) %>
                               <% if percentage_views == 'No Views Yet' %>
                                   <td style="text-align: center;"> <%= percentage_views %></td>
@@ -140,13 +139,13 @@
                                   <td style="text-align: center;"> <%= percentage_views %>%</td>
                               <% end %>
                               <% percentage_redeems = DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>
-                              <% if percentage_redeems == 'No Redeems Yet' %>
-                                  <td style="text-align: center;"> <%= percentage_redeems %></td>
+                              <% if percentage_redeems[0] == 'No Redeems Yet' %>
+                                  <td style="text-align: center;"> <%= percentage_redeems[0] %></td>
                               <% else %>
-                                  <td style="text-align: center;"> <%= percentage_redeems %>% = <%= RedemptionService.num_users_multiple(deal.id) %> Users</td>
+                                  <td style="text-align: center;"> <%= percentage_redeems[0] %>% = <%= percentage_redeems[1] %> Users</td>
                               <% end %>
-                              <td style="text-align: center;"> <%= DealAnalyticService.average_redemption_multiple_users(deal.id) %></td>
-                              <td style="text-align: center;"> <%= DealAnalyticService.average_time_btw_multiple_redeem(deal.id) %></td>
+                              <td style="text-align: center;"> <%= DealAnalyticService.average_redemption_multiple_users(deal.id, percentage_redeems[2]) %></td>
+                              <td style="text-align: center;"> <%= DealAnalyticService.average_time_btw_multiple_redeem(deal.id, percentage_redeems[2]) %></td>
                           <% elsif deal.redeemable && (deal.start_date > Date.today)%>
                               <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
                               <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>

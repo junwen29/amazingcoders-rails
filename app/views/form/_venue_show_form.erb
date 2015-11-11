@@ -46,6 +46,7 @@
 </p>
 
 <hr>
+<h3>Current Deals Offered</h3>
 <% if @payment.blank? || !@payment.paid? %>
     <div class="well col-lg-6 col-lg-offset-3" style="text-align: center; font-weight: bold">
       <p>Oops! You have not subscribed to our Deal Listing Service.</p>
@@ -59,7 +60,6 @@
     </div>
     <br><br><br>
 <% else %>
-    <h3>Current Deals Offered</h3>
     <% deal_num = 1 %>
     <% @deals.each do |deal| %>
         <p><%= deal_num %>) <%= link_to deal.title, deal_path(deal) %></p>

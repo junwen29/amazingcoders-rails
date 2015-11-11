@@ -16,7 +16,6 @@
     <div class="content-separator"></div>
 
     <!-- Content Body -->
-    <!--TODO: VIEW Render partials only for merchants with access-->
     <% if @payment.add_on1 && @deal.pushed && DealAnalyticService.get_wishlist_to_views(@deal.id) != 'nil' %>
         <%= render :partial => 'analytics/deal/wishlist_to_views' %><br>
     <% end %>
