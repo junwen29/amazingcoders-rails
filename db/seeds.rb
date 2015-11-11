@@ -2,7 +2,7 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
 # TODO: Change this data to presentation date and data for analytics will be seeding till that date
-final_end_date = "2015-11-19 00:00:00"
+final_end_date = "2015-11-18 00:00:00"
 
 Plan.create(id: '1', name: 'Premium Deals Services', cost: '30', description: 'Allows unlimited creation of deals. Publishing of up to 5 active deals')
 
@@ -82,7 +82,7 @@ end
 # users that have already been seeded
 seeded_users = Array.new
 # Seed 100 users
-user = User.new(id: 1000)
+user = User.new(id: 999)
 user.first_name = 'Ser Ming'
 user.last_name = 'Goh'
 user.username = 'serming'
@@ -90,8 +90,8 @@ user.email = 'gohserming@gmail.com'
 user.password ='12345678'
 user.password_confirmation = '12345678'
 user.save
-seeded_users << 1000
-user_id = 1001
+
+user_id = 1000
 while user_id < 1100
   user = User.new(id: user_id)
   user.first_name = 'user'+user_id.to_s
@@ -1206,17 +1206,6 @@ seed_users.each do |sd|
   user.password_confirmation = '12345678'
   user.save
 end
-
-# Merchant Feedback
-date = DateTime.parse("2015-11-02 00:00:00")
-merchant = 1000
-MerchantFeedback.create(id: 1000, title: "Live chat CS support", category: "Suggestion", content: "Good to have some online live chat support", resolved: false, created_at: date, updated_at: date, merchant_id: merchant)
-MerchantFeedback.create(id: 1001, title: "Poor service", category: "Complaint", content: "Rude customer service", resolved: true, created_at: date, updated_at: date, merchant_id: merchant)
-
-# User Feedback
-date = DateTime.parse("2015-11-02 00:00:00")
-UserFeedback.create(id: 1000, title: "Suggestion to add kids menu", category: "Suggestion", content: "Add some healthy food for small kids", resolved: false, created_at: date, updated_at: date, user_id: 1000)
-UserFeedback.create(id: 1001, title: "Poor service", category: "Complaint", content: "Rude customer service", resolved: true, created_at: date, updated_at: date, user_id: 1000)
 
 # Merchant Points
 MerchantPoint.create(id: 1000, reason: 'Paid for a plan upgrade', points: 1040, operation: 'Credit', merchant_id: 1000)
