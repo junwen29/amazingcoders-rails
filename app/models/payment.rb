@@ -9,7 +9,7 @@ class Payment < ActiveRecord::Base
   has_one :charge
 
   belongs_to :merchant
-  
+
   scope :active, -> {where("start_date <= ? AND expiry_date >= ?", Date.today, Date.today)}
   scope :expired, -> {where("expiry_date < ?", Date.today)}
   scope :future, -> {where("start_date > ? AND expiry_date >= ?", Date.today, Date.today)}
@@ -23,7 +23,7 @@ class Payment < ActiveRecord::Base
 
   validates(:start_date, presence: true)
   validates(:months, presence: true)
-  validate :start_date_not_past, :on => :create
+  validate :start_date_not_past, :on => :save
   validate :check_overlapping_plans, :on => :create
 
 
@@ -50,11 +50,11 @@ class Payment < ActiveRecord::Base
   end
 
   def start_date_not_past
-    errors.add(:base, 'Start date must start from today onwards') if ((start_date && start_date < Date.today) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'Start date must start from today onwards') if ((start_date < Date.today) rescue ArgumentError == ArgumentError)
   end
 
   def check_overlapping_plans
-    errors.add(:base, 'You already have a plan in this period') if ((start_date && overlapping_payment) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'You already have a plan in this period') if ((overlapping_payment) rescue ArgumentError == ArgumentError)
   end
 
 =begin
