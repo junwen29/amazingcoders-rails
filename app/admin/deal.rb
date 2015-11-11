@@ -6,8 +6,10 @@ ActiveAdmin.register Deal do
   config.sort_order = "created_at_desc"
 
   after_destroy do |deal|
+    merchant_id = deal.merchant_id
     DealMailer.delete_deal_email(deal, MerchantService.get_email(merchant_id)).deliver
   end
+
 
   controller do
     def update
