@@ -12,91 +12,75 @@
       <div id="collapseOne" class="panel-collapse collapse in">
         <div class="table-responsive">
           <table class="table table-bordered table-hover">
-            <% if !@deal_analytics_in_table[0].blank? %>
+            <% have_active_deal = false %>
+            <% @deals.each do |deal| %>
+                <% if (deal.expiry_date.future?|| deal.expiry_date.today?) && deal.active %>
+                    <% have_active_deal = true %>
+                    <% break %>
+                <% end %>
+            <% end %>
+            <% if have_active_deal %>
                 <tr>
                   <th>Title</th>
                   <th style="text-align: center; width: 15%">% of wishlisters that have viewed the deal</th>
                   <th style="text-align: center; width: 15%">% of users that redeem the deal after viewing it</th>
                   <th style="text-align: center; width: 15%">Percentage/Number of users who redeem more than once</th>
-                  <th style="text-align: center; width: 15%">Average number of redemptions for users who redeemed
-                    multiple times
-                  </th>
-                  <th style="text-align: center; width: 15%">Average time span between consecutive redemptions by a
-                    user
-                  </th>
+                  <th style="text-align: center; width: 15%">Average number of redemptions for users who redeemed multiple times</th>
+                  <th style="text-align: center; width: 15%">Average time span between consecutive redemptions by a user</th>
                   <th colspan="1"></th>
                 </tr>
 
-                <% @deal_analytics_in_table[0].each do |deal| %>
-                    <tr>
-                      <td><%= deal[0].title %></td>
-                      <% if @payment.add_on1 && deal[0].pushed %>
-                          <% wishlist_view = deal[1] %>
-                          <% if wishlist_view == 'N/A' %>
-                              <td style="text-align: center;">
-                                <p id="untracable" data-toggle="tooltip" data-placement="top" title="As you have no wishlisters when you pushed your deal, data cannot be gathered">N/A</p>
-                              </td>
+                <% @deals.each do |deal| %>
+                    <% if (deal.expiry_date.future?|| deal.expiry_date.today?) && deal.active %>
+                        <tr>
+                          <td><%= deal.title %></td>
+                          <% if @payment.add_on1 && deal.pushed %>
+                              <% wishlist_view = DealAnalyticService.get_wishlist_to_views(deal.id) %>
+                              <% if wishlist_view == 'nil' %>
+                                  <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="As you have no wishlisters when you pushed your deal, data cannot be gathered">N/A</p></td>
+                              <% else %>
+                                  <td style="text-align: center;"><%= wishlist_view %>%</td>
+                              <% end %>
+                          <% elsif @payment.add_on1 && !deal.pushed %>
+                              <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not been pushed hence, data cannot be gathered">N/A</p></td>
                           <% else %>
-                              <td style="text-align: center;"><%= wishlist_view %>%</td>
+                              <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="You have not purchased the Push Notification addon, hence you cannot view this">N/A</p></td>
                           <% end %>
-                      <% elsif @payment.add_on1 && !deal[0].pushed %>
-                          <td style="text-align: center;">
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not been pushed hence, data cannot be gathered">N/A</p>
-                          </td>
-                      <% else %>
-                          <td style="text-align: center;">
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="You have not purchased the Push Notification addon, hence you cannot view this">N/A</p>
-                          </td>
-                      <% end %>
 
-                      <% if deal[0].redeemable && (deal[0].start_date <= Date.today) %>
-                          <% percentage_views = deal[2] %>
-                          <% if percentage_views == 'No Views Yet' %>
-                              <td style="text-align: center;"> <%= percentage_views %></td>
+                          <% if deal.redeemable && (deal.start_date <= Date.today) %>
+                              <% percentage_views = DealAnalyticService.get_views_to_redeem(deal.id) %>
+                              <% if percentage_views == 'No Views Yet' %>
+                                  <td style="text-align: center;"> <%= percentage_views %></td>
+                              <% else %>
+                                  <td style="text-align: center;"> <%= percentage_views %>%</td>
+                              <% end %>
+                              <% percentage_redeems = DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>
+                              <% if percentage_redeems[0] == 'No Redeems Yet' %>
+                                  <td style="text-align: center;"> <%= percentage_redeems[0] %></td>
+                              <% else %>
+                                  <td style="text-align: center;"> <%= percentage_redeems[0] %>% = <%= percentage_redeems[1] %> Users</td>
+                              <% end %>
+                              <td style="text-align: center;"> <%= DealAnalyticService.average_redemption_multiple_users(deal.id, percentage_redeems[2]) %></td>
+                              <td style="text-align: center;"> <%= DealAnalyticService.average_time_btw_multiple_redeem(deal.id, percentage_redeems[2]) %></td>
+                          <% elsif deal.redeemable && (deal.start_date > Date.today)%>
+                              <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
+                              <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
+                              <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
+                              <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
                           <% else %>
-                              <td style="text-align: center;"> <%= percentage_views %>%</td>
+                              <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
+                              <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
+                              <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
+                              <td>.<p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                           <% end %>
-                          <% if deal[3] == 'No Redeems Yet' %>
-                              <td style="text-align: center;"> <%= deal[3] %></td>
-                          <% else %>
-                              <td style="text-align: center;"> <%= deal[3] %>% = <%= deal[4] %> Users</td>
-                          <% end %>
-                          <td style="text-align: center;"> <%= deal[5] %></td>
-                          <td style="text-align: center;"> <%= deal[6] %></td>
-                      <% elsif deal[0].redeemable && (deal[0].start_date > Date.today) %>
-                          <td style="text-align: center;">
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p>
-                          </td>
-                          <td style="text-align: center;">
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p>
-                          </td>
-                          <td style="text-align: center;">
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p>
-                          </td>
-                          <td style="text-align: center;">
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p>
-                          </td>
-                      <% else %>
                           <td>
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p>
+                            <%= link_to 'Show Deal', deal_path(deal), class: "btn btn-xs btn-success" %>
                           </td>
-                          <td>
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p>
-                          </td>
-                          <td>
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p>
-                          </td>
-                          <td>
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p>
-                          </td>
-                      <% end %>
-                      <td>
-                        <%= link_to 'Show Deal', deal_path(deal[0]), class: "btn btn-xs btn-success" %>
-                      </td>
-                    </tr>
+                        </tr>
+                    <% end %>
                 <% end %>
             <% else %>
-                <div class="well col-lg-12" style="text-align: center; font-weight: bold">
+                <div class = "well col-lg-12" style="text-align: center; font-weight: bold">
                   <p>Oops! You do not have any active deals!</p>
                 </div>
             <% end %>
@@ -114,93 +98,75 @@
       <div id="collapseTwo" class="panel-collapse collapse">
         <div class="table-responsive">
           <table class="table table-bordered table-hover">
-            <% if !@deal_analytics_in_table[1].blank? %>
-                <tr>
-                  <th>Title</th>
-                  <th style="text-align: center; width: 15%">% of wishlisters that have viewed the deal</th>
-                  <th style="text-align: center; width: 15%">% of users that redeem the deal after viewing it</th>
-                  <th style="text-align: center; width: 15%">Percentage/Number of users who redeem more than once</th>
-                  <th style="text-align: center; width: 15%">Average number of redemptions for users who redeemed
-                    multiple times
-                  </th>
-                  <th style="text-align: center; width: 15%">Average time span between consecutive redemptions by a
-                    user
-                  </th>
-                  <th colspan="1"></th>
+            <% have_expired_deal = false %>
+            <% @deals.each do |deal| %>
+                <% if deal.expiry_date.past? && deal.active %>
+                    <% have_expired_deal = true %>
+                    <% break %>
+                <% end %>
+            <% end %>
+            <% if have_expired_deal %>
+                <th>Title</th>
+                <th style="text-align: center; width: 15%">% of wishlisters that have viewed the deal</th>
+                <th style="text-align: center; width: 15%">% of users that redeem the deal after viewing it</th>
+                <th style="text-align: center; width: 15%">Percentage/Number of users who redeem more than once</th>
+                <th style="text-align: center; width: 15%">Average number of redemptions for users who redeemed multiple times</th>
+                <th style="text-align: center; width: 15%">Average time span between consecutive redemptions by a user</th>
+                <th colspan="1"></th>
                 </tr>
 
-                <% @deal_analytics_in_table[1].each do |deal| %>
-                    <tr>
-                      <td><%= deal[0].title %></td>
-                      <% if @payment.add_on1 && deal[0].pushed %>
-                          <% wishlist_view = deal[1] %>
-                          <% if wishlist_view == 'N/A' %>
-                              <td style="text-align: center;">
-                                <p id="untracable" data-toggle="tooltip" data-placement="top" title="As you have no wishlisters when you pushed your deal, data cannot be gathered">N/A</p>
-                              </td>
+                <% @deals.each do |deal| %>
+                    <% if deal.expiry_date.past? && deal.active %>
+                        <tr>
+                          <td><%= deal.title %></td>
+                          <% if @payment.add_on1 && deal.pushed %>
+                              <% wishlist_view = DealAnalyticService.get_wishlist_to_views(deal.id) %>
+                              <% if wishlist_view == 'nil' %>
+                                  <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="As you have no wishlisters when you pushed your deal, data cannot be gathered">N/A</p></td>
+                              <% else %>
+                                  <td style="text-align: center;"><%= wishlist_view %>%</td>
+                              <% end %>
+                          <% elsif @payment.add_on1 && !deal.pushed %>
+                              <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not been pushed hence, data cannot be gathered">N/A</p></td>
                           <% else %>
-                              <td style="text-align: center;"><%= wishlist_view %>%</td>
+                              <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="You have not purchased the Push Notification addon, hence you cannot view this">N/A</p></td>
                           <% end %>
-                      <% elsif @payment.add_on1 && !deal[0].pushed %>
-                          <td style="text-align: center;">
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not been pushed hence, data cannot be gathered">N/A</p>
-                          </td>
-                      <% else %>
-                          <td style="text-align: center;">
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="You have not purchased the Push Notification addon, hence you cannot view this">N/A</p>
-                          </td>
-                      <% end %>
-
-                      <% if deal[0].redeemable && (deal[0].start_date <= Date.today) %>
-                          <% percentage_views = deal[2] %>
-                          <% if percentage_views == 'No Views Yet' %>
-                              <td style="text-align: center;"> <%= percentage_views %></td>
+                          <% if deal.redeemable && (deal.start_date <= Date.today) %>
+                              <% percentage_views = DealAnalyticService.get_views_to_redeem(deal.id) %>
+                              <% if percentage_views == 'No Views Yet' %>
+                                  <td style="text-align: center;"> <%= percentage_views %></td>
+                              <% else %>
+                                  <td style="text-align: center;"> <%= percentage_views %>%</td>
+                              <% end %>
+                              <% percentage_redeems = DealAnalyticService.get_multiple_redeems_percentage(deal.id) %>
+                              <% if percentage_redeems[0] == 'No Redeems Yet' %>
+                                  <td style="text-align: center;"> <%= percentage_redeems[0] %></td>
+                              <% else %>
+                                  <td style="text-align: center;"> <%= percentage_redeems[0] %>% = <%= percentage_redeems[1] %> Users</td>
+                              <% end %>
+                              <td style="text-align: center;"> <%= DealAnalyticService.average_redemption_multiple_users(deal.id, percentage_redeems[2]) %></td>
+                              <td style="text-align: center;"> <%= DealAnalyticService.average_time_btw_multiple_redeem(deal.id, percentage_redeems[2]) %></td>
+                          <% elsif deal.redeemable && (deal.start_date > Date.today)%>
+                              <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
+                              <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
+                              <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
+                              <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p></td>
                           <% else %>
-                              <td style="text-align: center;"> <%= percentage_views %>%</td>
+                              <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
+                              <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
+                              <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
+                              <td><p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p></td>
                           <% end %>
-                          <% if deal[3] == 'No Redeems Yet' %>
-                              <td style="text-align: center;"> <%= deal[3] %></td>
-                          <% else %>
-                              <td style="text-align: center;"> <%= deal[3] %>% = <%= deal[4] %> Users</td>
-                          <% end %>
-                          <td style="text-align: center;"> <%= deal[5] %></td>
-                          <td style="text-align: center;"> <%= deal[6] %></td>
-                      <% elsif deal[0].redeemable && (deal[0].start_date > Date.today) %>
-                          <td style="text-align: center;">
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p>
-                          </td>
-                          <td style="text-align: center;">
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p>
-                          </td>
-                          <td style="text-align: center;">
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p>
-                          </td>
-                          <td style="text-align: center;">
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal has not started yet hence, data cannot be gathered">N/A</p>
-                          </td>
-                      <% else %>
                           <td>
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p>
+                            <%= link_to 'Show Deal', deal_path(deal), class: "btn btn-xs btn-success" %>
                           </td>
-                          <td>
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p>
-                          </td>
-                          <td>
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p>
-                          </td>
-                          <td>
-                            <p id="untracable" data-toggle="tooltip" data-placement="top" title="Deal is not redeemable hence, data cannot be gathered">N/A</p>
-                          </td>
-                      <% end %>
-                      <td>
-                        <%= link_to 'Show Deal', deal_path(deal[0]), class: "btn btn-xs btn-success" %>
-                      </td>
-                    </tr>
+                        </tr>
+                    <% end %>
                 <% end %>
             <% else %>
-                <div class="well col-lg-12" style="text-align: center; font-weight: bold">
-                  <p>Oops! You do not have any active deals!</p>
-                </div>
+            <div class = "well col-lg-12" style="text-align: center; font-weight: bold">
+              <p>Oops! You do not have any expired deals!</p>
+            </div>
             <% end %>
           </table>
         </div>
@@ -219,6 +185,7 @@
         color: #ea1218;
         font-weight: bold;
     }
+
 
     .panel-primary > .panel-heading-custom {
         background: #ea1f6c;

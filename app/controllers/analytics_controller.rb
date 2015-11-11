@@ -173,9 +173,7 @@ class AnalyticsController < ApplicationController
 
   private
   def deal_analytics_table
-    active_deals = MerchantService.get_all_active_deals(merchant_id).order(title: :asc)
-    past_deals = MerchantService.get_past_deals(merchant_id).order(title: :asc)
-    @deal_analytics_in_table = DealAnalyticService.get_analytics_table(active_deals, past_deals)
+    @deals = MerchantService.get_all_deals(merchant_id).order(title: :asc)
   end
 
   private
