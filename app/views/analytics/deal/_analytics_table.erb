@@ -36,7 +36,7 @@
                           <td><%= deal.title %></td>
                           <% if @payment.add_on1 && deal.pushed %>
                               <% wishlist_view = DealAnalyticService.get_wishlist_to_views(deal.id) %>
-                              <% if wishlist_view == 'nil' %>
+                              <% if wishlist_view == 'N/A' %>
                                   <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="As you have no wishlisters when you pushed your deal, data cannot be gathered">N/A</p></td>
                               <% else %>
                                   <td style="text-align: center;"><%= wishlist_view %>%</td>
@@ -121,7 +121,7 @@
                           <td><%= deal.title %></td>
                           <% if @payment.add_on1 && deal.pushed %>
                               <% wishlist_view = DealAnalyticService.get_wishlist_to_views(deal.id) %>
-                              <% if wishlist_view == 'nil' %>
+                              <% if wishlist_view == 'N/A' %>
                                   <td style="text-align: center;"><p id="untracable" data-toggle="tooltip" data-placement="top" title="As you have no wishlisters when you pushed your deal, data cannot be gathered">N/A</p></td>
                               <% else %>
                                   <td style="text-align: center;"><%= wishlist_view %>%</td>
