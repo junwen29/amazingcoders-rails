@@ -382,14 +382,4 @@ ActiveRecord::Schema.define(version: 20151110041018) do
     t.datetime "updated_at"
   end
 
-  create_table "wishlists", force: true do |t|
-    t.integer  "venue_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "wishlists", ["user_id"], name: "index_wishlists_on_user_id", using: :btree
-  add_index "wishlists", ["venue_id"], name: "index_wishlists_on_venue_id", using: :btree
-
 end
