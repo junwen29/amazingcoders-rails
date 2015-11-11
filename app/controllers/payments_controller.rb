@@ -164,7 +164,15 @@ class PaymentsController < ApplicationController
     @payment = Merchant.find(merchant_id).payments.new(payment_params)
     @plan1 = Plan.find(1)
 
-    if PaymentService.get_overlapping_payments(merchant_id, @payment.start_date, 1) == 0
+    if @payment.start_date == nil
+      @payment.errors.add(:base, 'Please fill in the start date')
+      @upcoming_payments = Payment.where("merchant_id = ? AND paid = ? AND expiry_date >= ?", session[:merchant_id], true, Date.today)
+      render 'gift_extend'
+    elsif @payment.start_date < Date.today
+      @payment.errors.add(:base, 'Please select a date starting from today onwards')
+      @upcoming_payments = Payment.where("merchant_id = ? AND paid = ? AND expiry_date >= ?", session[:merchant_id], true, Date.today)
+      render 'gift_extend'
+    elsif PaymentService.get_overlapping_payments(merchant_id, @payment.start_date, 1) == 0
       @payment.update(plan1: true, add_on1: true, add_on2: true, add_on3: true, total_cost: 0, months: 1, paid: true,
                       expiry_date: @payment.start_date.months_since(1))
 

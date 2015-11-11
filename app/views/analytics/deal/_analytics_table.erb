@@ -32,7 +32,7 @@
                       <td><%= deal[0].title %></td>
                       <% if @payment.add_on1 && deal[0].pushed %>
                           <% wishlist_view = deal[1] %>
-                          <% if wishlist_view == 'nil' %>
+                          <% if wishlist_view == 'N/A' %>
                               <td style="text-align: center;">
                                 <p id="untracable" data-toggle="tooltip" data-placement="top" title="As you have no wishlisters when you pushed your deal, data cannot be gathered">N/A</p>
                               </td>
@@ -134,7 +134,7 @@
                       <td><%= deal[0].title %></td>
                       <% if @payment.add_on1 && deal[0].pushed %>
                           <% wishlist_view = deal[1] %>
-                          <% if wishlist_view == 'nil' %>
+                          <% if wishlist_view == 'N/A' %>
                               <td style="text-align: center;">
                                 <p id="untracable" data-toggle="tooltip" data-placement="top" title="As you have no wishlisters when you pushed your deal, data cannot be gathered">N/A</p>
                               </td>
