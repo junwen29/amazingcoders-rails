@@ -1207,13 +1207,6 @@ seed_users.each do |sd|
   user.save
 end
 
-# Merchant Feedback
-date = DateTime.parse("2015-11-02 00:00:00")
-merchant = 1000
-
-# User Feedback
-date = DateTime.parse("2015-11-02 00:00:00")
-
 # Merchant Points
 MerchantPoint.create(id: 1000, reason: 'Paid for a plan upgrade', points: 1040, operation: 'Credit', merchant_id: 1000)
 
