@@ -39,7 +39,7 @@
                           crop: false,
                           overflow: 'none'
                       },
-                      pointWidth: 150,
+                      maxPointWidth: 150,
                       groupPadding: 0.06
                   }
               },
@@ -65,7 +65,7 @@
                               y: <%= @deals_for_venue[0][loop][redeem_placement] %>,
                               drilldown: "<%= @deals_for_venue[0][loop][0] %>" + " active",
                               dataLabels: {
-                                  format: "<%= @deals_for_venue[0][loop][0] %><br/>" + " " + '<span style="color: #F10DAA"><%= @deals_for_venue[0][loop][redeem_placement] %> Redemptions</span>'
+                                  format: "<%= truncate(@deals_for_venue[0][loop][0], length: 30) %><br/>" + " " + '<span style="color: #F10DAA"><%= @deals_for_venue[0][loop][redeem_placement] %> Redemptions</span>'
                               }
                           }
                       ]
@@ -86,7 +86,7 @@
                               y: <%= @deals_for_venue[1][loop][redeem_placement] %>,
                               drilldown: "<%= @deals_for_venue[1][loop][0] %>" + " past",
                               dataLabels: {
-                                  format: "<%= @deals_for_venue[1][loop][0] %><br/>" + " " + '<span style="color: #F10DAA"><%= @deals_for_venue[1][loop][redeem_placement] %> Redemptions </span>'
+                                  format: "<%= truncate(@deals_for_venue[1][loop][0], length: 30) %><br/>" + " " + '<span style="color: #F10DAA"><%= @deals_for_venue[1][loop][redeem_placement] %> Redemptions </span>'
                               }
                           }
                       ],
