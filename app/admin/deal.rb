@@ -25,7 +25,7 @@ ActiveAdmin.register Deal do
           item_type = "deal"
           item_id = @deal.id
           item_name = @deal.title
-          message = 'The' + item_name + ' has been removed. Sorry for any inconvenience. '
+          message = 'The ' + item_name + ' has been removed. Sorry for any inconvenience. '
           NotificationService.send_notification(user_ids, tokens, item_type,item_id, item_name, message)
         end
 
