@@ -14,11 +14,8 @@ Things to do to get the application up and running:
     * Ruby version
         - Ruby 2.0.0
         - Rails 4.1
-        - windows: install railsinstaller via http://railsinstaller.org/en
-
-    * System dependencies
-
-    * Configuration
+        - Windows: install railsinstaller via http://railsinstaller.org/en
+        - Mac OSx: refer to other web references
 
     * Database creation
         - Postgresql database download via: http://www.postgresql.org/download/
@@ -40,6 +37,7 @@ Things to do to get the application up and running:
         - Get 'Cloudinary.yml' and place it under 'config' folder
         - bundle install gem 'cloudinary' and gem 'attachinary'
         - rake db:migrate
+        - update Android;s corresponding Application file with the right remote Cloudinary configs.
 
     * Stripe configurations
         - add the stripe keys into environment variables as stated in ~initializers/ stripe.rb
@@ -57,7 +55,7 @@ Things to do to deploy
         * heroku open
         * heroku logs
     -upgrade database
-        ** important run these commands
+        ** important run these commands in the following order
         * heroku addons:create heroku-postgresql:hobby-basic
         * heroku maintenance:on
         * heroku ps:scale worker=0
@@ -91,5 +89,14 @@ Errors
         - Add  gem 'coffee-script-source', '1.8.0' to the gemfile
         - After that, type bundle update coffee-script-source
 
-Services
-job queues, cache servers, search engines, etc.
+
+Things to run Android application:
+    * 2 ways to get the Android app running
+        - install the app to phone through attached apk file
+            % The attached apk file is pointing to the remote server on Heroku
+            % In case of error in fetching data from remote server, modify the endpoint.java file in android to point to the correct ip address.
+
+        - install the app via Android Studio through the attached android repository source code
+            % In case of error in fetching data from remote server, modify the endpoint.java file in android to point to the correct ip address.
+            % Update Cloudinary configs in the Android application file.
+
