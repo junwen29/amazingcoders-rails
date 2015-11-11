@@ -54,7 +54,7 @@ class Payment < ActiveRecord::Base
   end
 
   def check_overlapping_plans
-    errors.add(:base, 'You already have a plan in this period') if ((overlapping_payment) rescue ArgumentError == ArgumentError)
+    errors.add(:base, 'You already have a plan in this period') if ((start_date && overlapping_payment) rescue ArgumentError == ArgumentError)
   end
 
 =begin
