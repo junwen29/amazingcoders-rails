@@ -80,7 +80,7 @@ class DealAnalyticService
         num_view_array = Array.new
         num_redeem_array = Array.new
         deal_array = Array.new
-        view_start_date = Viewcount.where(:deal_id => d.id).first
+        view_start_date = Viewcount.where(:deal_id => d.id).order(created_at: :asc).first
         if view_start_date.blank?
           view_start_date = DateTime.now.in_time_zone("Singapore").beginning_of_day
         else
@@ -243,11 +243,11 @@ class DealAnalyticService
     # Returns an array of deal_id and redemption count
     def get_active_deals_ranking(start_date, end_date, merchant_id = nil)
       if merchant_id == nil
-        active_deals = Deal.where("active = ? AND ((? BETWEEN start_date AND expiry_date) OR (? BETWEEN start_date AND expiry_date))",
-                                  true, start_date, end_date).pluck(:id)
+        active_deals = Deal.where("active = ? AND redeemable = ? AND ((? BETWEEN start_date AND expiry_date) OR (? BETWEEN start_date AND expiry_date))",
+                                  true, true, start_date, end_date).pluck(:id)
       else
-        active_deals = Deal.where("active = ? AND merchant_id = ? AND ((? BETWEEN start_date AND expiry_date) OR (? BETWEEN start_date AND expiry_date))",
-                                  true, merchant_id, start_date, end_date).pluck(:id)
+        active_deals = Deal.where("active = ? AND redeemable = ? AND merchant_id = ? AND ((? BETWEEN start_date AND expiry_date) OR (? BETWEEN start_date AND expiry_date))",
+                                  true, true, merchant_id, start_date, end_date).pluck(:id)
       end
 
       deal_ranking = Array.new
