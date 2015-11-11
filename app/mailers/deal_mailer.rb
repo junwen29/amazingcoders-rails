@@ -24,4 +24,9 @@ class DealMailer < ActionMailer::Base
     @pdf = "https://amazingcodersrails.herokuapp.com/deals/" + @deal.id.to_s + ".pdf"
     mail(to: email, subject: "Your deal has been successfully updated!")
   end
+
+  def delete_deal_email(deal, email)
+    @deal = deal
+    mail(to: email, subject: "Your deal has been deleted!")
+  end
 end
