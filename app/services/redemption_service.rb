@@ -14,6 +14,7 @@ class RedemptionService
 
       deal = Deal.active.find(deal_id) # TODO check for active deal, deal_days, time
       redeemable = deal.redeemable
+      # error = nil
       error = RedeemActiveError.new unless deal.present? # deal is not active
       # valid_time = deal.valid_time
       return nil,error unless redeemable && deal.present?
@@ -38,8 +39,8 @@ class RedemptionService
         Deal.increment_counter(:num_of_redeems, deal_id)
         return redemption, error
       else #redeem before so cannot redeem return nil
-        error = 1
-        return nil, error
+        # error = 1
+        return nil, nil
       end
     end
 
