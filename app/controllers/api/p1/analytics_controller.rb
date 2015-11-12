@@ -30,5 +30,6 @@ class Api::P1::AnalyticsController < Api::P1::ApplicationController
   def register_redemption
     deal_id = params[:deal_id]
     DealAnalyticService.set_redemption_count deal_id
+    head_ok
   end
 end
