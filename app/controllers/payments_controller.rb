@@ -253,6 +253,23 @@ class PaymentsController < ApplicationController
                             total_cost: cost_to_pay, months: @payment.months + payment_params[:months].to_i, paid: false,
                             id: Payment.last.id+1, merchant_id: merchant_id)
         @payment_new.save(validate: false)
+
+        # Update join table in addon_payment
+        if @payment.add_on1
+          AddOnPayment.create(id: AddOnPayment.last.id+1, add_on_id: 1, payment_id: Payment.order(id: :asc).last.id)
+        end
+        if @payment.add_on2
+          AddOnPayment.create(id: AddOnPayment.last.id+1, add_on_id: 2, payment_id: Payment.order(id: :asc).last.id)
+        end
+        if @payment.add_on3
+          AddOnPayment.create(id: AddOnPayment.last.id+1, add_on_id: 3, payment_id: Payment.order(id: :asc).last.id)
+        end
+
+      # Update join table in plan_payment
+        if @payment.plan1
+          PlanPayment.create(id: PlanPayment.last.id+1, plan_id: 1, payment_id: Payment.order(id: :asc).last.id)
+        end
+
      #   redirect_to payment_new_modify_path(@payment_new)
         redirect_to new_payment_charge_path(@payment_new)
       end
@@ -285,16 +302,21 @@ class PaymentsController < ApplicationController
       @payment_new.update(total_cost: cost_to_pay)
 
       # Update join table in addon_payment
-      @add_on_payment = @payment_new.add_on_payments.build
-      if (params[:payment][:add_on1] == "true")
-        @payment_new.add_on_payments.build(:add_on_id => 1)
+      if @payment.add_on1
+        AddOnPayment.create(id: AddOnPayment.last.id+1, add_on_id: 1, payment_id: Payment.order(id: :asc).last.id)
       end
-      if (params[:payment][:add_on2] == "true")
-        @payment_new.add_on_payments.build(:add_on_id => 2)
+      if @payment.add_on2
+        AddOnPayment.create(id: AddOnPayment.last.id+1, add_on_id: 2, payment_id: Payment.order(id: :asc).last.id)
       end
-      if (params[:payment][:add_on3] == "true")
-        @payment_new.add_on_payments.build(:add_on_id => 3)
+      if @payment.add_on3
+        AddOnPayment.create(id: AddOnPayment.last.id+1, add_on_id: 3, payment_id: Payment.order(id: :asc).last.id)
       end
+
+      # Update join table in plan_payment
+      if @payment.plan1
+        PlanPayment.create(id: PlanPayment.last.id+1, plan_id: 1, payment_id: Payment.order(id: :asc).last.id)
+      end
+
       redirect_to new_payment_charge_path(@payment_new)
     end
 
